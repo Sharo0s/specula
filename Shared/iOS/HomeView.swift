@@ -162,7 +162,7 @@ struct HomeView: View {
                 .font(.archivo(17, .heavy))
                 .monospacedDigit()
                 .foregroundStyle(accent ? Ink.accentText : Ink.text)
-            Text(label)
+            Text(LocalizedStringKey(label))
                 .upperLabel(8.5)
                 .foregroundStyle(Ink.muted)
         }
@@ -223,7 +223,7 @@ struct ServiceRow: View {
                 Text(service.name)
                     .font(.archivo(14.5, .heavy))
                     .foregroundStyle(store.isDown(service) ? Ink.accentText : Ink.text)
-                Text(service.desc)
+                Text(LocalizedStringKey(service.desc))
                     .font(.archivo(11))
                     .foregroundStyle(Ink.muted)
             }

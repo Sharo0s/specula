@@ -110,10 +110,10 @@ struct AddServiceView: View {
 
     private func field(_ label: String, text: Binding<String>, placeholder: String) -> some View {
         VStack(alignment: .leading, spacing: 5) {
-            Text(label)
+            Text(LocalizedStringKey(label))
                 .font(.archivo(12))
                 .foregroundStyle(Ink.text.opacity(0.7))
-            TextField(placeholder, text: text)
+            TextField(LocalizedStringKey(placeholder), text: text)
                 .font(.archivo(14))
                 .textInputAutocapitalization(.never)
                 .autocorrectionDisabled()

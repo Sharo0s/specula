@@ -37,12 +37,11 @@ struct NotifItem: Identifiable, Equatable {
 
     /// « à l'instant », « 14:38 », ou « 18 juil. · 21:40 » selon l'ancienneté.
     var timeLabel: String {
-        let fr = Locale(identifier: "fr_FR")
-        if Date().timeIntervalSince(date) < 60 { return "à l'instant" }
+        if Date().timeIntervalSince(date) < 60 { return String(localized: "à l'instant") }
         if Calendar.current.isDateInToday(date) {
-            return date.formatted(Date.FormatStyle(locale: fr).hour(.twoDigits(amPM: .omitted)).minute())
+            return date.formatted(.dateTime.hour(.twoDigits(amPM: .omitted)).minute())
         }
-        return date.formatted(Date.FormatStyle(locale: fr)
+        return date.formatted(.dateTime
             .day().month(.abbreviated).hour(.twoDigits(amPM: .omitted)).minute())
     }
 }
@@ -88,10 +87,10 @@ enum DetailMetric: String, CaseIterable {
 
 enum Catalog {
 
-    static let mainServer = Server(id: "main", name: "NAS principal",
-                                   groups: ["Média & Streaming", "Réseau & Domotique", "Serveurs & Stockage", "Outils"])
-    static let seedServer = Server(id: "seed", name: "Seedbox — OVH",
-                                   groups: ["Téléchargement", "Média", "Système"])
+    static let mainServer = Server(id: "main", name: String(localized: "NAS principal"),
+                                   groups: [String(localized: "Média & Streaming"), String(localized: "Réseau & Domotique"), String(localized: "Serveurs & Stockage"), String(localized: "Outils")])
+    static let seedServer = Server(id: "seed", name: String(localized: "Seedbox — OVH"),
+                                   groups: [String(localized: "Téléchargement"), String(localized: "Média"), String(localized: "Système")])
 
     static let cdn = "https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/png/"
 
@@ -131,11 +130,11 @@ enum Catalog {
     static let guestChoices = ["jellyfin", "immich", "komga", "nextcloud"]
 
     static let seedNotifs: [NotifItem] = [
-        NotifItem(title: "Sauvegarde terminée", sub: "OpenMediaVault — 284 Go vérifiés",
+        NotifItem(title: String(localized: "Sauvegarde terminée"), sub: String(localized: "OpenMediaVault — 284 Go vérifiés"),
                   date: Date().addingTimeInterval(-45 * 60), alert: false, unread: false),
-        NotifItem(title: "Mise à jour disponible", sub: "Sonarr 4.0.3 → 4.0.4",
+        NotifItem(title: String(localized: "Mise à jour disponible"), sub: "Sonarr 4.0.3 → 4.0.4",
                   date: Date().addingTimeInterval(-3 * 3600), alert: false, unread: false),
-        NotifItem(title: "Nouvel épisode récupéré", sub: "Radarr — 2 films ajoutés à Jellyfin",
+        NotifItem(title: String(localized: "Nouvel épisode récupéré"), sub: String(localized: "Radarr — 2 films ajoutés à Jellyfin"),
                   date: Date().addingTimeInterval(-4 * 3600), alert: false, unread: false),
     ]
 
@@ -154,10 +153,10 @@ enum Catalog {
 
     /// Incidents historiques du mur de statut 30 j (jour 0 = J-29).
     static let incidents: [Incident] = [
-        Incident(serviceID: "komga", day: 7, duration: "38 min", cause: "Conteneur arrêté — OOM killer"),
-        Incident(serviceID: "komga", day: 21, duration: "12 min", cause: "Mise à jour de l'image Docker"),
-        Incident(serviceID: "nextcloud", day: 12, duration: "26 min", cause: "Certificat TLS expiré"),
-        Incident(serviceID: "uptimekuma", day: 3, duration: "8 min", cause: "Redémarrage du NAS"),
+        Incident(serviceID: "komga", day: 7, duration: "38 min", cause: String(localized: "Conteneur arrêté — OOM killer")),
+        Incident(serviceID: "komga", day: 21, duration: "12 min", cause: String(localized: "Mise à jour de l'image Docker")),
+        Incident(serviceID: "nextcloud", day: 12, duration: "26 min", cause: String(localized: "Certificat TLS expiré")),
+        Incident(serviceID: "uptimekuma", day: 3, duration: "8 min", cause: String(localized: "Redémarrage du NAS")),
     ]
 
     /// Type d'intégration des services du catalogue.
@@ -179,13 +178,13 @@ enum Catalog {
     }
 
     static let alertRules: [AlertRule] = [
-        AlertRule(id: "temp", label: "Température > 50 °C", desc: "Alerte quand le CPU dépasse le seuil."),
-        AlertRule(id: "disk", label: "Disque > 90 %", desc: "Sur chaque volume surveillé."),
-        AlertRule(id: "down", label: "Hors ligne > 5 min", desc: "Après 3 tentatives échouées."),
+        AlertRule(id: "temp", label: String(localized: "Température > 50 °C"), desc: String(localized: "Alerte quand le CPU dépasse le seuil.")),
+        AlertRule(id: "disk", label: String(localized: "Disque > 90 %"), desc: String(localized: "Sur chaque volume surveillé.")),
+        AlertRule(id: "down", label: String(localized: "Hors ligne > 5 min"), desc: String(localized: "Après 3 tentatives échouées.")),
     ]
 }
 
-/// Format français : virgule décimale.
+/// Nombre formaté selon la locale (virgule en français, point en anglais).
 func fr(_ value: Double, _ digits: Int = 1) -> String {
-    String(format: "%.\(digits)f", value).replacingOccurrences(of: ".", with: ",")
+    value.formatted(.number.precision(.fractionLength(digits)).grouping(.never))
 }

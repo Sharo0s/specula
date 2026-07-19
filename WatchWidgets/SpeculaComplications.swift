@@ -77,9 +77,9 @@ struct ComplicationView: View {
                 .font(.archivo(12, .heavy))
                 .monospacedDigit()
                 .foregroundStyle(entry.down ? Color(hex: "ff9783") : .primary)
-                .widgetLabel(entry.downName.map { "\($0) en panne" } ?? "Tous en ligne")
+                .widgetLabel(entry.downName.map { String(localized: "\($0) en panne") } ?? String(localized: "Tous en ligne"))
         case .accessoryInline:
-            Text(entry.downName.map { "Specula — \($0) ✕" } ?? "Specula — \(entry.countText)")
+            Text(entry.downName.map { String(localized: "Specula — \($0) ✕") } ?? "Specula — \(entry.countText)")
         case .accessoryRectangular:
             VStack(alignment: .leading, spacing: 1) {
                 HStack(spacing: 5) {
@@ -90,11 +90,11 @@ struct ComplicationView: View {
                         .font(.archivo(10, .heavy))
                         .tracking(0.8)
                 }
-                Text("\(entry.countText) en ligne")
+                Text(String(localized: "\(entry.countText) en ligne"))
                     .font(.archivo(12, .heavy))
                     .monospacedDigit()
                 if let name = entry.downName {
-                    Text("\(name) hors ligne")
+                    Text(String(localized: "\(name) hors ligne"))
                         .font(.archivo(10))
                         .foregroundStyle(Color(hex: "ff9783"))
                 }

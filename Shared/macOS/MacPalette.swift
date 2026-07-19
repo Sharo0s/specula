@@ -89,7 +89,7 @@ struct MacPalette: View {
                 Text(s.name)
                     .font(.archivo(13, .heavy))
                     .foregroundStyle(down ? Ink.accentText : Ink.text)
-                Text("\(down ? "HORS LIGNE" : "EN LIGNE") · \(groupName(s))")
+                Text(verbatim: "\(down ? String(localized: "HORS LIGNE") : String(localized: "EN LIGNE")) · \(String(localized: String.LocalizationValue(groupName(s))))")
                     .font(.archivo(10))
                     .foregroundStyle(Ink.muted)
                 Spacer()

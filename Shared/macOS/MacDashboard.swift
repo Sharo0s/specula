@@ -140,14 +140,14 @@ struct MacServiceRow: View {
                 Text(service.name)
                     .font(.archivo(13.5, .heavy))
                     .foregroundStyle(down ? Ink.accentText : Ink.text)
-                Text(service.desc)
+                Text(LocalizedStringKey(service.desc))
                     .font(.archivo(11))
                     .foregroundStyle(Ink.muted)
                 Spacer()
                 ForEach(Array(store.metrics(service).prefix(3).enumerated()), id: \.offset) { _, m in
                     HStack(spacing: 4) {
                         Text(m[0]).font(.archivo(12, .heavy)).monospacedDigit()
-                        Text(m[1]).upperLabel(7.5).foregroundStyle(Ink.muted)
+                        Text(LocalizedStringKey(m[1])).upperLabel(7.5).foregroundStyle(Ink.muted)
                     }
                     .frame(minWidth: 76, alignment: .leading)
                 }
@@ -218,7 +218,7 @@ struct MacInspector: View {
                     ForEach(Array(store.metrics(service).enumerated()), id: \.offset) { i, m in
                         if i > 0 { HRule() }
                         HStack {
-                            Text(m[1])
+                            Text(LocalizedStringKey(m[1]))
                                 .upperLabel(8.5)
                                 .foregroundStyle(Ink.muted)
                             Spacer()
@@ -238,9 +238,9 @@ struct MacInspector: View {
                     .padding(.top, 12)
                     .padding(.bottom, 6)
                 ConsoleLog(lines: down
-                           ? ["ERROR Connexion refusée (timeout après 5 000 ms)",
-                              "ERROR 3 tentatives échouées — abandon",
-                              "INFO  Prochaine tentative dans 30 s"]
+                           ? [String(localized: "ERROR Connexion refusée (timeout après 5 000 ms)"),
+                              String(localized: "ERROR 3 tentatives échouées — abandon"),
+                              String(localized: "INFO  Prochaine tentative dans 30 s")]
                            : store.logs)
 
                 // Actions empilées

@@ -1,0 +1,22 @@
+{
+ "sourceLanguage": "fr",
+ "strings": {
+  "NSLocalNetworkUsageDescription": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Specula discovers and polls your self-hosted services on the local network."
+     }
+    },
+    "fr": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Specula découvre et interroge tes services selfhosted sur le réseau local."
+     }
+    }
+   }
+  }
+ },
+ "version": "1.0"
+}

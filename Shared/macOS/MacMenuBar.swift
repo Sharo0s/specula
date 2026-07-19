@@ -15,7 +15,7 @@ struct MenuBarPopover: View {
                 Text("Specula")
                     .font(.archivo(14, .heavy))
                 Spacer()
-                Text("CPU \(store.cpuText) · \(store.tempLongText) · \(store.ramLongText)")
+                Text(verbatim: "CPU \(store.cpuText) · \(store.tempLongText) · \(store.ramLongText)")
                     .font(.archivo(10)).monospacedDigit()
                     .foregroundStyle(Ink.muted)
             }
@@ -26,10 +26,10 @@ struct MenuBarPopover: View {
             if store.anyDown {
                 HStack(spacing: 10) {
                     Rectangle().fill(.white).frame(width: 8, height: 8)
-                    Text("\(store.downName) hors ligne")
+                    Text(String(localized: "\(store.downName) hors ligne"))
                         .font(.archivo(12.5, .heavy))
                     Spacer()
-                    Text("\(store.downDurationMin) min")
+                    Text(verbatim: "\(store.downDurationMin) min")
                         .font(.archivo(11, .heavy)).monospacedDigit()
                 }
                 .foregroundStyle(.white)
@@ -42,7 +42,7 @@ struct MenuBarPopover: View {
                     Text("Tous les services en ligne")
                         .font(.archivo(12.5, .bold))
                     Spacer()
-                    Text("\(store.onlineCount)/\(store.totalCount)")
+                    Text(verbatim: "\(store.onlineCount)/\(store.totalCount)")
                         .font(.archivo(11, .heavy)).monospacedDigit()
                         .foregroundStyle(Ink.muted)
                 }
@@ -111,7 +111,7 @@ struct MacTVView: View {
                 BrandSquare(size: 18)
                 Text("Specula")
                     .font(.archivo(24, .heavy))
-                Text("\(store.onlineCount)/\(store.totalCount) en ligne · CPU \(store.cpuText)")
+                Text(String(localized: "\(store.onlineCount)/\(store.totalCount) en ligne · CPU \(store.cpuText)"))
                     .font(.archivo(13)).monospacedDigit()
                     .opacity(0.75)
                 Spacer()
@@ -127,10 +127,10 @@ struct MacTVView: View {
             if store.anyDown {
                 HStack(spacing: 12) {
                     Rectangle().fill(.white).frame(width: 10, height: 10)
-                    Text("\(store.downName) HORS LIGNE")
+                    Text(String(localized: "\(store.downName) HORS LIGNE"))
                         .upperLabel(15, .heavy)
                     Spacer()
-                    Text("\(store.downDurationMin) min")
+                    Text(verbatim: "\(store.downDurationMin) min")
                         .font(.archivo(15, .heavy)).monospacedDigit()
                 }
                 .foregroundStyle(.white)
@@ -167,11 +167,11 @@ struct MacTVView: View {
                 .font(.archivo(17, .heavy))
                 .foregroundStyle(down ? .white : Ink.text)
             if let m {
-                Text("\(m[0]) \(m[1])")
+                Text(verbatim: "\(m[0]) ") + Text(LocalizedStringKey(m[1]))
                     .font(.archivo(11)).monospacedDigit()
                     .foregroundStyle(down ? .white.opacity(0.8) : Ink.muted)
             }
-            Text(down ? "HORS LIGNE" : "\(store.ping(s)) MS")
+            Text(down ? String(localized: "HORS LIGNE") : "\(store.ping(s)) MS")
                 .font(.archivo(19, .heavy)).monospacedDigit()
                 .foregroundStyle(down ? .white : Ink.text)
         }

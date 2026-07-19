@@ -144,7 +144,7 @@ struct MacSettingsPage: View {
 
     private func settingsBlock(_ title: String, @ViewBuilder content: () -> some View) -> some View {
         VStack(alignment: .leading, spacing: 0) {
-            Text(title)
+            Text(LocalizedStringKey(title))
                 .upperLabel(10.5, .heavy)
                 .padding(.bottom, 5)
             HRule(weight: 2)
@@ -154,7 +154,7 @@ struct MacSettingsPage: View {
 
     private func labelRow(_ title: String, @ViewBuilder trailing: () -> some View) -> some View {
         HStack {
-            Text(title).font(.archivo(13.5, .bold))
+            Text(LocalizedStringKey(title)).font(.archivo(13.5, .bold))
             Spacer()
             trailing()
         }
@@ -164,8 +164,8 @@ struct MacSettingsPage: View {
     private func toggleRow(_ title: String, sub: String, isOn: Binding<Bool>) -> some View {
         HStack(spacing: 12) {
             VStack(alignment: .leading, spacing: 1) {
-                Text(title).font(.archivo(13.5, .bold))
-                Text(sub).font(.archivo(11)).foregroundStyle(Ink.muted)
+                Text(LocalizedStringKey(title)).font(.archivo(13.5, .bold))
+                Text(LocalizedStringKey(sub)).font(.archivo(11)).foregroundStyle(Ink.muted)
             }
             Spacer()
             MSwitch(isOn: isOn, width: 36, height: 22)
@@ -222,10 +222,10 @@ struct MacAddServicePage: View {
 
     private func field(_ label: String, text: Binding<String>, placeholder: String) -> some View {
         VStack(alignment: .leading, spacing: 5) {
-            Text(label)
+            Text(LocalizedStringKey(label))
                 .font(.archivo(12))
                 .foregroundStyle(Ink.text.opacity(0.7))
-            TextField(placeholder, text: text)
+            TextField(LocalizedStringKey(placeholder), text: text)
                 .textFieldStyle(.plain)
                 .font(.archivo(14))
                 .padding(.horizontal, 10)

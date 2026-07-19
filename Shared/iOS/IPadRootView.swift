@@ -32,7 +32,7 @@ struct IPadRootView: View {
             Text("Specula")
                 .font(.archivo(17, .heavy))
             Spacer()
-            Text("\(store.onlineCount) en ligne \(netNote)· CPU \(store.cpuText) · \(Date.now.formatted(.dateTime.hour().minute()))")
+            Text(String(localized: "\(store.onlineCount) en ligne \(netNote)· CPU \(store.cpuText) · \(Date.now.formatted(.dateTime.hour().minute()))"))
                 .font(.archivo(11)).monospacedDigit()
                 .foregroundStyle(Ink.muted)
         }
@@ -41,7 +41,7 @@ struct IPadRootView: View {
     }
 
     private var netNote: String {
-        store.net == .tailscale ? "· via Tailscale " : ""
+        store.net == .tailscale ? String(localized: "· via Tailscale ") : ""
     }
 
     // MARK: Colonne latérale
@@ -68,7 +68,7 @@ struct IPadRootView: View {
     private func sideItem(_ label: String, meta: String, active: Bool, action: @escaping () -> Void) -> some View {
         Button(action: action) {
             HStack(spacing: 8) {
-                Text(label)
+                Text(LocalizedStringKey(label))
                     .font(.archivo(12.5, active ? .heavy : .semibold))
                     .lineLimit(1)
                 Spacer()
@@ -92,7 +92,7 @@ struct IPadRootView: View {
                 ForEach(groups, id: \.index) { g in
                     VStack(alignment: .leading, spacing: 10) {
                         HStack(alignment: .center, spacing: 10) {
-                            Text(g.name)
+                            Text(LocalizedStringKey(g.name))
                                 .upperLabel(11, .heavy)
                             Text(String(format: "%02d", g.services.count))
                                 .font(.archivo(10.5)).monospacedDigit()

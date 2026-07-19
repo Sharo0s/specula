@@ -297,8 +297,8 @@ final class AppStore {
         if panneAuto && !down && t == 5 {
             down = true
             downAt = Date()
-            pushNotif(title: "Komga ne répond plus",
-                      sub: "Délai dépassé (timeout) — 3 tentatives échouées")
+            pushNotif(title: String(localized: "Komga ne répond plus"),
+                      sub: String(localized: "Délai dépassé (timeout) — 3 tentatives échouées"))
             startOutageActivity(serviceName: "Komga")
             #if os(watchOS)
             WKInterfaceDevice.current().play(.failure)
@@ -329,8 +329,8 @@ final class AppStore {
     private func checkTempAlert() {
         if rules["temp"] == true && temp > 50 && !tempAlerted {
             tempAlerted = true
-            pushNotif(title: "Température élevée",
-                      sub: "CPU à \(fr(temp)) °C — seuil de 50 °C dépassé")
+            pushNotif(title: String(localized: "Température élevée"),
+                      sub: String(localized: "CPU à \(fr(temp)) °C — seuil de 50 °C dépassé"))
         } else if tempAlerted && temp < 48 {
             tempAlerted = false
         }
@@ -409,8 +409,8 @@ final class AppStore {
                     downIDs.insert(target.id)
                     if downAt == nil { downAt = Date() }
                     if rules["down"] == true {
-                        pushNotif(title: "\(target.name) ne répond plus",
-                                  sub: "Délai dépassé (timeout) — 3 tentatives échouées")
+                        pushNotif(title: String(localized: "\(target.name) ne répond plus"),
+                                  sub: String(localized: "Délai dépassé (timeout) — 3 tentatives échouées"))
                     }
                     startOutageActivity(serviceName: target.name)
                     #if os(watchOS)
@@ -462,13 +462,13 @@ final class AppStore {
     }
 
     func pingText(_ s: Service) -> String {
-        isDown(s) ? "HORS LIGNE" : (pending(s) ? "…" : "\(ping(s)) MS")
+        isDown(s) ? String(localized: "HORS LIGNE") : (pending(s) ? "…" : "\(ping(s)) MS")
     }
     func pingShort(_ s: Service) -> String {
-        isDown(s) ? "PANNE" : (pending(s) ? "…" : "\(ping(s)) MS")
+        isDown(s) ? String(localized: "PANNE") : (pending(s) ? "…" : "\(ping(s)) MS")
     }
     func statusText(_ s: Service) -> String {
-        isDown(s) ? "HORS LIGNE" : (pending(s) ? "CONNEXION…" : "EN LIGNE · \(ping(s)) MS")
+        isDown(s) ? String(localized: "HORS LIGNE") : (pending(s) ? String(localized: "CONNEXION…") : String(localized: "EN LIGNE · \(ping(s)) MS"))
     }
 
     /// URL affichée (démo : bascule Tailscale simulée).
@@ -613,7 +613,7 @@ final class AppStore {
                     knownType: IntegrationType? = nil) {
         let id = "custom-" + UUID().uuidString.prefix(8).lowercased()
         let service = Service(id: id, mono: YamlConfig.mono(name), name: name,
-                              desc: "Ajouté à la main", group: group, url: url,
+                              desc: String(localized: "Ajouté à la main"), group: group, url: url,
                               iconSlug: nil, metrics: nil)
         customList.append(service)
         serviceTypes[id] = knownType ?? .generic
@@ -621,7 +621,7 @@ final class AppStore {
         if !apiKey.isEmpty { setApiKey(apiKey, for: id) }
         config.custom.append(StoredService(service: service, type: knownType ?? .generic))
         persist()
-        fireToast("Service « \(name) » ajouté au groupe \(mainGroups[group])")
+        fireToast(String(localized: "Service « \(name) » ajouté au groupe \(mainGroups[group])"))
 
         // Détection asynchrone du type si inconnu
         guard knownType == nil else { return }
@@ -633,7 +633,7 @@ final class AppStore {
                 config.custom[i].type = type.rawValue
                 persist()
             }
-            fireToast("« \(name) » reconnu : \(type.rawValue)")
+            fireToast(String(localized: "« \(name) » reconnu : \(type.rawValue)"))
         }
     }
 
@@ -661,18 +661,18 @@ final class AppStore {
         pins.removeAll { $0 == s.id }
         persist()
         publishSharedState()
-        fireToast("« \(s.name) » supprimé")
+        fireToast(String(localized: "« \(s.name) » supprimé"))
     }
 
     /// Test de connexion réel (AddService) — latence + type détecté.
     func testConnection(url: String) {
-        fireToast("Test de \(YamlConfig.fullURL(url))…")
+        fireToast(String(localized: "Test de \(YamlConfig.fullURL(url))…"))
         Task { [weak self] in
             let (type, ms) = await LiveFetcher.detect(YamlConfig.fullURL(url))
             if let type {
-                self?.fireToast("Connexion réussie — \(ms) ms · \(type == .generic ? "service web" : type.rawValue)")
+                self?.fireToast(String(localized: "Connexion réussie — \(ms) ms · \(type == .generic ? String(localized: "service web") : type.rawValue)"))
             } else {
-                self?.fireToast("Aucune réponse — vérifie l'URL et le réseau")
+                self?.fireToast(String(localized: "Aucune réponse — vérifie l'URL et le réseau"))
             }
         }
     }
@@ -704,9 +704,9 @@ final class AppStore {
             failCounts = [:]
             liveMetricsCache = [:]
             persist()
-            fireToast("Import de services.yaml — \(result.services.count) services et \(result.groups.count) groupes reconnus")
+            fireToast(String(localized: "Import de services.yaml — \(result.services.count) services et \(result.groups.count) groupes reconnus"))
         } catch {
-            fireToast("Import impossible — services.yaml illisible")
+            fireToast(String(localized: "Import impossible — services.yaml illisible"))
         }
     }
 
@@ -721,9 +721,9 @@ final class AppStore {
             #elseif os(iOS)
             UIPasteboard.general.string = yaml
             #endif
-            fireToast("services.yaml copié — compatible gethomepage.dev")
+            fireToast(String(localized: "services.yaml copié — compatible gethomepage.dev"))
         } catch {
-            fireToast("Export impossible")
+            fireToast(String(localized: "Export impossible"))
         }
     }
 
@@ -779,7 +779,7 @@ final class AppStore {
         #elseif os(iOS)
         if let u = URL(string: target) { UIApplication.shared.open(u) }
         #endif
-        fireToast("Ouverture de \(target) dans le navigateur…")
+        fireToast(String(localized: "Ouverture de \(target) dans le navigateur…"))
     }
 
     func copyURL(_ s: Service) {
@@ -790,7 +790,7 @@ final class AppStore {
         #elseif os(iOS)
         UIPasteboard.general.string = target
         #endif
-        fireToast("URL copiée — \(target)")
+        fireToast(String(localized: "URL copiée — \(target)"))
     }
 
     func restart(_ s: Service) {
@@ -799,7 +799,7 @@ final class AppStore {
             downAt = nil
             endOutageActivity()
         }
-        fireToast("Redémarrage du conteneur « \(s.id) » demandé…")
+        fireToast(String(localized: "Redémarrage du conteneur « \(s.id) » demandé…"))
     }
 
     func moveGroup(_ idx: Int, _ delta: Int) {
@@ -814,7 +814,7 @@ final class AppStore {
         } else if pins.count < 4 {
             pins.append(id)
         } else {
-            fireToast("4 épinglés maximum")
+            fireToast(String(localized: "4 épinglés maximum"))
         }
     }
 }

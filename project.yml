@@ -1,5 +1,6 @@
 name: Specula
 options:
+  developmentLanguage: fr
   bundleIdPrefix: ovh.smalard
   deploymentTarget:
     iOS: "18.0"
@@ -73,6 +74,7 @@ targets:
       - path: Shared/LiveActivity.swift
       - path: Shared/SharedState.swift
       - path: Resources/Fonts
+      - path: Resources/Localizable.xcstrings
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: ovh.smalard.specula.widgets
@@ -166,6 +168,7 @@ targets:
       - path: Shared/Models.swift
       - path: Shared/SharedState.swift
       - path: Resources/Fonts
+      - path: Resources/Localizable.xcstrings
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: ovh.smalard.specula.watch.widgets

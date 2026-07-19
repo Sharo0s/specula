@@ -213,13 +213,13 @@ struct SettingsView: View {
 
     private func section(_ title: String, note: String? = nil, @ViewBuilder content: () -> some View) -> some View {
         VStack(alignment: .leading, spacing: 0) {
-            Text(title)
+            Text(LocalizedStringKey(title))
                 .upperLabel(10.5, .heavy)
                 .padding(.bottom, 5)
             HRule(weight: 2)
             content()
             if let note {
-                Text(note)
+                Text(LocalizedStringKey(note))
                     .font(.archivo(10.5))
                     .foregroundStyle(Ink.muted)
                     .padding(.bottom, 10)
@@ -231,9 +231,9 @@ struct SettingsView: View {
     private func toggleRow(_ title: String, sub: String, isOn: Binding<Bool>) -> some View {
         HStack(spacing: 12) {
             VStack(alignment: .leading, spacing: 1) {
-                Text(title)
+                Text(LocalizedStringKey(title))
                     .font(.archivo(13.5, .bold))
-                Text(sub)
+                Text(LocalizedStringKey(sub))
                     .font(.archivo(11))
                     .foregroundStyle(Ink.muted)
             }

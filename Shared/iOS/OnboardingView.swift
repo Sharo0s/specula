@@ -19,7 +19,7 @@ struct OnboardingView: View {
                 Text("Specula")
                     .font(.archivo(16, .heavy))
                 Spacer()
-                Text(["1 — Bienvenue", "2 — Scan", "3 — Import & groupes"][step])
+                Text(LocalizedStringKey(["1 — Bienvenue", "2 — Scan", "3 — Import & groupes"][step]))
                     .upperLabel(9, .bold)
                     .foregroundStyle(Ink.muted)
             }

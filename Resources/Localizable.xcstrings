@@ -1,0 +1,2866 @@
+{
+ "sourceLanguage": "fr",
+ "strings": {
+  "%@ Go": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "%@ GB"
+     }
+    }
+   }
+  },
+  "%@ HORS LIGNE": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "%@ OFFLINE"
+     }
+    }
+   }
+  },
+  "%@ Mo/s": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "%@ MB/s"
+     }
+    }
+   }
+  },
+  "%@ To": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "%@ TB"
+     }
+    }
+   }
+  },
+  "%@ en ligne": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "%@ online"
+     }
+    }
+   }
+  },
+  "%@ en panne": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "%@ down"
+     }
+    }
+   }
+  },
+  "%@ hors ligne": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "%@ offline"
+     }
+    }
+   }
+  },
+  "%@ ne répond plus": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "%@ is not responding"
+     }
+    }
+   }
+  },
+  "%lld Go": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "%lld GB"
+     }
+    }
+   }
+  },
+  "%lld en ligne %@· CPU %@ · %@": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "%lld online %@· CPU %@ · %@"
+     }
+    }
+   }
+  },
+  "%lld hors ligne": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "%lld offline"
+     }
+    }
+   }
+  },
+  "%lld min": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "%lld min"
+     }
+    }
+   }
+  },
+  "%lld/%lld EN LIGNE · %lld PANNE": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "%lld/%lld ONLINE · %lld DOWN"
+     }
+    }
+   }
+  },
+  "%lld/%lld SERVICES EN LIGNE": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "%lld/%lld SERVICES ONLINE"
+     }
+    }
+   }
+  },
+  "%lld/%lld en ligne · CPU %@": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "%lld/%lld online · CPU %@"
+     }
+    }
+   }
+  },
+  "%lld/%lld services en ligne": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "%lld/%lld services online"
+     }
+    }
+   }
+  },
+  "+ Ajouter un service": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "+ Add a service"
+     }
+    }
+   }
+  },
+  "0,8 s": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "0.8 s"
+     }
+    }
+   }
+  },
+  "1 — Bienvenue": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "1 — Welcome"
+     }
+    }
+   }
+  },
+  "1,6 s": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "1.6 s"
+     }
+    }
+   }
+  },
+  "2 — Scan": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "2 — Scan"
+     }
+    }
+   }
+  },
+  "3 — Import & groupes": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "3 — Import & groups"
+     }
+    }
+   }
+  },
+  "3,2 s": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "3.2 s"
+     }
+    }
+   }
+  },
+  "4 épinglés maximum": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "4 pinned max"
+     }
+    }
+   }
+  },
+  "AJOUTÉ": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "ADDED"
+     }
+    }
+   }
+  },
+  "Accès limité aux services autorisés": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Access limited to allowed services"
+     }
+    }
+   }
+  },
+  "Affichage": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Display"
+     }
+    }
+   }
+  },
+  "Affichés dans le widget, la barre de menus et sur la Watch — 4 maximum.": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Shown in the widget, the menu bar and on the Watch — 4 max."
+     }
+    }
+   }
+  },
+  "Ajouter": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Add"
+     }
+    }
+   }
+  },
+  "Ajouter le service": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Add service"
+     }
+    }
+   }
+  },
+  "Ajouter un service": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Add a service"
+     }
+    }
+   }
+  },
+  "Ajouter à la main": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Add manually"
+     }
+    }
+   }
+  },
+  "Ajouté à la main": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Added manually"
+     }
+    }
+   }
+  },
+  "Alerte quand le CPU dépasse le seuil.": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Alerts when the CPU crosses the threshold."
+     }
+    }
+   }
+  },
+  "Alertes": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Alerts"
+     }
+    }
+   }
+  },
+  "Alertes conf.": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Alerts set"
+     }
+    }
+   }
+  },
+  "Annuler": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Cancel"
+     }
+    }
+   }
+  },
+  "Aperçu invité — « Quitter » pour revenir": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Guest preview — “Leave” to come back"
+     }
+    }
+   }
+  },
+  "Après 3 tentatives échouées.": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "After 3 failed attempts."
+     }
+    }
+   }
+  },
+  "Aucun service annoncé en Bonjour sur ce réseau.": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "No services advertised over Bonjour on this network."
+     }
+    }
+   }
+  },
+  "Aucun service configuré": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "No services configured"
+     }
+    }
+   }
+  },
+  "Aucune réponse — vérifie l'URL et le réseau": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "No response — check the URL and the network"
+     }
+    }
+   }
+  },
+  "Aéré": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Comfortable"
+     }
+    }
+   }
+  },
+  "Bascule automatique": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Automatic switching"
+     }
+    }
+   }
+  },
+  "Bascule automatique Tailscale": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Automatic Tailscale switching"
+     }
+    }
+   }
+  },
+  "Bibliothèques": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Libraries"
+     }
+    }
+   }
+  },
+  "Bloquées": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Blocked"
+     }
+    }
+   }
+  },
+  "Bonjour (_http._tcp) sur le réseau local": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Bonjour (_http._tcp) on the local network"
+     }
+    }
+   }
+  },
+  "Bonjour + balayage du sous-réseau 192.168.1.0/24": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Bonjour + sweep of subnet 192.168.1.0/24"
+     }
+    }
+   }
+  },
+  "CONNEXION…": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "CONNECTING…"
+     }
+    }
+   }
+  },
+  "CPU": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "CPU"
+     }
+    }
+   }
+  },
+  "CPU à %@ °C — seuil de 50 °C dépassé": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "CPU at %@ °C — 50 °C threshold exceeded"
+     }
+    }
+   }
+  },
+  "CPU, température et services en ligne.": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "CPU, temperature and services online."
+     }
+    }
+   }
+  },
+  "Cartes": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Cards"
+     }
+    }
+   }
+  },
+  "Certificat TLS expiré": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Expired TLS certificate"
+     }
+    }
+   }
+  },
+  "Certificats": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Certificates"
+     }
+    }
+   }
+  },
+  "Choisit l'URL locale ou Tailscale selon le réseau": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Picks the local or Tailscale URL based on the network"
+     }
+    }
+   }
+  },
+  "Client BitTorrent": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "BitTorrent client"
+     }
+    }
+   }
+  },
+  "Clients DNS": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "DNS clients"
+     }
+    }
+   }
+  },
+  "Cloud personnel": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Personal cloud"
+     }
+    }
+   }
+  },
+  "Clé API (optionnelle — rangée dans le Keychain)": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "API key (optional — stored in the Keychain)"
+     }
+    }
+   }
+  },
+  "Collections": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Collections"
+     }
+    }
+   }
+  },
+  "Comics, livres & mangas": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Comics, books & manga"
+     }
+    }
+   }
+  },
+  "Commencer": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Get started"
+     }
+    }
+   }
+  },
+  "Compact": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Compact"
+     }
+    }
+   }
+  },
+  "Configuration": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Configuration"
+     }
+    }
+   }
+  },
+  "Configuration terminée — bienvenue dans Specula": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Setup complete — welcome to Specula"
+     }
+    }
+   }
+  },
+  "Confirmer la suppression": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Confirm deletion"
+     }
+    }
+   }
+  },
+  "Connecté via tail1a2b.ts.net — +18 ms": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Connected via tail1a2b.ts.net — +18 ms"
+     }
+    }
+   }
+  },
+  "Connexion": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Connection"
+     }
+    }
+   }
+  },
+  "Connexion réussie — %lld ms · %@": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Connection successful — %lld ms · %@"
+     }
+    }
+   }
+  },
+  "Conteneur arrêté — OOM killer": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Container stopped — OOM killer"
+     }
+    }
+   }
+  },
+  "Conteneurs": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Containers"
+     }
+    }
+   }
+  },
+  "Continuer": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Continue"
+     }
+    }
+   }
+  },
+  "Copier l'URL": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Copy URL"
+     }
+    }
+   }
+  },
+  "DNS filtrant — nouveau": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Filtering DNS — new"
+     }
+    }
+   }
+  },
+  "Densité": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Density"
+     }
+    }
+   }
+  },
+  "Dispo. 30 j": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "30-day uptime"
+     }
+    }
+   }
+  },
+  "Dispo. 30 j ": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "30-day uptime "
+     }
+    }
+   }
+  },
+  "Disponibilité sur 30 jours": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "30-day availability"
+     }
+    }
+   }
+  },
+  "Disposition": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Layout"
+     }
+    }
+   }
+  },
+  "Disque": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Disk"
+     }
+    }
+   }
+  },
+  "Disque > 90 %": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Disk > 90 %"
+     }
+    }
+   }
+  },
+  "Documents — nouveau": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Documents — new"
+     }
+    }
+   }
+  },
+  "Domotique": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Home automation"
+     }
+    }
+   }
+  },
+  "Données": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Data"
+     }
+    }
+   }
+  },
+  "Délai dépassé (timeout) — 3 tentatives échouées": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Timed out — 3 failed attempts"
+     }
+    }
+   }
+  },
+  "Démo": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Demo"
+     }
+    }
+   }
+  },
+  "Déplacement": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Away"
+     }
+    }
+   }
+  },
+  "Détection automatique du type de service à la connexion — 200+ intégrations reconnues (Jellyfin, *arr, Proxmox, AdGuard…).": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Automatic service type detection on connect — 200+ recognized integrations (Jellyfin, *arr, Proxmox, AdGuard…)."
+     }
+    }
+   }
+  },
+  "Détection automatique du type de service à la connexion — 200+ intégrations reconnues.": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Automatic service type detection on connect — 200+ recognized integrations."
+     }
+    }
+   }
+  },
+  "EN LIGNE": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "ONLINE"
+     }
+    }
+   }
+  },
+  "EN LIGNE · %lld MS": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "ONLINE · %lld MS"
+     }
+    }
+   }
+  },
+  "ERROR 3 tentatives échouées — abandon": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "ERROR 3 failed attempts — giving up"
+     }
+    }
+   }
+  },
+  "ERROR Connexion refusée (timeout après 5 000 ms)": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "ERROR Connection refused (timeout after 5,000 ms)"
+     }
+    }
+   }
+  },
+  "En attente": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Queued"
+     }
+    }
+   }
+  },
+  "En cours": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "In progress"
+     }
+    }
+   }
+  },
+  "En ligne": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Online"
+     }
+    }
+   }
+  },
+  "En partage": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Seeding"
+     }
+    }
+   }
+  },
+  "Envoi": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Upload"
+     }
+    }
+   }
+  },
+  "Erreurs": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Errors"
+     }
+    }
+   }
+  },
+  "Export impossible": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Export failed"
+     }
+    }
+   }
+  },
+  "Exporter": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Export"
+     }
+    }
+   }
+  },
+  "Fermer": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Close"
+     }
+    }
+   }
+  },
+  "Fichiers": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Files"
+     }
+    }
+   }
+  },
+  "Fichiers NAS + Mini-NAS": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "NAS + Mini-NAS files"
+     }
+    }
+   }
+  },
+  "Films": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Movies"
+     }
+    }
+   }
+  },
+  "Format gethomepage.dev — source de vérité": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "gethomepage.dev format — source of truth"
+     }
+    }
+   }
+  },
+  "Gestion films": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Movie management"
+     }
+    }
+   }
+  },
+  "Gestion films — seedbox": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Movie management — seedbox"
+     }
+    }
+   }
+  },
+  "Gestion séries": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "TV show management"
+     }
+    }
+   }
+  },
+  "Grille": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Grid"
+     }
+    }
+   }
+  },
+  "Groupe": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Group"
+     }
+    }
+   }
+  },
+  "Groupes": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Groups"
+     }
+    }
+   }
+  },
+  "Groupes reconnus": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Recognized groups"
+     }
+    }
+   }
+  },
+  "Groupes, widgets et clés API repris tels quels": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Groups, widgets and API keys carried over as-is"
+     }
+    }
+   }
+  },
+  "HORS LIGNE": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "OFFLINE"
+     }
+    }
+   }
+  },
+  "Homelab": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Homelab"
+     }
+    }
+   }
+  },
+  "Hors ligne > 5 min": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Offline > 5 min"
+     }
+    }
+   }
+  },
+  "Hyperviseur — nouveau": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Hypervisor — new"
+     }
+    }
+   }
+  },
+  "INCIDENT — %@": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "INCIDENT — %@"
+     }
+    }
+   }
+  },
+  "INFO  Prochaine tentative dans 30 s": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "INFO  Next attempt in 30 s"
+     }
+    }
+   }
+  },
+  "INVITÉ": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "GUEST"
+     }
+    }
+   }
+  },
+  "Import & groupes": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Import & groups"
+     }
+    }
+   }
+  },
+  "Import de services.yaml — %lld services et %lld groupes reconnus": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "services.yaml imported — %lld services and %lld groups recognized"
+     }
+    }
+   }
+  },
+  "Import impossible — fichier illisible": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Import failed — unreadable file"
+     }
+    }
+   }
+  },
+  "Import impossible — services.yaml illisible": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Import failed — services.yaml unreadable"
+     }
+    }
+   }
+  },
+  "Importer ou scanner…": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Import or scan…"
+     }
+    }
+   }
+  },
+  "Importer services.yaml…": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Import services.yaml…"
+     }
+    }
+   }
+  },
+  "Importer une config Homepage": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Import a Homepage config"
+     }
+    }
+   }
+  },
+  "Importer…": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Import…"
+     }
+    }
+   }
+  },
+  "Interrupteurs": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Switches"
+     }
+    }
+   }
+  },
+  "Intervalle": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Interval"
+     }
+    }
+   }
+  },
+  "J-%lld": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "D-%lld"
+     }
+    }
+   }
+  },
+  "J-29 → aujourd'hui": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "D-29 → today"
+     }
+    }
+   }
+  },
+  "Jellyfin": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Jellyfin"
+     }
+    }
+   }
+  },
+  "Jellyfin, Proxmox, Home Assistant, AdGuard… tes services selfhosted, leurs métriques en direct et les pannes qui comptent — sur iPhone, iPad, Mac et Watch.": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Jellyfin, Proxmox, Home Assistant, AdGuard… your self-hosted services, their live metrics and the outages that matter — on iPhone, iPad, Mac and Watch."
+     }
+    }
+   }
+  },
+  "Journal": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Log"
+     }
+    }
+   }
+  },
+  "Journal du conteneur": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Container log"
+     }
+    }
+   }
+  },
+  "Kanban & projets": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Kanban & projects"
+     }
+    }
+   }
+  },
+  "Komga ne répond plus": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Komga is not responding"
+     }
+    }
+   }
+  },
+  "LAN": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "LAN"
+     }
+    }
+   }
+  },
+  "Latence": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Latency"
+     }
+    }
+   }
+  },
+  "Lectures": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Playing"
+     }
+    }
+   }
+  },
+  "Libre": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Free"
+     }
+    }
+   }
+  },
+  "Libres": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Free"
+     }
+    }
+   }
+  },
+  "Liste": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "List"
+     }
+    }
+   }
+  },
+  "Livres": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Books"
+     }
+    }
+   }
+  },
+  "Logos des services": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Service logos"
+     }
+    }
+   }
+  },
+  "Lumières": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Lights"
+     }
+    }
+   }
+  },
+  "Maison": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Home"
+     }
+    }
+   }
+  },
+  "Manquants": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Missing"
+     }
+    }
+   }
+  },
+  "Mise à jour de l'image Docker": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Docker image update"
+     }
+    }
+   }
+  },
+  "Mise à jour disponible": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Update available"
+     }
+    }
+   }
+  },
+  "Mode Homelab : Specula n'interroge que tes services. Importe ta config gethomepage ou scanne le réseau depuis les réglages.": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Homelab mode: Specula only polls your services. Import your gethomepage config or scan the network from Settings."
+     }
+    }
+   }
+  },
+  "Mode Homelab : Specula n'interroge que tes services. Importe ta config gethomepage ou scanne le réseau pour commencer.": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Homelab mode: Specula only polls your services. Import your gethomepage config or scan the network to get started."
+     }
+    }
+   }
+  },
+  "Mode TV": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "TV mode"
+     }
+    }
+   }
+  },
+  "Monitoring VPS": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "VPS monitoring"
+     }
+    }
+   }
+  },
+  "Mots de passe — nouveau": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Passwords — new"
+     }
+    }
+   }
+  },
+  "Média": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Media"
+     }
+    }
+   }
+  },
+  "Média & Streaming": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Media & Streaming"
+     }
+    }
+   }
+  },
+  "NAS principal": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Main NAS"
+     }
+    }
+   }
+  },
+  "NAS principal ": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Main NAS "
+     }
+    }
+   }
+  },
+  "Nom": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Name"
+     }
+    }
+   }
+  },
+  "Notifications": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Notifications"
+     }
+    }
+   }
+  },
+  "Nouveau service": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "New service"
+     }
+    }
+   }
+  },
+  "Nouvel épisode récupéré": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "New episode grabbed"
+     }
+    }
+   }
+  },
+  "OpenMediaVault — 284 Go vérifiés": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "OpenMediaVault — 284 GB verified"
+     }
+    }
+   }
+  },
+  "Outils": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Tools"
+     }
+    }
+   }
+  },
+  "Ouverture de %@ dans le navigateur…": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Opening %@ in the browser…"
+     }
+    }
+   }
+  },
+  "Ouvrir Specula": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Open Specula"
+     }
+    }
+   }
+  },
+  "Ouvrir l'interface web": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Open web UI"
+     }
+    }
+   }
+  },
+  "PANNE": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "DOWN"
+     }
+    }
+   }
+  },
+  "Partage famille": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Family sharing"
+     }
+    }
+   }
+  },
+  "Partages": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Shares"
+     }
+    }
+   }
+  },
+  "Photos": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Photos"
+     }
+    }
+   }
+  },
+  "Photothèque": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Photo library"
+     }
+    }
+   }
+  },
+  "Pictogrammes": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Icons"
+     }
+    }
+   }
+  },
+  "Profil invité": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Guest profile"
+     }
+    }
+   }
+  },
+  "Présents": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Present"
+     }
+    }
+   }
+  },
+  "Prévisualiser le profil invité": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Preview guest profile"
+     }
+    }
+   }
+  },
+  "Quitter": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Leave"
+     }
+    }
+   }
+  },
+  "RAM": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "RAM"
+     }
+    }
+   }
+  },
+  "RAM libre": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Free RAM"
+     }
+    }
+   }
+  },
+  "Radarr — 2 films ajoutés à Jellyfin": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Radarr — 2 movies added to Jellyfin"
+     }
+    }
+   }
+  },
+  "Rafraîchissement": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Refresh"
+     }
+    }
+   }
+  },
+  "Recherche des services…": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Looking for services…"
+     }
+    }
+   }
+  },
+  "Rechercher un service, une action…": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Search for a service, an action…"
+     }
+    }
+   }
+  },
+  "Recherché": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Wanted"
+     }
+    }
+   }
+  },
+  "Redémarrage du NAS": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "NAS reboot"
+     }
+    }
+   }
+  },
+  "Redémarrage du conteneur « %@ » demandé…": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Restart of container “%@” requested…"
+     }
+    }
+   }
+  },
+  "Redémarrer le conteneur": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Restart container"
+     }
+    }
+   }
+  },
+  "Requêtes / j": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Queries / day"
+     }
+    }
+   }
+  },
+  "Retour": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Back"
+     }
+    }
+   }
+  },
+  "Reverse proxy": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Reverse proxy"
+     }
+    }
+   }
+  },
+  "Routes": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Routes"
+     }
+    }
+   }
+  },
+  "Réception": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Download"
+     }
+    }
+   }
+  },
+  "Réglages": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Settings"
+     }
+    }
+   }
+  },
+  "Réglages…": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Settings…"
+     }
+    }
+   }
+  },
+  "Réseau": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Network"
+     }
+    }
+   }
+  },
+  "Réseau & Domotique": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Network & Home"
+     }
+    }
+   }
+  },
+  "Réseau UniFi": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "UniFi network"
+     }
+    }
+   }
+  },
+  "Réseau local détecté": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Local network detected"
+     }
+    }
+   }
+  },
+  "Sauvegarde terminée": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Backup finished"
+     }
+    }
+   }
+  },
+  "Scan en cours…": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Scanning…"
+     }
+    }
+   }
+  },
+  "Scan terminé": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Scan finished"
+     }
+    }
+   }
+  },
+  "Scanner le réseau (Bonjour)…": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Scan the network (Bonjour)…"
+     }
+    }
+   }
+  },
+  "Scanner le réseau…": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Scan the network…"
+     }
+    }
+   }
+  },
+  "Scanner mon réseau": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Scan my network"
+     }
+    }
+   }
+  },
+  "Seedbox — OVH": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Seedbox — OVH"
+     }
+    }
+   }
+  },
+  "Serveur multimédia": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Media server"
+     }
+    }
+   }
+  },
+  "Serveurs": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Servers"
+     }
+    }
+   }
+  },
+  "Serveurs & Stockage": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Servers & Storage"
+     }
+    }
+   }
+  },
+  "Service « %@ » ajouté au groupe %@": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Service “%@” added to group %@"
+     }
+    }
+   }
+  },
+  "Services en ligne — carré rouge en cas de panne.": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Services online — red square when something is down."
+     }
+    }
+   }
+  },
+  "Simulateur": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Simulator"
+     }
+    }
+   }
+  },
+  "Simulation du prototype": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Prototype simulation"
+     }
+    }
+   }
+  },
+  "Sources": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Sources"
+     }
+    }
+   }
+  },
+  "Specula — %@ hors ligne": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Specula — %@ offline"
+     }
+    }
+   }
+  },
+  "Specula — %@ ✕": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Specula — %@ ✕"
+     }
+    }
+   }
+  },
+  "Specula — %lld/%lld en ligne": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Specula — %lld/%lld online"
+     }
+    }
+   }
+  },
+  "Statut": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Status"
+     }
+    }
+   }
+  },
+  "Stockage": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Storage"
+     }
+    }
+   }
+  },
+  "Supprimer le service": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Delete service"
+     }
+    }
+   }
+  },
+  "Sur chaque volume surveillé.": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "On every monitored volume."
+     }
+    }
+   }
+  },
+  "Surveillance — nouveau": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Monitoring — new"
+     }
+    }
+   }
+  },
+  "Synchroniser services.yaml": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Sync services.yaml"
+     }
+    }
+   }
+  },
+  "Système": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "System"
+     }
+    }
+   }
+  },
+  "Système ": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "System "
+     }
+    }
+   }
+  },
+  "Sélection du fichier services.yaml…": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Choosing the services.yaml file…"
+     }
+    }
+   }
+  },
+  "Séries": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Shows"
+     }
+    }
+   }
+  },
+  "Ta config Homepage existante — groupes, widgets et clés API repris tels quels.": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Your existing Homepage config — groups, widgets and API keys carried over as-is."
+     }
+    }
+   }
+  },
+  "Tableau de bord": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Dashboard"
+     }
+    }
+   }
+  },
+  "Tableaux": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Boards"
+     }
+    }
+   }
+  },
+  "Tailscale": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Tailscale"
+     }
+    }
+   }
+  },
+  "Temp.": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Temp."
+     }
+    }
+   }
+  },
+  "Température": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Temperature"
+     }
+    }
+   }
+  },
+  "Température > 50 °C": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Temperature > 50 °C"
+     }
+    }
+   }
+  },
+  "Température élevée": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "High temperature"
+     }
+    }
+   }
+  },
+  "Tes services épinglés et leur latence.": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Your pinned services and their latency."
+     }
+    }
+   }
+  },
+  "Test de %@…": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Testing %@…"
+     }
+    }
+   }
+  },
+  "Tester la connexion": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Test connection"
+     }
+    }
+   }
+  },
+  "Total": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Total"
+     }
+    }
+   }
+  },
+  "Tous en ligne": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "All online"
+     }
+    }
+   }
+  },
+  "Tous les services": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "All services"
+     }
+    }
+   }
+  },
+  "Tous les services en ligne": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "All services online"
+     }
+    }
+   }
+  },
+  "Tout lire": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Mark all read"
+     }
+    }
+   }
+  },
+  "Tout ton homelab.\nUne seule app.": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Your whole homelab.\nOne app."
+     }
+    }
+   }
+  },
+  "Téléchargement": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Downloads"
+     }
+    }
+   }
+  },
+  "URL": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "URL"
+     }
+    }
+   }
+  },
+  "URL copiée — %@": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "URL copied — %@"
+     }
+    }
+   }
+  },
+  "URL locale à la maison, tail1a2b.ts.net en déplacement": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Local URL at home, tail1a2b.ts.net on the go"
+     }
+    }
+   }
+  },
+  "Uptime": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Uptime"
+     }
+    }
+   }
+  },
+  "Utilisateur": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "User"
+     }
+    }
+   }
+  },
+  "Utilisateurs": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Users"
+     }
+    }
+   }
+  },
+  "VIA TAILSCALE": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "VIA TAILSCALE"
+     }
+    }
+   }
+  },
+  "VM": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "VMs"
+     }
+    }
+   }
+  },
+  "Vidéos": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Videos"
+     }
+    }
+   }
+  },
+  "Voir les détails": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "View details"
+     }
+    }
+   }
+  },
+  "Vraies requêtes vers tes services": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Real requests to your services"
+     }
+    }
+   }
+  },
+  "WLAN": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "WLAN"
+     }
+    }
+   }
+  },
+  "aujourd'hui · en cours": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "today · ongoing"
+     }
+    }
+   }
+  },
+  "dashboard-icons — monogramme en secours": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "dashboard-icons — monogram fallback"
+     }
+    }
+   }
+  },
+  "fermer": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "close"
+     }
+    }
+   }
+  },
+  "http://jellyfin.local:8096": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "http://jellyfin.local:8096"
+     }
+    }
+   }
+  },
+  "http://…": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "http://…"
+     }
+    }
+   }
+  },
+  "interface web": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "web UI"
+     }
+    }
+   }
+  },
+  "maintenant": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "now"
+     }
+    }
+   }
+  },
+  "ouvrir": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "open"
+     }
+    }
+   }
+  },
+  "redémarrer": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "restart"
+     }
+    }
+   }
+  },
+  "service web": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "web service"
+     }
+    }
+   }
+  },
+  "services.yaml": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "services.yaml"
+     }
+    }
+   }
+  },
+  "services.yaml (format gethomepage.dev) est la source de vérité.": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "services.yaml (gethomepage.dev format) is the source of truth."
+     }
+    }
+   }
+  },
+  "services.yaml copié — compatible gethomepage.dev": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "services.yaml copied — gethomepage.dev compatible"
+     }
+    }
+   }
+  },
+  "vCPU": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "vCPU"
+     }
+    }
+   }
+  },
+  "« %@ » reconnu : %@": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "“%@” recognized: %@"
+     }
+    }
+   }
+  },
+  "« %@ » supprimé": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "“%@” deleted"
+     }
+    }
+   }
+  },
+  "· via Tailscale ": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "· via Tailscale "
+     }
+    }
+   }
+  },
+  "À trier": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "To sort"
+     }
+    }
+   }
+  },
+  "Éléments": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Items"
+     }
+    }
+   }
+  },
+  "Épinglés": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Pinned"
+     }
+    }
+   }
+  },
+  "Épinglés et services en ligne, sur l'écran verrouillé.": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Pinned services and online count, on the Lock Screen."
+     }
+    }
+   }
+  },
+  "Épisodes": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Episodes"
+     }
+    }
+   }
+  },
+  "État du homelab": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Homelab status"
+     }
+    }
+   }
+  },
+  "Étiquettes": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Tags"
+     }
+    }
+   }
+  },
+  "à l'instant": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "just now"
+     }
+    }
+   }
+  }
+ },
+ "version": "1.0"
+}

@@ -21,8 +21,8 @@ struct SpeculaEntry: TimelineEntry {
     var down: Bool { downName != nil }
 
     var footer: String {
-        down ? "\(online)/\(total) EN LIGNE · \(total - online) PANNE"
-             : "\(total)/\(total) SERVICES EN LIGNE"
+        down ? String(localized: "\(online)/\(total) EN LIGNE · \(total - online) PANNE")
+             : String(localized: "\(total)/\(total) SERVICES EN LIGNE")
     }
 
     // Instantané réel (App Group)
@@ -46,7 +46,7 @@ struct SpeculaEntry: TimelineEntry {
                          ping: "\(Int.random(in: 6...40)) MS", down: false)
         }
         if down {
-            rows.append(SharedPinned(mono: "Ko", name: "Komga", ping: "PANNE", down: true))
+            rows.append(SharedPinned(mono: "Ko", name: "Komga", ping: String(localized: "PANNE"), down: true))
         } else if let last = pins.dropFirst(3).first {
             rows.append(SharedPinned(mono: last.mono, name: shortName(last.name),
                                      ping: "\(Int.random(in: 6...40)) MS", down: false))
@@ -154,7 +154,7 @@ struct SystemWidgetView: View {
             Text(entry.cpuText)
                 .font(.archivo(34, .heavy))
                 .monospacedDigit()
-            Text("CPU · \(entry.tempText)")
+            Text(verbatim: "CPU · \(entry.tempText)")
                 .font(.archivo(9.5))
                 .monospacedDigit()
                 .foregroundStyle(Ink.muted)
@@ -166,7 +166,7 @@ struct SystemWidgetView: View {
             }
             .frame(height: 4)
             .padding(.vertical, 6)
-            Text(entry.footer)
+            Text(verbatim: entry.footer)
                 .upperLabel(7.5, .heavy)
                 .monospacedDigit()
                 .foregroundStyle(entry.down ? Ink.accentText : Ink.muted)
@@ -200,7 +200,7 @@ struct PinnedWidgetView: View {
                     .foregroundStyle(Ink.muted)
                 Spacer()
                 if entry.down {
-                    Text("\(entry.total - entry.online) hors ligne")
+                    Text(String(localized: "\(entry.total - entry.online) hors ligne"))
                         .font(.archivo(8.5, .heavy))
                         .monospacedDigit()
                         .padding(.horizontal, 6)
@@ -223,7 +223,7 @@ struct PinnedWidgetView: View {
                         .foregroundStyle(row.down ? Ink.accentText : Ink.text)
                         .lineLimit(1)
                     Spacer()
-                    Text(row.down ? "HORS LIGNE" : row.ping)
+                    Text(row.down ? String(localized: "HORS LIGNE") : row.ping)
                         .font(.archivo(9.5, .heavy))
                         .monospacedDigit()
                         .foregroundStyle(row.down ? Ink.accentText : Ink.muted)
@@ -274,8 +274,8 @@ struct LockWidgetView: View {
                 }
             }
         case .accessoryInline:
-            Text(entry.downName.map { "Specula — \($0) hors ligne" }
-                 ?? "Specula — \(entry.online)/\(entry.total) en ligne")
+            Text(entry.downName.map { String(localized: "Specula — \($0) hors ligne") }
+                 ?? String(localized: "Specula — \(entry.online)/\(entry.total) en ligne"))
         default:
             // Rectangulaire : grille 2×2 des épinglés
             LazyVGrid(columns: [GridItem(.flexible(), alignment: .leading),
@@ -286,7 +286,7 @@ struct LockWidgetView: View {
                         Text(row.name)
                             .font(.archivo(9.5, .heavy))
                             .lineLimit(1)
-                        Text(row.down ? "PANNE" : row.ping)
+                        Text(row.down ? String(localized: "PANNE") : row.ping)
                             .font(.archivo(8.5))
                             .monospacedDigit()
                             .opacity(0.65)
@@ -306,9 +306,9 @@ struct SpeculaOutageActivity: Widget {
             HStack(spacing: 10) {
                 Rectangle().fill(Color(hex: "ec3013")).frame(width: 12, height: 12)
                 VStack(alignment: .leading, spacing: 1) {
-                    Text("\(context.attributes.serviceName) hors ligne")
+                    Text(String(localized: "\(context.attributes.serviceName) hors ligne"))
                         .font(.archivo(14, .heavy))
-                    Text("\(context.state.online)/\(context.state.total) services en ligne")
+                    Text(String(localized: "\(context.state.online)/\(context.state.total) services en ligne"))
                         .font(.archivo(10))
                         .monospacedDigit()
                         .opacity(0.65)
@@ -327,7 +327,7 @@ struct SpeculaOutageActivity: Widget {
                 DynamicIslandExpandedRegion(.leading) {
                     HStack(spacing: 8) {
                         Rectangle().fill(Color(hex: "ec3013")).frame(width: 10, height: 10)
-                        Text("\(context.attributes.serviceName) hors ligne")
+                        Text(String(localized: "\(context.attributes.serviceName) hors ligne"))
                             .font(.archivo(13, .heavy))
                             .foregroundStyle(Color(hex: "f3f2f2"))
                     }
@@ -340,7 +340,7 @@ struct SpeculaOutageActivity: Widget {
                         .frame(maxWidth: 52)
                 }
                 DynamicIslandExpandedRegion(.bottom) {
-                    Text("\(context.state.online)/\(context.state.total) SERVICES EN LIGNE")
+                    Text(String(localized: "\(context.state.online)/\(context.state.total) SERVICES EN LIGNE"))
                         .upperLabel(8.5, .heavy)
                         .monospacedDigit()
                         .foregroundStyle(Color(hex: "f3f2f2").opacity(0.65))

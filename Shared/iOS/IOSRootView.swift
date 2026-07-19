@@ -123,7 +123,7 @@ private struct ContextSheet: View {
             dismiss()
             action()
         } label: {
-            Text(title)
+            Text(LocalizedStringKey(title))
                 .font(.archivo(13.5, .semibold))
                 .foregroundStyle(Ink.text)
                 .frame(maxWidth: .infinity, alignment: .leading)

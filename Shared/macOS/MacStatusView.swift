@@ -27,10 +27,10 @@ struct MacStatusView: View {
                         Rectangle().fill(Ink.accent).frame(width: 10, height: 10)
                             .padding(.top, 4)
                         VStack(alignment: .leading, spacing: 2) {
-                            Text("INCIDENT — \(inc.service)")
+                            Text(String(localized: "INCIDENT — \(inc.service)"))
                                 .upperLabel(10, .heavy)
                                 .foregroundStyle(Ink.accentText)
-                            Text("\(inc.when) · \(inc.duration)")
+                            Text(verbatim: "\(inc.when) · \(inc.duration)")
                                 .font(.archivo(12, .bold)).monospacedDigit()
                             Text(inc.cause)
                                 .font(.archivo(11.5))
@@ -91,9 +91,9 @@ struct MacStatusView: View {
                             guard bad else { return }
                             incident = IncidentSelection(
                                 service: s.name,
-                                when: live ? "aujourd'hui · en cours" : "J-\(29 - day)",
-                                duration: live ? "\(store.downDurationMin) min" : (inc?.duration ?? ""),
-                                cause: live ? "Délai dépassé (timeout) — 3 tentatives échouées" : (inc?.cause ?? ""))
+                                when: live ? String(localized: "aujourd'hui · en cours") : String(localized: "J-\(29 - day)"),
+                                duration: live ? String(localized: "\(store.downDurationMin) min") : (inc?.duration ?? ""),
+                                cause: live ? String(localized: "Délai dépassé (timeout) — 3 tentatives échouées") : (inc?.cause ?? ""))
                         }
                 }
             }

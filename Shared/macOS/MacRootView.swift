@@ -45,7 +45,6 @@ struct MacRootView: View {
         .frame(minWidth: 1180, minHeight: 720)
         .environment(ui)
         .preferredColorScheme(ui.forceDark ? .dark : nil)
-        .environment(\.locale, Locale(identifier: "fr_FR"))
         .background {
             // ⌘K global
             Button("") { ui.paletteOpen.toggle() }
@@ -76,7 +75,7 @@ struct MacToolbar: View {
     var body: some View {
         @Bindable var store = store
         HStack(spacing: 14) {
-            Text(title)
+            Text(LocalizedStringKey(title))
                 .font(.archivo(19, .heavy))
             Spacer()
             if ui.view == .dash {

@@ -35,7 +35,6 @@ struct SpeculaApp: App {
         WindowGroup {
             IOSRootView()
                 .environment(store)
-                .environment(\.locale, Locale(identifier: "fr_FR"))
         }
         #endif
     }

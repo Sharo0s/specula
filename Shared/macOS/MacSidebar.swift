@@ -44,7 +44,7 @@ struct MacSidebar: View {
                                 Rectangle()
                                     .fill(active ? Ink.accent : Ink.text.opacity(0.25))
                                     .frame(width: 8, height: 8)
-                                Text(server.name)
+                                Text(LocalizedStringKey(server.name))
                                     .font(.archivo(12.5, active ? .heavy : .semibold))
                                 Spacer()
                                 Text("\(server.id == "seed" ? Catalog.seedServices.count : store.mainServices.count)")
@@ -108,7 +108,7 @@ struct MacSidebar: View {
     }
 
     private func sectionLabel(_ text: String) -> some View {
-        Text(text)
+        Text(LocalizedStringKey(text))
             .upperLabel(9, .heavy)
             .foregroundStyle(Ink.muted)
             .padding(.horizontal, 16)
@@ -119,7 +119,7 @@ struct MacSidebar: View {
                          action: @escaping () -> Void) -> some View {
         Button(action: action) {
             HStack(spacing: 8) {
-                Text(label)
+                Text(LocalizedStringKey(label))
                     .font(.archivo(12.5, active ? .heavy : .semibold))
                     .lineLimit(1)
                 Spacer()

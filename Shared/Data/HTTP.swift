@@ -78,23 +78,20 @@ extension Dictionary where Key == String, Value == Any {
 
 // MARK: - Formats français
 
-/// Entier groupé à la française : 10 967.
+/// Entier groupé selon la locale : « 10 967 » / « 10,967 ».
 func frInt(_ n: Int) -> String {
-    let f = NumberFormatter()
-    f.numberStyle = .decimal
-    f.locale = Locale(identifier: "fr_FR")
-    return f.string(from: NSNumber(value: n)) ?? "\(n)"
+    n.formatted(.number)
 }
 
-/// Octets → « 112 Go » / « 1,2 To ».
+/// Octets → « 112 Go » / « 112 GB ».
 func frBytes(_ bytes: Double) -> String {
     let gb = bytes / 1_073_741_824
-    if gb >= 1000 { return fr(gb / 1024) + " To" }
-    if gb >= 10 { return "\(Int(gb.rounded())) Go" }
-    return fr(gb) + " Go"
+    if gb >= 1000 { return String(localized: "\(fr(gb / 1024)) To") }
+    if gb >= 10 { return String(localized: "\(Int(gb.rounded())) Go") }
+    return String(localized: "\(fr(gb)) Go")
 }
 
-/// Octets/s → « 2,1 Mo/s ».
+/// Octets/s → « 2,1 Mo/s » / « 2.1 MB/s ».
 func frSpeed(_ bytesPerSec: Double) -> String {
-    fr(bytesPerSec / 1_048_576) + " Mo/s"
+    String(localized: "\(fr(bytesPerSec / 1_048_576)) Mo/s")
 }

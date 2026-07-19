@@ -84,7 +84,7 @@ struct ServiceDetailView: View {
                      color: isDown && metric == .lat ? Ink.accent : Ink.text)
                 .frame(height: 96)
             HStack {
-                Text(metric == .lat ? "-64 s" : "-24 h")
+                Text(verbatim: metric == .lat ? "-64 s" : "-24 h")
                 Spacer()
                 Text("maintenant")
             }
@@ -117,9 +117,9 @@ struct ServiceDetailView: View {
                 .upperLabel(9, .heavy)
                 .foregroundStyle(Ink.muted)
             ConsoleLog(lines: isDown
-                       ? ["ERROR Connexion refusée (timeout après 5 000 ms)",
-                          "ERROR 3 tentatives échouées — abandon",
-                          "INFO  Prochaine tentative dans 30 s"]
+                       ? [String(localized: "ERROR Connexion refusée (timeout après 5 000 ms)"),
+                          String(localized: "ERROR 3 tentatives échouées — abandon"),
+                          String(localized: "INFO  Prochaine tentative dans 30 s")]
                        : store.logs)
         }
         .padding(.bottom, 16)

@@ -28,7 +28,7 @@ struct WatchHomeView: View {
                     Text("Specula")
                         .font(.archivo(15, .heavy))
                     Spacer()
-                    Text("\(store.onlineCount)/\(store.totalCount)")
+                    Text(verbatim: "\(store.onlineCount)/\(store.totalCount)")
                         .font(.archivo(13, .heavy))
                         .monospacedDigit()
                         .foregroundStyle(store.anyDown ? Ink.accentText : Ink.text)
@@ -39,10 +39,10 @@ struct WatchHomeView: View {
                 // Bandeau de panne
                 if store.anyDown {
                     HStack(spacing: 6) {
-                        Text("✕ \(store.downName)")
+                        Text(verbatim: "✕ \(store.downName)")
                             .font(.archivo(12, .heavy))
                         Spacer()
-                        Text("\(store.downDurationMin) min")
+                        Text(verbatim: "\(store.downDurationMin) min")
                             .font(.archivo(11, .heavy))
                             .monospacedDigit()
                     }

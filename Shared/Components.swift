@@ -71,7 +71,7 @@ struct MSeg<T: Hashable>: View {
                 Button {
                     selection = opt.0
                 } label: {
-                    Text(opt.1)
+                    Text(LocalizedStringKey(opt.1))
                         .font(.archivo(fontSize, .semibold))
                         .padding(.horizontal, 12)
                         .padding(.vertical, 5)
@@ -116,7 +116,7 @@ struct MPrimaryButton: View {
 
     var body: some View {
         Button(action: action) {
-            Text(title)
+            Text(LocalizedStringKey(title))
                 .font(.archivo(14, .heavy))
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .padding(.horizontal, 14)
@@ -136,7 +136,7 @@ struct MSecondaryButton: View {
 
     var body: some View {
         Button(action: action) {
-            Text(title)
+            Text(LocalizedStringKey(title))
                 .font(.archivo(14, .heavy))
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .padding(.horizontal, 14)
@@ -157,7 +157,7 @@ struct GroupHeader: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 5) {
             HStack(alignment: .firstTextBaseline, spacing: 8) {
-                Text(name)
+                Text(LocalizedStringKey(name))
                     .upperLabel(10.5, .heavy)
                 Text(String(format: "%02d", count))
                     .font(.archivo(10)).monospacedDigit()
@@ -184,7 +184,7 @@ struct MetricCell: View {
                 .foregroundStyle(accent ? Ink.accentText : Ink.text)
                 .lineLimit(1)
                 .minimumScaleFactor(0.7)
-            Text(label)
+            Text(LocalizedStringKey(label))
                 .upperLabel(labelSize)
                 .foregroundStyle(Ink.muted)
         }
@@ -269,7 +269,7 @@ struct SystemBandCell: View {
                 .monospacedDigit()
                 .lineLimit(1)
                 .minimumScaleFactor(0.7)
-            Text(label)
+            Text(LocalizedStringKey(label))
                 .upperLabel(8.5)
                 .foregroundStyle(Ink.muted)
             if let progress {
@@ -315,7 +315,7 @@ struct ServiceCard: View {
                             .font(.archivo(14, .heavy))
                             .foregroundStyle(down ? Ink.accentText : Ink.text)
                             .lineLimit(1)
-                        Text(service.desc)
+                        Text(LocalizedStringKey(service.desc))
                             .font(.archivo(10.5))
                             .foregroundStyle(Ink.muted)
                             .lineLimit(1)
