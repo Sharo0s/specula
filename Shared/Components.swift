@@ -316,7 +316,6 @@ struct NowPlayingRow: View {
                 Text(verbatim: session.user.isEmpty
                      ? session.title : "\(session.title) (\(session.user))")
                     .font(.archivo(11, .bold))
-                    .lineLimit(2)
                     .fixedSize(horizontal: false, vertical: true)
                 Spacer(minLength: 8)
                 Text(verbatim: "\(timecode(session.position)) / \(timecode(session.duration))")
