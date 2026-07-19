@@ -382,6 +382,9 @@ struct ServiceCard: View {
                     LatencyTag(text: store.pingText(service), down: down,
                                slow: store.isSlow(service), size: 9)
                 }
+                // Le bas de carte (filet + métriques) est calé en bas :
+                // toutes les cartes d'une rangée prennent la même hauteur.
+                Spacer(minLength: 0)
                 HRule()
                 HStack(spacing: 0) {
                     ForEach(Array(store.metrics(service).prefix(3).enumerated()), id: \.offset) { i, m in
@@ -400,6 +403,7 @@ struct ServiceCard: View {
                 }
             }
             .padding(pad)
+            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
             .background(Ink.surface)
             .overlay(Rectangle().strokeBorder(
                 selected ? Ink.accent : (down ? Ink.accentRing : .clear), lineWidth: 2))
