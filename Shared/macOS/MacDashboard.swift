@@ -170,6 +170,7 @@ struct MacInspector: View {
     let service: Service
     @State private var metric: DetailMetric = .lat
     @State private var confirmDelete = false
+    @State private var showEdit = false
 
     var body: some View {
         let down = store.isDown(service)
@@ -249,6 +250,7 @@ struct MacInspector: View {
                     MSecondaryButton(title: "Copier l'URL") { store.copyURL(service) }
                     MSecondaryButton(title: "Redémarrer le conteneur") { store.restart(service) }
                     if store.dataMode == .live {
+                        MSecondaryButton(title: "Modifier…") { showEdit = true }
                         // Suppression en deux temps — pas de dialogue système
                         Button {
                             if confirmDelete {
@@ -277,6 +279,7 @@ struct MacInspector: View {
         }
         .background(Ink.bg)
         .onChange(of: service.id) { confirmDelete = false }
+        .sheet(isPresented: $showEdit) { EditServiceSheet(service: service).environment(store) }
     }
 }
 #endif

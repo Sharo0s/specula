@@ -65,6 +65,22 @@
     }
    }
   },
+  "%@ de nouveau en ligne": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "%@ back online"
+     }
+    },
+    "es": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "%@ vuelve a estar en línea"
+     }
+    }
+   }
+  },
   "%@ en ligne": {
    "localizations": {
     "en": {
@@ -977,6 +993,22 @@
     }
    }
   },
+  "Clé API (vide = inchangée)": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "API key (empty = unchanged)"
+     }
+    },
+    "es": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Clave API (vacía = sin cambios)"
+     }
+    }
+   }
+  },
   "Collections": {
    "localizations": {
     "en": {
@@ -1581,6 +1613,22 @@
      "stringUnit": {
       "state": "translated",
       "value": "Compartiendo"
+     }
+    }
+   }
+  },
+  "Enregistrer": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Save"
+     }
+    },
+    "es": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Guardar"
      }
     }
    }
@@ -2305,6 +2353,22 @@
     }
    }
   },
+  "Le service répond à nouveau.": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "The service is responding again."
+     }
+    },
+    "es": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "El servicio vuelve a responder."
+     }
+    }
+   }
+  },
   "Lectures": {
    "localizations": {
     "en": {
@@ -2525,6 +2589,38 @@
      "stringUnit": {
       "state": "translated",
       "value": "Modo TV"
+     }
+    }
+   }
+  },
+  "Modifier le service": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Edit service"
+     }
+    },
+    "es": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Editar servicio"
+     }
+    }
+   }
+  },
+  "Modifier…": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Edit…"
+     }
+    },
+    "es": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Editar…"
      }
     }
    }
@@ -4445,6 +4541,22 @@
      "stringUnit": {
       "state": "translated",
       "value": "vCPU"
+     }
+    }
+   }
+  },
+  "« %@ » modifié": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "“%@” updated"
+     }
+    },
+    "es": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "«%@» modificado"
      }
     }
    }

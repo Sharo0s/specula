@@ -105,7 +105,7 @@ struct SettingsView: View {
 
                     // Épinglés
                     section("Épinglés", note: "Affichés dans le widget, la barre de menus et sur la Watch — 4 maximum.") {
-                        chips(Catalog.services.map(\.id),
+                        chips(store.mainServices.map(\.id),
                               isOn: { store.pins.contains($0) },
                               toggle: { store.togglePin($0) })
                             .padding(.vertical, 10)
@@ -129,7 +129,7 @@ struct SettingsView: View {
                                   isOn: $store.guestOn)
                         if store.guestOn {
                             HRule()
-                            chips(Catalog.guestChoices,
+                            chips(store.mainServices.map(\.id),
                                   isOn: { store.guestIds.contains($0) },
                                   toggle: { id in
                                       if store.guestIds.contains(id) {
@@ -273,7 +273,7 @@ struct SettingsView: View {
     private func chips(_ ids: [String], isOn: @escaping (String) -> Bool, toggle: @escaping (String) -> Void) -> some View {
         FlowLayout(spacing: 6) {
             ForEach(ids, id: \.self) { id in
-                let service = Catalog.services.first { $0.id == id }
+                let service = store.mainServices.first { $0.id == id }
                 let on = isOn(id)
                 Button {
                     toggle(id)

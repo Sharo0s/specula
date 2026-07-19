@@ -40,6 +40,13 @@ struct StoredService: Codable {
     }
 }
 
+/// Panne observée (mode Homelab) — alimente le mur de statut 30 j.
+struct StoredOutage: Codable {
+    var serviceID: String
+    var start: Date
+    var end: Date?
+}
+
 struct AppConfig: Codable {
     var dataMode: DataMode = .demo
     /// Services ajoutés à la main (bouton « + »).
@@ -47,6 +54,10 @@ struct AppConfig: Codable {
     /// Import services.yaml : remplace le catalogue de démo.
     var importedGroups: [String]?
     var importedServices: [StoredService]?
+    /// Services épinglés (widget, barre de menus, Watch).
+    var pins: [String]?
+    /// Pannes observées (30 jours glissants).
+    var outages: [StoredOutage]?
     /// Clés API par id de service. Stockage principal : le trousseau redemande
     /// l'autorisation à chaque rebuild ad hoc (le Keychain reste écrit en
     /// best-effort pour le passage à une vraie signature).

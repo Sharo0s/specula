@@ -14,6 +14,8 @@ struct IOSRootView: View {
     @State private var path: [IOSRoute] = []
     /// Service ciblé par l'appui long (menu contextuel).
     @State private var ctxService: Service?
+    /// Service en cours d'édition.
+    @State private var editService: Service?
 
     var body: some View {
         ZStack {
@@ -44,11 +46,13 @@ struct IOSRootView: View {
 
             // Feuille contextuelle (appui long 480 ms)
             if let s = ctxService {
-                ContextSheet(service: s, path: $path, dismiss: { ctxService = nil })
+                ContextSheet(service: s, path: $path, edit: { editService = $0 },
+                             dismiss: { ctxService = nil })
             }
 
             ToastOverlay()
         }
+        .sheet(item: $editService) { s in EditServiceSheet(service: s).environment(store) }
         .tint(Ink.accent)
     }
 }
@@ -59,6 +63,7 @@ private struct ContextSheet: View {
     @Environment(AppStore.self) private var store
     let service: Service
     @Binding var path: [IOSRoute]
+    let edit: (Service) -> Void
     let dismiss: () -> Void
 
     var body: some View {
@@ -85,6 +90,8 @@ private struct ContextSheet: View {
                 HRule()
                 row("Copier l'URL") { store.copyURL(service) }
                 if store.dataMode == .live {
+                    HRule()
+                    row("Modifier le service") { edit(service) }
                     HRule()
                     Button {
                         dismiss()

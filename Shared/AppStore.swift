@@ -179,6 +179,9 @@ final class AppStore {
             types[stored.id] = IntegrationType(rawValue: stored.type) ?? .generic
         }
         serviceTypes = types
+        pins = config.pins ?? Catalog.defaultPins
+        let cutoff = Date().addingTimeInterval(-30 * 24 * 3600)
+        self.config.outages = (config.outages ?? []).filter { ($0.end ?? Date()) > cutoff }
 
         for s in Catalog.all + (importedList ?? []) + customList { seedHistory(s.id) }
         gOrder = Array(mainGroups.indices)
@@ -187,6 +190,7 @@ final class AppStore {
 
         network.onChange = { [weak self] in self?.applyNetwork() }
         applyNetwork()
+        SystemNotifier.shared.requestAuthorization()
         startTimer()
     }
 
@@ -425,9 +429,17 @@ final class AppStore {
                 latHistory[target.id]?.append(Double(result.ms))
                 failCounts[target.id] = 0
                 measured.insert(target.id)
-                if downIDs.remove(target.id) != nil, downIDs.isEmpty {
-                    downAt = nil
-                    endOutageActivity()
+                if downIDs.remove(target.id) != nil {
+                    closeOutageRecord(target.id)
+                    if rules["down"] == true {
+                        pushNotif(title: String(localized: "\(target.name) de nouveau en ligne"),
+                                  sub: String(localized: "Le service répond à nouveau."),
+                                  critical: false)
+                    }
+                    if downIDs.isEmpty {
+                        downAt = nil
+                        endOutageActivity()
+                    }
                 }
             } else {
                 latHistory[target.id]?.append(0)
@@ -435,6 +447,8 @@ final class AppStore {
                 // « Après 3 tentatives échouées » → HORS LIGNE
                 if failCounts[target.id] == 3 && !downIDs.contains(target.id) {
                     downIDs.insert(target.id)
+                    config.outages = (config.outages ?? []) + [StoredOutage(serviceID: target.id, start: Date())]
+                    persist()
                     if downAt == nil { downAt = Date() }
                     if rules["down"] == true {
                         pushNotif(title: String(localized: "\(target.name) ne répond plus"),
@@ -604,8 +618,34 @@ final class AppStore {
 
     // MARK: - Statut 30 j
 
+    private func closeOutageRecord(_ id: String) {
+        guard var outages = config.outages,
+              let i = outages.lastIndex(where: { $0.serviceID == id && $0.end == nil }) else { return }
+        outages[i].end = Date()
+        config.outages = outages
+        persist()
+    }
+
+    /// Mur 30 j : incidents de démo en mode démo, vraies pannes observées en Homelab.
     func incidents(for s: Service) -> [Incident] {
-        Catalog.incidents.filter { $0.serviceID == s.id }
+        if dataMode == .demo {
+            return Catalog.incidents.filter { $0.serviceID == s.id }
+        }
+        var minutesByDay: [Int: Double] = [:]
+        let cal = Calendar.current
+        let today = cal.startOfDay(for: Date())
+        for outage in config.outages ?? [] where outage.serviceID == s.id {
+            let daysAgo = cal.dateComponents([.day], from: cal.startOfDay(for: outage.start), to: today).day ?? 0
+            guard daysAgo < 30 else { continue }
+            // La panne en cours est déjà représentée par la barre du jour
+            let end = outage.end ?? Date()
+            minutesByDay[29 - daysAgo, default: 0] += max(1, end.timeIntervalSince(outage.start) / 60)
+        }
+        return minutesByDay.map { day, minutes in
+            Incident(serviceID: s.id, day: day,
+                     duration: String(localized: "\(Int(minutes)) min"),
+                     cause: String(localized: "Délai dépassé (timeout) — 3 tentatives échouées"))
+        }
     }
 
     func availability(_ s: Service) -> String {
@@ -671,6 +711,57 @@ final class AppStore {
                    knownType: found.type)
     }
 
+    /// Modification (mode Homelab). Clé API vide = inchangée.
+    func updateService(_ id: String, name: String, url: String, group: Int, apiKey: String) {
+        guard dataMode == .live else { return }
+        func rebuild(_ s: Service) -> Service {
+            Service(id: s.id, mono: YamlConfig.mono(name), name: name, desc: s.desc,
+                    group: group, url: url, iconSlug: s.iconSlug, metrics: nil,
+                    apiURL: url == s.url ? s.apiURL : nil)
+        }
+        let urlChanged: Bool
+        if let i = importedList?.firstIndex(where: { $0.id == id }) {
+            urlChanged = importedList![i].url != url
+            importedList![i] = rebuild(importedList![i])
+        } else if let i = customList.firstIndex(where: { $0.id == id }) {
+            urlChanged = customList[i].url != url
+            customList[i] = rebuild(customList[i])
+        } else {
+            return
+        }
+        let type = serviceTypes[id] ?? .generic
+        let updated = mainServices.first { $0.id == id }!
+        if let i = config.importedServices?.firstIndex(where: { $0.id == id }) {
+            config.importedServices![i] = StoredService(service: updated, type: type)
+        }
+        if let i = config.custom.firstIndex(where: { $0.id == id }) {
+            config.custom[i] = StoredService(service: updated, type: type)
+        }
+        if !apiKey.isEmpty { setApiKey(apiKey, for: id) }
+        liveMetricsCache[id] = nil
+        measured.remove(id)
+        failCounts[id] = 0
+        persist()
+        publishSharedState()
+        fireToast(String(localized: "« \(name) » modifié"))
+
+        // L'URL a changé : on redétecte le type
+        if urlChanged {
+            Task { [weak self] in
+                let detected = await LiveFetcher.detect(YamlConfig.fullURL(url))
+                guard let self, let newType = detected.type, newType != .generic else { return }
+                serviceTypes[id] = newType
+                if let i = config.importedServices?.firstIndex(where: { $0.id == id }) {
+                    config.importedServices![i].type = newType.rawValue
+                }
+                if let i = config.custom.firstIndex(where: { $0.id == id }) {
+                    config.custom[i].type = newType.rawValue
+                }
+                persist()
+            }
+        }
+    }
+
     /// Suppression (mode Homelab — le catalogue de démo est figé).
     func removeService(_ s: Service) {
         guard dataMode == .live else { return }
@@ -687,6 +778,7 @@ final class AppStore {
         measured.remove(s.id)
         liveMetricsCache[s.id] = nil
         pins.removeAll { $0 == s.id }
+        config.pins = pins
         persist()
         publishSharedState()
         fireToast(String(localized: "« \(s.name) » supprimé"))
@@ -795,9 +887,10 @@ final class AppStore {
         notifs = notifs.map { var n = $0; n.unread = false; return n }
     }
 
-    private func pushNotif(title: String, sub: String) {
-        notifs.insert(NotifItem(title: title, sub: sub, date: Date(), alert: true, unread: true), at: 0)
+    private func pushNotif(title: String, sub: String, critical: Bool = true) {
+        notifs.insert(NotifItem(title: title, sub: sub, date: Date(), alert: critical, unread: true), at: 0)
         unread += 1
+        SystemNotifier.shared.post(title: title, body: sub, critical: critical)
     }
 
     func openWeb(_ s: Service) {
@@ -843,6 +936,10 @@ final class AppStore {
             pins.append(id)
         } else {
             fireToast(String(localized: "4 épinglés maximum"))
+            return
         }
+        config.pins = pins
+        persist()
+        publishSharedState()
     }
 }
