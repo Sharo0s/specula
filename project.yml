@@ -1,0 +1,184 @@
+name: Specula
+options:
+  bundleIdPrefix: ovh.smalard
+  deploymentTarget:
+    iOS: "18.0"
+    macOS: "15.0"
+    watchOS: "11.0"
+  createIntermediateGroups: true
+
+settings:
+  base:
+    SWIFT_VERSION: "5.10"
+    CODE_SIGN_STYLE: Automatic
+    CODE_SIGN_IDENTITY: "-"
+    DEVELOPMENT_TEAM: ""
+
+packages:
+  Yams:
+    url: https://github.com/jpsim/Yams.git
+    from: "5.1.0"
+
+targets:
+  Specula-iOS:
+    type: application
+    platform: iOS
+    sources:
+      - path: Shared
+        excludes:
+          - "macOS/**"
+      - path: Resources
+    dependencies:
+      - target: Specula-Widgets
+        embed: true
+      - package: Yams
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: ovh.smalard.specula
+        PRODUCT_NAME: Specula
+        INFOPLIST_KEY_UILaunchScreen_Generation: YES
+        TARGETED_DEVICE_FAMILY: "1,2"
+    entitlements:
+      path: Resources/Specula-iOS.entitlements
+      properties:
+        com.apple.security.application-groups: [group.ovh.smalard.specula]
+    info:
+      path: Resources/Info-iOS.plist
+      properties:
+        CFBundleDisplayName: Specula
+        UIAppFonts: [Archivo-Variable.ttf]
+        UILaunchScreen: {}
+        NSSupportsLiveActivities: true
+        NSAppTransportSecurity:
+          NSAllowsArbitraryLoads: true
+        NSLocalNetworkUsageDescription: "Specula découvre et interroge tes services selfhosted sur le réseau local."
+        NSBonjourServices:
+          - _http._tcp
+          - _https._tcp
+        UISupportedInterfaceOrientations~ipad:
+          - UIInterfaceOrientationPortrait
+          - UIInterfaceOrientationPortraitUpsideDown
+          - UIInterfaceOrientationLandscapeLeft
+          - UIInterfaceOrientationLandscapeRight
+        UISupportedInterfaceOrientations~iphone:
+          - UIInterfaceOrientationPortrait
+
+  Specula-Widgets:
+    type: app-extension
+    platform: iOS
+    sources:
+      - path: Widgets
+      - path: Shared/Theme.swift
+      - path: Shared/Models.swift
+      - path: Shared/LiveActivity.swift
+      - path: Shared/SharedState.swift
+      - path: Resources/Fonts
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: ovh.smalard.specula.widgets
+        SKIP_INSTALL: YES
+        TARGETED_DEVICE_FAMILY: "1,2"
+    entitlements:
+      path: Resources/Specula-Widgets.entitlements
+      properties:
+        com.apple.security.application-groups: [group.ovh.smalard.specula]
+    info:
+      path: Resources/Info-Widgets.plist
+      properties:
+        CFBundleDisplayName: Specula
+        UIAppFonts: [Archivo-Variable.ttf]
+        NSExtension:
+          NSExtensionPointIdentifier: com.apple.widgetkit-extension
+
+  Specula-macOS:
+    type: application
+    platform: macOS
+    sources:
+      - path: Shared
+        excludes:
+          - "iOS/**"
+      - path: Resources
+    dependencies:
+      - package: Yams
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: ovh.smalard.specula.mac
+        PRODUCT_NAME: Specula
+        ENABLE_HARDENED_RUNTIME: NO
+    info:
+      path: Resources/Info-macOS.plist
+      properties:
+        CFBundleDisplayName: Specula
+        ATSApplicationFontsPath: "."
+        NSAppTransportSecurity:
+          NSAllowsArbitraryLoads: true
+        NSLocalNetworkUsageDescription: "Specula découvre et interroge tes services selfhosted sur le réseau local."
+        NSBonjourServices:
+          - _http._tcp
+          - _https._tcp
+        NSMainStoryboardFile: ""
+        LSMinimumSystemVersion: "15.0"
+
+  Specula-Watch:
+    type: application
+    platform: watchOS
+    sources:
+      - path: Watch
+      - path: Shared
+        excludes:
+          - "iOS/**"
+          - "macOS/**"
+          - "SpeculaApp.swift"
+      - path: Resources
+    dependencies:
+      - target: Specula-WatchWidgets
+        embed: true
+      - package: Yams
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: ovh.smalard.specula.watch
+        PRODUCT_NAME: Specula
+        TARGETED_DEVICE_FAMILY: "4"
+    entitlements:
+      path: Resources/Specula-Watch.entitlements
+      properties:
+        com.apple.security.application-groups: [group.ovh.smalard.specula]
+    info:
+      path: Resources/Info-Watch.plist
+      properties:
+        CFBundleDisplayName: Specula
+        WKApplication: true
+        WKWatchOnly: true
+        NSAppTransportSecurity:
+          NSAllowsArbitraryLoads: true
+        NSLocalNetworkUsageDescription: "Specula découvre et interroge tes services selfhosted sur le réseau local."
+        NSBonjourServices:
+          - _http._tcp
+          - _https._tcp
+        UIAppFonts: [Archivo-Variable.ttf]
+
+  Specula-WatchWidgets:
+    type: app-extension
+    platform: watchOS
+    sources:
+      - path: WatchWidgets
+      - path: Shared/Theme.swift
+      - path: Shared/Models.swift
+      - path: Shared/SharedState.swift
+      - path: Resources/Fonts
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: ovh.smalard.specula.watch.widgets
+        SKIP_INSTALL: YES
+        TARGETED_DEVICE_FAMILY: "4"
+    entitlements:
+      path: Resources/Specula-WatchWidgets.entitlements
+      properties:
+        com.apple.security.application-groups: [group.ovh.smalard.specula]
+    info:
+      path: Resources/Info-WatchWidgets.plist
+      properties:
+        CFBundleDisplayName: Specula
+        UIAppFonts: [Archivo-Variable.ttf]
+        NSExtension:
+          NSExtensionPointIdentifier: com.apple.widgetkit-extension
