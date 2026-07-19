@@ -449,6 +449,22 @@
     }
    }
   },
+  "Actives": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Enabled"
+     }
+    },
+    "es": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Activas"
+     }
+    }
+   }
+  },
   "Affichage": {
    "localizations": {
     "en": {
@@ -561,6 +577,22 @@
     }
    }
   },
+  "Albums": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Albums"
+     }
+    },
+    "es": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Álbumes"
+     }
+    }
+   }
+  },
   "Alerte quand le CPU dépasse le seuil.": {
    "localizations": {
     "en": {
@@ -641,6 +673,38 @@
     }
    }
   },
+  "Appareils": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Devices"
+     }
+    },
+    "es": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Dispositivos"
+     }
+    }
+   }
+  },
+  "Applications": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Apps"
+     }
+    },
+    "es": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Aplicaciones"
+     }
+    }
+   }
+  },
   "Après 3 tentatives échouées.": {
    "localizations": {
     "en": {
@@ -653,6 +717,38 @@
      "stringUnit": {
       "state": "translated",
       "value": "Tras 3 intentos fallidos."
+     }
+    }
+   }
+  },
+  "Articles": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Posts"
+     }
+    },
+    "es": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Artículos"
+     }
+    }
+   }
+  },
+  "Artistes": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Artists"
+     }
+    },
+    "es": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Artistas"
      }
     }
    }
@@ -701,6 +797,22 @@
      "stringUnit": {
       "state": "translated",
       "value": "Sin respuesta — comprueba la URL y la red"
+     }
+    }
+   }
+  },
+  "Auteurs": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Authors"
+     }
+    },
+    "es": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Autores"
      }
     }
    }
@@ -913,6 +1025,22 @@
     }
    }
   },
+  "Caméras": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Cameras"
+     }
+    },
+    "es": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Cámaras"
+     }
+    }
+   }
+  },
   "Cartes": {
    "localizations": {
     "en": {
@@ -957,6 +1085,22 @@
      "stringUnit": {
       "state": "translated",
       "value": "Certificados"
+     }
+    }
+   }
+  },
+  "Chansons": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Songs"
+     }
+    },
+    "es": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Canciones"
      }
     }
    }
@@ -1057,6 +1201,22 @@
     }
    }
   },
+  "Clé API du service": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Service API key"
+     }
+    },
+    "es": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Clave API del servicio"
+     }
+    }
+   }
+  },
   "Collections": {
    "localizations": {
     "en": {
@@ -1117,6 +1277,22 @@
      "stringUnit": {
       "state": "translated",
       "value": "Compacto"
+     }
+    }
+   }
+  },
+  "Comptes": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Accounts"
+     }
+    },
+    "es": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Cuentas"
      }
     }
    }
@@ -1297,6 +1473,22 @@
     }
    }
   },
+  "Demandes": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Requests"
+     }
+    },
+    "es": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Solicitudes"
+     }
+    }
+   }
+  },
   "Densité": {
    "localizations": {
     "en": {
@@ -1409,6 +1601,22 @@
     }
    }
   },
+  "Disques": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Drives"
+     }
+    },
+    "es": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Discos"
+     }
+    }
+   }
+  },
   "Documents — nouveau": {
    "localizations": {
     "en": {
@@ -1457,6 +1665,22 @@
     }
    }
   },
+  "Dossiers": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Folders"
+     }
+    },
+    "es": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Carpetas"
+     }
+    }
+   }
+  },
   "Délai dépassé (timeout) — 3 tentatives échouées": {
    "localizations": {
     "en": {
@@ -1501,6 +1725,22 @@
      "stringUnit": {
       "state": "translated",
       "value": "Fuera"
+     }
+    }
+   }
+  },
+  "Dépôts": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Repositories"
+     }
+    },
+    "es": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Repositorios"
      }
     }
    }
@@ -1681,6 +1921,22 @@
     }
    }
   },
+  "Environnements": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Environments"
+     }
+    },
+    "es": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Entornos"
+     }
+    }
+   }
+  },
   "Envoi": {
    "localizations": {
     "en": {
@@ -1805,6 +2061,38 @@
      "stringUnit": {
       "state": "translated",
       "value": "Películas"
+     }
+    }
+   }
+  },
+  "Format : id:secret (jeton API)": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Format: id:secret (API token)"
+     }
+    },
+    "es": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Formato: id:secreto (token API)"
+     }
+    }
+   }
+  },
+  "Format : utilisateur:motdepasse": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Format: username:password"
+     }
+    },
+    "es": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Formato: usuario:contraseña"
      }
     }
    }
@@ -2289,6 +2577,38 @@
     }
    }
   },
+  "Jeton X-Plex-Token": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "X-Plex-Token token"
+     }
+    },
+    "es": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Token X-Plex-Token"
+     }
+    }
+   }
+  },
+  "Jeton d'accès longue durée (profil → Sécurité)": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Long-lived access token (profile → Security)"
+     }
+    },
+    "es": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Token de acceso de larga duración (perfil → Seguridad)"
+     }
+    }
+   }
+  },
   "Journal": {
    "localizations": {
     "en": {
@@ -2461,6 +2781,22 @@
      "stringUnit": {
       "state": "translated",
       "value": "Libres"
+     }
+    }
+   }
+  },
+  "Liens": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Links"
+     }
+    },
+    "es": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Enlaces"
      }
     }
    }
@@ -2673,6 +3009,22 @@
     }
    }
   },
+  "Modèles": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Models"
+     }
+    },
+    "es": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Modelos"
+     }
+    }
+   }
+  },
   "Monitoring VPS": {
    "localizations": {
     "en": {
@@ -2685,6 +3037,22 @@
      "stringUnit": {
       "state": "translated",
       "value": "Supervisión del VPS"
+     }
+    }
+   }
+  },
+  "Mot de passe de l'interface": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Web UI password"
+     }
+    },
+    "es": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Contraseña de la interfaz"
      }
     }
    }
@@ -2781,6 +3149,22 @@
      "stringUnit": {
       "state": "translated",
       "value": "Nombre"
+     }
+    }
+   }
+  },
+  "Non lus": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Unread"
+     }
+    },
+    "es": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "No leídos"
      }
     }
    }
@@ -3009,6 +3393,22 @@
     }
    }
   },
+  "Produits": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Products"
+     }
+    },
+    "es": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Productos"
+     }
+    }
+   }
+  },
   "Profil invité": {
    "localizations": {
     "en": {
@@ -3021,6 +3421,22 @@
      "stringUnit": {
       "state": "translated",
       "value": "Perfil de invitado"
+     }
+    }
+   }
+  },
+  "Progression": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Progress"
+     }
+    },
+    "es": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Progreso"
      }
     }
    }
@@ -3133,6 +3549,22 @@
      "stringUnit": {
       "state": "translated",
       "value": "Actualización"
+     }
+    }
+   }
+  },
+  "Recettes": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Recipes"
+     }
+    },
+    "es": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Recetas"
      }
     }
    }
@@ -3761,6 +4193,22 @@
     }
    }
   },
+  "Suivis": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Watches"
+     }
+    },
+    "es": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Seguimientos"
+     }
+    }
+   }
+  },
   "Supprimer le service": {
    "localizations": {
     "en": {
@@ -4321,6 +4769,22 @@
     }
    }
   },
+  "Visites": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Visits"
+     }
+    },
+    "es": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Visitas"
+     }
+    }
+   }
+  },
   "Voir les détails": {
    "localizations": {
     "en": {
@@ -4333,6 +4797,22 @@
      "stringUnit": {
       "state": "translated",
       "value": "Ver detalles"
+     }
+    }
+   }
+  },
+  "Volumes": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Pools"
+     }
+    },
+    "es": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Volúmenes"
      }
     }
    }

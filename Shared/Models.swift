@@ -70,6 +70,13 @@ enum IntegrationType: String, Codable, CaseIterable {
     case jellyfin, radarr, sonarr, adguard, transmission, proxmox, immich, glances
     case homeassistant, uptimekuma, nextcloud, vaultwarden, paperless, komga
     case filebrowser, unifi, omv, plex, qbittorrent, traefik, generic
+    case pihole, portainer, sabnzbd, prowlarr, lidarr, readarr, bazarr
+    case overseerr, tautulli, gitea, grafana, syncthing, audiobookshelf
+    case navidrome, frigate, kavita, mealie, miniflux, linkding, speedtest
+    case scrutiny, netdata, gotify, authentik, truenas, octoprint, esphome
+    case ollama, npm, wgeasy, jackett, deluge, photoprism, gitlab, peertube
+    case bookstack, fireflyiii, grocy, healthchecks, changedetection
+    case wordpress, ghost, matomo, n8n
 }
 enum NetMode: String, CaseIterable { case local, tailscale }
 enum DetailMetric: String, CaseIterable {

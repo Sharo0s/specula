@@ -52,7 +52,11 @@ enum YamlConfig {
                                 .replacingOccurrences(of: ".png", with: "")
                                 .replacingOccurrences(of: ".svg", with: "")
                         }
-                        let type = (widget?["type"] as? String).flatMap(IntegrationType.init) ?? .generic
+                        let aliases = ["jellyseerr": "overseerr", "forgejo": "gitea", "emby": "jellyfin",
+                                       "changedetectionio": "changedetection", "firefly": "fireflyiii",
+                                       "wireguard": "wgeasy", "nginxproxymanager": "npm"]
+                        let rawType = (widget?["type"] as? String).map { aliases[$0] ?? $0 }
+                        let type = rawType.flatMap(IntegrationType.init) ?? .generic
                         // id unique, même en cas de doublon de nom (2 FileBrowser…)
                         let base = "yaml-" + name.lowercased()
                             .replacingOccurrences(of: " ", with: "-") + "-\(gi)"

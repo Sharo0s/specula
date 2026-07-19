@@ -35,6 +35,12 @@ struct EditServiceSheet: View {
             field("Nom", text: $name)
             field("URL", text: $url)
             field("Clé API (vide = inchangée)", text: $apiKey)
+            if let hint = LiveFetcher.keyHint(for: store.type(of: service)) {
+                Text(verbatim: hint)
+                    .font(.archivo(10.5))
+                    .foregroundStyle(Ink.muted)
+                    .padding(.top, -8)
+            }
 
             VStack(alignment: .leading, spacing: 5) {
                 Text("Groupe")
