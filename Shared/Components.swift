@@ -370,11 +370,13 @@ struct ServiceCard: View {
                         Text(service.name)
                             .font(.archivo(14, .heavy))
                             .foregroundStyle(down ? Ink.accentText : Ink.text)
-                            .lineLimit(1)
+                            .lineLimit(2)
+                            .fixedSize(horizontal: false, vertical: true)
                         Text(LocalizedStringKey(service.desc))
                             .font(.archivo(10.5))
                             .foregroundStyle(Ink.muted)
-                            .lineLimit(1)
+                            .lineLimit(2)
+                            .fixedSize(horizontal: false, vertical: true)
                     }
                     Spacer(minLength: 0)
                     LatencyTag(text: store.pingText(service), down: down,

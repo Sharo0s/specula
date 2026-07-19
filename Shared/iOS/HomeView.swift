@@ -228,6 +228,8 @@ struct ServiceRow: View {
                 Text(LocalizedStringKey(service.desc))
                     .font(.archivo(11))
                     .foregroundStyle(Ink.muted)
+                    .lineLimit(2)
+                    .fixedSize(horizontal: false, vertical: true)
             }
             Spacer()
             LatencyTag(text: store.pingText(service), down: store.isDown(service),
