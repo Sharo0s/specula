@@ -38,6 +38,7 @@ struct ServiceDetailView: View {
                     chart
                     HRule(weight: 2)
                     metricsGrid
+                    nowPlayingBlock
                     journal
                     actions
                 }
@@ -107,6 +108,20 @@ struct ServiceDetailView: View {
             }
         }
         .padding(.vertical, 16)
+    }
+
+    // MARK: Lecture en cours (Jellyfin)
+
+    @ViewBuilder
+    private var nowPlayingBlock: some View {
+        if let sessions = store.nowPlaying[service.id], !sessions.isEmpty {
+            VStack(alignment: .leading, spacing: 8) {
+                ForEach(Array(sessions.prefix(3)), id: \.self) { session in
+                    NowPlayingRow(session: session)
+                }
+            }
+            .padding(.bottom, 16)
+        }
     }
 
     // MARK: Journal

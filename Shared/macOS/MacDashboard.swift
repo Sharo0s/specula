@@ -232,6 +232,17 @@ struct MacInspector: View {
                 .padding(.vertical, 6)
                 HRule(weight: 2)
 
+                // Lecture en cours (Jellyfin)
+                if let sessions = store.nowPlaying[service.id], !sessions.isEmpty {
+                    VStack(alignment: .leading, spacing: 8) {
+                        ForEach(Array(sessions.prefix(3)), id: \.self) { session in
+                            NowPlayingRow(session: session)
+                        }
+                    }
+                    .padding(.vertical, 10)
+                    HRule(weight: 2)
+                }
+
                 // Journal
                 Text("Journal")
                     .upperLabel(8.5, .heavy)

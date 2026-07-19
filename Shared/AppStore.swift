@@ -138,6 +138,8 @@ final class AppStore {
 
     private var config: AppConfig
     private var liveMetricsCache: [String: [[String]]] = [:]
+    /// Lectures en cours par service (Jellyfin), rafraîchies à chaque tick.
+    var nowPlaying: [String: [LiveFetcher.NowPlayingSession]] = [:]
     private var failCounts: [String: Int] = [:]
     /// Services dont la latence a été réellement mesurée (mode live) —
     /// tant qu'ils n'y sont pas, on affiche « … », pas les valeurs d'amorçage.
@@ -396,31 +398,40 @@ final class AppStore {
         Task { [weak self] in
             var pings: [String: (ok: Bool, ms: Int)] = [:]
             var metrics: [String: [[String]]] = [:]
+            var sessions: [String: [LiveFetcher.NowPlayingSession]] = [:]
 
-            await withTaskGroup(of: (String, (Bool, Int), [[String]]?).self) { group in
+            await withTaskGroup(of: (String, (Bool, Int), [[String]]?, [LiveFetcher.NowPlayingSession]?).self) { group in
                 for target in targets {
                     group.addTask {
                         let ping = await LiveFetcher.ping(target.url)
                         var m: [[String]]? = nil
+                        var np: [LiveFetcher.NowPlayingSession]? = nil
                         if ping.ok && wantMetrics {
                             m = await LiveFetcher.metrics(type: target.type, base: target.apiBase, key: target.key)
                         }
-                        return (target.id, ping, m)
+                        // Lecture en cours : à chaque tick (la progression avance)
+                        if ping.ok, target.type == .jellyfin, let key = target.key {
+                            np = await LiveFetcher.jellyfinSessions(base: target.apiBase, key: key)
+                        }
+                        return (target.id, ping, m, np)
                     }
                 }
-                for await (id, ping, m) in group {
+                for await (id, ping, m, np) in group {
                     pings[id] = ping
                     if let m { metrics[id] = m }
+                    sessions[id] = np ?? []
                 }
             }
             let system = glances != nil ? await LiveFetcher.systemBand(base: glances!.apiBase) : nil
-            self?.applyLive(targets: targets, pings: pings, metrics: metrics, system: system)
+            self?.applyLive(targets: targets, pings: pings, metrics: metrics,
+                            sessions: sessions, system: system)
         }
     }
 
     private func applyLive(targets: [PollTarget],
                            pings results: [String: (ok: Bool, ms: Int)],
                            metrics: [String: [[String]]],
+                           sessions: [String: [LiveFetcher.NowPlayingSession]],
                            system: LiveFetcher.SystemBand?) {
         for target in targets {
             guard let result = results[target.id] else { continue }
@@ -463,6 +474,7 @@ final class AppStore {
             trimHistories(target.id)
         }
         for (id, m) in metrics { liveMetricsCache[id] = m }
+        for (id, np) in sessions where serviceTypes[id] == .jellyfin { nowPlaying[id] = np }
         if let system {
             systemLive = true
             cpu = system.cpu

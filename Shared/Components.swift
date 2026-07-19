@@ -287,6 +287,45 @@ struct SystemBandCell: View {
     }
 }
 
+/// Lecture en cours (Jellyfin) : ▶︎/⏸ titre (utilisateur) · position / durée + progression.
+struct NowPlayingRow: View {
+    let session: LiveFetcher.NowPlayingSession
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 4) {
+            HStack(spacing: 8) {
+                Image(systemName: session.paused ? "pause.fill" : "play.fill")
+                    .font(.system(size: 9, weight: .bold))
+                Text(verbatim: session.user.isEmpty
+                     ? session.title : "\(session.title) (\(session.user))")
+                    .font(.archivo(11, .bold))
+                    .lineLimit(1)
+                Spacer(minLength: 8)
+                Text(verbatim: "\(timecode(session.position)) / \(timecode(session.duration))")
+                    .font(.archivo(10)).monospacedDigit()
+                    .foregroundStyle(Ink.muted)
+            }
+            GeometryReader { geo in
+                ZStack(alignment: .leading) {
+                    Ink.divider.opacity(0.4)
+                    Ink.text.frame(width: geo.size.width * fraction)
+                }
+            }
+            .frame(height: 3)
+        }
+    }
+
+    private var fraction: Double {
+        session.duration > 0 ? min(1, Double(session.position) / Double(session.duration)) : 0
+    }
+
+    private func timecode(_ seconds: Int) -> String {
+        seconds >= 3600
+            ? String(format: "%d:%02d:%02d", seconds / 3600, (seconds % 3600) / 60, seconds % 60)
+            : String(format: "%02d:%02d", seconds / 60, seconds % 60)
+    }
+}
+
 /// Petit carré de marque — LE carré rouge Specula.
 struct BrandSquare: View {
     var size: CGFloat = 15
@@ -328,6 +367,13 @@ struct ServiceCard: View {
                     ForEach(Array(store.metrics(service).prefix(3).enumerated()), id: \.offset) { i, m in
                         if i > 0 { Spacer(minLength: 6) }
                         MetricCell(value: m[0], label: m[1], valueSize: 15, labelSize: 8)
+                    }
+                }
+                // Lecture en cours (Jellyfin)
+                if let sessions = store.nowPlaying[service.id], !sessions.isEmpty {
+                    HRule()
+                    ForEach(Array(sessions.prefix(2)), id: \.self) { session in
+                        NowPlayingRow(session: session)
                     }
                 }
             }

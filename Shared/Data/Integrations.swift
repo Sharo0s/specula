@@ -181,6 +181,39 @@ enum LiveFetcher {
         }
     }
 
+    // MARK: Lecture en cours (Jellyfin /Sessions)
+
+    struct NowPlayingSession: Sendable, Hashable {
+        let title: String
+        let user: String
+        let paused: Bool
+        /// Position et durée en secondes.
+        let position: Int
+        let duration: Int
+    }
+
+    static func jellyfinSessions(base: String, key: String) async -> [NowPlayingSession]? {
+        for candidate in candidates(base) {
+            guard let url = URL(string: "\(candidate)/Sessions?ActiveWithinSeconds=300") else { continue }
+            guard let (json, _) = try? await HTTPClient.shared.json(url, headers: ["X-Emby-Token": key]),
+                  let list = json as? [Any] else { continue }
+            return list.compactMap { raw -> NowPlayingSession? in
+                guard let session = raw as? [String: Any],
+                      let item = session.dict("NowPlayingItem"),
+                      let name = item["Name"] as? String else { return nil }
+                let series = item["SeriesName"] as? String
+                let play = session.dict("PlayState")
+                return NowPlayingSession(
+                    title: series.map { "\($0) — \(name)" } ?? name,
+                    user: session["UserName"] as? String ?? "",
+                    paused: play?["IsPaused"] as? Bool ?? false,
+                    position: Int((play?.double("PositionTicks") ?? 0) / 10_000_000),
+                    duration: Int((item.double("RunTimeTicks") ?? 0) / 10_000_000))
+            }
+        }
+        return nil
+    }
+
     // MARK: Transmission RPC (danse du X-Transmission-Session-Id)
 
     private static func transmissionStats(base: String, key: String?) async throws -> [[String]]? {
