@@ -173,6 +173,137 @@ enum LiveFetcher {
                 guard let sys = await systemBand(base: base) else { return nil }
                 return [["\(Int(sys.cpu)) %", "CPU"], [fr(sys.temp) + " °C", "Temp."], [fr(sys.ramFreeGB) + " Go", "RAM libre"]]
 
+            case .komga:
+                // clé « utilisateur:motdepasse » → Basic
+                guard let key, key.contains(":") else { return nil }
+                let h = ["Authorization": "Basic " + Data(key.utf8).base64EncodedString()]
+                async let libs = HTTPClient.shared.json(URL(string: "\(base)/api/v1/libraries")!, headers: h)
+                async let series = HTTPClient.shared.json(URL(string: "\(base)/api/v1/series?size=1")!, headers: h)
+                async let books = HTTPClient.shared.json(URL(string: "\(base)/api/v1/books?size=1")!, headers: h)
+                let l = (try await libs.0 as? [Any])?.count ?? 0
+                let s = (try await series.0 as? [String: Any])?.int("totalElements") ?? 0
+                let b = (try await books.0 as? [String: Any])?.int("totalElements") ?? 0
+                return [[frInt(l), "Bibliothèques"], [frInt(s), "Séries"], [frInt(b), "Livres"]]
+
+            case .homeassistant:
+                // clé = jeton longue durée (Bearer)
+                guard let key else { return nil }
+                let (json, _) = try await HTTPClient.shared.json(
+                    URL(string: "\(base)/api/states")!, headers: ["Authorization": "Bearer \(key)"])
+                guard let states = json as? [[String: Any]] else { return nil }
+                func tally(_ prefix: String, on: Set<String>) -> (Int, Int) {
+                    let items = states.filter { ($0["entity_id"] as? String)?.hasPrefix(prefix) == true }
+                    let active = items.filter { on.contains(($0["state"] as? String) ?? "") }.count
+                    return (active, items.count)
+                }
+                let p = tally("person.", on: ["home"])
+                let li = tally("light.", on: ["on"])
+                let sw = tally("switch.", on: ["on"])
+                return [["\(p.0) / \(p.1)", "Présents"], ["\(li.0) / \(li.1)", "Lumières"],
+                        ["\(sw.0) / \(sw.1)", "Interrupteurs"]]
+
+            case .unifi:
+                // clé = API key UniFi (X-API-KEY, console UniFi OS)
+                guard let key else { return nil }
+                let h = ["X-API-KEY": key, "Accept": "application/json"]
+                let (healthJ, _) = try await HTTPClient.shared.json(
+                    URL(string: "\(base)/proxy/network/api/s/default/stat/health")!, headers: h)
+                guard let subsystems = (healthJ as? [String: Any])?.array("data")?
+                    .compactMap({ $0 as? [String: Any] }) else { return nil }
+                var lan = 0, wlan = 0, wanUp = false
+                for sub in subsystems {
+                    switch sub["subsystem"] as? String {
+                    case "lan": lan = sub.int("num_user") ?? 0
+                    case "wlan": wlan = sub.int("num_user") ?? 0
+                    case "wan": wanUp = (sub["status"] as? String) == "ok"
+                    default: break
+                    }
+                }
+                var out = [[frInt(lan), "LAN"], [frInt(wlan), "WLAN"]]
+                if let (sysJ, _) = try? await HTTPClient.shared.json(
+                    URL(string: "\(base)/proxy/network/api/s/default/stat/sysinfo")!, headers: h),
+                   let uptime = ((sysJ as? [String: Any])?.array("data")?.first as? [String: Any])?.double("uptime"),
+                   uptime > 0 {
+                    out.append([fr(uptime / 86_400) + " j", "Uptime"])
+                }
+                out.append([wanUp ? String(localized: "ACTIF") : String(localized: "HORS LIGNE"), "WAN"])
+                return out
+
+            case .nextcloud:
+                // clé « utilisateur:motdepasse » (ou mot de passe d'application)
+                guard let key, key.contains(":") else { return nil }
+                let h = ["Authorization": "Basic " + Data(key.utf8).base64EncodedString(),
+                         "OCS-APIRequest": "true"]
+                let (json, _) = try await HTTPClient.shared.json(
+                    URL(string: "\(base)/ocs/v2.php/apps/serverinfo/api/v1/info?format=json")!, headers: h)
+                guard let data = ((json as? [String: Any])?.dict("ocs"))?.dict("data") else { return nil }
+                let nc = data.dict("nextcloud")
+                let free = nc?.dict("system")?.double("freespace") ?? 0
+                let files = nc?.dict("storage")?.int("num_files") ?? 0
+                let shares = nc?.dict("shares")?.int("num_shares") ?? 0
+                let active = data.dict("activeUsers")?.int("last5minutes") ?? 0
+                return [[frBytes(free), "Libres"], [frInt(files), "Fichiers"],
+                        [frInt(active), "Utilisateurs"], [frInt(shares), "Partages"]]
+
+            case .paperless:
+                // clé = jeton API (Authorization: Token)
+                guard let key else { return nil }
+                let (json, _) = try await HTTPClient.shared.json(
+                    URL(string: "\(base)/api/statistics/")!, headers: ["Authorization": "Token \(key)"])
+                guard let d = json as? [String: Any] else { return nil }
+                return [[frInt(d.int("documents_total") ?? 0), "Documents"],
+                        [frInt(d.int("tag_count") ?? 0), "Étiquettes"],
+                        [frInt(d.int("documents_inbox") ?? 0), "À trier"]]
+
+            case .plex:
+                // clé = X-Plex-Token
+                guard let key else { return nil }
+                let h = ["X-Plex-Token": key, "Accept": "application/json"]
+                let (sessJ, _) = try await HTTPClient.shared.json(
+                    URL(string: "\(base)/status/sessions")!, headers: h)
+                let playing = ((sessJ as? [String: Any])?.dict("MediaContainer"))?.int("size") ?? 0
+                var out = [[frInt(playing), "Lectures"]]
+                if let (libJ, _) = try? await HTTPClient.shared.json(
+                    URL(string: "\(base)/library/sections")!, headers: h),
+                   let sections = ((libJ as? [String: Any])?.dict("MediaContainer"))?.array("Directory") {
+                    out.append([frInt(sections.count), "Bibliothèques"])
+                }
+                return out
+
+            case .qbittorrent:
+                // clé « utilisateur:motdepasse » → login cookie SID
+                guard let key, let sep = key.firstIndex(of: ":") else { return nil }
+                let user = String(key[..<sep])
+                let pass = String(key[key.index(after: sep)...])
+                var allowed = CharacterSet.alphanumerics
+                allowed.insert(charactersIn: "-._~")
+                let body = "username=\(user.addingPercentEncoding(withAllowedCharacters: allowed) ?? user)&password=\(pass.addingPercentEncoding(withAllowedCharacters: allowed) ?? pass)"
+                let login = try await HTTPClient.shared.request(
+                    URL(string: "\(base)/api/v2/auth/login")!, method: "POST",
+                    headers: ["Content-Type": "application/x-www-form-urlencoded", "Referer": base],
+                    body: Data(body.utf8))
+                guard let setCookie = login.headers["set-cookie"],
+                      let sid = setCookie.split(separator: ";").first, sid.contains("SID=") else { return nil }
+                let h = ["Cookie": String(sid)]
+                let (transferJ, _) = try await HTTPClient.shared.json(
+                    URL(string: "\(base)/api/v2/transfer/info")!, headers: h)
+                guard let tr = transferJ as? [String: Any] else { return nil }
+                let torrents = try? await HTTPClient.shared.json(
+                    URL(string: "\(base)/api/v2/torrents/info")!, headers: h)
+                let count = (torrents?.0 as? [Any])?.count ?? 0
+                return [[frSpeed(tr.double("dl_info_speed") ?? 0), "Réception"],
+                        [frSpeed(tr.double("up_info_speed") ?? 0), "Envoi"],
+                        [frInt(count), "En partage"]]
+
+            case .traefik:
+                // API interne (:8080 par défaut), sans authentification
+                let (json, _) = try await HTTPClient.shared.json(URL(string: "\(base)/api/overview")!)
+                guard let http = (json as? [String: Any])?.dict("http") else { return nil }
+                let routers = http.dict("routers")
+                return [[frInt(routers?.int("total") ?? 0), "Routes"],
+                        [frInt(http.dict("services")?.int("total") ?? 0), "Sources"],
+                        [frInt(routers?.int("errors") ?? 0), "Erreurs"]]
+
             default:
                 return nil
             }

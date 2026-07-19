@@ -76,7 +76,9 @@ final class AppStore {
     /// (statuts, toasts) suivent au relancement via AppleLanguages.
     var appLanguage: String = UserDefaults.standard.string(forKey: "appLanguage") ?? "system" {
         didSet {
+            guard appLanguage != oldValue else { return }
             UserDefaults.standard.set(appLanguage, forKey: "appLanguage")
+            fireToast(String(localized: "Relance l'app pour appliquer partout."))
             if appLanguage == "system" {
                 UserDefaults.standard.removeObject(forKey: "AppleLanguages")
             } else {

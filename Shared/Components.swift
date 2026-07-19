@@ -300,14 +300,19 @@ struct NowPlayingRow: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 4) {
             HStack(spacing: 8) {
-                Image(systemName: session.paused ? "pause.fill" : "play.fill")
-                    .font(.system(size: 9, weight: .bold))
-                    .foregroundStyle(Ink.accent2)
-                    .frame(width: 18, height: 18)
-                    .overlay(Rectangle().strokeBorder(
-                        onTogglePause == nil ? .clear : Ink.divider, lineWidth: 1))
-                    .contentShape(.rect)
-                    .onTapGesture { onTogglePause?() }
+                Button {
+                    onTogglePause?()
+                } label: {
+                    Image(systemName: session.paused ? "pause.fill" : "play.fill")
+                        .font(.system(size: 9, weight: .bold))
+                        .foregroundStyle(Ink.accent2)
+                        .frame(width: 18, height: 18)
+                        .overlay(Rectangle().strokeBorder(
+                            onTogglePause == nil ? .clear : Ink.divider, lineWidth: 1))
+                        .contentShape(.rect)
+                }
+                .buttonStyle(.plain)
+                .disabled(onTogglePause == nil)
                 Text(verbatim: session.user.isEmpty
                      ? session.title : "\(session.title) (\(session.user))")
                     .font(.archivo(11, .bold))

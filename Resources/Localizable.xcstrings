@@ -401,6 +401,22 @@
     }
    }
   },
+  "ACTIF": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "UP"
+     }
+    },
+    "es": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "ACTIVO"
+     }
+    }
+   }
+  },
   "AJOUTÉ": {
    "localizations": {
     "en": {
@@ -4301,6 +4317,22 @@
      "stringUnit": {
       "state": "translated",
       "value": "Peticiones reales a tus servicios"
+     }
+    }
+   }
+  },
+  "WAN": {
+   "localizations": {
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "WAN"
+     }
+    },
+    "es": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "WAN"
      }
     }
    }
