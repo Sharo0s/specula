@@ -347,11 +347,12 @@ enum LiveFetcher {
         return nil
     }
 
-    /// Pause/reprise d'une session Jellyfin.
-    static func togglePause(base: String, key: String, sessionID: String) async {
+    /// Pause/reprise d'une session Jellyfin (commandes PlaystateCommand).
+    static func setPaused(_ paused: Bool, base: String, key: String, sessionID: String) async {
         guard !sessionID.isEmpty else { return }
+        let command = paused ? "Pause" : "Unpause"
         for candidate in candidates(base) {
-            guard let url = URL(string: "\(candidate)/Sessions/\(sessionID)/Playing/TogglePause") else { continue }
+            guard let url = URL(string: "\(candidate)/Sessions/\(sessionID)/Playing/\(command)") else { continue }
             if let resp = try? await HTTPClient.shared.request(url, method: "POST",
                                                               headers: ["X-Emby-Token": key]),
                (200..<300).contains(resp.status) {

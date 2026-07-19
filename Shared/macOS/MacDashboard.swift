@@ -15,7 +15,9 @@ struct MacDashboard: View {
         HStack(spacing: 0) {
             ScrollView {
                 VStack(alignment: .leading, spacing: 0) {
-                    systemBand
+                    if store.systemBandVisible {
+                        systemBand
+                    }
                     if store.services.isEmpty {
                         emptyState
                     }

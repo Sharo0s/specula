@@ -73,6 +73,8 @@ struct MacSettingsPage: View {
                     }
                     HRule()
                     toggleRow("Logos des services", sub: "dashboard-icons — monogramme en secours", isOn: $store.logosOn)
+                    HRule()
+                    toggleRow("Bandeau système", sub: "CPU, température et RAM — nécessite une source Glances.", isOn: $store.showSystemBand)
                 }
 
                 settingsBlock("Connexion") {

@@ -528,6 +528,19 @@ final class AppStore {
         (dataMode == .demo || systemLive) && temp >= 48
     }
 
+    /// Réglage : afficher le bandeau système.
+    var showSystemBand: Bool = UserDefaults.standard.object(forKey: "showSystemBand") as? Bool ?? true {
+        didSet { UserDefaults.standard.set(showSystemBand, forKey: "showSystemBand") }
+    }
+
+    /// Le bandeau n'apparaît que s'il a quelque chose à dire :
+    /// démo toujours, Homelab seulement avec une source Glances.
+    var systemBandVisible: Bool {
+        guard showSystemBand else { return false }
+        if dataMode == .demo { return true }
+        return systemLive || mainServices.contains { type(of: $0) == .glances }
+    }
+
     func pingText(_ s: Service) -> String {
         isDown(s) ? String(localized: "HORS LIGNE") : (pending(s) ? "…" : "\(ping(s)) MS")
     }
@@ -644,14 +657,17 @@ final class AppStore {
     /// Pause/reprise d'une lecture Jellyfin (bascule optimiste, POST ensuite).
     func togglePause(_ s: Service, session: LiveFetcher.NowPlayingSession) {
         guard let key = apiKey(for: s.id) else { return }
-        if var list = nowPlaying[s.id], let i = list.firstIndex(of: session) {
+        let willPause = !session.paused
+        if var list = nowPlaying[s.id],
+           let i = list.firstIndex(where: { $0.id == session.id }) {
+            let current = list[i]
             list[i] = LiveFetcher.NowPlayingSession(
-                id: session.id, title: session.title, user: session.user,
-                paused: !session.paused, position: session.position, duration: session.duration)
+                id: current.id, title: current.title, user: current.user,
+                paused: willPause, position: current.position, duration: current.duration)
             nowPlaying[s.id] = list
         }
         let base = s.apiURL ?? fullURL(s)
-        Task { await LiveFetcher.togglePause(base: base, key: key, sessionID: session.id) }
+        Task { await LiveFetcher.setPaused(willPause, base: base, key: key, sessionID: session.id) }
     }
 
     // MARK: - Statut 30 j

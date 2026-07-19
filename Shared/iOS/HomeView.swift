@@ -14,7 +14,9 @@ struct HomeView: View {
             header
             ScrollView {
                 VStack(spacing: 0) {
-                    systemBand
+                    if store.systemBandVisible {
+                        systemBand
+                    }
                     HStack {
                         Spacer()
                         MSeg(options: [(LayoutMode.liste, "Liste"), (LayoutMode.grille, "Grille")],
