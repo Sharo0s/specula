@@ -71,6 +71,34 @@ final class AppStore {
     var guestIds: Set<String> = ["jellyfin", "immich"]
     var syncOn = true
 
+    /// Langue de l'app : "system", "fr", "en" ou "es".
+    /// L'environnement SwiftUI bascule immédiatement ; les chaînes construites
+    /// (statuts, toasts) suivent au relancement via AppleLanguages.
+    var appLanguage: String = UserDefaults.standard.string(forKey: "appLanguage") ?? "system" {
+        didSet {
+            UserDefaults.standard.set(appLanguage, forKey: "appLanguage")
+            if appLanguage == "system" {
+                UserDefaults.standard.removeObject(forKey: "AppleLanguages")
+            } else {
+                UserDefaults.standard.set([appLanguage], forKey: "AppleLanguages")
+            }
+        }
+    }
+
+    var localeOverride: Locale? {
+        appLanguage == "system" ? nil : Locale(identifier: appLanguage)
+    }
+
+    /// macOS : relance l'app pour appliquer la langue partout.
+    func relaunch() {
+        #if os(macOS)
+        let config = NSWorkspace.OpenConfiguration()
+        config.createsNewApplicationInstance = true
+        NSWorkspace.shared.openApplication(at: Bundle.main.bundleURL, configuration: config) { _, _ in }
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) { NSApp.terminate(nil) }
+        #endif
+    }
+
     // MARK: Source de données
     var dataMode: DataMode {
         didSet {

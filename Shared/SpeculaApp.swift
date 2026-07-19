@@ -12,6 +12,7 @@ struct SpeculaApp: App {
         WindowGroup {
             MacRootView()
                 .environment(store)
+                .environment(\.locale, store.localeOverride ?? .autoupdatingCurrent)
         }
         .windowStyle(.hiddenTitleBar)
         .defaultSize(width: 1320, height: 820)
@@ -35,6 +36,7 @@ struct SpeculaApp: App {
         WindowGroup {
             IOSRootView()
                 .environment(store)
+                .environment(\.locale, store.localeOverride ?? .autoupdatingCurrent)
         }
         #endif
     }

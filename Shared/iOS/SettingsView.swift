@@ -179,6 +179,19 @@ struct SettingsView: View {
                             .padding(.bottom, 10)
                     }
 
+                    // Langue
+                    section("Langue", note: "Relance l'app pour appliquer partout.") {
+                        HStack {
+                            Text("Langue")
+                                .font(.archivo(13.5, .bold))
+                            Spacer()
+                            MSeg(options: [("system", String(localized: "Système")),
+                                           ("fr", "Français"), ("en", "English"), ("es", "Español")],
+                                 selection: $store.appLanguage, fontSize: 9.5)
+                        }
+                        .padding(.vertical, 10)
+                    }
+
                     // Rafraîchissement
                     section("Rafraîchissement") {
                         HStack {

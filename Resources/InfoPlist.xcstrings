@@ -9,6 +9,12 @@
       "value": "Specula discovers and polls your self-hosted services on the local network."
      }
     },
+    "es": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Specula descubre y consulta tus servicios autoalojados en la red local."
+     }
+    },
     "fr": {
      "stringUnit": {
       "state": "translated",

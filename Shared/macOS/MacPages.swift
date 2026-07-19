@@ -116,6 +116,24 @@ struct MacSettingsPage: View {
                     .padding(.vertical, 10)
                 }
 
+                settingsBlock("Langue") {
+                    labelRow("Langue") {
+                        MSeg(options: [("system", String(localized: "Système")),
+                                       ("fr", "Français"), ("en", "English"), ("es", "Español")],
+                             selection: $store.appLanguage, fontSize: 10)
+                    }
+                    HRule()
+                    HStack(spacing: 12) {
+                        Text("Relance l'app pour appliquer partout.")
+                            .font(.archivo(11))
+                            .foregroundStyle(Ink.muted)
+                        Spacer()
+                        MSecondaryButton(title: "Relancer maintenant") { store.relaunch() }
+                            .frame(width: 190)
+                    }
+                    .padding(.vertical, 10)
+                }
+
                 settingsBlock("Rafraîchissement") {
                     labelRow("Intervalle") {
                         MSeg(options: [(800, "0,8 s"), (1600, "1,6 s"), (3200, "3,2 s")],
