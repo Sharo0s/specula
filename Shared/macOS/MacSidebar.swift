@@ -19,8 +19,8 @@ struct MacSidebar: View {
                         .font(.archivo(8, .heavy))
                         .padding(.horizontal, 5)
                         .padding(.vertical, 2)
-                        .overlay(Rectangle().strokeBorder(Ink.accent, lineWidth: 1))
-                        .foregroundStyle(Ink.accentText)
+                        .overlay(Rectangle().strokeBorder(Ink.accent2, lineWidth: 1))
+                        .foregroundStyle(Ink.accent2Text)
                 }
                 Spacer()
             }

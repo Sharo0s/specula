@@ -43,6 +43,12 @@ enum Ink {
     static let accentText = dyn("ae1800", "ff9783")
     /// accent-300, ring des cartes en panne
     static let accentRing = dyn("ffc4b8", "7c1405")
+    /// accent-2 du design system — corail orangé, « attention sans gravité »
+    static let accent2 = Color(hex: "e15b47")
+    /// texte accent-2 lisible : `#9e3526` / `#ff9784`
+    static let accent2Text = dyn("9e3526", "ff9784")
+    /// fond de tag accent-2 : `#ffe0da` / `#71261b`
+    static let accent2Bg = dyn("ffe0da", "71261b")
     /// tag latence : fond `#f8f4f4` / `#3a3737`
     static let tagBg = dyn("f8f4f4", "3a3737")
     /// tag latence : texte `#444141` / `#d7d3d3`

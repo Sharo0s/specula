@@ -184,6 +184,7 @@ enum LiveFetcher {
     // MARK: Lecture en cours (Jellyfin /Sessions)
 
     struct NowPlayingSession: Sendable, Hashable {
+        let id: String
         let title: String
         let user: String
         let paused: Bool
@@ -204,6 +205,7 @@ enum LiveFetcher {
                 let series = item["SeriesName"] as? String
                 let play = session.dict("PlayState")
                 return NowPlayingSession(
+                    id: session["Id"] as? String ?? "",
                     title: series.map { "\($0) — \(name)" } ?? name,
                     user: session["UserName"] as? String ?? "",
                     paused: play?["IsPaused"] as? Bool ?? false,
@@ -212,6 +214,19 @@ enum LiveFetcher {
             }
         }
         return nil
+    }
+
+    /// Pause/reprise d'une session Jellyfin.
+    static func togglePause(base: String, key: String, sessionID: String) async {
+        guard !sessionID.isEmpty else { return }
+        for candidate in candidates(base) {
+            guard let url = URL(string: "\(candidate)/Sessions/\(sessionID)/Playing/TogglePause") else { continue }
+            if let resp = try? await HTTPClient.shared.request(url, method: "POST",
+                                                              headers: ["X-Emby-Token": key]),
+               (200..<300).contains(resp.status) {
+                return
+            }
+        }
     }
 
     // MARK: Transmission RPC (danse du X-Transmission-Session-Id)

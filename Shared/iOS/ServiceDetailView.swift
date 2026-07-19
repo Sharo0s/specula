@@ -117,7 +117,9 @@ struct ServiceDetailView: View {
         if let sessions = store.nowPlaying[service.id], !sessions.isEmpty {
             VStack(alignment: .leading, spacing: 8) {
                 ForEach(Array(sessions.prefix(3)), id: \.self) { session in
-                    NowPlayingRow(session: session)
+                    NowPlayingRow(session: session) {
+                        store.togglePause(service, session: session)
+                    }
                 }
             }
             .padding(.bottom, 16)

@@ -67,8 +67,8 @@ struct HomeView: View {
                     .tracking(0.45)
                     .padding(.horizontal, 7)
                     .padding(.vertical, 2)
-                    .overlay(Rectangle().strokeBorder(Ink.accent, lineWidth: 1))
-                    .foregroundStyle(Ink.accentText)
+                    .overlay(Rectangle().strokeBorder(Ink.accent2, lineWidth: 1))
+                    .foregroundStyle(Ink.accent2Text)
             }
             if store.guestPreview {
                 Text("INVITÉ")
@@ -141,7 +141,7 @@ struct HomeView: View {
             HStack(spacing: 0) {
                 cell(store.cpuText, "CPU")
                 VRule()
-                cell(store.tempText, "Temp.")
+                cell(store.tempText, "Temp.", warn: store.tempWarning)
                 VRule()
                 cell(store.ramText, "Libre")
                 VRule()
@@ -156,12 +156,12 @@ struct HomeView: View {
         .padding(.top, 8)
     }
 
-    private func cell(_ value: String, _ label: String, accent: Bool = false) -> some View {
+    private func cell(_ value: String, _ label: String, accent: Bool = false, warn: Bool = false) -> some View {
         VStack(alignment: .leading, spacing: 1) {
             Text(value)
                 .font(.archivo(17, .heavy))
                 .monospacedDigit()
-                .foregroundStyle(accent ? Ink.accentText : Ink.text)
+                .foregroundStyle(accent ? Ink.accentText : (warn ? Ink.accent2Text : Ink.text))
             Text(LocalizedStringKey(label))
                 .upperLabel(8.5)
                 .foregroundStyle(Ink.muted)
@@ -228,7 +228,8 @@ struct ServiceRow: View {
                     .foregroundStyle(Ink.muted)
             }
             Spacer()
-            LatencyTag(text: store.pingText(service), down: store.isDown(service))
+            LatencyTag(text: store.pingText(service), down: store.isDown(service),
+                       slow: store.isSlow(service))
             Image(systemName: "chevron.right")
                 .font(.system(size: 11, weight: .semibold))
                 .foregroundStyle(Ink.muted)

@@ -511,8 +511,19 @@ final class AppStore {
     }
 
     /// Latence pas encore mesurée (mode live, avant la première réponse).
-    private func pending(_ s: Service) -> Bool {
+    func isPending(_ s: Service) -> Bool {
         dataMode == .live && !measured.contains(s.id)
+    }
+    private func pending(_ s: Service) -> Bool { isPending(s) }
+
+    /// Latence élevée (≥ 100 ms) — accent-2.
+    func isSlow(_ s: Service) -> Bool {
+        !isDown(s) && (isPending(s) || ping(s) >= 100)
+    }
+
+    /// Température en préavis (≥ 48 °C, avant l'alerte à 50).
+    var tempWarning: Bool {
+        (dataMode == .demo || systemLive) && temp >= 48
     }
 
     func pingText(_ s: Service) -> String {
@@ -626,6 +637,19 @@ final class AppStore {
         case .cpu: "\(Int((cpuHistory[s.id]?.last ?? 0).rounded())) %"
         case .net: "\(fr(netHistory[s.id]?.last ?? 0)) Mo/s"
         }
+    }
+
+    /// Pause/reprise d'une lecture Jellyfin (bascule optimiste, POST ensuite).
+    func togglePause(_ s: Service, session: LiveFetcher.NowPlayingSession) {
+        guard let key = apiKey(for: s.id) else { return }
+        if var list = nowPlaying[s.id], let i = list.firstIndex(of: session) {
+            list[i] = LiveFetcher.NowPlayingSession(
+                id: session.id, title: session.title, user: session.user,
+                paused: !session.paused, position: session.position, duration: session.duration)
+            nowPlaying[s.id] = list
+        }
+        let base = s.apiURL ?? fullURL(s)
+        Task { await LiveFetcher.togglePause(base: base, key: key, sessionID: session.id) }
     }
 
     // MARK: - Statut 30 j

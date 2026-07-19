@@ -45,6 +45,8 @@ struct ServiceTile: View {
 struct LatencyTag: View {
     let text: String
     var down = false
+    /// Latence élevée ou mesure en attente — accent-2 (orange).
+    var slow = false
     var size: CGFloat = 9.5
 
     var body: some View {
@@ -54,8 +56,8 @@ struct LatencyTag: View {
             .tracking(size * 0.02)
             .padding(.horizontal, 7)
             .padding(.vertical, 3)
-            .background(down ? Ink.accent : Ink.tagBg)
-            .foregroundStyle(down ? Ink.bg : Ink.tagText)
+            .background(down ? Ink.accent : (slow ? Ink.accent2Bg : Ink.tagBg))
+            .foregroundStyle(down ? Ink.bg : (slow ? Ink.accent2Text : Ink.tagText))
     }
 }
 
@@ -261,12 +263,14 @@ struct SystemBandCell: View {
     let value: String
     let label: String
     var progress: Double? = nil
+    var tint: Color? = nil
 
     var body: some View {
         VStack(alignment: .leading, spacing: 2) {
             Text(value)
                 .font(.archivo(17, .heavy))
                 .monospacedDigit()
+                .foregroundStyle(tint ?? Ink.text)
                 .lineLimit(1)
                 .minimumScaleFactor(0.7)
             Text(LocalizedStringKey(label))
@@ -290,12 +294,20 @@ struct SystemBandCell: View {
 /// Lecture en cours (Jellyfin) : ▶︎/⏸ titre (utilisateur) · position / durée + progression.
 struct NowPlayingRow: View {
     let session: LiveFetcher.NowPlayingSession
+    /// Pause/reprise — l'icône devient interactive quand fourni.
+    var onTogglePause: (() -> Void)? = nil
 
     var body: some View {
         VStack(alignment: .leading, spacing: 4) {
             HStack(spacing: 8) {
                 Image(systemName: session.paused ? "pause.fill" : "play.fill")
                     .font(.system(size: 9, weight: .bold))
+                    .foregroundStyle(Ink.accent2)
+                    .frame(width: 18, height: 18)
+                    .overlay(Rectangle().strokeBorder(
+                        onTogglePause == nil ? .clear : Ink.divider, lineWidth: 1))
+                    .contentShape(.rect)
+                    .onTapGesture { onTogglePause?() }
                 Text(verbatim: session.user.isEmpty
                      ? session.title : "\(session.title) (\(session.user))")
                     .font(.archivo(11, .bold))
@@ -308,7 +320,7 @@ struct NowPlayingRow: View {
             GeometryReader { geo in
                 ZStack(alignment: .leading) {
                     Ink.divider.opacity(0.4)
-                    Ink.text.frame(width: geo.size.width * fraction)
+                    Ink.accent2.frame(width: geo.size.width * fraction)
                 }
             }
             .frame(height: 3)
@@ -360,7 +372,8 @@ struct ServiceCard: View {
                             .lineLimit(1)
                     }
                     Spacer(minLength: 0)
-                    LatencyTag(text: store.pingText(service), down: down, size: 9)
+                    LatencyTag(text: store.pingText(service), down: down,
+                               slow: store.isSlow(service), size: 9)
                 }
                 HRule()
                 HStack(spacing: 0) {
@@ -373,7 +386,9 @@ struct ServiceCard: View {
                 if let sessions = store.nowPlaying[service.id], !sessions.isEmpty {
                     HRule()
                     ForEach(Array(sessions.prefix(2)), id: \.self) { session in
-                        NowPlayingRow(session: session)
+                        NowPlayingRow(session: session) {
+                            store.togglePause(service, session: session)
+                        }
                     }
                 }
             }

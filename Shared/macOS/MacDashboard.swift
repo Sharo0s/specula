@@ -105,7 +105,8 @@ struct MacDashboard: View {
             HStack(spacing: 0) {
                 bandCell(store.cpuText, "CPU", progress: hasSystem ? store.cpu / 100 : nil)
                 VRule()
-                bandCell(store.tempLongText, "Température", progress: hasSystem ? store.temp / 70 : nil)
+                bandCell(store.tempLongText, "Température", progress: hasSystem ? store.temp / 70 : nil,
+                         tint: store.tempWarning ? Ink.accent2Text : nil)
                 VRule()
                 bandCell(store.ramLongText, "RAM libre", progress: hasSystem ? store.ram / 16 : nil)
                 VRule()
@@ -117,8 +118,8 @@ struct MacDashboard: View {
         }
     }
 
-    private func bandCell(_ value: String, _ label: String, progress: Double?) -> some View {
-        SystemBandCell(value: value, label: label, progress: progress)
+    private func bandCell(_ value: String, _ label: String, progress: Double?, tint: Color? = nil) -> some View {
+        SystemBandCell(value: value, label: label, progress: progress, tint: tint)
             .padding(.vertical, 10)
             .padding(.horizontal, 14)
     }
@@ -151,7 +152,8 @@ struct MacServiceRow: View {
                     }
                     .frame(minWidth: 76, alignment: .leading)
                 }
-                LatencyTag(text: store.pingText(service), down: down)
+                LatencyTag(text: store.pingText(service), down: down,
+                           slow: store.isSlow(service))
             }
             .padding(.vertical, 8)
             .padding(.horizontal, 6)
@@ -236,7 +238,9 @@ struct MacInspector: View {
                 if let sessions = store.nowPlaying[service.id], !sessions.isEmpty {
                     VStack(alignment: .leading, spacing: 8) {
                         ForEach(Array(sessions.prefix(3)), id: \.self) { session in
-                            NowPlayingRow(session: session)
+                            NowPlayingRow(session: session) {
+                                store.togglePause(service, session: session)
+                            }
                         }
                     }
                     .padding(.vertical, 10)
