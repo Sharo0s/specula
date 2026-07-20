@@ -4,7 +4,7 @@ import Security
 // MARK: - Clés API → Keychain (README : « clé API → Keychain »)
 
 enum KeychainStore {
-    private static let service = "ovh.smalard.specula"
+    private static let service = "com.smalard.specula"
 
     static func set(_ value: String, for account: String) {
         delete(account)

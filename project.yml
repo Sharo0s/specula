@@ -38,14 +38,14 @@ targets:
       - package: Yams
     settings:
       base:
-        PRODUCT_BUNDLE_IDENTIFIER: ovh.smalard.specula
+        PRODUCT_BUNDLE_IDENTIFIER: com.smalard.specula
         PRODUCT_NAME: Specula
         INFOPLIST_KEY_UILaunchScreen_Generation: YES
         TARGETED_DEVICE_FAMILY: "1,2"
     entitlements:
       path: Resources/Specula-iOS.entitlements
       properties:
-        com.apple.security.application-groups: [group.ovh.smalard.specula]
+        com.apple.security.application-groups: [group.com.smalard.specula]
     info:
       path: Resources/Info-iOS.plist
       properties:
@@ -84,13 +84,13 @@ targets:
       - path: Resources/Localizable.xcstrings
     settings:
       base:
-        PRODUCT_BUNDLE_IDENTIFIER: ovh.smalard.specula.widgets
+        PRODUCT_BUNDLE_IDENTIFIER: com.smalard.specula.widgets
         SKIP_INSTALL: YES
         TARGETED_DEVICE_FAMILY: "1,2"
     entitlements:
       path: Resources/Specula-Widgets.entitlements
       properties:
-        com.apple.security.application-groups: [group.ovh.smalard.specula]
+        com.apple.security.application-groups: [group.com.smalard.specula]
     info:
       path: Resources/Info-Widgets.plist
       properties:
@@ -113,7 +113,7 @@ targets:
       - package: Yams
     settings:
       base:
-        PRODUCT_BUNDLE_IDENTIFIER: ovh.smalard.specula.mac
+        PRODUCT_BUNDLE_IDENTIFIER: com.smalard.specula.mac
         PRODUCT_NAME: Specula
         ENABLE_HARDENED_RUNTIME: NO
     info:
@@ -147,13 +147,13 @@ targets:
       - package: Yams
     settings:
       base:
-        PRODUCT_BUNDLE_IDENTIFIER: ovh.smalard.specula.watchkitapp
+        PRODUCT_BUNDLE_IDENTIFIER: com.smalard.specula.watchkitapp
         PRODUCT_NAME: Specula
         TARGETED_DEVICE_FAMILY: "4"
     entitlements:
       path: Resources/Specula-Watch.entitlements
       properties:
-        com.apple.security.application-groups: [group.ovh.smalard.specula]
+        com.apple.security.application-groups: [group.com.smalard.specula]
     info:
       path: Resources/Info-Watch.plist
       properties:
@@ -162,7 +162,7 @@ targets:
         CFBundleVersion: $(CURRENT_PROJECT_VERSION)
         ITSAppUsesNonExemptEncryption: false
         WKApplication: true
-        WKCompanionAppBundleIdentifier: ovh.smalard.specula
+        WKCompanionAppBundleIdentifier: com.smalard.specula
         WKRunsIndependentlyOfCompanionApp: true
         NSAppTransportSecurity:
           NSAllowsArbitraryLoads: true
@@ -184,13 +184,13 @@ targets:
       - path: Resources/Localizable.xcstrings
     settings:
       base:
-        PRODUCT_BUNDLE_IDENTIFIER: ovh.smalard.specula.watchkitapp.widgets
+        PRODUCT_BUNDLE_IDENTIFIER: com.smalard.specula.watchkitapp.widgets
         SKIP_INSTALL: YES
         TARGETED_DEVICE_FAMILY: "4"
     entitlements:
       path: Resources/Specula-WatchWidgets.entitlements
       properties:
-        com.apple.security.application-groups: [group.ovh.smalard.specula]
+        com.apple.security.application-groups: [group.com.smalard.specula]
     info:
       path: Resources/Info-WatchWidgets.plist
       properties:

@@ -23,7 +23,7 @@ struct SharedState: Codable {
     var temp: Double?
     var pinned: [SharedPinned]
 
-    static let groupID = "group.ovh.smalard.specula"
+    static let groupID = "group.com.smalard.specula"
 
     static var fileURL: URL {
         let base = FileManager.default
