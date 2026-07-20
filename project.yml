@@ -1,7 +1,7 @@
 name: Specula
 options:
   developmentLanguage: fr
-  bundleIdPrefix: ovh.smalard
+  bundleIdPrefix: com.smalard
   deploymentTarget:
     iOS: "26.0"
     macOS: "26.0"
