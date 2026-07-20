@@ -30,6 +30,8 @@ targets:
         excludes:
           - "macOS/**"
       - path: Resources
+        excludes:
+          - "Info-*.plist"
     dependencies:
       - target: Specula-Widgets
         embed: true
@@ -109,6 +111,8 @@ targets:
         excludes:
           - "iOS/**"
       - path: Resources
+        excludes:
+          - "Info-*.plist"
     dependencies:
       - package: Yams
     settings:
@@ -141,6 +145,8 @@ targets:
           - "macOS/**"
           - "SpeculaApp.swift"
       - path: Resources
+        excludes:
+          - "Info-*.plist"
     dependencies:
       - target: Specula-WatchWidgets
         embed: true
