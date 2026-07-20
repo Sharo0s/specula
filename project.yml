@@ -3,17 +3,18 @@ options:
   developmentLanguage: fr
   bundleIdPrefix: ovh.smalard
   deploymentTarget:
-    iOS: "18.0"
-    macOS: "15.0"
-    watchOS: "11.0"
+    iOS: "26.0"
+    macOS: "26.0"
+    watchOS: "26.0"
   createIntermediateGroups: true
 
 settings:
   base:
     SWIFT_VERSION: "5.10"
     CODE_SIGN_STYLE: Automatic
-    CODE_SIGN_IDENTITY: "-"
-    DEVELOPMENT_TEAM: ""
+    DEVELOPMENT_TEAM: F98837R8GC
+    MARKETING_VERSION: "1.0.0"
+    CURRENT_PROJECT_VERSION: "1"
 
 packages:
   Yams:
@@ -32,6 +33,8 @@ targets:
     dependencies:
       - target: Specula-Widgets
         embed: true
+      - target: Specula-Watch
+        embed: true
       - package: Yams
     settings:
       base:
@@ -47,6 +50,10 @@ targets:
       path: Resources/Info-iOS.plist
       properties:
         CFBundleDisplayName: Specula
+        CFBundleShortVersionString: $(MARKETING_VERSION)
+        CFBundleVersion: $(CURRENT_PROJECT_VERSION)
+        ITSAppUsesNonExemptEncryption: false
+        LSApplicationCategoryType: public.app-category.utilities
         UIAppFonts: [Archivo-Variable.ttf]
         UILaunchScreen: {}
         NSSupportsLiveActivities: true
@@ -88,6 +95,8 @@ targets:
       path: Resources/Info-Widgets.plist
       properties:
         CFBundleDisplayName: Specula
+        CFBundleShortVersionString: $(MARKETING_VERSION)
+        CFBundleVersion: $(CURRENT_PROJECT_VERSION)
         UIAppFonts: [Archivo-Variable.ttf]
         NSExtension:
           NSExtensionPointIdentifier: com.apple.widgetkit-extension
@@ -119,7 +128,7 @@ targets:
           - _http._tcp
           - _https._tcp
         NSMainStoryboardFile: ""
-        LSMinimumSystemVersion: "15.0"
+        LSMinimumSystemVersion: "26.0"
 
   Specula-Watch:
     type: application
@@ -138,7 +147,7 @@ targets:
       - package: Yams
     settings:
       base:
-        PRODUCT_BUNDLE_IDENTIFIER: ovh.smalard.specula.watch
+        PRODUCT_BUNDLE_IDENTIFIER: ovh.smalard.specula.watchkitapp
         PRODUCT_NAME: Specula
         TARGETED_DEVICE_FAMILY: "4"
     entitlements:
@@ -149,8 +158,12 @@ targets:
       path: Resources/Info-Watch.plist
       properties:
         CFBundleDisplayName: Specula
+        CFBundleShortVersionString: $(MARKETING_VERSION)
+        CFBundleVersion: $(CURRENT_PROJECT_VERSION)
+        ITSAppUsesNonExemptEncryption: false
         WKApplication: true
-        WKWatchOnly: true
+        WKCompanionAppBundleIdentifier: ovh.smalard.specula
+        WKRunsIndependentlyOfCompanionApp: true
         NSAppTransportSecurity:
           NSAllowsArbitraryLoads: true
         NSLocalNetworkUsageDescription: "Specula découvre et interroge tes services selfhosted sur le réseau local."
@@ -171,7 +184,7 @@ targets:
       - path: Resources/Localizable.xcstrings
     settings:
       base:
-        PRODUCT_BUNDLE_IDENTIFIER: ovh.smalard.specula.watch.widgets
+        PRODUCT_BUNDLE_IDENTIFIER: ovh.smalard.specula.watchkitapp.widgets
         SKIP_INSTALL: YES
         TARGETED_DEVICE_FAMILY: "4"
     entitlements:
@@ -182,6 +195,8 @@ targets:
       path: Resources/Info-WatchWidgets.plist
       properties:
         CFBundleDisplayName: Specula
+        CFBundleShortVersionString: $(MARKETING_VERSION)
+        CFBundleVersion: $(CURRENT_PROJECT_VERSION)
         UIAppFonts: [Archivo-Variable.ttf]
         NSExtension:
           NSExtensionPointIdentifier: com.apple.widgetkit-extension
