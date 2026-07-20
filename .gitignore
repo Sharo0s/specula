@@ -14,3 +14,6 @@ xcuserdata/
 
 # Le projet est généré par XcodeGen (project.yml est la source de vérité)
 Specula.xcodeproj/
+
+# Artefacts de build/export
+build/
