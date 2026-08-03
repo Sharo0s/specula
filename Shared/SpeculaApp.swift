@@ -25,7 +25,9 @@ struct SpeculaApp: App {
 
     var body: some Scene {
         #if os(macOS)
-        WindowGroup {
+        // Identifiée : la barre de menus doit pouvoir rouvrir une fenêtre
+        // quand l'app tourne sans Dock et que la dernière a été fermée.
+        WindowGroup(id: "main") {
             MacRootView()
                 .environment(store)
                 .environment(\.locale, store.localeOverride ?? .autoupdatingCurrent)

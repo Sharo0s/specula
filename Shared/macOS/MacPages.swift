@@ -79,6 +79,17 @@ struct MacSettingsPage: View {
                         toggleRow("Bandeau système", sub: "CPU, température et RAM — nécessite une source Glances.", isOn: $store.showSystemBand)
                     }
 
+                    settingsBlock("Démarrage") {
+                        toggleRow("Démarrer avec le Mac",
+                                  sub: "Specula s'ouvre à l'ouverture de session, sans fenêtre.",
+                                  isOn: Binding(get: { store.startsAtLogin },
+                                                set: { store.setStartsAtLogin($0) }))
+                        HRule()
+                        toggleRow("Rester dans la barre de menus",
+                                  sub: "Pas d'icône au Dock ; fermer la fenêtre n'arrête pas la surveillance.",
+                                  isOn: $store.menuBarOnly)
+                    }
+
                     settingsBlock("Connexion") {
                         toggleRow("Bascule automatique Tailscale",
                                   sub: "URL locale à la maison, tail1a2b.ts.net en déplacement",

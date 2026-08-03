@@ -643,6 +643,28 @@ final class AppStore {
         didSet { UserDefaults.standard.set(showSystemBand, forKey: "showSystemBand") }
     }
 
+    #if os(macOS)
+    /// Démarrage à l'ouverture de session. Pas de persistance locale : l'état
+    /// vient de SMAppService, que l'utilisateur peut aussi changer côté système.
+    var startsAtLogin: Bool = LoginItem.isEnabled
+
+    func setStartsAtLogin(_ on: Bool) {
+        startsAtLogin = LoginItem.set(on)
+        if !startsAtLogin && on {
+            fireToast(String(localized: "Ouverture automatique refusée — autorise Specula dans Réglages Système > Général > Ouverture."))
+        }
+    }
+
+    /// Vivre dans la seule barre de menus : pas d'icône au Dock, la fermeture
+    /// de la fenêtre ne coupe pas le relevé.
+    var menuBarOnly: Bool = UserDefaults.standard.bool(forKey: "menuBarOnly") {
+        didSet {
+            UserDefaults.standard.set(menuBarOnly, forKey: "menuBarOnly")
+            LoginItem.applyDockVisibility(hidden: menuBarOnly)
+        }
+    }
+    #endif
+
     /// Le bandeau n'apparaît que s'il a quelque chose à dire :
     /// démo toujours, Homelab seulement avec une source Glances.
     var systemBandVisible: Bool {

@@ -1890,6 +1890,38 @@
         }
       }
     },
+    "Démarrage": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Startup"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Inicio"
+          }
+        }
+      }
+    },
+    "Démarrer avec le Mac": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Launch at login"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Abrir al iniciar sesión"
+          }
+        }
+      }
+    },
     "Démo": {
       "localizations": {
         "en": {
@@ -3495,6 +3527,22 @@
         }
       }
     },
+    "Ouverture automatique refusée — autorise Specula dans Réglages Système > Général > Ouverture.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Launch at login was denied — allow Specula in System Settings > General > Login Items."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Apertura automática denegada — autoriza Specula en Ajustes del Sistema > General > Ítems de inicio."
+          }
+        }
+      }
+    },
     "Ouverture de %@ dans le navigateur…": {
       "localizations": {
         "en": {
@@ -3588,6 +3636,22 @@
           "stringUnit": {
             "state": "translated",
             "value": "Recursos"
+          }
+        }
+      }
+    },
+    "Pas d'icône au Dock ; fermer la fenêtre n'arrête pas la surveillance.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No Dock icon; closing the window doesn't stop monitoring."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sin icono en el Dock; cerrar la ventana no detiene la supervisión."
           }
         }
       }
@@ -3746,7 +3810,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Leave"
+            "value": "Quit"
           }
         },
         "es": {
@@ -3980,6 +4044,22 @@
           "stringUnit": {
             "state": "translated",
             "value": "Consultas / día"
+          }
+        }
+      }
+    },
+    "Rester dans la barre de menus": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Keep in the menu bar"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mantener en la barra de menús"
           }
         }
       }
@@ -4396,6 +4476,22 @@
     "Specula": {},
     "Specula interroge désormais tes services. Le mode Démo est désactivé — tu peux le réactiver dans Réglages à tout moment.": {},
     "Specula interroge tes services directement chez toi. iOS va te demander l'accès à ton réseau local — sans lui, impossible de scanner ni de contacter tes machines.": {},
+    "Specula s'ouvre à l'ouverture de session, sans fenêtre.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Specula opens at login, without a window."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Specula se abre al iniciar sesión, sin ventana."
+          }
+        }
+      }
+    },
     "Specula — %@ hors ligne": {
       "extractionState": "stale",
       "localizations": {

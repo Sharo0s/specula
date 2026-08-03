@@ -74,7 +74,7 @@ struct MenuBarPopover: View {
             // Pied
             HStack {
                 Button {
-                    NSApp.activate(ignoringOtherApps: true)
+                    showWindow()
                 } label: {
                     Text("Ouvrir Specula")
                         .font(.archivo(11.5, .heavy))
@@ -82,10 +82,11 @@ struct MenuBarPopover: View {
                 }
                 .buttonStyle(.plain)
                 Spacer()
+                // Sans icône au Dock, c'est la seule sortie de l'app.
                 Button {
-                    NSApp.activate(ignoringOtherApps: true)
+                    NSApp.terminate(nil)
                 } label: {
-                    Text("Réglages…")
+                    Text("Quitter")
                         .font(.archivo(11.5))
                         .foregroundStyle(Ink.muted)
                         .contentShape(.rect)
@@ -96,6 +97,15 @@ struct MenuBarPopover: View {
         }
         .frame(width: 344)
         .background(Ink.bg)
+    }
+
+    /// En mode barre de menus seule, la fenêtre a été fermée : `activate` ne
+    /// suffit plus, il faut en rouvrir une.
+    private func showWindow() {
+        NSApp.activate(ignoringOtherApps: true)
+        if !NSApp.windows.contains(where: { $0.isVisible && $0.canBecomeMain }) {
+            openWindow(id: "main")
+        }
     }
 }
 

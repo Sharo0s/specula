@@ -24,7 +24,17 @@ struct MacRootView: View {
     @AppStorage("hasOnboarded") private var hasOnboarded = false
 
     var body: some View {
-        gate.background(WindowSizer())
+        gate
+            .background(WindowSizer())
+            .task {
+                // Ouverture de session : on applique la visibilité du Dock puis
+                // on referme la fenêtre — le relevé tourne dans la barre de menus
+                // sans s'imposer à l'écran au démarrage du Mac.
+                LoginItem.applyDockVisibility(hidden: store.menuBarOnly)
+                if LoginItem.launchedAtLogin {
+                    LoginItem.closeMainWindow()
+                }
+            }
     }
 
     @ViewBuilder private var gate: some View {
