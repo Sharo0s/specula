@@ -185,7 +185,16 @@ final class AppStore {
         serviceTypes = types
         pins = config.pins ?? Catalog.defaultPins
         let cutoff = Date().addingTimeInterval(-30 * 24 * 3600)
-        self.config.outages = (config.outages ?? []).filter { ($0.end ?? Date()) > cutoff }
+        // Une panne encore ouverte au lancement date d'une session précédente :
+        // on l'arrête à la dernière activité connue plutôt que de la faire courir
+        // pendant tout le temps où l'app était fermée. Si le service est toujours
+        // à terre, le prochain relevé rouvrira un enregistrement.
+        self.config.outages = (config.outages ?? []).map { outage in
+            guard outage.end == nil else { return outage }
+            var sealed = outage
+            sealed.end = max(config.lastTick ?? outage.start, outage.start)
+            return sealed
+        }.filter { ($0.end ?? Date()) > cutoff }
 
         for s in Catalog.all + (importedList ?? []) + customList { seedHistory(s.id) }
         gOrder = Array(mainGroups.indices)
@@ -460,7 +469,11 @@ final class AppStore {
                 // « Après 3 tentatives échouées » → HORS LIGNE
                 if failCounts[target.id] == 3 && !downIDs.contains(target.id) {
                     downIDs.insert(target.id)
-                    config.outages = (config.outages ?? []) + [StoredOutage(serviceID: target.id, start: Date())]
+                    // Un seul enregistrement ouvert par service, sinon les pannes
+                    // s'empilent à chaque redescente sans que rien ne les referme.
+                    if !(config.outages ?? []).contains(where: { $0.serviceID == target.id && $0.end == nil }) {
+                        config.outages = (config.outages ?? []) + [StoredOutage(serviceID: target.id, start: Date())]
+                    }
                     persist()
                     if downAt == nil { downAt = Date() }
                     if rules["down"] == true {
@@ -485,6 +498,10 @@ final class AppStore {
             checkTempAlert()
         }
         polling = false
+        // Trace de la dernière observation, écrite une fois par minute : c'est
+        // elle qui bornera les pannes ouvertes si l'app est quittée.
+        config.lastTick = Date()
+        if t % max(1, 60_000 / refreshMs) == 0 { persist() }
         publishSharedState()
     }
 
@@ -715,14 +732,15 @@ final class AppStore {
         return minutesByDay.map { day, minutes in
             Incident(serviceID: s.id, day: day,
                      duration: String(localized: "\(Int(minutes)) min"),
-                     cause: String(localized: "Délai dépassé (timeout) — 3 tentatives échouées"))
+                     cause: String(localized: "Délai dépassé (timeout) — 3 tentatives échouées"),
+                     minutes: minutes)
         }
     }
 
     func availability(_ s: Service) -> String {
         var minutes = 0.0
         for inc in incidents(for: s) {
-            minutes += Double(inc.duration.split(separator: " ").first.flatMap { Int($0) } ?? 0)
+            minutes += inc.minutes
         }
         if isDown(s) { minutes += Double(downDurationMin) }
         let pct = 100 - minutes / (30 * 24 * 60) * 100

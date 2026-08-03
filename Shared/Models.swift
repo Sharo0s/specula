@@ -53,6 +53,17 @@ struct Incident: Hashable {
     let day: Int
     let duration: String
     let cause: String
+    /// Durée en minutes — le texte est formaté pour l'affichage (séparateur de
+    /// milliers compris) et ne doit jamais servir à recalculer quoi que ce soit.
+    var minutes: Double = 0
+
+    init(serviceID: String, day: Int, duration: String, cause: String, minutes: Double = 0) {
+        self.serviceID = serviceID
+        self.day = day
+        self.duration = duration
+        self.cause = cause
+        self.minutes = minutes
+    }
 }
 
 struct IncidentSelection: Equatable {
@@ -160,10 +171,10 @@ enum Catalog {
 
     /// Incidents historiques du mur de statut 30 j (jour 0 = J-29).
     static let incidents: [Incident] = [
-        Incident(serviceID: "komga", day: 7, duration: "38 min", cause: String(localized: "Conteneur arrêté — OOM killer")),
-        Incident(serviceID: "komga", day: 21, duration: "12 min", cause: String(localized: "Mise à jour de l'image Docker")),
-        Incident(serviceID: "nextcloud", day: 12, duration: "26 min", cause: String(localized: "Certificat TLS expiré")),
-        Incident(serviceID: "uptimekuma", day: 3, duration: "8 min", cause: String(localized: "Redémarrage du NAS")),
+        Incident(serviceID: "komga", day: 7, duration: "38 min", cause: String(localized: "Conteneur arrêté — OOM killer"), minutes: 38),
+        Incident(serviceID: "komga", day: 21, duration: "12 min", cause: String(localized: "Mise à jour de l'image Docker"), minutes: 12),
+        Incident(serviceID: "nextcloud", day: 12, duration: "26 min", cause: String(localized: "Certificat TLS expiré"), minutes: 26),
+        Incident(serviceID: "uptimekuma", day: 3, duration: "8 min", cause: String(localized: "Redémarrage du NAS"), minutes: 8),
     ]
 
     /// Type d'intégration des services du catalogue.

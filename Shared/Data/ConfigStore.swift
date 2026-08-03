@@ -58,6 +58,10 @@ struct AppConfig: Codable {
     var pins: [String]?
     /// Pannes observées (30 jours glissants).
     var outages: [StoredOutage]?
+    /// Dernier relevé effectué par l'app. Sert à refermer une panne restée
+    /// ouverte parce que l'app a été quittée avant le retour du service : le
+    /// temps où personne ne regardait n'est imputé à aucun service.
+    var lastTick: Date?
     /// Clés API par id de service. Stockage principal : le trousseau redemande
     /// l'autorisation à chaque rebuild ad hoc (le Keychain reste écrit en
     /// best-effort pour le passage à une vraie signature).
