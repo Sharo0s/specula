@@ -2,7 +2,7 @@
 import SwiftUI
 
 // MARK: - iPadOS : colonne latérale 212 px + grille de cartes denses
-// Mêmes cartes que le Mac ; tap = ouvre l'interface web.
+// Mêmes cartes que le Mac ; tap = détail du service, double-tap = interface web.
 // Suit le mode sombre, l'ordre/visibilité des groupes et le rafraîchissement.
 
 struct IPadRootView: View {
@@ -11,6 +11,8 @@ struct IPadRootView: View {
     @State private var group: Int?
     /// Feuille des réglages (seul accès à la config sur iPad).
     @State private var showSettings = false
+    /// Service dont le détail est ouvert en feuille (tap simple sur une carte).
+    @State private var detail: Service?
     /// SettingsView attend un chemin de navigation ; en feuille il reste local.
     @State private var settingsPath: [IOSRoute] = []
 
@@ -130,7 +132,8 @@ struct IPadRootView: View {
                         LazyVGrid(columns: [GridItem(.adaptive(minimum: 235), spacing: 14, alignment: .topLeading)],
                                   alignment: .leading, spacing: 14) {
                             ForEach(g.services) { s in
-                                ServiceCard(service: s) { store.openWeb(s) }
+                                ServiceCard(service: s,
+                                            onOpen: { store.openWeb(s) }) { detail = s }
                             }
                         }
                     }
@@ -140,6 +143,12 @@ struct IPadRootView: View {
             .padding(.bottom, 30)
         }
         .frame(maxWidth: .infinity)
+        // Feuille portée par la grille, pas par la vue racine : celle-ci
+        // présente déjà les réglages (deux présentations sur la même vue
+        // s'annulent).
+        .sheet(item: $detail) { s in
+            ServiceDetailView(service: s).environment(store)
+        }
     }
 
     private var groups: [(index: Int, name: String, services: [Service])] {

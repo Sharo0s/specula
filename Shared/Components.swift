@@ -364,6 +364,43 @@ struct BrandSquare: View {
     }
 }
 
+extension View {
+    /// Double-clic (macOS) → action secondaire, sans désarmer le clic simple :
+    /// le double-clic sélectionne *puis* ouvre, comme le Finder.
+    @ViewBuilder
+    func doubleClickAction(_ action: (() -> Void)?) -> some View {
+        #if os(macOS)
+        if let action {
+            simultaneousGesture(TapGesture(count: 2).onEnded(action))
+                .help(Text("Double-clic : ouvrir l'interface web"))
+        } else {
+            self
+        }
+        #else
+        self
+        #endif
+    }
+}
+
+// Compilé aussi pour watchOS : le target Watch embarque Components.swift.
+#if !os(macOS)
+extension View {
+    /// Tap simple → `tap`, double-tap → `open`. Gestes **exclusifs** : SwiftUI
+    /// diffère le tap simple le temps de lever l'ambiguïté (contrairement au
+    /// Mac, où le double-clic sélectionne puis ouvre — enchaîner les deux
+    /// ouvrirait le détail *et* le navigateur).
+    @ViewBuilder
+    func tapOrDoubleTap(tap: @escaping () -> Void, open: (() -> Void)?) -> some View {
+        if let open {
+            onTapGesture(count: 2, perform: open)
+                .onTapGesture(perform: tap)
+        } else {
+            onTapGesture(perform: tap)
+        }
+    }
+}
+#endif
+
 /// Carte service dense — dashboard Mac et grille iPad.
 /// Tuile + nom + description + tag latence, filet, 3 métriques.
 struct ServiceCard: View {
@@ -371,62 +408,73 @@ struct ServiceCard: View {
     let service: Service
     var pad: CGFloat = 12
     var selected = false
+    /// Ouverture de l'interface web : double-clic (macOS) ou double-tap (iOS).
+    var onOpen: (() -> Void)?
     let select: () -> Void
 
     var body: some View {
+        #if os(macOS)
+        Button(action: select) { card }
+            .buttonStyle(.plain)
+            .doubleClickAction(onOpen)
+        #else
+        card
+            .accessibilityAddTraits(.isButton)
+            .tapOrDoubleTap(tap: select, open: onOpen)
+        #endif
+    }
+
+    private var card: some View {
         let down = store.isDown(service)
-        Button(action: select) {
-            VStack(alignment: .leading, spacing: 8) {
-                HStack(alignment: .top, spacing: 10) {
-                    ServiceTile(service: service, size: 34, down: down)
-                    VStack(alignment: .leading, spacing: 1) {
-                        Text(service.name)
-                            .font(.archivo(14, .heavy))
-                            .foregroundStyle(down ? Ink.accentText : Ink.text)
-                            .lineLimit(2)
-                            .fixedSize(horizontal: false, vertical: true)
-                        Text(LocalizedStringKey(service.desc))
-                            .font(.archivo(10.5))
-                            .foregroundStyle(Ink.muted)
-                            .lineLimit(2)
-                            .fixedSize(horizontal: false, vertical: true)
-                    }
-                    Spacer(minLength: 0)
-                    LatencyTag(text: store.pingText(service), down: down,
-                               slow: store.isSlow(service), size: 9)
+        return VStack(alignment: .leading, spacing: 8) {
+            HStack(alignment: .top, spacing: 10) {
+                ServiceTile(service: service, size: 34, down: down)
+                VStack(alignment: .leading, spacing: 1) {
+                    Text(service.name)
+                        .font(.archivo(14, .heavy))
+                        .foregroundStyle(down ? Ink.accentText : Ink.text)
+                        .lineLimit(2)
+                        .fixedSize(horizontal: false, vertical: true)
+                    Text(LocalizedStringKey(service.desc))
+                        .font(.archivo(10.5))
+                        .foregroundStyle(Ink.muted)
+                        .lineLimit(2)
+                        .fixedSize(horizontal: false, vertical: true)
                 }
-                // Le bas de carte (filet + métriques) est calé en bas :
-                // toutes les cartes d'une rangée prennent la même hauteur.
                 Spacer(minLength: 0)
-                HRule()
-                let cells = store.metrics(service)
-                if cells.isEmpty && store.needsAPIKey(service) {
-                    KeyRequiredNote(size: 8)
-                } else {
-                    HStack(spacing: 0) {
-                        ForEach(Array(cells.prefix(3).enumerated()), id: \.offset) { i, m in
-                            if i > 0 { Spacer(minLength: 6) }
-                            MetricCell(value: m[0], label: m[1], valueSize: 15, labelSize: 8)
-                        }
-                    }
-                }
-                // Lecture en cours (Jellyfin)
-                if let sessions = store.nowPlaying[service.id], !sessions.isEmpty {
-                    HRule()
-                    ForEach(Array(sessions.prefix(2)), id: \.self) { session in
-                        NowPlayingRow(session: session) {
-                            store.togglePause(service, session: session)
-                        }
+                LatencyTag(text: store.pingText(service), down: down,
+                           slow: store.isSlow(service), size: 9)
+            }
+            // Le bas de carte (filet + métriques) est calé en bas :
+            // toutes les cartes d'une rangée prennent la même hauteur.
+            Spacer(minLength: 0)
+            HRule()
+            let cells = store.metrics(service)
+            if cells.isEmpty && store.needsAPIKey(service) {
+                KeyRequiredNote(size: 8)
+            } else {
+                HStack(spacing: 0) {
+                    ForEach(Array(cells.prefix(3).enumerated()), id: \.offset) { i, m in
+                        if i > 0 { Spacer(minLength: 6) }
+                        MetricCell(value: m[0], label: m[1], valueSize: 15, labelSize: 8)
                     }
                 }
             }
+            // Lecture en cours (Jellyfin)
+            if let sessions = store.nowPlaying[service.id], !sessions.isEmpty {
+                HRule()
+                ForEach(Array(sessions.prefix(2)), id: \.self) { session in
+                    NowPlayingRow(session: session) {
+                        store.togglePause(service, session: session)
+                    }
+                }
+            }
+        }
             .padding(pad)
             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
             .background(Ink.surface)
             .overlay(Rectangle().strokeBorder(
                 selected ? Ink.accent : (down ? Ink.accentRing : .clear), lineWidth: 2))
             .contentShape(.rect)
-        }
-        .buttonStyle(.plain)
     }
 }

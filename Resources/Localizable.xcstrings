@@ -1809,6 +1809,22 @@
         }
       }
     },
+    "Double-clic : ouvrir l'interface web": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Double-click: open web UI"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Doble clic: abrir interfaz web"
+          }
+        }
+      }
+    },
     "DÉMO": {},
     "Délai dépassé (timeout) — 3 tentatives échouées": {
       "localizations": {

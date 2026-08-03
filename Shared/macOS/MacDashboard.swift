@@ -32,7 +32,8 @@ struct MacDashboard: View {
                                           alignment: .leading, spacing: gap) {
                                     ForEach(group.services) { s in
                                         ServiceCard(service: s, pad: pad,
-                                                    selected: ui.selection == s.id) {
+                                                    selected: ui.selection == s.id,
+                                                    onOpen: { store.openWeb(s) }) {
                                             ui.selection = s.id
                                         }
                                     }
@@ -181,6 +182,7 @@ struct MacServiceRow: View {
             .contentShape(.rect)
         }
         .buttonStyle(.plain)
+        .doubleClickAction { store.openWeb(service) }
     }
 }
 

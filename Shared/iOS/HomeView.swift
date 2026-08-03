@@ -189,7 +189,8 @@ struct HomeView: View {
             ForEach(Array(services.enumerated()), id: \.element.id) { i, s in
                 if i > 0 { HRule().padding(.leading, 18) }
                 ServiceRow(service: s)
-                    .onTapGesture { path.append(.detail(s)) }
+                    .tapOrDoubleTap(tap: { path.append(.detail(s)) },
+                                    open: { store.openWeb(s) })
                     .onLongPressGesture(minimumDuration: 0.48) { ctxService = s }
             }
         }
@@ -212,7 +213,8 @@ struct HomeView: View {
                         .foregroundStyle(store.isDown(s) ? Ink.accentText : Ink.muted)
                 }
                 .contentShape(.rect)
-                .onTapGesture { path.append(.detail(s)) }
+                .tapOrDoubleTap(tap: { path.append(.detail(s)) },
+                                open: { store.openWeb(s) })
                 .onLongPressGesture(minimumDuration: 0.48) { ctxService = s }
             }
         }
