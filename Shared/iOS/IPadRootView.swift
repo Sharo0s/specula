@@ -29,7 +29,11 @@ struct IPadRootView: View {
         }
         .background(Ink.bg)
         .sheet(isPresented: $showSettings) {
-            SettingsView(path: $settingsPath).environment(store)
+            // Feuille pleine page : la taille par défaut (~540 pt) laisse les
+            // réglages en une seule colonne alors que l'écran en tient deux.
+            SettingsView(path: $settingsPath)
+                .environment(store)
+                .presentationSizing(.page)
         }
     }
 

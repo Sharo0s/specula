@@ -35,216 +35,238 @@ struct SettingsView: View {
             .padding(.horizontal, 18)
             .padding(.vertical, 12)
 
-            ScrollView {
-                VStack(alignment: .leading, spacing: 0) {
-                    Text("Réglages")
-                        .font(.archivo(24, .heavy))
-                        .padding(.bottom, 14)
-
-                    // Pictogrammes
-                    section("Pictogrammes") {
-                        toggleRow("Logos des services",
-                                  sub: "dashboard-icons — monogramme en secours",
-                                  isOn: $store.logosOn)
-                        HRule()
-                        toggleRow("Bandeau système",
-                                  sub: "CPU, température et RAM — nécessite une source Glances.",
-                                  isOn: $store.showSystemBand)
-                    }
-
-                    // Connexion
-                    section("Connexion") {
-                        HStack {
-                            VStack(alignment: .leading, spacing: 1) {
-                                Text("Tailscale")
-                                    .font(.archivo(13.5, .bold))
-                                Text(store.net == .tailscale
-                                     ? "Connecté via tail1a2b.ts.net — +18 ms"
-                                     : "Réseau local détecté")
-                                    .font(.archivo(11))
-                                    .foregroundStyle(Ink.muted)
+            // iPad : deux colonnes dès que la feuille est assez large ;
+            // sur iPhone la pile reste la seule mise en page possible.
+            GeometryReader { geo in
+                ScrollView {
+                    VStack(alignment: .leading, spacing: 0) {
+                        Text("Réglages")
+                            .font(.archivo(24, .heavy))
+                            .padding(.bottom, 14)
+                        if geo.size.width > 820 {
+                            HStack(alignment: .top, spacing: 26) {
+                                VStack(alignment: .leading, spacing: 0) { columnA }
+                                VStack(alignment: .leading, spacing: 0) { columnB }
                             }
-                            Spacer()
-                            Rectangle()
-                                .fill(store.net == .tailscale ? Ink.accent : Ink.text.opacity(0.25))
-                                .frame(width: 10, height: 10)
-                        }
-                        .padding(.vertical, 10)
-                        HRule()
-                        toggleRow("Bascule automatique",
-                                  sub: "Choisit l'URL locale ou Tailscale selon le réseau",
-                                  isOn: $store.tsAuto)
-                        HRule()
-                        HStack {
-                            Text("Simulateur")
-                                .font(.archivo(13.5, .bold))
-                            Spacer()
-                            MSeg(options: [(NetMode.local, "Maison"), (NetMode.tailscale, "Déplacement")],
-                                 selection: $store.net)
-                        }
-                        .padding(.vertical, 10)
-                    }
-
-                    // Groupes
-                    section("Groupes") {
-                        ForEach(Array(store.gOrder.enumerated()), id: \.element) { idx, gi in
-                            if idx > 0 { HRule() }
-                            HStack(spacing: 8) {
-                                Text(store.mainGroups[gi])
-                                    .font(.archivo(13.5, .bold))
-                                    .foregroundStyle(store.gHidden.contains(gi) ? Ink.muted : Ink.text)
-                                Spacer()
-                                squareButton("arrow.up", disabled: idx == 0) { store.moveGroup(idx, -1) }
-                                squareButton("arrow.down", disabled: idx == store.gOrder.count - 1) { store.moveGroup(idx, 1) }
-                                squareButton(store.gHidden.contains(gi) ? "eye.slash" : "eye") {
-                                    if store.gHidden.contains(gi) {
-                                        store.gHidden.remove(gi)
-                                    } else {
-                                        store.gHidden.insert(gi)
-                                    }
-                                }
-                            }
-                            .padding(.vertical, 8)
+                        } else {
+                            columnA
+                            columnB
                         }
                     }
-
-                    // Épinglés
-                    section("Épinglés", note: "Affichés dans le widget, la barre de menus et sur la Watch — 4 maximum.") {
-                        chips(store.mainServices.map(\.id),
-                              isOn: { store.pins.contains($0) },
-                              toggle: { store.togglePin($0) })
-                            .padding(.vertical, 10)
-                    }
-
-                    // Alertes
-                    section("Alertes") {
-                        ForEach(Array(Catalog.alertRules.enumerated()), id: \.element.id) { i, rule in
-                            if i > 0 { HRule() }
-                            toggleRow(rule.label, sub: rule.desc, isOn: Binding(
-                                get: { store.rules[rule.id] ?? false },
-                                set: { store.setRule(rule.id, $0) }
-                            ))
-                        }
-                        // Un montage plein par nature (archives figées) rejouerait
-                        // l'alerte à chaque lancement : on le décoche ici.
-                        if !store.monitoredVolumes.isEmpty {
-                            HRule()
-                            Text("Volumes surveillés")
-                                .upperLabel(8.5, .heavy)
-                                .foregroundStyle(Ink.muted)
-                                .padding(.top, 10)
-                            ForEach(store.monitoredVolumes, id: \.service.id) { entry in
-                                ForEach(entry.fills, id: \.id) { v in
-                                    volumeRow(entry.service, v)
-                                }
-                            }
-                        }
-                    }
-
-                    // Partage famille
-                    section("Partage famille") {
-                        toggleRow("Profil invité",
-                                  sub: "Accès limité aux services autorisés",
-                                  isOn: $store.guestOn)
-                        if store.guestOn {
-                            HRule()
-                            chips(store.mainServices.map(\.id),
-                                  isOn: { store.guestIds.contains($0) },
-                                  toggle: { id in
-                                      if store.guestIds.contains(id) {
-                                          store.guestIds.remove(id)
-                                      } else {
-                                          store.guestIds.insert(id)
-                                      }
-                                  })
-                                .padding(.vertical, 10)
-                            MSecondaryButton(title: "Prévisualiser le profil invité") {
-                                store.guestPreview = true
-                                path.removeAll()
-                                store.fireToast("Aperçu invité — « Quitter » pour revenir")
-                            }
-                            .padding(.bottom, 10)
-                        }
-                    }
-
-                    // Configuration
-                    section("Configuration", note: "services.yaml est ta source de vérité (import et export).") {
-                        HStack {
-                            VStack(alignment: .leading, spacing: 1) {
-                                Text("Données")
-                                    .font(.archivo(13.5, .bold))
-                                Text(store.dataMode == .live
-                                     ? "Vraies requêtes vers tes services"
-                                     : "Simulation du prototype")
-                                    .font(.archivo(11))
-                                    .foregroundStyle(Ink.muted)
-                            }
-                            Spacer()
-                            MSeg(options: [(DataMode.demo, "Démo"), (DataMode.live, "Homelab")],
-                                 selection: $store.dataMode)
-                        }
-                        .padding(.vertical, 10)
-                        HRule()
-                        toggleRow("Synchroniser services.yaml",
-                                  sub: "Groupes, widgets et clés API repris tels quels",
-                                  isOn: $store.syncOn)
-                        HRule()
-                        HStack(spacing: 8) {
-                            MSecondaryButton(title: "Importer…") { importingYAML = true }
-                            MSecondaryButton(title: "Exporter") { store.exportYAML() }
-                        }
-                        .padding(.vertical, 10)
-                        .fileImporter(isPresented: $importingYAML,
-                                      allowedContentTypes: [.yaml, .plainText, .data]) { result in
-                            guard case .success(let url) = result else { return }
-                            let scoped = url.startAccessingSecurityScopedResource()
-                            defer { if scoped { url.stopAccessingSecurityScopedResource() } }
-                            if let text = try? String(contentsOf: url, encoding: .utf8) {
-                                store.importYAML(text)
-                            } else {
-                                store.fireToast("Import impossible — fichier illisible")
-                            }
-                        }
-                        MSecondaryButton(title: "Scanner le réseau (Bonjour)…") { showScan = true }
-                            .padding(.bottom, 10)
-                        MSecondaryButton(title: "Revoir l'introduction") {
-                            path.removeAll()
-                            hasOnboarded = false
-                        }
-                        .padding(.bottom, 10)
-                    }
-
-                    // Langue
-                    section("Langue", note: "Relance l'app pour appliquer partout.") {
-                        HStack {
-                            Text("Langue")
-                                .font(.archivo(13.5, .bold))
-                            Spacer()
-                            MSeg(options: [("system", String(localized: "Système")),
-                                           ("fr", "Français"), ("en", "English"), ("es", "Español")],
-                                 selection: $store.appLanguage, fontSize: 9.5)
-                        }
-                        .padding(.vertical, 10)
-                    }
-
-                    // Rafraîchissement
-                    section("Rafraîchissement") {
-                        HStack {
-                            Text("Intervalle")
-                                .font(.archivo(13.5, .bold))
-                            Spacer()
-                            MSeg(options: [(800, "0,8 s"), (1600, "1,6 s"), (3200, "3,2 s")],
-                                 selection: Binding(get: { store.refreshMs }, set: { store.setRefresh($0) }))
-                        }
-                        .padding(.vertical, 10)
-                    }
+                    .padding(.horizontal, 18)
+                    .padding(.bottom, 40)
                 }
-                .padding(.horizontal, 18)
-                .padding(.bottom, 40)
             }
         }
         .sheet(isPresented: $showScan) { ScanSheet().environment(store) }
     }
+
+    // MARK: Colonnes (empilées sur iPhone, côte à côte sur iPad)
+
+    @ViewBuilder private var columnA: some View {
+        @Bindable var store = store
+        // Pictogrammes
+        section("Pictogrammes") {
+            toggleRow("Logos des services",
+                      sub: "dashboard-icons — monogramme en secours",
+                      isOn: $store.logosOn)
+            HRule()
+            toggleRow("Bandeau système",
+                      sub: "CPU, température et RAM — nécessite une source Glances.",
+                      isOn: $store.showSystemBand)
+        }
+
+        // Connexion
+        section("Connexion") {
+            HStack {
+                VStack(alignment: .leading, spacing: 1) {
+                    Text("Tailscale")
+                        .font(.archivo(13.5, .bold))
+                    Text(store.net == .tailscale
+                         ? "Connecté via tail1a2b.ts.net — +18 ms"
+                         : "Réseau local détecté")
+                        .font(.archivo(11))
+                        .foregroundStyle(Ink.muted)
+                }
+                Spacer()
+                Rectangle()
+                    .fill(store.net == .tailscale ? Ink.accent : Ink.text.opacity(0.25))
+                    .frame(width: 10, height: 10)
+            }
+            .padding(.vertical, 10)
+            HRule()
+            toggleRow("Bascule automatique",
+                      sub: "Choisit l'URL locale ou Tailscale selon le réseau",
+                      isOn: $store.tsAuto)
+            HRule()
+            HStack {
+                Text("Simulateur")
+                    .font(.archivo(13.5, .bold))
+                Spacer()
+                MSeg(options: [(NetMode.local, "Maison"), (NetMode.tailscale, "Déplacement")],
+                     selection: $store.net)
+            }
+            .padding(.vertical, 10)
+        }
+
+        // Groupes
+        section("Groupes") {
+            ForEach(Array(store.gOrder.enumerated()), id: \.element) { idx, gi in
+                if idx > 0 { HRule() }
+                HStack(spacing: 8) {
+                    Text(store.mainGroups[gi])
+                        .font(.archivo(13.5, .bold))
+                        .foregroundStyle(store.gHidden.contains(gi) ? Ink.muted : Ink.text)
+                    Spacer()
+                    squareButton("arrow.up", disabled: idx == 0) { store.moveGroup(idx, -1) }
+                    squareButton("arrow.down", disabled: idx == store.gOrder.count - 1) { store.moveGroup(idx, 1) }
+                    squareButton(store.gHidden.contains(gi) ? "eye.slash" : "eye") {
+                        if store.gHidden.contains(gi) {
+                            store.gHidden.remove(gi)
+                        } else {
+                            store.gHidden.insert(gi)
+                        }
+                    }
+                }
+                .padding(.vertical, 8)
+            }
+        }
+
+        // Épinglés
+        section("Épinglés", note: "Affichés dans le widget, la barre de menus et sur la Watch — 4 maximum.") {
+            chips(store.mainServices.map(\.id),
+                  isOn: { store.pins.contains($0) },
+                  toggle: { store.togglePin($0) })
+                .padding(.vertical, 10)
+        }
+    }
+
+    @ViewBuilder private var columnB: some View {
+        @Bindable var store = store
+        // Alertes
+        section("Alertes") {
+            ForEach(Array(Catalog.alertRules.enumerated()), id: \.element.id) { i, rule in
+                if i > 0 { HRule() }
+                toggleRow(rule.label, sub: rule.desc, isOn: Binding(
+                    get: { store.rules[rule.id] ?? false },
+                    set: { store.setRule(rule.id, $0) }
+                ))
+            }
+            // Un montage plein par nature (archives figées) rejouerait
+            // l'alerte à chaque lancement : on le décoche ici.
+            if !store.monitoredVolumes.isEmpty {
+                HRule()
+                Text("Volumes surveillés")
+                    .upperLabel(8.5, .heavy)
+                    .foregroundStyle(Ink.muted)
+                    .padding(.top, 10)
+                ForEach(store.monitoredVolumes, id: \.service.id) { entry in
+                    ForEach(entry.fills, id: \.id) { v in
+                        volumeRow(entry.service, v)
+                    }
+                }
+            }
+        }
+
+        // Partage famille
+        section("Partage famille") {
+            toggleRow("Profil invité",
+                      sub: "Accès limité aux services autorisés",
+                      isOn: $store.guestOn)
+            if store.guestOn {
+                HRule()
+                chips(store.mainServices.map(\.id),
+                      isOn: { store.guestIds.contains($0) },
+                      toggle: { id in
+                          if store.guestIds.contains(id) {
+                              store.guestIds.remove(id)
+                          } else {
+                              store.guestIds.insert(id)
+                          }
+                      })
+                    .padding(.vertical, 10)
+                MSecondaryButton(title: "Prévisualiser le profil invité") {
+                    store.guestPreview = true
+                    path.removeAll()
+                    store.fireToast("Aperçu invité — « Quitter » pour revenir")
+                }
+                .padding(.bottom, 10)
+            }
+        }
+
+        // Configuration
+        section("Configuration", note: "services.yaml est ta source de vérité (import et export).") {
+            HStack {
+                VStack(alignment: .leading, spacing: 1) {
+                    Text("Données")
+                        .font(.archivo(13.5, .bold))
+                    Text(store.dataMode == .live
+                         ? "Vraies requêtes vers tes services"
+                         : "Simulation du prototype")
+                        .font(.archivo(11))
+                        .foregroundStyle(Ink.muted)
+                }
+                Spacer()
+                MSeg(options: [(DataMode.demo, "Démo"), (DataMode.live, "Homelab")],
+                     selection: $store.dataMode)
+            }
+            .padding(.vertical, 10)
+            HRule()
+            toggleRow("Synchroniser services.yaml",
+                      sub: "Groupes, widgets et clés API repris tels quels",
+                      isOn: $store.syncOn)
+            HRule()
+            HStack(spacing: 8) {
+                MSecondaryButton(title: "Importer…") { importingYAML = true }
+                MSecondaryButton(title: "Exporter") { store.exportYAML() }
+            }
+            .padding(.vertical, 10)
+            .fileImporter(isPresented: $importingYAML,
+                          allowedContentTypes: [.yaml, .plainText, .data]) { result in
+                guard case .success(let url) = result else { return }
+                let scoped = url.startAccessingSecurityScopedResource()
+                defer { if scoped { url.stopAccessingSecurityScopedResource() } }
+                if let text = try? String(contentsOf: url, encoding: .utf8) {
+                    store.importYAML(text)
+                } else {
+                    store.fireToast("Import impossible — fichier illisible")
+                }
+            }
+            MSecondaryButton(title: "Scanner le réseau (Bonjour)…") { showScan = true }
+                .padding(.bottom, 10)
+            MSecondaryButton(title: "Revoir l'introduction") {
+                path.removeAll()
+                hasOnboarded = false
+            }
+            .padding(.bottom, 10)
+        }
+
+        // Langue
+        section("Langue", note: "Relance l'app pour appliquer partout.") {
+            HStack {
+                Text("Langue")
+                    .font(.archivo(13.5, .bold))
+                Spacer()
+                MSeg(options: [("system", String(localized: "Système")),
+                               ("fr", "Français"), ("en", "English"), ("es", "Español")],
+                     selection: $store.appLanguage, fontSize: 9.5)
+            }
+            .padding(.vertical, 10)
+        }
+
+        // Rafraîchissement
+        section("Rafraîchissement") {
+            HStack {
+                Text("Intervalle")
+                    .font(.archivo(13.5, .bold))
+                Spacer()
+                MSeg(options: [(800, "0,8 s"), (1600, "1,6 s"), (3200, "3,2 s")],
+                     selection: Binding(get: { store.refreshMs }, set: { store.setRefresh($0) }))
+            }
+            .padding(.vertical, 10)
+        }
+    }
+
 
     // MARK: Blocs
 
