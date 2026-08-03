@@ -41,7 +41,10 @@ struct MacRootView: View {
         if hasOnboarded {
             mainContent
         } else {
-            OnboardingView(done: { hasOnboarded = true })
+            OnboardingView(done: {
+                hasOnboarded = true
+                store.finishOnboarding()
+            })
                 .frame(minWidth: 760, minHeight: 640)
                 .preferredColorScheme(ui.forceDark ? .dark : nil)
         }

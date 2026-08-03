@@ -224,6 +224,28 @@ final class AppStore {
 
         network.onChange = { [weak self] in self?.applyNetwork() }
         applyNetwork()
+        // Tant que le tutoriel n'est pas fini, ni horloge ni demande
+        // d'autorisation : la panne scénarisée de la démo posterait une
+        // notification système et une Live Activity par-dessus l'écran
+        // « Bienvenue » (cf. `onboardingDone`).
+        if onboardingDone {
+            SystemNotifier.shared.requestAuthorization()
+            startTimer()
+        }
+    }
+
+    /// Le tutoriel de premier lancement gèle le simulateur.
+    /// watchOS n'a pas d'onboarding : l'horloge y démarre tout de suite.
+    private var onboardingDone: Bool {
+        #if os(watchOS)
+        true
+        #else
+        UserDefaults.standard.bool(forKey: "hasOnboarded")
+        #endif
+    }
+
+    /// Sortie du tutoriel : autorisation notifications puis démarrage de l'horloge.
+    func finishOnboarding() {
         SystemNotifier.shared.requestAuthorization()
         startTimer()
     }
@@ -270,6 +292,8 @@ final class AppStore {
 
     private func startTimer() {
         timer?.invalidate()
+        timer = nil
+        guard onboardingDone else { return }
         let interval = Double(refreshMs) / 1000
         timer = Timer.scheduledTimer(withTimeInterval: interval, repeats: true) { [weak self] _ in
             Task { @MainActor in self?.tick() }

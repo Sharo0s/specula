@@ -22,7 +22,10 @@ struct IOSRootView: View {
             Ink.bg.ignoresSafeArea()
             if !hasOnboarded {
                 // Tutoriel de premier lancement (iPhone et iPad)
-                OnboardingView(done: { hasOnboarded = true })
+                OnboardingView(done: {
+                    hasOnboarded = true
+                    store.finishOnboarding()
+                })
             } else if UIDevice.current.userInterfaceIdiom == .pad {
                 // iPadOS : colonne latérale + grille dense, tap = interface web
                 IPadRootView()
