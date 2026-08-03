@@ -691,10 +691,13 @@ enum LiveFetcher {
                     [frSpeed(result.double("upload_rate") ?? 0), "Envoi"]]
 
         case .filebrowser:
-            // clé « utilisateur:motdepasse » → JWT
-            guard let key, let sep = key.firstIndex(of: ":") else { return nil }
-            let body = try JSONSerialization.data(withJSONObject: [
-                "username": String(key[..<sep]), "password": String(key[key.index(after: sep)...])])
+            // clé « utilisateur:motdepasse » → JWT. Une instance en mode « noauth »
+            // délivre le même jeton sur un login vide : la clé devient facultative.
+            var body = Data("{}".utf8)
+            if let key, let sep = key.firstIndex(of: ":") {
+                body = try JSONSerialization.data(withJSONObject: [
+                    "username": String(key[..<sep]), "password": String(key[key.index(after: sep)...])])
+            }
             let login = try await HTTPClient.shared.request(
                 URL(string: "\(base)/api/login")!, method: "POST",
                 headers: ["Content-Type": "application/json"], body: body)
@@ -704,8 +707,11 @@ enum LiveFetcher {
                 if let (json, _) = try? await HTTPClient.shared.json(
                     URL(string: base + path)!, headers: ["X-Auth": jwt]),
                    let d = json as? [String: Any], let used = d.double("used") {
-                    var out = [[frBytes(used), "Stockage"]]
-                    if let total = d.double("total") { out.append([frBytes(total), "Total"]) }
+                    var out = [[frBytes(used), "Utilisé"]]
+                    if let total = d.double("total"), total > 0 {
+                        out.append([frBytes(total - used), "Libres"])
+                        out.append(["\(Int((used / total * 100).rounded())) %", "Occupation"])
+                    }
                     return out
                 }
             }
@@ -721,10 +727,13 @@ enum LiveFetcher {
                                                    "password": String(key[key.index(after: sep)...])]))
             guard login.status == 200,
                   let cookies = login.headers["set-cookie"], !cookies.isEmpty else { return nil }
-            // URLSession refuse le stockage des cookies : on renvoie les jetons de session à la main.
-            let session = cookies.split(separator: ",")
-                .compactMap { $0.split(separator: ";").first?.trimmingCharacters(in: .whitespaces) }
-                .filter { $0.hasPrefix("X-OPENMEDIAVAULT-") }
+            // URLSession refuse le stockage des cookies : on renvoie les jetons de session à
+            // la main. Les en-têtes Set-Cookie sont concaténés et l'attribut « expires »
+            // contient lui-même une virgule — on découpe large et on ne garde que les cookies OMV.
+            let session = cookies
+                .components(separatedBy: CharacterSet(charactersIn: ",;"))
+                .map { $0.trimmingCharacters(in: .whitespaces) }
+                .filter { $0.hasPrefix("OPENMEDIAVAULT") && $0.contains("=") }
                 .joined(separator: "; ")
             guard !session.isEmpty else { return nil }
             let headers = ["Content-Type": "application/json", "Cookie": session]
