@@ -63,123 +63,128 @@ struct MacSettingsPage: View {
     var body: some View {
         @Bindable var store = store
         ScrollView {
-            VStack(alignment: .leading, spacing: 26) {
-                settingsBlock("Affichage") {
-                    labelRow("Densité") {
-                        MSeg(options: [(Density.aere, "Aéré"), (Density.compact, "Compact")], selection: $store.density)
-                    }
-                    HRule()
-                    labelRow("Disposition") {
-                        MSeg(options: [(LayoutMode.grille, "Grille"), (LayoutMode.liste, "Liste")], selection: $store.layout)
-                    }
-                    HRule()
-                    toggleRow("Logos des services", sub: "dashboard-icons — monogramme en secours", isOn: $store.logosOn)
-                    HRule()
-                    toggleRow("Bandeau système", sub: "CPU, température et RAM — nécessite une source Glances.", isOn: $store.showSystemBand)
-                }
-
-                settingsBlock("Connexion") {
-                    toggleRow("Bascule automatique Tailscale",
-                              sub: "URL locale à la maison, tail1a2b.ts.net en déplacement",
-                              isOn: $store.tsAuto)
-                    HRule()
-                    labelRow("Simulateur") {
-                        MSeg(options: [(NetMode.local, "Maison"), (NetMode.tailscale, "Déplacement")], selection: $store.net)
-                    }
-                }
-
-                settingsBlock("Alertes") {
-                    ForEach(Array(Catalog.alertRules.enumerated()), id: \.element.id) { i, rule in
-                        if i > 0 { HRule() }
-                        toggleRow(rule.label, sub: rule.desc, isOn: Binding(
-                            get: { store.rules[rule.id] ?? false },
-                            set: { store.setRule(rule.id, $0) }
-                        ))
-                    }
-                    // Un montage plein par nature (archives figées) rejouerait
-                    // l'alerte à chaque lancement : on le décoche ici.
-                    if !store.monitoredVolumes.isEmpty {
+            HStack(alignment: .top, spacing: 26) {
+                VStack(alignment: .leading, spacing: 26) {
+                    settingsBlock("Affichage") {
+                        labelRow("Densité") {
+                            MSeg(options: [(Density.aere, "Aéré"), (Density.compact, "Compact")], selection: $store.density)
+                        }
                         HRule()
-                        Text("Volumes surveillés")
-                            .upperLabel(8.5, .heavy)
-                            .foregroundStyle(Ink.muted)
-                            .padding(.top, 10)
-                        ForEach(store.monitoredVolumes, id: \.service.id) { entry in
-                            ForEach(entry.fills, id: \.id) { v in
-                                volumeRow(entry.service, v)
+                        labelRow("Disposition") {
+                            MSeg(options: [(LayoutMode.grille, "Grille"), (LayoutMode.liste, "Liste")], selection: $store.layout)
+                        }
+                        HRule()
+                        toggleRow("Logos des services", sub: "dashboard-icons — monogramme en secours", isOn: $store.logosOn)
+                        HRule()
+                        toggleRow("Bandeau système", sub: "CPU, température et RAM — nécessite une source Glances.", isOn: $store.showSystemBand)
+                    }
+
+                    settingsBlock("Connexion") {
+                        toggleRow("Bascule automatique Tailscale",
+                                  sub: "URL locale à la maison, tail1a2b.ts.net en déplacement",
+                                  isOn: $store.tsAuto)
+                        HRule()
+                        labelRow("Simulateur") {
+                            MSeg(options: [(NetMode.local, "Maison"), (NetMode.tailscale, "Déplacement")], selection: $store.net)
+                        }
+                    }
+                }
+                .frame(maxWidth: 420, alignment: .leading)
+                VStack(alignment: .leading, spacing: 26) {
+                    settingsBlock("Alertes") {
+                        ForEach(Array(Catalog.alertRules.enumerated()), id: \.element.id) { i, rule in
+                            if i > 0 { HRule() }
+                            toggleRow(rule.label, sub: rule.desc, isOn: Binding(
+                                get: { store.rules[rule.id] ?? false },
+                                set: { store.setRule(rule.id, $0) }
+                            ))
+                        }
+                        // Un montage plein par nature (archives figées) rejouerait
+                        // l'alerte à chaque lancement : on le décoche ici.
+                        if !store.monitoredVolumes.isEmpty {
+                            HRule()
+                            Text("Volumes surveillés")
+                                .upperLabel(8.5, .heavy)
+                                .foregroundStyle(Ink.muted)
+                                .padding(.top, 10)
+                            ForEach(store.monitoredVolumes, id: \.service.id) { entry in
+                                ForEach(entry.fills, id: \.id) { v in
+                                    volumeRow(entry.service, v)
+                                }
                             }
                         }
                     }
                 }
-
-                settingsBlock("Configuration") {
-                    labelRow("Données") {
-                        MSeg(options: [(DataMode.demo, "Démo"), (DataMode.live, "Homelab")],
-                             selection: $store.dataMode)
-                    }
-                    HRule()
-                    toggleRow("Synchroniser services.yaml",
-                              sub: "Format services.yaml — source de vérité",
-                              isOn: $store.syncOn)
-                    HRule()
-                    HStack(spacing: 8) {
-                        MSecondaryButton(title: "Importer…") { importingYAML = true }
-                            .frame(width: 150)
-                            .fileImporter(isPresented: $importingYAML,
-                                          allowedContentTypes: [.yaml, .plainText, .data]) { result in
-                                guard case .success(let url) = result else { return }
-                                let scoped = url.startAccessingSecurityScopedResource()
-                                defer { if scoped { url.stopAccessingSecurityScopedResource() } }
-                                if let text = try? String(contentsOf: url, encoding: .utf8) {
-                                    store.importYAML(text)
-                                } else {
-                                    store.fireToast("Import impossible — fichier illisible")
+                .frame(maxWidth: 420, alignment: .leading)
+                VStack(alignment: .leading, spacing: 26) {
+                    settingsBlock("Configuration") {
+                        labelRow("Données") {
+                            MSeg(options: [(DataMode.demo, "Démo"), (DataMode.live, "Homelab")],
+                                 selection: $store.dataMode)
+                        }
+                        HRule()
+                        toggleRow("Synchroniser services.yaml",
+                                  sub: "Format services.yaml — source de vérité",
+                                  isOn: $store.syncOn)
+                        HRule()
+                        // Colonne de 420 pt : les boutons se partagent la largeur
+                        // plutôt que de déborder sur des largeurs fixes.
+                        HStack(spacing: 8) {
+                            MSecondaryButton(title: "Importer…") { importingYAML = true }
+                                .frame(maxWidth: .infinity)
+                                .fileImporter(isPresented: $importingYAML,
+                                              allowedContentTypes: [.yaml, .plainText, .data]) { result in
+                                    guard case .success(let url) = result else { return }
+                                    let scoped = url.startAccessingSecurityScopedResource()
+                                    defer { if scoped { url.stopAccessingSecurityScopedResource() } }
+                                    if let text = try? String(contentsOf: url, encoding: .utf8) {
+                                        store.importYAML(text)
+                                    } else {
+                                        store.fireToast("Import impossible — fichier illisible")
+                                    }
                                 }
-                            }
-                        MSecondaryButton(title: "Exporter") { store.exportYAML() }
-                            .frame(width: 150)
+                            MSecondaryButton(title: "Exporter") { store.exportYAML() }
+                                .frame(maxWidth: .infinity)
+                        }
+                        .padding(.top, 10)
                         MSecondaryButton(title: "Scanner le réseau…") { showScan = true }
-                            .frame(width: 190)
+                            .padding(.bottom, 10)
+                        HRule()
+                        VStack(alignment: .leading, spacing: 6) {
+                            Text("Revoir le tutoriel de premier lancement.")
+                                .font(.archivo(11))
+                                .foregroundStyle(Ink.muted)
+                            MSecondaryButton(title: "Revoir l'introduction") { hasOnboarded = false }
+                        }
+                        .padding(.vertical, 10)
                     }
-                    .padding(.vertical, 10)
-                    HRule()
-                    HStack(spacing: 12) {
-                        Text("Revoir le tutoriel de premier lancement.")
-                            .font(.archivo(11))
-                            .foregroundStyle(Ink.muted)
-                        Spacer()
-                        MSecondaryButton(title: "Revoir l'introduction") { hasOnboarded = false }
-                            .frame(width: 220)
-                    }
-                    .padding(.vertical, 10)
-                }
 
-                settingsBlock("Langue") {
-                    labelRow("Langue") {
-                        MSeg(options: [("system", String(localized: "Système")),
-                                       ("fr", "Français"), ("en", "English"), ("es", "Español")],
-                             selection: $store.appLanguage, fontSize: 10)
+                    settingsBlock("Langue") {
+                        labelRow("Langue") {
+                            MSeg(options: [("system", String(localized: "Système")),
+                                           ("fr", "Français"), ("en", "English"), ("es", "Español")],
+                                 selection: $store.appLanguage, fontSize: 10)
+                        }
+                        HRule()
+                        VStack(alignment: .leading, spacing: 6) {
+                            Text("Relance l'app pour appliquer partout.")
+                                .font(.archivo(11))
+                                .foregroundStyle(Ink.muted)
+                            MSecondaryButton(title: "Relancer maintenant") { store.relaunch() }
+                        }
+                        .padding(.vertical, 10)
                     }
-                    HRule()
-                    HStack(spacing: 12) {
-                        Text("Relance l'app pour appliquer partout.")
-                            .font(.archivo(11))
-                            .foregroundStyle(Ink.muted)
-                        Spacer()
-                        MSecondaryButton(title: "Relancer maintenant") { store.relaunch() }
-                            .frame(width: 190)
-                    }
-                    .padding(.vertical, 10)
-                }
 
-                settingsBlock("Rafraîchissement") {
-                    labelRow("Intervalle") {
-                        MSeg(options: [(800, "0,8 s"), (1600, "1,6 s"), (3200, "3,2 s")],
-                             selection: Binding(get: { store.refreshMs }, set: { store.setRefresh($0) }))
+                    settingsBlock("Rafraîchissement") {
+                        labelRow("Intervalle") {
+                            MSeg(options: [(800, "0,8 s"), (1600, "1,6 s"), (3200, "3,2 s")],
+                                 selection: Binding(get: { store.refreshMs }, set: { store.setRefresh($0) }))
+                        }
                     }
                 }
+                .frame(maxWidth: 420, alignment: .leading)
             }
-            .frame(maxWidth: 560, alignment: .leading)
+            .frame(maxWidth: .infinity, alignment: .topLeading)
             .padding(20)
             .padding(.bottom, 30)
         }
