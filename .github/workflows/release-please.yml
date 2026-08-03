@@ -1,0 +1,23 @@
+name: release-please
+
+on:
+  push:
+    branches: [main]
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  release-please:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: googleapis/release-please-action@v4
+        id: release
+        with:
+          config-file: release-please-config.json
+          manifest-file: .release-please-manifest.json
+      # Les sorties servent aux étapes suivantes si un jour l'archive et
+      # l'envoi TestFlight sont automatisés :
+      #   steps.release.outputs.release_created → "true" quand un tag est posé
+      #   steps.release.outputs.tag_name        → "v1.1.0"
