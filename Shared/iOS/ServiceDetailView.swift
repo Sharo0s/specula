@@ -95,7 +95,8 @@ struct ServiceDetailView: View {
         .padding(.vertical, 14)
     }
 
-    // MARK: Grille 2×2
+    // MARK: Grille 2 colonnes — 2 rangées d'ordinaire, 3 si l'intégration
+    // rend plus de trois métriques (OpenMediaVault, Nextcloud…).
 
     private var metricsGrid: some View {
         let m = store.metrics(service)
@@ -112,7 +113,7 @@ struct ServiceDetailView: View {
             LazyVGrid(columns: [GridItem(.flexible(), alignment: .topLeading),
                                 GridItem(.flexible(), alignment: .topLeading)],
                       alignment: .leading, spacing: 16) {
-                ForEach(Array(cells.prefix(4).enumerated()), id: \.offset) { _, cell in
+                ForEach(Array(cells.enumerated()), id: \.offset) { _, cell in
                     MetricCell(value: cell[0], label: cell[1])
                 }
             }
