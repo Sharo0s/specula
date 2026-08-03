@@ -58,6 +58,7 @@ struct MacSettingsPage: View {
     @Environment(AppStore.self) private var store
     @State private var showScan = false
     @State private var importingYAML = false
+    @AppStorage("hasOnboarded") private var hasOnboarded = false
 
     var body: some View {
         @Bindable var store = store
@@ -104,16 +105,37 @@ struct MacSettingsPage: View {
                     }
                     HRule()
                     toggleRow("Synchroniser services.yaml",
-                              sub: "Format gethomepage.dev — source de vérité",
+                              sub: "Format services.yaml — source de vérité",
                               isOn: $store.syncOn)
                     HRule()
                     HStack(spacing: 8) {
                         MSecondaryButton(title: "Importer…") { importingYAML = true }
                             .frame(width: 150)
+                            .fileImporter(isPresented: $importingYAML,
+                                          allowedContentTypes: [.yaml, .plainText, .data]) { result in
+                                guard case .success(let url) = result else { return }
+                                let scoped = url.startAccessingSecurityScopedResource()
+                                defer { if scoped { url.stopAccessingSecurityScopedResource() } }
+                                if let text = try? String(contentsOf: url, encoding: .utf8) {
+                                    store.importYAML(text)
+                                } else {
+                                    store.fireToast("Import impossible — fichier illisible")
+                                }
+                            }
                         MSecondaryButton(title: "Exporter") { store.exportYAML() }
                             .frame(width: 150)
                         MSecondaryButton(title: "Scanner le réseau…") { showScan = true }
                             .frame(width: 190)
+                    }
+                    .padding(.vertical, 10)
+                    HRule()
+                    HStack(spacing: 12) {
+                        Text("Revoir le tutoriel de premier lancement.")
+                            .font(.archivo(11))
+                            .foregroundStyle(Ink.muted)
+                        Spacer()
+                        MSecondaryButton(title: "Revoir l'introduction") { hasOnboarded = false }
+                            .frame(width: 220)
                     }
                     .padding(.vertical, 10)
                 }
@@ -149,17 +171,6 @@ struct MacSettingsPage: View {
         }
         .frame(maxWidth: .infinity, alignment: .topLeading)
         .sheet(isPresented: $showScan) { ScanSheet().environment(store) }
-        .fileImporter(isPresented: $importingYAML,
-                      allowedContentTypes: [.yaml, .plainText, .data]) { result in
-            guard case .success(let url) = result else { return }
-            let scoped = url.startAccessingSecurityScopedResource()
-            defer { if scoped { url.stopAccessingSecurityScopedResource() } }
-            if let text = try? String(contentsOf: url, encoding: .utf8) {
-                store.importYAML(text)
-            } else {
-                store.fireToast("Import impossible — fichier illisible")
-            }
-        }
     }
 
     private func settingsBlock(_ title: String, @ViewBuilder content: () -> some View) -> some View {

@@ -1,28 +1,53 @@
 {
- "sourceLanguage": "fr",
- "strings": {
-  "NSLocalNetworkUsageDescription": {
-   "localizations": {
-    "en": {
-     "stringUnit": {
-      "state": "translated",
-      "value": "Specula discovers and polls your self-hosted services on the local network."
-     }
+  "sourceLanguage" : "fr",
+  "strings" : {
+    "CFBundleDisplayName" : {
+      "comment" : "Bundle display name",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Specula"
+          }
+        }
+      }
     },
-    "es": {
-     "stringUnit": {
-      "state": "translated",
-      "value": "Specula descubre y consulta tus servicios autoalojados en la red local."
-     }
+    "CFBundleName" : {
+      "comment" : "Bundle name",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Specula"
+          }
+        }
+      }
     },
-    "fr": {
-     "stringUnit": {
-      "state": "translated",
-      "value": "Specula découvre et interroge tes services selfhosted sur le réseau local."
-     }
+    "NSLocalNetworkUsageDescription" : {
+      "comment" : "Privacy - Local Network Usage Description",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Specula discovers and polls your self-hosted services on the local network."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Specula descubre y consulta tus servicios autoalojados en la red local."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Specula découvre et interroge tes services selfhosted sur le réseau local."
+          }
+        }
+      }
     }
-   }
-  }
- },
- "version": "1.0"
+  },
+  "version" : "1.0"
 }

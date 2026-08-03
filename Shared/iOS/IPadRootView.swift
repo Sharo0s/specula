@@ -9,6 +9,10 @@ struct IPadRootView: View {
     @Environment(AppStore.self) private var store
     /// Groupe filtré (nil = tous les services).
     @State private var group: Int?
+    /// Feuille des réglages (seul accès à la config sur iPad).
+    @State private var showSettings = false
+    /// SettingsView attend un chemin de navigation ; en feuille il reste local.
+    @State private var settingsPath: [IOSRoute] = []
 
     var body: some View {
         VStack(spacing: 0) {
@@ -22,6 +26,9 @@ struct IPadRootView: View {
             }
         }
         .background(Ink.bg)
+        .sheet(isPresented: $showSettings) {
+            SettingsView(path: $settingsPath).environment(store)
+        }
     }
 
     // MARK: Header
@@ -31,10 +38,31 @@ struct IPadRootView: View {
             BrandSquare(size: 14)
             Text("Specula")
                 .font(.archivo(17, .heavy))
+            if store.dataMode == .demo {
+                Text("DÉMO")
+                    .font(.archivo(8, .heavy))
+                    .tracking(0.4)
+                    .padding(.horizontal, 6)
+                    .padding(.vertical, 2)
+                    .background(Ink.accent2Bg)
+                    .foregroundStyle(Ink.accent2Text)
+            }
             Spacer()
             Text(String(localized: "\(store.onlineCount) en ligne \(netNote)· CPU \(store.cpuText) · \(Date.now.formatted(.dateTime.hour().minute()))"))
                 .font(.archivo(11)).monospacedDigit()
                 .foregroundStyle(Ink.muted)
+            Button {
+                showSettings = true
+            } label: {
+                Image(systemName: "gearshape")
+                    .font(.system(size: 14, weight: .medium))
+                    .frame(width: 32, height: 30)
+                    .overlay(Rectangle().strokeBorder(Ink.divider, lineWidth: 1))
+                    .contentShape(.rect)
+            }
+            .buttonStyle(.plain)
+            .foregroundStyle(Ink.text)
+            .accessibilityLabel("Réglages")
         }
         .padding(.horizontal, 18)
         .padding(.vertical, 12)

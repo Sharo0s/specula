@@ -1,5 +1,6 @@
 #if os(macOS)
 import SwiftUI
+import UniformTypeIdentifiers
 
 // MARK: - Dashboard macOS : bandeau 5 cellules + cartes par groupe + inspecteur 312 px
 
@@ -7,6 +8,7 @@ struct MacDashboard: View {
     @Environment(AppStore.self) private var store
     @Bindable var ui: MacUIState
     @State private var showScan = false
+    @State private var importingYAML = false
 
     private var pad: CGFloat { store.density == .compact ? 9 : 14 }
     private var gap: CGFloat { store.density == .compact ? 10 : 16 }
@@ -73,13 +75,24 @@ struct MacDashboard: View {
         VStack(alignment: .leading, spacing: 10) {
             Text("Aucun service configuré")
                 .font(.archivo(19, .heavy))
-            Text("Mode Homelab : Specula n'interroge que tes services. Importe ta config gethomepage ou scanne le réseau pour commencer.")
+            Text("Mode Homelab : Specula n'interroge que tes services. Importe ton services.yaml ou scanne le réseau pour commencer.")
                 .font(.archivo(12.5))
                 .foregroundStyle(Ink.muted)
                 .frame(maxWidth: 420, alignment: .leading)
             HStack(spacing: 8) {
-                MPrimaryButton(title: "Importer services.yaml…") { ui.view = .settings }
+                MPrimaryButton(title: "Importer services.yaml…") { importingYAML = true }
                     .frame(width: 230)
+                    .fileImporter(isPresented: $importingYAML,
+                                  allowedContentTypes: [.yaml, .plainText, .data]) { result in
+                        guard case .success(let url) = result else { return }
+                        let scoped = url.startAccessingSecurityScopedResource()
+                        defer { if scoped { url.stopAccessingSecurityScopedResource() } }
+                        if let text = try? String(contentsOf: url, encoding: .utf8) {
+                            store.importYAML(text)
+                        } else {
+                            store.fireToast("Import impossible — fichier illisible")
+                        }
+                    }
                 MSecondaryButton(title: "Scanner le réseau…") { showScan = true }
                     .frame(width: 200)
                 MSecondaryButton(title: "Ajouter à la main") { ui.view = .add }
@@ -147,7 +160,11 @@ struct MacServiceRow: View {
                     .font(.archivo(11))
                     .foregroundStyle(Ink.muted)
                 Spacer()
-                ForEach(Array(store.metrics(service).prefix(3).enumerated()), id: \.offset) { _, m in
+                let cells = store.metrics(service)
+                if cells.isEmpty && store.needsAPIKey(service) {
+                    KeyRequiredNote(size: 7.5)
+                }
+                ForEach(Array(cells.prefix(3).enumerated()), id: \.offset) { _, m in
                     HStack(spacing: 4) {
                         Text(m[0]).font(.archivo(12, .heavy)).monospacedDigit()
                         Text(LocalizedStringKey(m[1])).upperLabel(7.5).foregroundStyle(Ink.muted)
@@ -220,6 +237,16 @@ struct MacInspector: View {
 
                 // Tableau de métriques
                 VStack(spacing: 0) {
+                    if store.metrics(service).isEmpty && store.needsAPIKey(service) {
+                        HStack {
+                            KeyRequiredNote()
+                            Spacer()
+                            Text(LiveFetcher.keyHint(for: store.type(of: service)) ?? "")
+                                .font(.archivo(10))
+                                .foregroundStyle(Ink.muted)
+                        }
+                        .padding(.vertical, 7)
+                    }
                     ForEach(Array(store.metrics(service).enumerated()), id: \.offset) { i, m in
                         if i > 0 { HRule() }
                         HStack {

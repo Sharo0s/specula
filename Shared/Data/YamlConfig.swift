@@ -21,15 +21,29 @@ enum YamlConfig {
         var services: [StoredService] = []
         /// id de service → clé API (à ranger dans le Keychain).
         var keys: [String: String] = [:]
+        /// id de service → variables Homepage non résolues ({{HOMEPAGE_VAR_X}}) :
+        /// la clé existe côté Homepage mais son `.env` n'est pas dans le YAML.
+        var unresolved: [String: [String]] = [:]
     }
 
     // MARK: Import
 
+    /// Jetons balisant les {{VARIABLES}} le temps du parsing (un `@` ou une
+    /// accolade ouvrante ne peut pas commencer un scalaire YAML nu).
+    private static let varPrefix = "SPECULAVAR_"
+    private static let varSuffix = "_ENDVAR"
+
     static func parse(_ text: String) throws -> ImportResult {
-        // Homepage substitue {{HOMEPAGE_VAR_X}} avant de parser — sans son
-        // environnement, on remplace par une chaîne vide (sinon YAML invalide).
-        let cleaned = text.replacingOccurrences(
-            of: #"\{\{[^}]*\}\}"#, with: "\"\"", options: .regularExpression)
+        // Homepage substitue {{HOMEPAGE_VAR_X}} depuis son .env avant de parser.
+        // Sans cet environnement, on les balise pour pouvoir les signaler
+        // ensuite (une clé « non résolue » n'est pas une clé absente), et on
+        // vide les motifs exotiques (sinon YAML invalide).
+        let cleaned = text
+            .replacingOccurrences(of: #"\{\{\s*([A-Za-z0-9_.]+)\s*\}\}"#,
+                                  with: varPrefix + "$1" + varSuffix,
+                                  options: .regularExpression)
+            .replacingOccurrences(of: #"\{\{[^}]*\}\}"#, with: "\"\"",
+                                  options: .regularExpression)
         guard let root = try Yams.load(yaml: cleaned) as? [[String: Any]] else {
             throw CocoaError(.fileReadCorruptFile)
         }
@@ -44,8 +58,8 @@ enum YamlConfig {
                     for (name, rawProps) in svcDict {
                         let props = rawProps as? [String: Any] ?? [:]
                         let widget = props["widget"] as? [String: Any]
-                        let href = (props["href"] as? String)
-                            ?? (widget?["url"] as? String) ?? ""
+                        let href = stripVars((props["href"] as? String)
+                            ?? (widget?["url"] as? String) ?? "")
                         // Icône : slug dashboard-icons — pas les URLs directes
                         let slugRaw = (props["icon"] as? String).flatMap { icon -> String? in
                             icon.contains("://") ? nil : icon
@@ -67,10 +81,10 @@ enum YamlConfig {
 
                         var stored = StoredService(
                             service: Service(id: id, mono: Self.mono(name), name: name,
-                                             desc: props["description"] as? String ?? "",
+                                             desc: stripVars(props["description"] as? String ?? ""),
                                              group: gi, url: href,
                                              iconSlug: slugRaw, metrics: nil,
-                                             apiURL: widget?["url"] as? String),
+                                             apiURL: (widget?["url"] as? String).map(stripVars)),
                             type: type)
                         if type == .generic, let slugRaw {
                             // le slug d'icône est souvent le type (jellyfin.png…)
@@ -90,7 +104,14 @@ enum YamlConfig {
                            let p = widget?["password"] as? String, !p.isEmpty {
                             key = "\(u):\(p)"
                         }
-                        if !key.isEmpty { result.keys[id] = key }
+                        // Variables Homepage non résolues : la clé n'est pas
+                        // exploitable, mais on retient laquelle manque.
+                        let vars = unresolvedVars(in: key)
+                        if !vars.isEmpty {
+                            result.unresolved[id] = vars
+                        } else if !key.isEmpty {
+                            result.keys[id] = key
+                        }
                     }
                 }
             }
@@ -126,6 +147,23 @@ enum YamlConfig {
     }
 
     // MARK: Aides
+
+    /// Noms des variables Homepage restées non substituées dans une valeur.
+    private static func unresolvedVars(in value: String) -> [String] {
+        guard value.contains(varPrefix) else { return [] }
+        return value.components(separatedBy: varPrefix).dropFirst().compactMap {
+            guard let end = $0.range(of: varSuffix) else { return nil }
+            return String($0[..<end.lowerBound])
+        }
+    }
+
+    /// Retire les jetons de variable d'un texte affiché (URL, description).
+    private static func stripVars(_ value: String) -> String {
+        guard value.contains(varPrefix) else { return value }
+        return value.replacingOccurrences(
+            of: varPrefix + "[A-Za-z0-9_.]*" + varSuffix, with: "",
+            options: .regularExpression)
+    }
 
     static func fullURL(_ url: String) -> String {
         url.contains("://") ? url : "http://" + url

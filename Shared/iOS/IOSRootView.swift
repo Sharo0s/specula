@@ -20,10 +20,13 @@ struct IOSRootView: View {
     var body: some View {
         ZStack {
             Ink.bg.ignoresSafeArea()
-            if UIDevice.current.userInterfaceIdiom == .pad {
+            if !hasOnboarded {
+                // Tutoriel de premier lancement (iPhone et iPad)
+                OnboardingView(done: { hasOnboarded = true })
+            } else if UIDevice.current.userInterfaceIdiom == .pad {
                 // iPadOS : colonne latérale + grille dense, tap = interface web
                 IPadRootView()
-            } else if hasOnboarded {
+            } else {
                 NavigationStack(path: $path) {
                     HomeView(path: $path, ctxService: $ctxService)
                         .navigationBarHidden(true)
@@ -40,8 +43,6 @@ struct IOSRootView: View {
                             .background(Ink.bg)
                         }
                 }
-            } else {
-                OnboardingView(done: { hasOnboarded = true })
             }
 
             // Feuille contextuelle (appui long 480 ms)

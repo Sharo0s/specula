@@ -29,7 +29,7 @@ struct HomeView: View {
                         VStack(alignment: .leading, spacing: 10) {
                             Text("Aucun service configuré")
                                 .font(.archivo(19, .heavy))
-                            Text("Mode Homelab : Specula n'interroge que tes services. Importe ta config gethomepage ou scanne le réseau depuis les réglages.")
+                            Text("Mode Homelab : Specula n'interroge que tes services. Importe ton services.yaml ou scanne le réseau depuis les réglages.")
                                 .font(.archivo(12))
                                 .foregroundStyle(Ink.muted)
                             MPrimaryButton(title: "Importer ou scanner…") { path.append(.settings) }
@@ -63,6 +63,15 @@ struct HomeView: View {
             BrandSquare()
             Text("Specula")
                 .font(.archivo(20, .heavy))
+            if store.dataMode == .demo {
+                Text("DÉMO")
+                    .font(.archivo(9, .heavy))
+                    .tracking(0.45)
+                    .padding(.horizontal, 7)
+                    .padding(.vertical, 2)
+                    .background(Ink.accent2Bg)
+                    .foregroundStyle(Ink.accent2Text)
+            }
             if store.net == .tailscale {
                 Text("VIA TAILSCALE")
                     .font(.archivo(9, .heavy))

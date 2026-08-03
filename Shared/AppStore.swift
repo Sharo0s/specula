@@ -566,6 +566,15 @@ final class AppStore {
         return URL(string: Catalog.cdn + slug + ".png")
     }
 
+    /// Carte muette faute d'identifiants : l'intégration en réclame (keyHint)
+    /// et aucune clé n'est enregistrée — cas typique des `{{HOMEPAGE_VAR_…}}`
+    /// d'un services.yaml importé, que l'app ne peut pas résoudre.
+    func needsAPIKey(_ s: Service) -> Bool {
+        dataMode == .live
+            && LiveFetcher.keyHint(for: type(of: s)) != nil
+            && apiKey(for: s.id) == nil
+    }
+
     /// Métriques : live = cache des fetchers, démo = simulateur du prototype.
     func metrics(_ s: Service) -> [[String]] {
         if dataMode == .live {
@@ -728,6 +737,11 @@ final class AppStore {
         persist()
     }
 
+    /// Définit la clé API d'un service existant (onboarding, édition).
+    func setKey(_ key: String, for id: String) {
+        setApiKey(key, for: id)
+    }
+
     // MARK: - Configuration (ajout, YAML)
 
     /// Ajout manuel (« + ») ou depuis le scan — le type est détecté à la connexion.
@@ -878,7 +892,16 @@ final class AppStore {
             failCounts = [:]
             liveMetricsCache = [:]
             persist()
-            fireToast(String(localized: "Import de services.yaml — \(result.services.count) services et \(result.groups.count) groupes reconnus"))
+            // Clés restées en {{HOMEPAGE_VAR_…}} : Homepage les lit dans son
+            // .env, pas nous. Sans ce message la carte reste muette sans raison.
+            let pending = result.services
+                .filter { result.unresolved[$0.id] != nil && keys[$0.id] == nil }
+                .map(\.name)
+            if pending.isEmpty {
+                fireToast(String(localized: "Import de services.yaml — \(result.services.count) services et \(result.groups.count) groupes reconnus"))
+            } else {
+                fireToast(String(localized: "Import de services.yaml — \(result.services.count) services, \(pending.count) en attente de clé API : \(pending.joined(separator: ", "))"))
+            }
         } catch {
             fireToast(String(localized: "Import impossible — services.yaml illisible"))
         }
@@ -895,7 +918,7 @@ final class AppStore {
             #elseif os(iOS)
             UIPasteboard.general.string = yaml
             #endif
-            fireToast(String(localized: "services.yaml copié — compatible gethomepage.dev"))
+            fireToast(String(localized: "services.yaml copié dans le presse-papiers"))
         } catch {
             fireToast(String(localized: "Export impossible"))
         }

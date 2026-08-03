@@ -171,6 +171,19 @@ struct GroupHeader: View {
 }
 
 /// Cellule de métrique : valeur 800 tabular + libellé uppercase.
+/// Mention affichée à la place des métriques quand l'intégration réclame une
+/// clé API et qu'aucune n'est enregistrée (sinon la carte reste muette sans
+/// que rien n'explique pourquoi).
+struct KeyRequiredNote: View {
+    var size: CGFloat = 8.5
+
+    var body: some View {
+        Text("Clé API requise")
+            .upperLabel(size, .heavy)
+            .foregroundStyle(Ink.accent2Text)
+    }
+}
+
 struct MetricCell: View {
     let value: String
     let label: String
@@ -386,10 +399,15 @@ struct ServiceCard: View {
                 // toutes les cartes d'une rangée prennent la même hauteur.
                 Spacer(minLength: 0)
                 HRule()
-                HStack(spacing: 0) {
-                    ForEach(Array(store.metrics(service).prefix(3).enumerated()), id: \.offset) { i, m in
-                        if i > 0 { Spacer(minLength: 6) }
-                        MetricCell(value: m[0], label: m[1], valueSize: 15, labelSize: 8)
+                let cells = store.metrics(service)
+                if cells.isEmpty && store.needsAPIKey(service) {
+                    KeyRequiredNote(size: 8)
+                } else {
+                    HStack(spacing: 0) {
+                        ForEach(Array(cells.prefix(3).enumerated()), id: \.offset) { i, m in
+                            if i > 0 { Spacer(minLength: 6) }
+                            MetricCell(value: m[0], label: m[1], valueSize: 15, labelSize: 8)
+                        }
                     }
                 }
                 // Lecture en cours (Jellyfin)

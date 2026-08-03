@@ -837,6 +837,21 @@ enum LiveFetcher {
         }
     }
 
+    /// Comment saisir l'identifiant selon l'intégration : deux champs
+    /// (utilisateur + mot de passe), mot de passe seul, ou jeton unique.
+    enum KeyStyle { case userPassword, password, token }
+
+    static func keyStyle(for type: IntegrationType) -> KeyStyle {
+        switch type {
+        case .komga, .nextcloud, .transmission, .qbittorrent, .npm, .filebrowser, .photoprism, .navidrome:
+            .userPassword
+        case .wgeasy, .deluge:
+            .password
+        default:
+            .token
+        }
+    }
+
     // MARK: Lecture en cours (Jellyfin /Sessions)
 
     struct NowPlayingSession: Sendable, Hashable {

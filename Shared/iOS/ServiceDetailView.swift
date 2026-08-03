@@ -100,11 +100,21 @@ struct ServiceDetailView: View {
     private var metricsGrid: some View {
         let m = store.metrics(service)
         let cells: [[String]] = m + [[store.availability(service), "Dispo. 30 j"]]
-        return LazyVGrid(columns: [GridItem(.flexible(), alignment: .topLeading),
-                                   GridItem(.flexible(), alignment: .topLeading)],
-                         alignment: .leading, spacing: 16) {
-            ForEach(Array(cells.prefix(4).enumerated()), id: \.offset) { _, cell in
-                MetricCell(value: cell[0], label: cell[1])
+        return VStack(alignment: .leading, spacing: 12) {
+            if m.isEmpty && store.needsAPIKey(service) {
+                VStack(alignment: .leading, spacing: 3) {
+                    KeyRequiredNote()
+                    Text(LiveFetcher.keyHint(for: store.type(of: service)) ?? "")
+                        .font(.archivo(11))
+                        .foregroundStyle(Ink.muted)
+                }
+            }
+            LazyVGrid(columns: [GridItem(.flexible(), alignment: .topLeading),
+                                GridItem(.flexible(), alignment: .topLeading)],
+                      alignment: .leading, spacing: 16) {
+                ForEach(Array(cells.prefix(4).enumerated()), id: \.offset) { _, cell in
+                    MetricCell(value: cell[0], label: cell[1])
+                }
             }
         }
         .padding(.vertical, 16)

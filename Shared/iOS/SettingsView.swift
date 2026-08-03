@@ -11,6 +11,7 @@ struct SettingsView: View {
     @Binding var path: [IOSRoute]
     @State private var showScan = false
     @State private var importingYAML = false
+    @AppStorage("hasOnboarded") private var hasOnboarded = false
 
     var body: some View {
         @Bindable var store = store
@@ -153,7 +154,7 @@ struct SettingsView: View {
                     }
 
                     // Configuration
-                    section("Configuration", note: "services.yaml (format gethomepage.dev) est la source de vérité.") {
+                    section("Configuration", note: "services.yaml est ta source de vérité (import et export).") {
                         HStack {
                             VStack(alignment: .leading, spacing: 1) {
                                 Text("Données")
@@ -179,8 +180,24 @@ struct SettingsView: View {
                             MSecondaryButton(title: "Exporter") { store.exportYAML() }
                         }
                         .padding(.vertical, 10)
+                        .fileImporter(isPresented: $importingYAML,
+                                      allowedContentTypes: [.yaml, .plainText, .data]) { result in
+                            guard case .success(let url) = result else { return }
+                            let scoped = url.startAccessingSecurityScopedResource()
+                            defer { if scoped { url.stopAccessingSecurityScopedResource() } }
+                            if let text = try? String(contentsOf: url, encoding: .utf8) {
+                                store.importYAML(text)
+                            } else {
+                                store.fireToast("Import impossible — fichier illisible")
+                            }
+                        }
                         MSecondaryButton(title: "Scanner le réseau (Bonjour)…") { showScan = true }
                             .padding(.bottom, 10)
+                        MSecondaryButton(title: "Revoir l'introduction") {
+                            path.removeAll()
+                            hasOnboarded = false
+                        }
+                        .padding(.bottom, 10)
                     }
 
                     // Langue
@@ -213,17 +230,6 @@ struct SettingsView: View {
             }
         }
         .sheet(isPresented: $showScan) { ScanSheet().environment(store) }
-        .fileImporter(isPresented: $importingYAML,
-                      allowedContentTypes: [.yaml, .plainText, .data]) { result in
-            guard case .success(let url) = result else { return }
-            let scoped = url.startAccessingSecurityScopedResource()
-            defer { if scoped { url.stopAccessingSecurityScopedResource() } }
-            if let text = try? String(contentsOf: url, encoding: .utf8) {
-                store.importYAML(text)
-            } else {
-                store.fireToast("Import impossible — fichier illisible")
-            }
-        }
     }
 
     // MARK: Blocs

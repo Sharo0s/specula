@@ -1,5 +1,6 @@
 #if os(macOS)
 import SwiftUI
+import AppKit
 
 enum MacView: Hashable {
     case dash, status, notifs, settings, add
@@ -20,8 +21,23 @@ final class MacUIState {
 struct MacRootView: View {
     @Environment(AppStore.self) private var store
     @State private var ui = MacUIState()
+    @AppStorage("hasOnboarded") private var hasOnboarded = false
 
     var body: some View {
+        gate.background(WindowSizer())
+    }
+
+    @ViewBuilder private var gate: some View {
+        if hasOnboarded {
+            mainContent
+        } else {
+            OnboardingView(done: { hasOnboarded = true })
+                .frame(minWidth: 760, minHeight: 640)
+                .preferredColorScheme(ui.forceDark ? .dark : nil)
+        }
+    }
+
+    private var mainContent: some View {
         ZStack {
             HStack(spacing: 0) {
                 MacSidebar(ui: ui)
@@ -42,7 +58,7 @@ struct MacRootView: View {
 
             ToastOverlay()
         }
-        .frame(minWidth: 1180, minHeight: 720)
+        .frame(minWidth: 1280, minHeight: 800)
         .environment(ui)
         .preferredColorScheme(ui.forceDark ? .dark : nil)
         .background {
@@ -125,5 +141,28 @@ struct MacToolbar: View {
         case .add: return "Ajouter un service"
         }
     }
+}
+
+// MARK: - Dimensionnement adaptatif de la fenêtre
+
+/// Ouvre la fenêtre à une taille proportionnelle à l'écran (adaptée à la résolution),
+/// centrée, au lancement — indépendamment de la taille mémorisée par macOS.
+private struct WindowSizer: NSViewRepresentable {
+    func makeNSView(context: Context) -> NSView {
+        let view = NSView()
+        DispatchQueue.main.async {
+            guard let window = view.window,
+                  let screen = window.screen ?? NSScreen.main else { return }
+            let visible = screen.visibleFrame
+            let w = min(visible.width, max(1280, visible.width * 0.90))
+            let h = min(visible.height, max(800, visible.height * 0.92))
+            window.setFrame(NSRect(x: visible.minX + (visible.width - w) / 2,
+                                   y: visible.minY + (visible.height - h) / 2,
+                                   width: w, height: h),
+                            display: true, animate: false)
+        }
+        return view
+    }
+    func updateNSView(_ nsView: NSView, context: Context) {}
 }
 #endif

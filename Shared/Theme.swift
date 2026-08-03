@@ -67,9 +67,19 @@ enum Ink {
 // MARK: - Typographie Archivo
 
 extension Font {
+    /// Facteur d'échelle global de l'UI. Le Mac agrandit un peu toute l'interface
+    /// (le texte passe par ce seul point d'entrée → agrandissement net, sans flou).
+    static var uiScale: CGFloat {
+        #if os(macOS)
+        1.12
+        #else
+        1
+        #endif
+    }
+
     /// Archivo — titres 800, corps 400. Chiffres en direct : ajouter `.monospacedDigit()`.
     static func archivo(_ size: CGFloat, _ weight: Font.Weight = .regular) -> Font {
-        .custom("Archivo", size: size).weight(weight)
+        .custom("Archivo", size: size * uiScale).weight(weight)
     }
 }
 
