@@ -3577,6 +3577,22 @@
         }
       }
     },
+    "Plus rempli": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Fullest volume"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Más lleno"
+          }
+        }
+      }
+    },
     "Plus tard": {},
     "Produits": {
       "localizations": {

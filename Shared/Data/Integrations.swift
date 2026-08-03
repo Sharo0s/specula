@@ -754,10 +754,17 @@ enum LiveFetcher {
                 if !volumes.isEmpty { break }
             }
             guard !volumes.isEmpty else { return nil }
+            // « Libres » et « Occupation » sur la même base (le cumul des volumes),
+            // le maximum étant reporté à part : un seul disque plein ne doit pas
+            // laisser croire que la baie entière l'est.
             let free = volumes.reduce(0.0) { $0 + (omvNumber($1["available"]) ?? 0) }
+            let total = volumes.reduce(0.0) { $0 + (omvNumber($1["size"]) ?? 0) }
             let fullest = volumes.compactMap { omvNumber($0["percentage"]) }.max() ?? 0
-            var out = [[frBytes(free), "Libres"], [frInt(volumes.count), "Volumes"],
-                       ["\(Int(fullest)) %", "Occupation"]]
+            var out = [[frBytes(free), "Libres"], [frInt(volumes.count), "Volumes"]]
+            if total > 0 {
+                out.append(["\(Int(((total - free) / total * 100).rounded())) %", "Occupation"])
+            }
+            out.append(["\(Int(fullest)) %", "Plus rempli"])
             if let resp = try? await HTTPClient.shared.request(
                 rpc, method: "POST", headers: headers,
                 body: omvBody("System", "getInformation", nil)),
