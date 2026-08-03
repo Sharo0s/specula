@@ -125,6 +125,20 @@ struct SettingsView: View {
                                 set: { store.setRule(rule.id, $0) }
                             ))
                         }
+                        // Un montage plein par nature (archives figées) rejouerait
+                        // l'alerte à chaque lancement : on le décoche ici.
+                        if !store.monitoredVolumes.isEmpty {
+                            HRule()
+                            Text("Volumes surveillés")
+                                .upperLabel(8.5, .heavy)
+                                .foregroundStyle(Ink.muted)
+                                .padding(.top, 10)
+                            ForEach(store.monitoredVolumes, id: \.service.id) { entry in
+                                ForEach(entry.fills, id: \.id) { v in
+                                    volumeRow(entry.service, v)
+                                }
+                            }
+                        }
                     }
 
                     // Partage famille
@@ -249,6 +263,26 @@ struct SettingsView: View {
             }
         }
         .padding(.bottom, 22)
+    }
+
+    /// Libellés dynamiques (nom de service, device, point de montage) : pas de
+    /// LocalizedStringKey ici, ces chaînes viennent du serveur.
+    private func volumeRow(_ s: Service, _ v: LiveFetcher.VolumeFill) -> some View {
+        HStack(spacing: 12) {
+            VStack(alignment: .leading, spacing: 1) {
+                Text("\(s.name) — \(v.label)").font(.archivo(12.5, .bold))
+                Text("\(v.mount) · \(v.percent) %")
+                    .font(.archivo(10.5))
+                    .foregroundStyle(v.percent > 90 ? Ink.accent2Text : Ink.muted)
+                    .lineLimit(1).truncationMode(.middle)
+            }
+            Spacer()
+            MSwitch(isOn: Binding(
+                get: { !store.mutedVolumes.contains(store.volumeKey(s.id, v.id)) },
+                set: { store.setVolumeMonitored(s.id, v.id, $0) }
+            ), width: 36, height: 22)
+        }
+        .padding(.vertical, 7)
     }
 
     private func toggleRow(_ title: String, sub: String, isOn: Binding<Bool>) -> some View {

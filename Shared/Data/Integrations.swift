@@ -718,61 +718,7 @@ enum LiveFetcher {
             return nil
 
         case .omv:
-            // clé « utilisateur:motdepasse » → RPC JSON authentifié par session
-            guard let key, let sep = key.firstIndex(of: ":") else { return nil }
-            let rpc = URL(string: "\(base)/rpc.php")!
-            let login = try await HTTPClient.shared.request(
-                rpc, method: "POST", headers: ["Content-Type": "application/json"],
-                body: omvBody("Session", "login", ["username": String(key[..<sep]),
-                                                   "password": String(key[key.index(after: sep)...])]))
-            guard login.status == 200,
-                  let cookies = login.headers["set-cookie"], !cookies.isEmpty else { return nil }
-            // URLSession refuse le stockage des cookies : on renvoie les jetons de session à
-            // la main. Les en-têtes Set-Cookie sont concaténés et l'attribut « expires »
-            // contient lui-même une virgule — on découpe large et on ne garde que les cookies OMV.
-            let session = cookies
-                .components(separatedBy: CharacterSet(charactersIn: ",;"))
-                .map { $0.trimmingCharacters(in: .whitespaces) }
-                .filter { $0.hasPrefix("OPENMEDIAVAULT") && $0.contains("=") }
-                .joined(separator: "; ")
-            guard !session.isEmpty else { return nil }
-            let headers = ["Content-Type": "application/json", "Cookie": session]
-
-            // OMV 6/7 : enumerateMountedFilesystems ; repli getList (pagination).
-            var volumes: [[String: Any]] = []
-            for (method, params) in [("enumerateMountedFilesystems", ["includeroot": false] as [String: Any]),
-                                     ("getList", ["start": 0, "limit": -1])] {
-                let resp = try? await HTTPClient.shared.request(
-                    rpc, method: "POST", headers: headers,
-                    body: omvBody("FileSystemMgmt", method, params))
-                guard let resp, resp.status == 200,
-                      let json = try? JSONSerialization.jsonObject(with: resp.data) as? [String: Any] else { continue }
-                // getList encapsule la liste dans « data », l'autre la rend telle quelle
-                let payload = json["response"]
-                let list = (payload as? [Any]) ?? ((payload as? [String: Any])?.array("data") ?? [])
-                volumes = list.compactMap { $0 as? [String: Any] }.filter { $0["mounted"] as? Bool != false }
-                if !volumes.isEmpty { break }
-            }
-            guard !volumes.isEmpty else { return nil }
-            // « Libres » et « Occupation » sur la même base (le cumul des volumes),
-            // le maximum étant reporté à part : un seul disque plein ne doit pas
-            // laisser croire que la baie entière l'est.
-            let free = volumes.reduce(0.0) { $0 + (omvNumber($1["available"]) ?? 0) }
-            let total = volumes.reduce(0.0) { $0 + (omvNumber($1["size"]) ?? 0) }
-            let fullest = volumes.compactMap { omvNumber($0["percentage"]) }.max() ?? 0
-            var out = [[frBytes(free), "Libres"], [frInt(volumes.count), "Volumes"]]
-            if total > 0 {
-                out.append(["\(Int(((total - free) / total * 100).rounded())) %", "Occupation"])
-            }
-            out.append(["\(Int(fullest)) %", "Plus rempli"])
-            if let resp = try? await HTTPClient.shared.request(
-                rpc, method: "POST", headers: headers,
-                body: omvBody("System", "getInformation", nil)),
-               let json = try? JSONSerialization.jsonObject(with: resp.data) as? [String: Any],
-               let uptime = omvNumber(json.dict("response")?["uptime"]), uptime > 0 {
-                out.append([frUptime(uptime), "Uptime"])
-            }
-            return out
+            return await omvSnapshot(base: base, key: key)?.cells
 
         case .photoprism:
             // clé « utilisateur:motdepasse » → session
@@ -892,6 +838,102 @@ enum LiveFetcher {
     private static func omvNumber(_ value: Any?) -> Double? {
         (value as? Double) ?? (value as? Int).map(Double.init)
             ?? (value as? String).flatMap(Double.init)
+    }
+
+    /// Ouvre une session OMV et renvoie les en-têtes à rejouer.
+    /// URLSession refuse le stockage des cookies : on renvoie les jetons de session à
+    /// la main. Les en-têtes Set-Cookie sont concaténés et l'attribut « expires »
+    /// contient lui-même une virgule — on découpe large et on ne garde que les cookies OMV.
+    private static func omvSession(rpc: URL, key: String?) async throws -> [String: String]? {
+        guard let key, let sep = key.firstIndex(of: ":") else { return nil }
+        let login = try await HTTPClient.shared.request(
+            rpc, method: "POST", headers: ["Content-Type": "application/json"],
+            body: omvBody("Session", "login", ["username": String(key[..<sep]),
+                                               "password": String(key[key.index(after: sep)...])]))
+        guard login.status == 200,
+              let cookies = login.headers["set-cookie"], !cookies.isEmpty else { return nil }
+        let session = cookies
+            .components(separatedBy: CharacterSet(charactersIn: ",;"))
+            .map { $0.trimmingCharacters(in: .whitespaces) }
+            .filter { $0.hasPrefix("OPENMEDIAVAULT") && $0.contains("=") }
+            .joined(separator: "; ")
+        guard !session.isEmpty else { return nil }
+        return ["Content-Type": "application/json", "Cookie": session]
+    }
+
+    /// Systèmes de fichiers montés. OMV 6/7 : enumerateMountedFilesystems ;
+    /// repli getList (pagination).
+    private static func omvFilesystems(rpc: URL, headers: [String: String]) async -> [[String: Any]] {
+        for (method, params) in [("enumerateMountedFilesystems", ["includeroot": false] as [String: Any]),
+                                 ("getList", ["start": 0, "limit": -1])] {
+            let resp = try? await HTTPClient.shared.request(
+                rpc, method: "POST", headers: headers,
+                body: omvBody("FileSystemMgmt", method, params))
+            guard let resp, resp.status == 200,
+                  let json = try? JSONSerialization.jsonObject(with: resp.data) as? [String: Any] else { continue }
+            // getList encapsule la liste dans « data », l'autre la rend telle quelle
+            let payload = json["response"]
+            let list = (payload as? [Any]) ?? ((payload as? [String: Any])?.array("data") ?? [])
+            let volumes = list.compactMap { $0 as? [String: Any] }.filter { $0["mounted"] as? Bool != false }
+            if !volumes.isEmpty { return volumes }
+        }
+        return []
+    }
+
+    /// Remplissage volume par volume — alimente l'alerte disque et sa liste
+    /// d'exclusions. Seul OMV expose ce détail ; ailleurs l'alerte retombe sur
+    /// le pourcentage global affiché dans les métriques.
+    struct VolumeFill: Sendable, Hashable, Codable {
+        let id: String
+        let label: String
+        let mount: String
+        let percent: Int
+    }
+
+    /// Un seul relevé OMV par cycle : le serveur refuse une seconde ouverture
+    /// de session dans la foulée, donc métriques et volumes sortent du même
+    /// login. Ailleurs, l'alerte disque retombe sur le pourcentage global.
+    static func metricsAndVolumes(type: IntegrationType, base: String,
+                                  key: String?) async -> (cells: [[String]]?, fills: [VolumeFill]?) {
+        guard type == .omv else { return (await metrics(type: type, base: base, key: key), nil) }
+        for candidate in candidates(base) {
+            if let snap = await omvSnapshot(base: candidate, key: key) { return (snap.cells, snap.fills) }
+        }
+        return (nil, nil)
+    }
+
+    private static func omvSnapshot(base: String, key: String?) async -> (cells: [[String]], fills: [VolumeFill])? {
+        let rpc = URL(string: "\(base)/rpc.php")!
+        guard let headers = try? await omvSession(rpc: rpc, key: key) else { return nil }
+        let volumes = await omvFilesystems(rpc: rpc, headers: headers)
+        guard !volumes.isEmpty else { return nil }
+        // « Libres » et « Occupation » sur la même base (le cumul des volumes),
+        // le maximum étant reporté à part : un seul disque plein ne doit pas
+        // laisser croire que la baie entière l'est.
+        let free = volumes.reduce(0.0) { $0 + (omvNumber($1["available"]) ?? 0) }
+        let total = volumes.reduce(0.0) { $0 + (omvNumber($1["size"]) ?? 0) }
+        let fullest = volumes.compactMap { omvNumber($0["percentage"]) }.max() ?? 0
+        var cells = [[frBytes(free), "Libres"], [frInt(volumes.count), "Volumes"]]
+        if total > 0 {
+            cells.append(["\(Int(((total - free) / total * 100).rounded())) %", "Occupation"])
+        }
+        cells.append(["\(Int(fullest)) %", "Plus rempli"])
+        if let resp = try? await HTTPClient.shared.request(
+            rpc, method: "POST", headers: headers,
+            body: omvBody("System", "getInformation", nil)),
+           let json = try? JSONSerialization.jsonObject(with: resp.data) as? [String: Any],
+           let uptime = omvNumber(json.dict("response")?["uptime"]), uptime > 0 {
+            cells.append([frUptime(uptime), "Uptime"])
+        }
+        let fills = volumes.compactMap { fs -> VolumeFill? in
+            guard let percent = omvNumber(fs["percentage"]) else { return nil }
+            let device = (fs["devicename"] as? String) ?? (fs["devicefile"] as? String) ?? "?"
+            return VolumeFill(id: (fs["uuid"] as? String) ?? device,
+                              label: device,
+                              mount: (fs["mountpoint"] as? String) ?? "",
+                              percent: Int(percent))
+        }
+        return (cells, fills)
     }
 
     /// Format de clé attendu par intégration — affiché dans la feuille d'édition.

@@ -1,6 +1,22 @@
 {
   "sourceLanguage": "fr",
   "strings": {
+    "%1$@ — %2$@ rempli à %3$lld %%": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$@ — %2$@ is %3$lld%% full"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$@ — %2$@ al %3$lld %%"
+          }
+        }
+      }
+    },
     "%1$@ — volume rempli à %2$lld %%": {
       "localizations": {
         "en": {
@@ -5116,6 +5132,22 @@
           "stringUnit": {
             "state": "translated",
             "value": "Volúmenes"
+          }
+        }
+      }
+    },
+    "Volumes surveillés": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Monitored volumes"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Volúmenes vigilados"
           }
         }
       }

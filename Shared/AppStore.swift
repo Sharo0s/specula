@@ -40,9 +40,13 @@ final class AppStore {
     var downIDs: Set<String> = []
     var downAt: Date?
     var tempAlerted = false
-    /// Services déjà signalés comme presque pleins — une seule alerte tant que
+    /// Volumes déjà signalés comme presque pleins — une seule alerte tant que
     /// le volume n'est pas redescendu sous l'hystérésis.
     var diskAlerted: Set<String> = []
+    /// Remplissage détaillé par service (OMV), pour l'alerte et sa liste d'exclusions.
+    var volumeFills: [String: [LiveFetcher.VolumeFill]] = [:]
+    /// Volumes exclus de l'alerte disque (clé `volumeKey(_:_:)`).
+    private(set) var mutedVolumes: Set<String> = []
     /// Komga tombe en panne après ~5 ticks (mode démo).
     var panneAuto = true
 
@@ -203,6 +207,7 @@ final class AppStore {
         }.filter { ($0.end ?? Date()) > cutoff }
 
         rules = config.alertRules ?? rules
+        mutedVolumes = Set(config.mutedVolumes ?? [])
         // Les trois notifications de `seedNotifs` illustrent la démo : en mode
         // Homelab elles feraient croire à des événements réels du serveur.
         if let stored = config.notifs {
@@ -403,15 +408,54 @@ final class AppStore {
     /// source française quelle que soit la langue affichée.
     private func checkDiskAlerts() {
         for s in services {
+            // OMV détaille ses volumes : on alerte celui qui déborde, et les
+            // montages pleins par nature peuvent être exclus un par un.
+            if let fills = volumeFills[s.id], !fills.isEmpty {
+                for v in fills {
+                    let key = volumeKey(s.id, v.id)
+                    if v.percent > 90 && !diskAlerted.contains(key) {
+                        guard rules["disk"] == true, !mutedVolumes.contains(key) else { continue }
+                        diskAlerted.insert(key)
+                        pushNotif(title: String(localized: "Disque presque plein"),
+                                  sub: String(localized: "\(s.name) — \(v.label) rempli à \(v.percent) %"))
+                    } else if v.percent < 85 {
+                        diskAlerted.remove(key)
+                    }
+                }
+                continue
+            }
             guard let peak = fillPercent(liveMetricsCache[s.id]) else { continue }
             if peak > 90 && !diskAlerted.contains(s.id) {
-                guard rules["disk"] == true else { continue }
+                guard rules["disk"] == true, !mutedVolumes.contains(volumeKey(s.id, "*")) else { continue }
                 diskAlerted.insert(s.id)
                 pushNotif(title: String(localized: "Disque presque plein"),
                           sub: String(localized: "\(s.name) — volume rempli à \(peak) %"))
             } else if peak < 85 {
                 diskAlerted.remove(s.id)
             }
+        }
+    }
+
+    func volumeKey(_ serviceID: String, _ volumeID: String) -> String { "\(serviceID)|\(volumeID)" }
+
+    /// Surveillance d'un volume (décoché = exclu de l'alerte disque).
+    func setVolumeMonitored(_ serviceID: String, _ volumeID: String, _ on: Bool) {
+        let key = volumeKey(serviceID, volumeID)
+        if on {
+            mutedVolumes.remove(key)
+        } else {
+            mutedVolumes.insert(key)
+            diskAlerted.remove(key)
+        }
+        config.mutedVolumes = Array(mutedVolumes).sorted()
+        persist()
+    }
+
+    /// Volumes connus, groupés par service, pour la liste des Réglages.
+    var monitoredVolumes: [(service: Service, fills: [LiveFetcher.VolumeFill])] {
+        services.compactMap { s in
+            guard let fills = volumeFills[s.id], !fills.isEmpty else { return nil }
+            return (s, fills.sorted { $0.percent > $1.percent })
         }
     }
 
@@ -451,32 +495,37 @@ final class AppStore {
             var pings: [String: (ok: Bool, ms: Int)] = [:]
             var metrics: [String: [[String]]] = [:]
             var sessions: [String: [LiveFetcher.NowPlayingSession]] = [:]
+            var volumes: [String: [LiveFetcher.VolumeFill]] = [:]
 
-            await withTaskGroup(of: (String, (Bool, Int), [[String]]?, [LiveFetcher.NowPlayingSession]?).self) { group in
+            await withTaskGroup(of: (String, (Bool, Int), [[String]]?, [LiveFetcher.NowPlayingSession]?,
+                                     [LiveFetcher.VolumeFill]?).self) { group in
                 for target in targets {
                     group.addTask {
                         let ping = await LiveFetcher.ping(target.url)
                         var m: [[String]]? = nil
                         var np: [LiveFetcher.NowPlayingSession]? = nil
+                        var vol: [LiveFetcher.VolumeFill]? = nil
                         if ping.ok && wantMetrics {
-                            m = await LiveFetcher.metrics(type: target.type, base: target.apiBase, key: target.key)
+                            (m, vol) = await LiveFetcher.metricsAndVolumes(
+                                type: target.type, base: target.apiBase, key: target.key)
                         }
                         // Lecture en cours : à chaque tick (la progression avance)
                         if ping.ok, target.type == .jellyfin, let key = target.key {
                             np = await LiveFetcher.jellyfinSessions(base: target.apiBase, key: key)
                         }
-                        return (target.id, ping, m, np)
+                        return (target.id, ping, m, np, vol)
                     }
                 }
-                for await (id, ping, m, np) in group {
+                for await (id, ping, m, np, vol) in group {
                     pings[id] = ping
                     if let m { metrics[id] = m }
+                    if let vol { volumes[id] = vol }
                     sessions[id] = np ?? []
                 }
             }
             let system = glances != nil ? await LiveFetcher.systemBand(base: glances!.apiBase) : nil
             self?.applyLive(targets: targets, pings: pings, metrics: metrics,
-                            sessions: sessions, system: system)
+                            sessions: sessions, volumes: volumes, system: system)
         }
     }
 
@@ -484,6 +533,7 @@ final class AppStore {
                            pings results: [String: (ok: Bool, ms: Int)],
                            metrics: [String: [[String]]],
                            sessions: [String: [LiveFetcher.NowPlayingSession]],
+                           volumes: [String: [LiveFetcher.VolumeFill]],
                            system: LiveFetcher.SystemBand?) {
         for target in targets {
             guard let result = results[target.id] else { continue }
@@ -530,6 +580,7 @@ final class AppStore {
             trimHistories(target.id)
         }
         for (id, m) in metrics { liveMetricsCache[id] = m }
+        for (id, v) in volumes { volumeFills[id] = v }
         if !metrics.isEmpty { checkDiskAlerts() }
         for (id, np) in sessions where serviceTypes[id] == .jellyfin { nowPlaying[id] = np }
         if let system {

@@ -84,6 +84,9 @@ struct AppConfig: Codable {
     var notifs: [StoredNotif]?
     /// Interrupteurs de la section Alertes.
     var alertRules: [String: Bool]?
+    /// Volumes exclus de l'alerte disque, clés « idService|idVolume » — un
+    /// montage plein par nature ne doit pas rejouer à chaque lancement.
+    var mutedVolumes: [String]?
     /// Dernier relevé effectué par l'app. Sert à refermer une panne restée
     /// ouverte parce que l'app a été quittée avant le retour du service : le
     /// temps où personne ne regardait n'est imputé à aucun service.
