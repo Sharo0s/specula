@@ -266,7 +266,7 @@ enum LiveFetcher {
                     URL(string: "\(base)/proxy/network/api/s/default/stat/sysinfo")!, headers: h),
                    let uptime = ((sysJ as? [String: Any])?.array("data")?.first as? [String: Any])?.double("uptime"),
                    uptime > 0 {
-                    out.append([fr(uptime / 86_400) + " j", "Uptime"])
+                    out.append([frUptime(uptime), "Uptime"])
                 }
                 out.append([wanUp ? String(localized: "ACTIF") : String(localized: "HORS LIGNE"), "WAN"])
                 return out
@@ -763,7 +763,7 @@ enum LiveFetcher {
                 body: omvBody("System", "getInformation", nil)),
                let json = try? JSONSerialization.jsonObject(with: resp.data) as? [String: Any],
                let uptime = omvNumber(json.dict("response")?["uptime"]), uptime > 0 {
-                out.append([fr(uptime / 86_400) + " j", "Uptime"])
+                out.append([frUptime(uptime), "Uptime"])
             }
             return out
 

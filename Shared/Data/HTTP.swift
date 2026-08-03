@@ -91,6 +91,13 @@ func frBytes(_ bytes: Double) -> String {
     return String(localized: "\(fr(gb)) Go")
 }
 
+/// Secondes d'activité → « 15,6 h » sous une journée, « 12,2 j » au-delà.
+func frUptime(_ seconds: Double) -> String {
+    seconds < 86_400
+        ? String(localized: "\(fr(seconds / 3600)) h")
+        : String(localized: "\(fr(seconds / 86_400)) j")
+}
+
 /// Octets/s → « 2,1 Mo/s » / « 2.1 MB/s ».
 func frSpeed(_ bytesPerSec: Double) -> String {
     String(localized: "\(fr(bytesPerSec / 1_048_576)) Mo/s")

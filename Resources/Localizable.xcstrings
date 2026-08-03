@@ -117,6 +117,22 @@
         }
       }
     },
+    "%@ h": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ h"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ h"
+          }
+        }
+      }
+    },
     "%@ hors ligne": {
       "localizations": {
         "en": {
@@ -129,6 +145,22 @@
           "stringUnit": {
             "state": "translated",
             "value": "%@ sin conexión"
+          }
+        }
+      }
+    },
+    "%@ j": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ d"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ d"
           }
         }
       }
