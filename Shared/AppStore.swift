@@ -743,8 +743,11 @@ final class AppStore {
             minutes += inc.minutes
         }
         if isDown(s) { minutes += Double(downDurationMin) }
-        let pct = 100 - minutes / (30 * 24 * 60) * 100
-        return minutes == 0 ? "100 %" : fr((pct * 100).rounded() / 100, 2) + " %"
+        guard minutes > 0 else { return "100 %" }
+        // Une minute de panne sur 43 200 s'arrondit à 100,00 % : un service dont
+        // la rangée porte une barre rouge ne doit jamais s'afficher sans faute.
+        let pct = min(99.99, 100 - minutes / (30 * 24 * 60) * 100)
+        return fr((pct * 100).rounded() / 100, 2) + " %"
     }
 
     // MARK: - Clés API (config-first — le trousseau redemande à chaque rebuild)
