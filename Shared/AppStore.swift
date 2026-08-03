@@ -648,11 +648,19 @@ final class AppStore {
 
     /// Graphe du détail : 24 points selon la métrique choisie.
     func bars(_ id: String, metric: DetailMetric) -> [Double] {
+        let history: [Double]?
+        let floor: Double
         switch metric {
-        case .lat: latHistory[id]?.map { $0 / 46 } ?? []
-        case .cpu: cpuHistory[id]?.map { $0 / 85 } ?? []
-        case .net: netHistory[id]?.map { $0 / 3.2 } ?? []
+        case .lat: (history, floor) = (latHistory[id], 46)
+        case .cpu: (history, floor) = (cpuHistory[id], 85)
+        case .net: (history, floor) = (netHistory[id], 3.2)
         }
+        guard let history, !history.isEmpty else { return [] }
+        // Échelle adaptative : un service à 100 ms saturait le graphe sur l'échelle
+        // fixe du prototype. Le plancher évite l'inverse — amplifier le bruit d'un
+        // service stable jusqu'à lui faire des montagnes.
+        let scale = max(history.max() ?? floor, floor)
+        return history.map { $0 / scale }
     }
 
     func bigValue(_ s: Service, metric: DetailMetric) -> String {
