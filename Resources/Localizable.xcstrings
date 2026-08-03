@@ -1,6 +1,22 @@
 {
   "sourceLanguage": "fr",
   "strings": {
+    "%1$@ — volume rempli à %2$lld %%": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$@ — volume %2$lld%% full"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$@ — volumen al %2$lld %%"
+          }
+        }
+      }
+    },
     "%@": {},
     "%@ Go": {
       "localizations": {
@@ -1725,6 +1741,22 @@
           "stringUnit": {
             "state": "translated",
             "value": "Disco > 90 %"
+          }
+        }
+      }
+    },
+    "Disque presque plein": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Disk almost full"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Disco casi lleno"
           }
         }
       }

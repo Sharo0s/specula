@@ -86,7 +86,7 @@ struct OnboardingView: View {
                 .foregroundStyle(Ink.muted)
                 .padding(.bottom, 32)
             MPrimaryButton(title: "Configurer mon homelab") {
-                store.dataMode = .live
+                store.switchToLive()
                 step = .method
             }
             .padding(.bottom, 4)

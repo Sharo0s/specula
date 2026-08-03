@@ -40,6 +40,28 @@ struct StoredService: Codable {
     }
 }
 
+/// Notification archivée. `NotifItem` porte un `id` non décodable (UUID
+/// généré) : on persiste le contenu, l'identité est recréée au chargement.
+struct StoredNotif: Codable {
+    var title: String
+    var sub: String
+    var date: Date
+    var alert: Bool
+    var unread: Bool
+
+    init(_ item: NotifItem) {
+        title = item.title
+        sub = item.sub
+        date = item.date
+        alert = item.alert
+        unread = item.unread
+    }
+
+    var item: NotifItem {
+        NotifItem(title: title, sub: sub, date: date, alert: alert, unread: unread)
+    }
+}
+
 /// Panne observée (mode Homelab) — alimente le mur de statut 30 j.
 struct StoredOutage: Codable {
     var serviceID: String
@@ -58,6 +80,10 @@ struct AppConfig: Codable {
     var pins: [String]?
     /// Pannes observées (30 jours glissants).
     var outages: [StoredOutage]?
+    /// Historique des notifications, plus récente d'abord (borné à 60).
+    var notifs: [StoredNotif]?
+    /// Interrupteurs de la section Alertes.
+    var alertRules: [String: Bool]?
     /// Dernier relevé effectué par l'app. Sert à refermer une panne restée
     /// ouverte parce que l'app a été quittée avant le retour du service : le
     /// temps où personne ne regardait n'est imputé à aucun service.

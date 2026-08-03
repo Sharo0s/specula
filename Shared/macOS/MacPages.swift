@@ -93,7 +93,7 @@ struct MacSettingsPage: View {
                         if i > 0 { HRule() }
                         toggleRow(rule.label, sub: rule.desc, isOn: Binding(
                             get: { store.rules[rule.id] ?? false },
-                            set: { store.rules[rule.id] = $0 }
+                            set: { store.setRule(rule.id, $0) }
                         ))
                     }
                 }

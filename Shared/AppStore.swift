@@ -40,6 +40,9 @@ final class AppStore {
     var downIDs: Set<String> = []
     var downAt: Date?
     var tempAlerted = false
+    /// Services déjà signalés comme presque pleins — une seule alerte tant que
+    /// le volume n'est pas redescendu sous l'hystérésis.
+    var diskAlerted: Set<String> = []
     /// Komga tombe en panne après ~5 ticks (mode démo).
     var panneAuto = true
 
@@ -51,8 +54,11 @@ final class AppStore {
     var logs: [String] = []
 
     // MARK: Notifications
-    var notifs: [NotifItem] = Catalog.seedNotifs
+    /// Peuplé dans `init` : historique persisté, ou seed de démo, ou rien.
+    var notifs: [NotifItem] = []
     var unread = 0
+    /// Nombre de notifications conservées d'un lancement à l'autre.
+    private let notifLimit = 60
 
     // MARK: Réglages
     var density: Density = .aere
@@ -65,7 +71,7 @@ final class AppStore {
     var gHidden: Set<Int> = []
     var pins: [String] = Catalog.defaultPins
     var refreshMs = 1600
-    var rules: [String: Bool] = ["temp": true, "disk": true, "down": true]
+    private(set) var rules: [String: Bool] = ["temp": true, "disk": true, "down": true]
     var guestOn = false
     var guestPreview = false
     var guestIds: Set<String> = ["jellyfin", "immich"]
@@ -195,6 +201,16 @@ final class AppStore {
             sealed.end = max(config.lastTick ?? outage.start, outage.start)
             return sealed
         }.filter { ($0.end ?? Date()) > cutoff }
+
+        rules = config.alertRules ?? rules
+        // Les trois notifications de `seedNotifs` illustrent la démo : en mode
+        // Homelab elles feraient croire à des événements réels du serveur.
+        if let stored = config.notifs {
+            notifs = stored.map(\.item)
+        } else if config.dataMode == .demo {
+            notifs = Catalog.seedNotifs
+        }
+        unread = notifs.filter(\.unread).count
 
         for s in Catalog.all + (importedList ?? []) + customList { seedHistory(s.id) }
         gOrder = Array(mainGroups.indices)
@@ -381,6 +397,31 @@ final class AppStore {
         }
     }
 
+    /// Alerte disque (seuil 90 %, hystérésis 85 %). Lit les métriques déjà
+    /// remontées plutôt qu'une requête dédiée : « Occupation » et « Plus rempli »
+    /// sont des pourcentages entiers, et le libellé stocké est toujours la clé
+    /// source française quelle que soit la langue affichée.
+    private func checkDiskAlerts() {
+        for s in services {
+            guard let peak = fillPercent(liveMetricsCache[s.id]) else { continue }
+            if peak > 90 && !diskAlerted.contains(s.id) {
+                guard rules["disk"] == true else { continue }
+                diskAlerted.insert(s.id)
+                pushNotif(title: String(localized: "Disque presque plein"),
+                          sub: String(localized: "\(s.name) — volume rempli à \(peak) %"))
+            } else if peak < 85 {
+                diskAlerted.remove(s.id)
+            }
+        }
+    }
+
+    private func fillPercent(_ cells: [[String]]?) -> Int? {
+        cells?.compactMap { cell -> Int? in
+            guard cell.count > 1, cell[1] == "Occupation" || cell[1] == "Plus rempli" else { return nil }
+            return Int(cell[0].prefix { $0.isNumber })
+        }.max()
+    }
+
     // MARK: - Mode live (vraies requêtes)
 
     private struct PollTarget: Sendable {
@@ -489,6 +530,7 @@ final class AppStore {
             trimHistories(target.id)
         }
         for (id, m) in metrics { liveMetricsCache[id] = m }
+        if !metrics.isEmpty { checkDiskAlerts() }
         for (id, np) in sessions where serviceTypes[id] == .jellyfin { nowPlaying[id] = np }
         if let system {
             systemLive = true
@@ -914,7 +956,7 @@ final class AppStore {
                 KeychainStore.set(key, for: id)
             }
             config.apiKeys = keys
-            dataMode = .live
+            switchToLive()
             gOrder = Array(result.groups.indices)
             gHidden = []
             downIDs = []
@@ -991,12 +1033,39 @@ final class AppStore {
     func markAllRead() {
         unread = 0
         notifs = notifs.map { var n = $0; n.unread = false; return n }
+        persistNotifs()
+    }
+
+    /// Passage en mode Homelab. L'historique accumulé en démo décrit un serveur
+    /// qui n'existe pas (panne Komga scénarisée, température du random-walk) :
+    /// on repart à zéro plutôt que de le mêler aux vrais événements.
+    func switchToLive() {
+        guard dataMode != .live else { return }
+        dataMode = .live
+        notifs = []
+        unread = 0
+        diskAlerted = []
+        persistNotifs()
+    }
+
+    /// Interrupteur de la section Alertes (les règles survivent au relancement).
+    func setRule(_ id: String, _ on: Bool) {
+        rules[id] = on
+        config.alertRules = rules
+        persist()
     }
 
     private func pushNotif(title: String, sub: String, critical: Bool = true) {
         notifs.insert(NotifItem(title: title, sub: sub, date: Date(), alert: critical, unread: true), at: 0)
+        if notifs.count > notifLimit { notifs.removeLast(notifs.count - notifLimit) }
         unread += 1
+        persistNotifs()
         SystemNotifier.shared.post(title: title, body: sub, critical: critical)
+    }
+
+    private func persistNotifs() {
+        config.notifs = notifs.map(StoredNotif.init)
+        persist()
     }
 
     func openWeb(_ s: Service) {
