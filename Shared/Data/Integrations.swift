@@ -70,6 +70,10 @@ enum LiveFetcher {
             ("/admin/api.php", .pihole, { r in
                 r.status == 200 && String(data: r.data, encoding: .utf8).map { $0 == "[]" || $0.contains("dns_queries") } == true
             }),
+            // OMV répond à un GET sur son RPC par une erreur JSON signée « OMV\Rpc »
+            ("/rpc.php", .omv, { r in
+                String(data: r.data, encoding: .utf8)?.contains("OMV\\\\Rpc") == true
+            }),
             ("/api2/json/version", .proxmox, { r in r.status == 401 }),
             ("/api/v3/system/status", .radarr, { r in r.status == 401 }),
         ]
@@ -707,6 +711,53 @@ enum LiveFetcher {
             }
             return nil
 
+        case .omv:
+            // clé « utilisateur:motdepasse » → RPC JSON authentifié par session
+            guard let key, let sep = key.firstIndex(of: ":") else { return nil }
+            let rpc = URL(string: "\(base)/rpc.php")!
+            let login = try await HTTPClient.shared.request(
+                rpc, method: "POST", headers: ["Content-Type": "application/json"],
+                body: omvBody("Session", "login", ["username": String(key[..<sep]),
+                                                   "password": String(key[key.index(after: sep)...])]))
+            guard login.status == 200,
+                  let cookies = login.headers["set-cookie"], !cookies.isEmpty else { return nil }
+            // URLSession refuse le stockage des cookies : on renvoie les jetons de session à la main.
+            let session = cookies.split(separator: ",")
+                .compactMap { $0.split(separator: ";").first?.trimmingCharacters(in: .whitespaces) }
+                .filter { $0.hasPrefix("X-OPENMEDIAVAULT-") }
+                .joined(separator: "; ")
+            guard !session.isEmpty else { return nil }
+            let headers = ["Content-Type": "application/json", "Cookie": session]
+
+            // OMV 6/7 : enumerateMountedFilesystems ; repli getList (pagination).
+            var volumes: [[String: Any]] = []
+            for (method, params) in [("enumerateMountedFilesystems", ["includeroot": false] as [String: Any]),
+                                     ("getList", ["start": 0, "limit": -1])] {
+                let resp = try? await HTTPClient.shared.request(
+                    rpc, method: "POST", headers: headers,
+                    body: omvBody("FileSystemMgmt", method, params))
+                guard let resp, resp.status == 200,
+                      let json = try? JSONSerialization.jsonObject(with: resp.data) as? [String: Any] else { continue }
+                // getList encapsule la liste dans « data », l'autre la rend telle quelle
+                let payload = json["response"]
+                let list = (payload as? [Any]) ?? ((payload as? [String: Any])?.array("data") ?? [])
+                volumes = list.compactMap { $0 as? [String: Any] }.filter { $0["mounted"] as? Bool != false }
+                if !volumes.isEmpty { break }
+            }
+            guard !volumes.isEmpty else { return nil }
+            let free = volumes.reduce(0.0) { $0 + (omvNumber($1["available"]) ?? 0) }
+            let fullest = volumes.compactMap { omvNumber($0["percentage"]) }.max() ?? 0
+            var out = [[frBytes(free), "Libres"], [frInt(volumes.count), "Volumes"],
+                       ["\(Int(fullest)) %", "Occupation"]]
+            if let resp = try? await HTTPClient.shared.request(
+                rpc, method: "POST", headers: headers,
+                body: omvBody("System", "getInformation", nil)),
+               let json = try? JSONSerialization.jsonObject(with: resp.data) as? [String: Any],
+               let uptime = omvNumber(json.dict("response")?["uptime"]), uptime > 0 {
+                out.append([fr(uptime / 86_400) + " j", "Uptime"])
+            }
+            return out
+
         case .photoprism:
             // clé « utilisateur:motdepasse » → session
             guard let key, let sep = key.firstIndex(of: ":") else { return nil }
@@ -813,10 +864,24 @@ enum LiveFetcher {
         }
     }
 
+    /// Enveloppe d'appel RPC OpenMediaVault (`/rpc.php`).
+    private static func omvBody(_ service: String, _ method: String,
+                                _ params: [String: Any]?) -> Data? {
+        try? JSONSerialization.data(withJSONObject: [
+            "service": service, "method": method,
+            "params": params ?? NSNull(), "options": NSNull()])
+    }
+
+    /// OMV renvoie ses tailles tantôt en nombre, tantôt en chaîne d'octets.
+    private static func omvNumber(_ value: Any?) -> Double? {
+        (value as? Double) ?? (value as? Int).map(Double.init)
+            ?? (value as? String).flatMap(Double.init)
+    }
+
     /// Format de clé attendu par intégration — affiché dans la feuille d'édition.
     static func keyHint(for type: IntegrationType) -> String? {
         switch type {
-        case .komga, .nextcloud, .transmission, .qbittorrent, .npm, .filebrowser, .photoprism:
+        case .komga, .nextcloud, .transmission, .qbittorrent, .npm, .filebrowser, .photoprism, .omv:
             String(localized: "Format : utilisateur:motdepasse")
         case .wgeasy, .deluge:
             String(localized: "Mot de passe de l'interface")
@@ -828,7 +893,7 @@ enum LiveFetcher {
             String(localized: "Jeton X-Plex-Token")
         case .navidrome:
             String(localized: "Format : utilisateur:motdepasse")
-        case .generic, .omv, .vaultwarden, .traefik,
+        case .generic, .vaultwarden, .traefik,
              .frigate, .scrutiny, .netdata, .esphome,
              .ollama, .peertube, .wordpress:
             nil
@@ -843,7 +908,7 @@ enum LiveFetcher {
 
     static func keyStyle(for type: IntegrationType) -> KeyStyle {
         switch type {
-        case .komga, .nextcloud, .transmission, .qbittorrent, .npm, .filebrowser, .photoprism, .navidrome:
+        case .komga, .nextcloud, .transmission, .qbittorrent, .npm, .filebrowser, .photoprism, .navidrome, .omv:
             .userPassword
         case .wgeasy, .deluge:
             .password

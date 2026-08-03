@@ -28,6 +28,13 @@ enum YamlConfig {
 
     // MARK: Import
 
+    /// Types de widget Homepage et slugs d'icônes qui désignent une intégration
+    /// que l'on connaît déjà sous un autre nom.
+    private static let aliases = ["jellyseerr": "overseerr", "forgejo": "gitea", "emby": "jellyfin",
+                                  "changedetectionio": "changedetection", "firefly": "fireflyiii",
+                                  "wireguard": "wgeasy", "nginxproxymanager": "npm",
+                                  "openmediavault": "omv"]
+
     /// Jetons balisant les {{VARIABLES}} le temps du parsing (un `@` ou une
     /// accolade ouvrante ne peut pas commencer un scalaire YAML nu).
     private static let varPrefix = "SPECULAVAR_"
@@ -66,9 +73,6 @@ enum YamlConfig {
                                 .replacingOccurrences(of: ".png", with: "")
                                 .replacingOccurrences(of: ".svg", with: "")
                         }
-                        let aliases = ["jellyseerr": "overseerr", "forgejo": "gitea", "emby": "jellyfin",
-                                       "changedetectionio": "changedetection", "firefly": "fireflyiii",
-                                       "wireguard": "wgeasy", "nginxproxymanager": "npm"]
                         let rawType = (widget?["type"] as? String).map { aliases[$0] ?? $0 }
                         let type = rawType.flatMap(IntegrationType.init) ?? .generic
                         // id unique, même en cas de doublon de nom (2 FileBrowser…)
@@ -88,7 +92,8 @@ enum YamlConfig {
                             type: type)
                         if type == .generic, let slugRaw {
                             // le slug d'icône est souvent le type (jellyfin.png…)
-                            stored.type = IntegrationType(rawValue: slugRaw.replacingOccurrences(of: "-", with: ""))?.rawValue ?? stored.type
+                            let slug = slugRaw.lowercased().replacingOccurrences(of: "-", with: "")
+                            stored.type = IntegrationType(rawValue: aliases[slug] ?? slug)?.rawValue ?? stored.type
                         }
                         result.services.append(stored)
 
