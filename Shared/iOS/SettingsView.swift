@@ -12,6 +12,7 @@ struct SettingsView: View {
     @State private var showScan = false
     @State private var importingYAML = false
     @State private var exportingYAML = false
+    @State private var exportChoice = false
     @State private var exportDoc: YAMLDocument?
     @AppStorage("hasOnboarded") private var hasOnboarded = false
 
@@ -187,13 +188,19 @@ struct SettingsView: View {
             HRule()
             HStack(spacing: 8) {
                 MSecondaryButton(title: "Importer…") { importingYAML = true }
-                MSecondaryButton(title: "Exporter") {
-                    guard let text = store.exportYAMLText() else { return }
-                    exportDoc = YAMLDocument(text: text)
-                    exportingYAML = true
-                }
+                MSecondaryButton(title: "Exporter") { exportChoice = true }
             }
             .padding(.vertical, 10)
+            // Le fichier emporte les clés en clair si on le lui demande : le
+            // choix se fait avant la feuille d'enregistrement, pas après.
+            .confirmationDialog("Exporter services.yaml", isPresented: $exportChoice,
+                                titleVisibility: .visible) {
+                Button("Avec les clés API") { prepareExport(includeKeys: true) }
+                Button("Sans les clés") { prepareExport(includeKeys: false) }
+                Button("Annuler", role: .cancel) {}
+            } message: {
+                Text("Avec les clés, le fichier suffit à rejouer la configuration ailleurs — et se range comme un secret. Sans elles, les clés sont remplacées par des variables Homepage.")
+            }
             .fileExporter(isPresented: $exportingYAML, document: exportDoc,
                           // « services » seul donnerait services.yml : l'extension
                           // préférée du type système. Or tout, ici et chez
@@ -292,6 +299,12 @@ struct SettingsView: View {
             ), width: 36, height: 22)
         }
         .padding(.vertical, 7)
+    }
+
+    private func prepareExport(includeKeys: Bool) {
+        guard let text = store.exportYAMLText(includeKeys: includeKeys) else { return }
+        exportDoc = YAMLDocument(text: text)
+        exportingYAML = true
     }
 
     private func toggleRow(_ title: String, sub: String, isOn: Binding<Bool>) -> some View {

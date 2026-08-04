@@ -991,6 +991,18 @@ final class AppStore {
         return keys
     }
 
+    /// Mêmes services, clés remplacées par des variables au format Homepage.
+    /// Le fichier reste valide et transportable ; réimporté ici, il signale les
+    /// services en attente de clé plutôt que d'en inventer une.
+    private func placeholderKeys() -> [String: String] {
+        var keys: [String: String] = [:]
+        for s in mainServices where apiKey(for: s.id) != nil {
+            let slug = s.id.uppercased().map { $0.isLetter || $0.isNumber ? $0 : "_" }
+            keys[s.id] = "{{HOMEPAGE_VAR_\(String(slug))_KEY}}"
+        }
+        return keys
+    }
+
     /// Verse dans le trousseau les clés des configurations antérieures, puis les
     /// efface du fichier. Une clé qui n'a pas pu être écrite y reste : mieux
     /// vaut un service qui fonctionne qu'une clé perdue en silence.
@@ -1180,10 +1192,11 @@ final class AppStore {
     /// panneau d'enregistrement sur macOS, feuille d'export sur iOS. Le fichier
     /// porte les clés API en clair — c'est ce qui rend la config transportable
     /// d'un appareil à l'autre, mais ça se range comme un secret.
-    func exportYAMLText() -> String? {
+    func exportYAMLText(includeKeys: Bool = true) -> String? {
         do {
             return try YamlConfig.export(groups: mainGroups, services: mainServices,
-                                         types: serviceTypes, keys: exportableKeys())
+                                         types: serviceTypes,
+                                         keys: includeKeys ? exportableKeys() : placeholderKeys())
         } catch {
             fireToast(String(localized: "Export impossible"))
             return nil
@@ -1191,9 +1204,18 @@ final class AppStore {
     }
 
     #if os(macOS)
-    /// Enregistre le services.yaml là où l'utilisateur le demande.
+    /// Enregistre le services.yaml là où l'utilisateur le demande, après lui
+    /// avoir fait choisir si les clés API partent avec.
     func exportYAMLToFile() {
-        guard let yaml = exportYAMLText() else { return }
+        let alert = NSAlert()
+        alert.messageText = String(localized: "Exporter services.yaml")
+        alert.informativeText = String(localized: "Le fichier peut emporter tes clés API en clair. C'est ce qui rend la configuration transportable d'un appareil à l'autre, mais ça se range alors comme un secret.")
+        alert.addButton(withTitle: String(localized: "Avec les clés"))
+        alert.addButton(withTitle: String(localized: "Sans les clés"))
+        alert.addButton(withTitle: String(localized: "Annuler"))
+        let choice = alert.runModal()
+        guard choice != .alertThirdButtonReturn else { return }
+        guard let yaml = exportYAMLText(includeKeys: choice == .alertFirstButtonReturn) else { return }
         let panel = NSSavePanel()
         panel.nameFieldStringValue = "services.yaml"
         panel.allowedContentTypes = [.yaml]
