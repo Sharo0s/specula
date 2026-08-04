@@ -978,6 +978,118 @@
         }
       }
     },
+    "Avec les clés" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "مع المفاتيح"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "With keys"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Con las claves"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "包含密钥"
+          }
+        }
+      }
+    },
+    "Avec les clés API" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "مع مفاتيح API"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "With API keys"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Con las claves API"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "包含 API 密钥"
+          }
+        }
+      }
+    },
+    "Avec les clés, le fichier suffit à rejouer la configuration ailleurs — et se range comme un secret. Sans elles, les clés sont remplacées par des variables Homepage." : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "مع المفاتيح، يكفي الملف لإعادة بناء الإعداد في مكان آخر — ويجب حفظه كأنه سر. وبدونها، تُستبدل المفاتيح بمتغيرات Homepage."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "With keys, the file is enough to recreate the configuration elsewhere — and has to be kept like a secret. Without them, the keys are replaced by Homepage variables."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Con las claves, el archivo basta para recrear la configuración en otro sitio — y hay que guardarlo como un secreto. Sin ellas, las claves se sustituyen por variables de Homepage."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "包含密钥时，这个文件足以在别处还原整套配置——因此要像密钥一样保管。不含密钥时，密钥会被替换为 Homepage 变量。"
+          }
+        }
+      }
+    },
+    "Exporter services.yaml" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تصدير services.yaml"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Export services.yaml"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Exportar services.yaml"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "导出 services.yaml"
+          }
+        }
+      }
+    },
     "⌘K" : {
       "localizations" : {
         "ar" : {
@@ -6395,6 +6507,34 @@
         }
       }
     },
+    "Le fichier peut emporter tes clés API en clair. C'est ce qui rend la configuration transportable d'un appareil à l'autre, mais ça se range alors comme un secret." : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "قد يحمل الملف مفاتيح API الخاصة بك بنص واضح. هذا ما يجعل الإعداد قابلاً للنقل من جهاز إلى آخر، لكن عندئذٍ يجب حفظه كأنه سر."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The file can carry your API keys in plain text. That is what makes the configuration portable from one device to another, but it then has to be kept like a secret."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "El archivo puede llevar tus claves API en texto plano. Eso es lo que hace que la configuración sea portable de un dispositivo a otro, pero entonces hay que guardarlo como un secreto."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "该文件可能以明文携带你的 API 密钥。这正是配置能在设备之间迁移的原因，但此时它必须像密钥一样妥善保管。"
+          }
+        }
+      }
+    },
     "Le service répond à nouveau." : {
       "localizations" : {
         "ar" : {
@@ -8932,6 +9072,34 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "路由"
+          }
+        }
+      }
+    },
+    "Sans les clés" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "بدون المفاتيح"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Without keys"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sin las claves"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "不含密钥"
           }
         }
       }
