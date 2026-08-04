@@ -1,0 +1,74 @@
+name: Bogue
+description: Signaler un comportement fautif
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Merci du signalement. Faille de sécurité : ne pas passer par ici, voir
+        [SECURITY.md](https://github.com/Sharo0s/specula/blob/main/SECURITY.md).
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+      description: Ce qui se passe, et ce qui devrait se passer à la place.
+    validations:
+      required: true
+
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Reproduire
+      description: Les étapes, dans l'ordre, depuis le lancement de l'app.
+      placeholder: |
+        1. Réglages → Configuration → Données
+        2. Importer un services.yaml
+        3. …
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: plateformes
+    attributes:
+      label: Plateformes concernées
+      options:
+        - label: iOS
+        - label: iPadOS
+        - label: macOS
+        - label: watchOS
+    validations:
+      required: true
+
+  - type: dropdown
+    id: mode
+    attributes:
+      label: Mode de données
+      options:
+        - Démo
+        - Homelab
+        - Les deux
+    validations:
+      required: true
+
+  - type: input
+    id: versions
+    attributes:
+      label: Versions
+      description: Version de Specula (Réglages → À propos) et version du système.
+      placeholder: "Specula 1.0.0 (20) — iOS 26.1"
+    validations:
+      required: true
+
+  - type: input
+    id: service
+    attributes:
+      label: Service concerné
+      description: S'il s'agit d'une intégration — Jellyfin, AdGuard, Proxmox…
+      placeholder: "Jellyfin 10.9, derrière un reverse proxy"
+
+  - type: textarea
+    id: contexte
+    attributes:
+      label: Journaux, captures, contexte
+      description: Penser à masquer URLs, jetons et noms d'hôte.

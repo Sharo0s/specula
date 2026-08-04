@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Question ou idée à débattre
+    url: https://github.com/Sharo0s/specula/discussions
+    about: Pour ce qui n'est ni un bogue ni une proposition précise.
+  - name: Faille de sécurité
+    url: https://github.com/Sharo0s/specula/security/advisories/new
+    about: Signalement privé, jamais en issue publique.

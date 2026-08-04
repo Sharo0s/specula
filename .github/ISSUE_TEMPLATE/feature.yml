@@ -1,0 +1,41 @@
+name: Proposition
+description: Suggérer une fonctionnalité ou une intégration
+labels: ["enhancement"]
+body:
+  - type: textarea
+    id: probleme
+    attributes:
+      label: Le problème
+      description: Ce que l'app ne permet pas aujourd'hui, et dans quelle situation.
+    validations:
+      required: true
+
+  - type: textarea
+    id: solution
+    attributes:
+      label: La solution souhaitée
+      description: À quoi ça ressemblerait dans l'app.
+    validations:
+      required: true
+
+  - type: input
+    id: integration
+    attributes:
+      label: Intégration visée
+      description: Pour un nouveau service, son nom et un lien vers la doc de son API.
+      placeholder: "Uptime Kuma — https://…"
+
+  - type: checkboxes
+    id: plateformes
+    attributes:
+      label: Plateformes concernées
+      options:
+        - label: iOS
+        - label: iPadOS
+        - label: macOS
+        - label: watchOS
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Contournements essayés
