@@ -139,7 +139,7 @@ enum LiveFetcher {
             case .jellyfin:
                 guard let key else { return nil }
                 let (json, _) = try await HTTPClient.shared.json(
-                    URL(string: "\(base)/Items/Counts")!, headers: ["X-Emby-Token": key])
+                    "\(base)/Items/Counts", headers: ["X-Emby-Token": key])
                 guard let d = json as? [String: Any] else { return nil }
                 return [[frInt(d.int("MovieCount") ?? 0), "Films"],
                         [frInt(d.int("SeriesCount") ?? 0), "Séries"],
@@ -148,9 +148,9 @@ enum LiveFetcher {
             case .radarr:
                 guard let key else { return nil }
                 let h = ["X-Api-Key": key]
-                async let missing = HTTPClient.shared.json(URL(string: "\(base)/api/v3/wanted/missing?pageSize=1")!, headers: h)
-                async let queue = HTTPClient.shared.json(URL(string: "\(base)/api/v3/queue?pageSize=1")!, headers: h)
-                async let movies = HTTPClient.shared.json(URL(string: "\(base)/api/v3/movie")!, headers: h)
+                async let missing = HTTPClient.shared.json("\(base)/api/v3/wanted/missing?pageSize=1", headers: h)
+                async let queue = HTTPClient.shared.json("\(base)/api/v3/queue?pageSize=1", headers: h)
+                async let movies = HTTPClient.shared.json("\(base)/api/v3/movie", headers: h)
                 let m = (try await missing.0 as? [String: Any])?.int("totalRecords") ?? 0
                 let q = (try await queue.0 as? [String: Any])?.int("totalRecords") ?? 0
                 let count = (try await movies.0 as? [Any])?.count ?? 0
@@ -159,9 +159,9 @@ enum LiveFetcher {
             case .sonarr:
                 guard let key else { return nil }
                 let h = ["X-Api-Key": key]
-                async let series = HTTPClient.shared.json(URL(string: "\(base)/api/v3/series")!, headers: h)
-                async let queue = HTTPClient.shared.json(URL(string: "\(base)/api/v3/queue?pageSize=1")!, headers: h)
-                async let missing = HTTPClient.shared.json(URL(string: "\(base)/api/v3/wanted/missing?pageSize=1")!, headers: h)
+                async let series = HTTPClient.shared.json("\(base)/api/v3/series", headers: h)
+                async let queue = HTTPClient.shared.json("\(base)/api/v3/queue?pageSize=1", headers: h)
+                async let missing = HTTPClient.shared.json("\(base)/api/v3/wanted/missing?pageSize=1", headers: h)
                 let s = (try await series.0 as? [Any])?.count ?? 0
                 let q = (try await queue.0 as? [String: Any])?.int("totalRecords") ?? 0
                 let m = (try await missing.0 as? [String: Any])?.int("totalRecords") ?? 0
@@ -174,7 +174,7 @@ enum LiveFetcher {
                     headers["Authorization"] = "Basic " + Data(key.utf8).base64EncodedString()
                 }
                 let (json, _) = try await HTTPClient.shared.json(
-                    URL(string: "\(base)/control/stats")!, headers: headers)
+                    "\(base)/control/stats", headers: headers)
                 guard let d = json as? [String: Any] else { return nil }
                 let queries = d.int("num_dns_queries") ?? 0
                 let blocked = d.int("num_blocked_filtering") ?? 0
@@ -190,7 +190,7 @@ enum LiveFetcher {
                 // key = jeton complet « user@realm!nom=uuid »
                 let h = ["Authorization": "PVEAPIToken=\(key)"]
                 let (json, _) = try await HTTPClient.shared.json(
-                    URL(string: "\(base)/api2/json/cluster/resources")!, headers: h)
+                    "\(base)/api2/json/cluster/resources", headers: h)
                 guard let d = json as? [String: Any], let list = d.array("data") else { return nil }
                 let rows = list.compactMap { $0 as? [String: Any] }
                 let vms = rows.filter { $0["type"] as? String == "qemu" }.count
@@ -205,7 +205,7 @@ enum LiveFetcher {
                 var immichBase = base
                 if let r = immichBase.range(of: "/api/") { immichBase = String(immichBase[..<r.lowerBound]) }
                 let (json, _) = try await HTTPClient.shared.json(
-                    URL(string: "\(immichBase)/api/server/statistics")!, headers: ["x-api-key": key])
+                    "\(immichBase)/api/server/statistics", headers: ["x-api-key": key])
                 guard let d = json as? [String: Any] else { return nil }
                 return [[frInt(d.int("photos") ?? 0), "Photos"],
                         [frInt(d.int("videos") ?? 0), "Vidéos"],
@@ -219,9 +219,9 @@ enum LiveFetcher {
                 // clé « utilisateur:motdepasse » → Basic
                 guard let key, key.contains(":") else { return nil }
                 let h = ["Authorization": "Basic " + Data(key.utf8).base64EncodedString()]
-                async let libs = HTTPClient.shared.json(URL(string: "\(base)/api/v1/libraries")!, headers: h)
-                async let series = HTTPClient.shared.json(URL(string: "\(base)/api/v1/series?size=1")!, headers: h)
-                async let books = HTTPClient.shared.json(URL(string: "\(base)/api/v1/books?size=1")!, headers: h)
+                async let libs = HTTPClient.shared.json("\(base)/api/v1/libraries", headers: h)
+                async let series = HTTPClient.shared.json("\(base)/api/v1/series?size=1", headers: h)
+                async let books = HTTPClient.shared.json("\(base)/api/v1/books?size=1", headers: h)
                 let l = (try await libs.0 as? [Any])?.count ?? 0
                 let s = (try await series.0 as? [String: Any])?.int("totalElements") ?? 0
                 let b = (try await books.0 as? [String: Any])?.int("totalElements") ?? 0
@@ -231,7 +231,7 @@ enum LiveFetcher {
                 // clé = jeton longue durée (Bearer)
                 guard let key else { return nil }
                 let (json, _) = try await HTTPClient.shared.json(
-                    URL(string: "\(base)/api/states")!, headers: ["Authorization": "Bearer \(key)"])
+                    "\(base)/api/states", headers: ["Authorization": "Bearer \(key)"])
                 guard let states = json as? [[String: Any]] else { return nil }
                 func tally(_ prefix: String, on: Set<String>) -> (Int, Int) {
                     let items = states.filter { ($0["entity_id"] as? String)?.hasPrefix(prefix) == true }
@@ -249,7 +249,7 @@ enum LiveFetcher {
                 guard let key else { return nil }
                 let h = ["X-API-KEY": key, "Accept": "application/json"]
                 let (healthJ, _) = try await HTTPClient.shared.json(
-                    URL(string: "\(base)/proxy/network/api/s/default/stat/health")!, headers: h)
+                    "\(base)/proxy/network/api/s/default/stat/health", headers: h)
                 guard let subsystems = (healthJ as? [String: Any])?.array("data")?
                     .compactMap({ $0 as? [String: Any] }) else { return nil }
                 var lan = 0, wlan = 0, wanUp = false
@@ -263,7 +263,7 @@ enum LiveFetcher {
                 }
                 var out = [[frInt(lan), "LAN"], [frInt(wlan), "WLAN"]]
                 if let (sysJ, _) = try? await HTTPClient.shared.json(
-                    URL(string: "\(base)/proxy/network/api/s/default/stat/sysinfo")!, headers: h),
+                    "\(base)/proxy/network/api/s/default/stat/sysinfo", headers: h),
                    let uptime = ((sysJ as? [String: Any])?.array("data")?.first as? [String: Any])?.double("uptime"),
                    uptime > 0 {
                     out.append([frUptime(uptime), "Uptime"])
@@ -277,7 +277,7 @@ enum LiveFetcher {
                 let h = ["Authorization": "Basic " + Data(key.utf8).base64EncodedString(),
                          "OCS-APIRequest": "true"]
                 let (json, _) = try await HTTPClient.shared.json(
-                    URL(string: "\(base)/ocs/v2.php/apps/serverinfo/api/v1/info?format=json")!, headers: h)
+                    "\(base)/ocs/v2.php/apps/serverinfo/api/v1/info?format=json", headers: h)
                 guard let data = ((json as? [String: Any])?.dict("ocs"))?.dict("data") else { return nil }
                 let nc = data.dict("nextcloud")
                 let free = nc?.dict("system")?.double("freespace") ?? 0
@@ -291,7 +291,7 @@ enum LiveFetcher {
                 // clé = jeton API (Authorization: Token)
                 guard let key else { return nil }
                 let (json, _) = try await HTTPClient.shared.json(
-                    URL(string: "\(base)/api/statistics/")!, headers: ["Authorization": "Token \(key)"])
+                    "\(base)/api/statistics/", headers: ["Authorization": "Token \(key)"])
                 guard let d = json as? [String: Any] else { return nil }
                 return [[frInt(d.int("documents_total") ?? 0), "Documents"],
                         [frInt(d.int("tag_count") ?? 0), "Étiquettes"],
@@ -302,11 +302,11 @@ enum LiveFetcher {
                 guard let key else { return nil }
                 let h = ["X-Plex-Token": key, "Accept": "application/json"]
                 let (sessJ, _) = try await HTTPClient.shared.json(
-                    URL(string: "\(base)/status/sessions")!, headers: h)
+                    "\(base)/status/sessions", headers: h)
                 let playing = ((sessJ as? [String: Any])?.dict("MediaContainer"))?.int("size") ?? 0
                 var out = [[frInt(playing), "Lectures"]]
                 if let (libJ, _) = try? await HTTPClient.shared.json(
-                    URL(string: "\(base)/library/sections")!, headers: h),
+                    "\(base)/library/sections", headers: h),
                    let sections = ((libJ as? [String: Any])?.dict("MediaContainer"))?.array("Directory") {
                     out.append([frInt(sections.count), "Bibliothèques"])
                 }
@@ -321,17 +321,17 @@ enum LiveFetcher {
                 allowed.insert(charactersIn: "-._~")
                 let body = "username=\(user.addingPercentEncoding(withAllowedCharacters: allowed) ?? user)&password=\(pass.addingPercentEncoding(withAllowedCharacters: allowed) ?? pass)"
                 let login = try await HTTPClient.shared.request(
-                    URL(string: "\(base)/api/v2/auth/login")!, method: "POST",
+                    "\(base)/api/v2/auth/login", method: "POST",
                     headers: ["Content-Type": "application/x-www-form-urlencoded", "Referer": base],
                     body: Data(body.utf8))
                 guard let setCookie = login.headers["set-cookie"],
                       let sid = setCookie.split(separator: ";").first, sid.contains("SID=") else { return nil }
                 let h = ["Cookie": String(sid)]
                 let (transferJ, _) = try await HTTPClient.shared.json(
-                    URL(string: "\(base)/api/v2/transfer/info")!, headers: h)
+                    "\(base)/api/v2/transfer/info", headers: h)
                 guard let tr = transferJ as? [String: Any] else { return nil }
                 let torrents = try? await HTTPClient.shared.json(
-                    URL(string: "\(base)/api/v2/torrents/info")!, headers: h)
+                    "\(base)/api/v2/torrents/info", headers: h)
                 let count = (torrents?.0 as? [Any])?.count ?? 0
                 return [[frSpeed(tr.double("dl_info_speed") ?? 0), "Réception"],
                         [frSpeed(tr.double("up_info_speed") ?? 0), "Envoi"],
@@ -339,7 +339,7 @@ enum LiveFetcher {
 
             case .traefik:
                 // API interne (:8080 par défaut), sans authentification
-                let (json, _) = try await HTTPClient.shared.json(URL(string: "\(base)/api/overview")!)
+                let (json, _) = try await HTTPClient.shared.json("\(base)/api/overview")
                 guard let http = (json as? [String: Any])?.dict("http") else { return nil }
                 let routers = http.dict("routers")
                 return [[frInt(routers?.int("total") ?? 0), "Routes"],
@@ -360,9 +360,9 @@ enum LiveFetcher {
         switch type {
         case .pihole:
             // v5 — clé = jeton API (paramètre auth)
-            let auth = key.map { "&auth=\($0)" } ?? ""
+            let auth = key.map { "&auth=\(urlQueryValue($0))" } ?? ""
             let (json, _) = try await HTTPClient.shared.json(
-                URL(string: "\(base)/admin/api.php?summaryRaw\(auth)")!)
+                "\(base)/admin/api.php?summaryRaw\(auth)")
             guard let d = json as? [String: Any], d["dns_queries_today"] != nil else { return nil }
             let q = d.int("dns_queries_today") ?? 0
             let b = d.int("ads_blocked_today") ?? 0
@@ -373,7 +373,7 @@ enum LiveFetcher {
         case .prowlarr:
             guard let key else { return nil }
             let (json, _) = try await HTTPClient.shared.json(
-                URL(string: "\(base)/api/v1/indexer")!, headers: ["X-Api-Key": key])
+                "\(base)/api/v1/indexer", headers: ["X-Api-Key": key])
             guard let list = json as? [[String: Any]] else { return nil }
             let enabled = list.filter { ($0["enable"] as? Bool) == true }.count
             return [[frInt(list.count), "Sources"], [frInt(enabled), "Actives"]]
@@ -382,9 +382,9 @@ enum LiveFetcher {
             guard let key else { return nil }
             let h = ["X-Api-Key": key]
             let kind = type == .lidarr ? "artist" : "author"
-            async let items = HTTPClient.shared.json(URL(string: "\(base)/api/v1/\(kind)")!, headers: h)
-            async let queue = HTTPClient.shared.json(URL(string: "\(base)/api/v1/queue?pageSize=1")!, headers: h)
-            async let missing = HTTPClient.shared.json(URL(string: "\(base)/api/v1/wanted/missing?pageSize=1")!, headers: h)
+            async let items = HTTPClient.shared.json("\(base)/api/v1/\(kind)", headers: h)
+            async let queue = HTTPClient.shared.json("\(base)/api/v1/queue?pageSize=1", headers: h)
+            async let missing = HTTPClient.shared.json("\(base)/api/v1/wanted/missing?pageSize=1", headers: h)
             let n = (try await items.0 as? [Any])?.count ?? 0
             let q = (try await queue.0 as? [String: Any])?.int("totalRecords") ?? 0
             let m = (try await missing.0 as? [String: Any])?.int("totalRecords") ?? 0
@@ -394,8 +394,8 @@ enum LiveFetcher {
         case .bazarr:
             guard let key else { return nil }
             let h = ["X-API-KEY": key]
-            async let eps = HTTPClient.shared.json(URL(string: "\(base)/api/episodes/wanted?length=1")!, headers: h)
-            async let movies = HTTPClient.shared.json(URL(string: "\(base)/api/movies/wanted?length=1")!, headers: h)
+            async let eps = HTTPClient.shared.json("\(base)/api/episodes/wanted?length=1", headers: h)
+            async let movies = HTTPClient.shared.json("\(base)/api/movies/wanted?length=1", headers: h)
             let e = (try await eps.0 as? [String: Any])?.int("total") ?? 0
             let m = (try await movies.0 as? [String: Any])?.int("total") ?? 0
             return [[frInt(e), "Épisodes"], [frInt(m), "Films"]]
@@ -403,7 +403,7 @@ enum LiveFetcher {
         case .overseerr:
             guard let key else { return nil }
             let (json, _) = try await HTTPClient.shared.json(
-                URL(string: "\(base)/api/v1/request/count")!, headers: ["X-Api-Key": key])
+                "\(base)/api/v1/request/count", headers: ["X-Api-Key": key])
             guard let d = json as? [String: Any] else { return nil }
             return [[frInt(d.int("pending") ?? 0), "En attente"],
                     [frInt(d.int("total") ?? 0), "Demandes"]]
@@ -411,12 +411,12 @@ enum LiveFetcher {
         case .tautulli:
             guard let key else { return nil }
             let (actJ, _) = try await HTTPClient.shared.json(
-                URL(string: "\(base)/api/v2?apikey=\(key)&cmd=get_activity")!)
+                "\(base)/api/v2?apikey=\(urlQueryValue(key))&cmd=get_activity")
             let data = ((actJ as? [String: Any])?.dict("response"))?.dict("data")
             let streams = data?.int("stream_count") ?? 0
             var out = [[frInt(streams), "Lectures"]]
             if let (libJ, _) = try? await HTTPClient.shared.json(
-                URL(string: "\(base)/api/v2?apikey=\(key)&cmd=get_libraries")!),
+                "\(base)/api/v2?apikey=\(urlQueryValue(key))&cmd=get_libraries"),
                let libs = (((libJ as? [String: Any])?.dict("response"))?["data"]) as? [Any] {
                 out.append([frInt(libs.count), "Bibliothèques"])
             }
@@ -426,12 +426,12 @@ enum LiveFetcher {
             guard let key else { return nil }
             let h = ["X-API-Key": key]
             let (endJ, _) = try await HTTPClient.shared.json(
-                URL(string: "\(base)/api/endpoints")!, headers: h)
+                "\(base)/api/endpoints", headers: h)
             guard let endpoints = endJ as? [[String: Any]] else { return nil }
             var out: [[String]] = []
             if let first = endpoints.first?.int("Id"),
                let (contJ, _) = try? await HTTPClient.shared.json(
-                URL(string: "\(base)/api/endpoints/\(first)/docker/containers/json?all=true")!, headers: h),
+                "\(base)/api/endpoints/\(first)/docker/containers/json?all=true", headers: h),
                let containers = contJ as? [[String: Any]] {
                 let running = containers.filter { ($0["State"] as? String) == "running" }.count
                 out.append([frInt(running), "En cours"])
@@ -443,7 +443,7 @@ enum LiveFetcher {
         case .sabnzbd:
             guard let key else { return nil }
             let (json, _) = try await HTTPClient.shared.json(
-                URL(string: "\(base)/api?mode=queue&output=json&apikey=\(key)")!)
+                "\(base)/api?mode=queue&output=json&apikey=\(urlQueryValue(key))")
             guard let q = (json as? [String: Any])?.dict("queue") else { return nil }
             let kbps = Double(q["kbpersec"] as? String ?? "0") ?? 0
             return [[frSpeed(kbps * 1024), "Réception"],
@@ -452,7 +452,7 @@ enum LiveFetcher {
         case .gitea:
             guard let key else { return nil }
             let (json, _) = try await HTTPClient.shared.json(
-                URL(string: "\(base)/api/v1/repos/search?limit=1")!,
+                "\(base)/api/v1/repos/search?limit=1",
                 headers: ["Authorization": "token \(key)"])
             guard let total = (json as? [String: Any])?.int("total_count") else { return nil }
             return [[frInt(total), "Dépôts"]]
@@ -461,7 +461,7 @@ enum LiveFetcher {
             // clé = jeton de compte de service (Bearer)
             guard let key else { return nil }
             let (json, _) = try await HTTPClient.shared.json(
-                URL(string: "\(base)/api/search?limit=5000&type=dash-db")!,
+                "\(base)/api/search?limit=5000&type=dash-db",
                 headers: ["Authorization": "Bearer \(key)"])
             guard let list = json as? [Any] else { return nil }
             return [[frInt(list.count), "Tableaux"]]
@@ -470,13 +470,13 @@ enum LiveFetcher {
             guard let key else { return nil }
             let h = ["X-API-Key": key]
             let (connJ, _) = try await HTTPClient.shared.json(
-                URL(string: "\(base)/rest/system/connections")!, headers: h)
+                "\(base)/rest/system/connections", headers: h)
             guard let conns = ((connJ as? [String: Any])?.dict("connections")) else { return nil }
             let connected = conns.values.compactMap { $0 as? [String: Any] }
                 .filter { ($0["connected"] as? Bool) == true }.count
             var out = [["\(connected) / \(conns.count)", "Appareils"]]
             if let (foldJ, _) = try? await HTTPClient.shared.json(
-                URL(string: "\(base)/rest/config/folders")!, headers: h),
+                "\(base)/rest/config/folders", headers: h),
                let folders = foldJ as? [Any] {
                 out.append([frInt(folders.count), "Dossiers"])
             }
@@ -485,7 +485,7 @@ enum LiveFetcher {
         case .audiobookshelf:
             guard let key else { return nil }
             let (json, _) = try await HTTPClient.shared.json(
-                URL(string: "\(base)/api/libraries")!, headers: ["Authorization": "Bearer \(key)"])
+                "\(base)/api/libraries", headers: ["Authorization": "Bearer \(key)"])
             guard let libs = (json as? [String: Any])?.array("libraries") else { return nil }
             return [[frInt(libs.count), "Bibliothèques"]]
 
@@ -493,7 +493,7 @@ enum LiveFetcher {
             // clé = API key (Basic, utilisateur vide) → métriques Prometheus
             guard let key else { return nil }
             let h = ["Authorization": "Basic " + Data(":\(key)".utf8).base64EncodedString()]
-            let resp = try await HTTPClient.shared.request(URL(string: "\(base)/metrics")!, headers: h)
+            let resp = try await HTTPClient.shared.request("\(base)/metrics", headers: h)
             guard resp.status == 200, let text = String(data: resp.data, encoding: .utf8) else { return nil }
             let monitors = text.split(separator: "\n").filter { $0.hasPrefix("monitor_status{") }
             guard !monitors.isEmpty else { return nil }
@@ -508,13 +508,13 @@ enum LiveFetcher {
             let u = String(key[..<sep]).addingPercentEncoding(withAllowedCharacters: allowed) ?? ""
             let p = String(key[key.index(after: sep)...]).addingPercentEncoding(withAllowedCharacters: allowed) ?? ""
             let (json, _) = try await HTTPClient.shared.json(
-                URL(string: "\(base)/rest/getScanStatus.view?u=\(u)&p=\(p)&v=1.16.1&c=specula&f=json")!)
+                "\(base)/rest/getScanStatus.view?u=\(u)&p=\(p)&v=1.16.1&c=specula&f=json")
             guard let count = (((json as? [String: Any])?.dict("subsonic-response"))?
                 .dict("scanStatus"))?.int("count") else { return nil }
             return [[frInt(count), "Chansons"]]
 
         case .frigate:
-            let (json, _) = try await HTTPClient.shared.json(URL(string: "\(base)/api/stats")!)
+            let (json, _) = try await HTTPClient.shared.json("\(base)/api/stats")
             guard let d = json as? [String: Any] else { return nil }
             let cams = (d.dict("cameras"))?.count ?? 0
             guard cams > 0 else { return nil }
@@ -523,13 +523,13 @@ enum LiveFetcher {
         case .kavita:
             guard let key else { return nil }
             let auth = try await HTTPClient.shared.request(
-                URL(string: "\(base)/api/Plugin/authenticate?apiKey=\(key)&pluginName=Specula")!,
+                "\(base)/api/Plugin/authenticate?apiKey=\(urlQueryValue(key))&pluginName=Specula",
                 method: "POST")
             guard auth.status == 200,
                   let token = (try? JSONSerialization.jsonObject(with: auth.data) as? [String: Any])?["token"] as? String else { return nil }
             let h = ["Authorization": "Bearer \(token)"]
             for path in ["/api/Library/libraries", "/api/Library"] {
-                if let (json, _) = try? await HTTPClient.shared.json(URL(string: base + path)!, headers: h),
+                if let (json, _) = try? await HTTPClient.shared.json(base + path, headers: h),
                    let libs = json as? [Any] {
                     return [[frInt(libs.count), "Bibliothèques"]]
                 }
@@ -539,7 +539,7 @@ enum LiveFetcher {
         case .mealie:
             guard let key else { return nil }
             let (json, _) = try await HTTPClient.shared.json(
-                URL(string: "\(base)/api/recipes?perPage=1")!,
+                "\(base)/api/recipes?perPage=1",
                 headers: ["Authorization": "Bearer \(key)"])
             guard let total = (json as? [String: Any])?.int("total") else { return nil }
             return [[frInt(total), "Recettes"]]
@@ -547,7 +547,7 @@ enum LiveFetcher {
         case .miniflux:
             guard let key else { return nil }
             let (json, _) = try await HTTPClient.shared.json(
-                URL(string: "\(base)/v1/entries?status=unread&limit=1")!,
+                "\(base)/v1/entries?status=unread&limit=1",
                 headers: ["X-Auth-Token": key])
             guard let total = (json as? [String: Any])?.int("total") else { return nil }
             return [[frInt(total), "Non lus"]]
@@ -555,7 +555,7 @@ enum LiveFetcher {
         case .linkding:
             guard let key else { return nil }
             let (json, _) = try await HTTPClient.shared.json(
-                URL(string: "\(base)/api/bookmarks/?limit=1")!,
+                "\(base)/api/bookmarks/?limit=1",
                 headers: ["Authorization": "Token \(key)"])
             guard let count = (json as? [String: Any])?.int("count") else { return nil }
             return [[frInt(count), "Liens"]]
@@ -564,7 +564,7 @@ enum LiveFetcher {
             // Speedtest Tracker — jeton Bearer
             guard let key else { return nil }
             let (json, _) = try await HTTPClient.shared.json(
-                URL(string: "\(base)/api/speedtest/latest")!,
+                "\(base)/api/speedtest/latest",
                 headers: ["Authorization": "Bearer \(key)", "Accept": "application/json"])
             guard let d = (json as? [String: Any])?.dict("data") else { return nil }
             let down = d.double("download") ?? 0
@@ -574,13 +574,13 @@ enum LiveFetcher {
                     ["\(Int(ping.rounded())) MS", "Latence"]]
 
         case .scrutiny:
-            let (json, _) = try await HTTPClient.shared.json(URL(string: "\(base)/api/summary")!)
+            let (json, _) = try await HTTPClient.shared.json("\(base)/api/summary")
             guard let summary = ((json as? [String: Any])?.dict("data"))?.dict("summary") else { return nil }
             return [[frInt(summary.count), "Disques"]]
 
         case .netdata:
             let (json, _) = try await HTTPClient.shared.json(
-                URL(string: "\(base)/api/v1/alarms?active=true")!)
+                "\(base)/api/v1/alarms?active=true")
             guard let alarms = (json as? [String: Any])?.dict("alarms") else { return nil }
             return [[frInt(alarms.count), "Alertes"]]
 
@@ -588,14 +588,14 @@ enum LiveFetcher {
             // clé = jeton client
             guard let key else { return nil }
             let (json, _) = try await HTTPClient.shared.json(
-                URL(string: "\(base)/application")!, headers: ["X-Gotify-Key": key])
+                "\(base)/application", headers: ["X-Gotify-Key": key])
             guard let apps = json as? [Any] else { return nil }
             return [[frInt(apps.count), "Applications"]]
 
         case .authentik:
             guard let key else { return nil }
             let (json, _) = try await HTTPClient.shared.json(
-                URL(string: "\(base)/api/v3/core/users/?page_size=1")!,
+                "\(base)/api/v3/core/users/?page_size=1",
                 headers: ["Authorization": "Bearer \(key)"])
             guard let count = ((json as? [String: Any])?.dict("pagination"))?.int("count") else { return nil }
             return [[frInt(count), "Utilisateurs"]]
@@ -603,11 +603,11 @@ enum LiveFetcher {
         case .truenas:
             guard let key else { return nil }
             let h = ["Authorization": "Bearer \(key)"]
-            let (poolJ, _) = try await HTTPClient.shared.json(URL(string: "\(base)/api/v2.0/pool")!, headers: h)
+            let (poolJ, _) = try await HTTPClient.shared.json("\(base)/api/v2.0/pool", headers: h)
             guard let pools = poolJ as? [Any] else { return nil }
             var out = [[frInt(pools.count), "Volumes"]]
             if let (alertJ, _) = try? await HTTPClient.shared.json(
-                URL(string: "\(base)/api/v2.0/alert/list")!, headers: h),
+                "\(base)/api/v2.0/alert/list", headers: h),
                let alerts = alertJ as? [[String: Any]] {
                 let active = alerts.filter { ($0["dismissed"] as? Bool) != true }.count
                 out.append([frInt(active), "Alertes"])
@@ -617,7 +617,7 @@ enum LiveFetcher {
         case .octoprint:
             guard let key else { return nil }
             let (json, _) = try await HTTPClient.shared.json(
-                URL(string: "\(base)/api/job")!, headers: ["X-Api-Key": key])
+                "\(base)/api/job", headers: ["X-Api-Key": key])
             guard let d = json as? [String: Any] else { return nil }
             let completion = (d.dict("progress"))?.double("completion") ?? 0
             var out = [[fr(completion, 0) + " %", "Progression"]]
@@ -625,14 +625,14 @@ enum LiveFetcher {
             return out
 
         case .esphome:
-            let (json, _) = try await HTTPClient.shared.json(URL(string: "\(base)/devices")!)
+            let (json, _) = try await HTTPClient.shared.json("\(base)/devices")
             guard let d = json as? [String: Any] else { return nil }
             let devices = (d.array("configured_devices") ?? d.array("devices") ?? d.array("configured"))?.count ?? 0
             guard devices > 0 else { return nil }
             return [[frInt(devices), "Appareils"]]
 
         case .ollama:
-            let (json, _) = try await HTTPClient.shared.json(URL(string: "\(base)/api/tags")!)
+            let (json, _) = try await HTTPClient.shared.json("\(base)/api/tags")
             guard let models = (json as? [String: Any])?.array("models") else { return nil }
             return [[frInt(models.count), "Modèles"]]
 
@@ -642,11 +642,11 @@ enum LiveFetcher {
             let body = try JSONSerialization.data(withJSONObject: [
                 "identity": String(key[..<sep]), "secret": String(key[key.index(after: sep)...])])
             let login = try await HTTPClient.shared.request(
-                URL(string: "\(base)/api/tokens")!, method: "POST",
+                "\(base)/api/tokens", method: "POST",
                 headers: ["Content-Type": "application/json"], body: body)
             guard let token = (try? JSONSerialization.jsonObject(with: login.data) as? [String: Any])?["token"] as? String else { return nil }
             let (json, _) = try await HTTPClient.shared.json(
-                URL(string: "\(base)/api/nginx/proxy-hosts")!,
+                "\(base)/api/nginx/proxy-hosts",
                 headers: ["Authorization": "Bearer \(token)"])
             guard let hosts = json as? [Any] else { return nil }
             return [[frInt(hosts.count), "Routes"]]
@@ -656,11 +656,11 @@ enum LiveFetcher {
             guard let key else { return nil }
             let body = try JSONSerialization.data(withJSONObject: ["password": key])
             let login = try await HTTPClient.shared.request(
-                URL(string: "\(base)/api/session")!, method: "POST",
+                "\(base)/api/session", method: "POST",
                 headers: ["Content-Type": "application/json"], body: body)
             guard let cookie = login.headers["set-cookie"]?.split(separator: ";").first else { return nil }
             let (json, _) = try await HTTPClient.shared.json(
-                URL(string: "\(base)/api/wireguard/client")!, headers: ["Cookie": String(cookie)])
+                "\(base)/api/wireguard/client", headers: ["Cookie": String(cookie)])
             guard let clients = json as? [[String: Any]] else { return nil }
             let enabled = clients.filter { ($0["enabled"] as? Bool) == true }.count
             return [["\(enabled) / \(clients.count)", "Appareils"]]
@@ -668,7 +668,7 @@ enum LiveFetcher {
         case .jackett:
             guard let key else { return nil }
             let (json, _) = try await HTTPClient.shared.json(
-                URL(string: "\(base)/api/v2.0/indexers?apikey=\(key)&configured=true")!)
+                "\(base)/api/v2.0/indexers?apikey=\(urlQueryValue(key))&configured=true")
             guard let list = json as? [Any] else { return nil }
             return [[frInt(list.count), "Sources"]]
 
@@ -678,13 +678,13 @@ enum LiveFetcher {
             let loginBody = try JSONSerialization.data(withJSONObject:
                 ["method": "auth.login", "params": [key], "id": 1])
             let login = try await HTTPClient.shared.request(
-                URL(string: "\(base)/json")!, method: "POST",
+                "\(base)/json", method: "POST",
                 headers: ["Content-Type": "application/json"], body: loginBody)
             guard let cookie = login.headers["set-cookie"]?.split(separator: ";").first else { return nil }
             let statusBody = try JSONSerialization.data(withJSONObject:
                 ["method": "core.get_session_status", "params": [["download_rate", "upload_rate"]], "id": 2])
             let resp = try await HTTPClient.shared.request(
-                URL(string: "\(base)/json")!, method: "POST",
+                "\(base)/json", method: "POST",
                 headers: ["Content-Type": "application/json", "Cookie": String(cookie)], body: statusBody)
             guard let result = (try? JSONSerialization.jsonObject(with: resp.data) as? [String: Any])?["result"] as? [String: Any] else { return nil }
             return [[frSpeed(result.double("download_rate") ?? 0), "Réception"],
@@ -699,13 +699,13 @@ enum LiveFetcher {
                     "username": String(key[..<sep]), "password": String(key[key.index(after: sep)...])])
             }
             let login = try await HTTPClient.shared.request(
-                URL(string: "\(base)/api/login")!, method: "POST",
+                "\(base)/api/login", method: "POST",
                 headers: ["Content-Type": "application/json"], body: body)
             guard login.status == 200, let jwt = String(data: login.data, encoding: .utf8),
                   !jwt.isEmpty else { return nil }
             for path in ["/api/usage/", "/api/usage"] {
                 if let (json, _) = try? await HTTPClient.shared.json(
-                    URL(string: base + path)!, headers: ["X-Auth": jwt]),
+                    base + path, headers: ["X-Auth": jwt]),
                    let d = json as? [String: Any], let used = d.double("used") {
                     var out = [[frBytes(used), "Utilisé"]]
                     if let total = d.double("total"), total > 0 {
@@ -726,7 +726,7 @@ enum LiveFetcher {
             let body = try JSONSerialization.data(withJSONObject: [
                 "username": String(key[..<sep]), "password": String(key[key.index(after: sep)...])])
             let login = try await HTTPClient.shared.request(
-                URL(string: "\(base)/api/v1/session")!, method: "POST",
+                "\(base)/api/v1/session", method: "POST",
                 headers: ["Content-Type": "application/json"], body: body)
             guard let json = try? JSONSerialization.jsonObject(with: login.data) as? [String: Any],
                   let count = (json.dict("config"))?.dict("count") else { return nil }
@@ -737,14 +737,14 @@ enum LiveFetcher {
         case .gitlab:
             guard let key else { return nil }
             let resp = try await HTTPClient.shared.request(
-                URL(string: "\(base)/api/v4/projects?per_page=1&membership=true")!,
+                "\(base)/api/v4/projects?per_page=1&membership=true",
                 headers: ["PRIVATE-TOKEN": key])
             guard resp.status == 200, let total = resp.headers["x-total"].flatMap(Int.init) else { return nil }
             return [[frInt(total), "Dépôts"]]
 
         case .peertube:
             let (json, _) = try await HTTPClient.shared.json(
-                URL(string: "\(base)/api/v1/videos?count=1")!)
+                "\(base)/api/v1/videos?count=1")
             guard let total = (json as? [String: Any])?.int("total") else { return nil }
             return [[frInt(total), "Vidéos"]]
 
@@ -752,7 +752,7 @@ enum LiveFetcher {
             // clé « id:secret » du jeton API
             guard let key, key.contains(":") else { return nil }
             let (json, _) = try await HTTPClient.shared.json(
-                URL(string: "\(base)/api/books?count=1")!,
+                "\(base)/api/books?count=1",
                 headers: ["Authorization": "Token \(key)"])
             guard let total = (json as? [String: Any])?.int("total") else { return nil }
             return [[frInt(total), "Livres"]]
@@ -760,7 +760,7 @@ enum LiveFetcher {
         case .fireflyiii:
             guard let key else { return nil }
             let (json, _) = try await HTTPClient.shared.json(
-                URL(string: "\(base)/api/v1/accounts?limit=1")!,
+                "\(base)/api/v1/accounts?limit=1",
                 headers: ["Authorization": "Bearer \(key)", "Accept": "application/json"])
             guard let total = (((json as? [String: Any])?.dict("meta"))?.dict("pagination"))?.int("total") else { return nil }
             return [[frInt(total), "Comptes"]]
@@ -768,14 +768,14 @@ enum LiveFetcher {
         case .grocy:
             guard let key else { return nil }
             let (json, _) = try await HTTPClient.shared.json(
-                URL(string: "\(base)/api/stock")!, headers: ["GROCY-API-KEY": key])
+                "\(base)/api/stock", headers: ["GROCY-API-KEY": key])
             guard let stock = json as? [Any] else { return nil }
             return [[frInt(stock.count), "Produits"]]
 
         case .healthchecks:
             guard let key else { return nil }
             let (json, _) = try await HTTPClient.shared.json(
-                URL(string: "\(base)/api/v3/checks/")!, headers: ["X-Api-Key": key])
+                "\(base)/api/v3/checks/", headers: ["X-Api-Key": key])
             guard let checks = (json as? [String: Any])?.array("checks")?
                 .compactMap({ $0 as? [String: Any] }) else { return nil }
             let up = checks.filter { ($0["status"] as? String) == "up" }.count
@@ -784,13 +784,13 @@ enum LiveFetcher {
         case .changedetection:
             guard let key else { return nil }
             let (json, _) = try await HTTPClient.shared.json(
-                URL(string: "\(base)/api/v1/watch")!, headers: ["x-api-key": key])
+                "\(base)/api/v1/watch", headers: ["x-api-key": key])
             guard let watches = json as? [String: Any] else { return nil }
             return [[frInt(watches.count), "Suivis"]]
 
         case .wordpress:
             let resp = try await HTTPClient.shared.request(
-                URL(string: "\(base)/wp-json/wp/v2/posts?per_page=1")!)
+                "\(base)/wp-json/wp/v2/posts?per_page=1")
             guard resp.status == 200, let total = resp.headers["x-wp-total"].flatMap(Int.init) else { return nil }
             return [[frInt(total), "Articles"]]
 
@@ -798,7 +798,7 @@ enum LiveFetcher {
             // clé = Content API key
             guard let key else { return nil }
             let (json, _) = try await HTTPClient.shared.json(
-                URL(string: "\(base)/ghost/api/content/posts/?key=\(key)&limit=1")!)
+                "\(base)/ghost/api/content/posts/?key=\(urlQueryValue(key))&limit=1")
             guard let total = (((json as? [String: Any])?.dict("meta"))?.dict("pagination"))?.int("total") else { return nil }
             return [[frInt(total), "Articles"]]
 
@@ -806,18 +806,18 @@ enum LiveFetcher {
             // clé = token_auth
             guard let key else { return nil }
             let (json, _) = try await HTTPClient.shared.json(
-                URL(string: "\(base)/index.php?module=API&method=VisitsSummary.getVisits&idSite=1&period=day&date=today&format=json&token_auth=\(key)")!)
+                "\(base)/index.php?module=API&method=VisitsSummary.getVisits&idSite=1&period=day&date=today&format=json&token_auth=\(urlQueryValue(key))")
             guard let visits = (json as? [String: Any])?.int("value") else { return nil }
             return [[frInt(visits), "Visites"]]
 
         case .n8n:
             guard let key else { return nil }
             let (json, _) = try await HTTPClient.shared.json(
-                URL(string: "\(base)/api/v1/workflows?limit=1")!, headers: ["X-N8N-API-KEY": key])
+                "\(base)/api/v1/workflows?limit=1", headers: ["X-N8N-API-KEY": key])
             guard (json as? [String: Any])?["data"] != nil else { return nil }
             // le total n'est pas exposé : on compte la première page complète
             let (fullJ, _) = try await HTTPClient.shared.json(
-                URL(string: "\(base)/api/v1/workflows?limit=250")!, headers: ["X-N8N-API-KEY": key])
+                "\(base)/api/v1/workflows?limit=250", headers: ["X-N8N-API-KEY": key])
             let count = ((fullJ as? [String: Any])?.array("data"))?.count ?? 0
             return [[frInt(count), "Workflows"]]
 
@@ -844,7 +844,7 @@ enum LiveFetcher {
     /// URLSession refuse le stockage des cookies : on renvoie les jetons de session à
     /// la main. Les en-têtes Set-Cookie sont concaténés et l'attribut « expires »
     /// contient lui-même une virgule — on découpe large et on ne garde que les cookies OMV.
-    private static func omvSession(rpc: URL, key: String?) async throws -> [String: String]? {
+    private static func omvSession(rpc: String, key: String?) async throws -> [String: String]? {
         guard let key, let sep = key.firstIndex(of: ":") else { return nil }
         let login = try await HTTPClient.shared.request(
             rpc, method: "POST", headers: ["Content-Type": "application/json"],
@@ -863,7 +863,7 @@ enum LiveFetcher {
 
     /// Systèmes de fichiers montés. OMV 6/7 : enumerateMountedFilesystems ;
     /// repli getList (pagination).
-    private static func omvFilesystems(rpc: URL, headers: [String: String]) async -> [[String: Any]] {
+    private static func omvFilesystems(rpc: String, headers: [String: String]) async -> [[String: Any]] {
         for (method, params) in [("enumerateMountedFilesystems", ["includeroot": false] as [String: Any]),
                                  ("getList", ["start": 0, "limit": -1])] {
             let resp = try? await HTTPClient.shared.request(
@@ -903,7 +903,7 @@ enum LiveFetcher {
     }
 
     private static func omvSnapshot(base: String, key: String?) async -> (cells: [[String]], fills: [VolumeFill])? {
-        let rpc = URL(string: "\(base)/rpc.php")!
+        let rpc = "\(base)/rpc.php"
         guard let headers = try? await omvSession(rpc: rpc, key: key) else { return nil }
         let volumes = await omvFilesystems(rpc: rpc, headers: headers)
         guard !volumes.isEmpty else { return nil }
@@ -1063,9 +1063,9 @@ enum LiveFetcher {
     static func systemBand(base: String) async -> SystemBand? {
         for api in ["/api/4", "/api/3"] {
             do {
-                async let cpuJ = HTTPClient.shared.json(URL(string: base + api + "/cpu")!)
-                async let memJ = HTTPClient.shared.json(URL(string: base + api + "/mem")!)
-                async let sensJ = HTTPClient.shared.json(URL(string: base + api + "/sensors")!)
+                async let cpuJ = HTTPClient.shared.json(base + api + "/cpu")
+                async let memJ = HTTPClient.shared.json(base + api + "/mem")
+                async let sensJ = HTTPClient.shared.json(base + api + "/sensors")
                 let cpu = (try await cpuJ.0 as? [String: Any])?.double("total") ?? 0
                 let free = (try await memJ.0 as? [String: Any])?.double("available") ?? 0
                 let temps = ((try? await sensJ.0) as? [Any])?

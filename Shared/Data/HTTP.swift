@@ -5,6 +5,13 @@ import Foundation
 // après 5 000 ms) »), certificats auto-signés acceptés (UniFi :8443,
 // Proxmox :8006… — la norme sur un LAN selfhosted).
 
+enum HTTPError: Error {
+    /// L'adresse saisie ne forme pas une URL — une espace collée dans un
+    /// copier-coller suffit. Erreur, jamais un `!` : le service passe hors
+    /// ligne, l'app continue.
+    case badURL
+}
+
 final class HTTPClient: NSObject, URLSessionDelegate, @unchecked Sendable {
     static let shared = HTTPClient()
 
@@ -52,6 +59,23 @@ final class HTTPClient: NSObject, URLSessionDelegate, @unchecked Sendable {
         return (try JSONSerialization.jsonObject(with: resp.data), resp.latencyMs)
     }
 
+    // MARK: Adresses construites à partir d'une saisie
+
+    // Les intégrations composent leur URL avec l'adresse du service, tapée par
+    // l'utilisateur. Ces deux surcharges centralisent la conversion : une
+    // adresse malformée lève `badURL` et rejoint le chemin d'échec habituel.
+
+    func request(_ string: String, method: String = "GET",
+                 headers: [String: String] = [:], body: Data? = nil) async throws -> Response {
+        guard let url = URL(string: string) else { throw HTTPError.badURL }
+        return try await request(url, method: method, headers: headers, body: body)
+    }
+
+    func json(_ string: String, headers: [String: String] = [:]) async throws -> (Any, Int) {
+        guard let url = URL(string: string) else { throw HTTPError.badURL }
+        return try await json(url, headers: headers)
+    }
+
     // Auto-signé : on fait confiance au trust présenté (homelab).
     func urlSession(_ session: URLSession, didReceive challenge: URLAuthenticationChallenge,
                     completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void) {
@@ -61,6 +85,16 @@ final class HTTPClient: NSObject, URLSessionDelegate, @unchecked Sendable {
             completionHandler(.performDefaultHandling, nil)
         }
     }
+}
+
+// MARK: - Query string
+
+/// Valeur prête à être posée dans une query string. Une clé API contient ce que
+/// le service a bien voulu générer : un « + », un « & » ou un « # » non encodé
+/// tronque la requête ou en change le sens.
+func urlQueryValue(_ value: String) -> String {
+    let allowed = CharacterSet.urlQueryAllowed.subtracting(CharacterSet(charactersIn: "&=+?#"))
+    return value.addingPercentEncoding(withAllowedCharacters: allowed) ?? value
 }
 
 // MARK: - Aides JSON (accès dynamique sans Codable par intégration)
