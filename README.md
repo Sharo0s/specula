@@ -34,32 +34,11 @@ complications alimentés par l'état réel.
 
 ## Installation
 
-### TestFlight
+TestFlight — lien public à venir.
 
-Lien public à venir.
-
-### Compiler soi-même
-
-Prérequis : macOS 26 et Xcode 26 — les cibles sont iOS 26, macOS 26 et
-watchOS 26, aucune version antérieure n'est prise en charge. Plus
-[XcodeGen](https://github.com/yonaskolb/XcodeGen) :
-
-```bash
-brew install xcodegen
-cp Signing.local.xcconfig.example Signing.local.xcconfig
-xcodegen generate
-open Specula.xcodeproj
-```
-
-`Signing.local.xcconfig` (ignoré par git) porte deux valeurs : `DEVELOPMENT_TEAM`,
-l'identifiant de ton équipe Apple Developer, et `SPECULA_BUNDLE_PREFIX`, un
-préfixe reverse-DNS qui t'appartient. Les identifiants d'app et les App Groups
-sont uniques à l'échelle mondiale : ceux en `com.smalard` sont déposés, il faut
-les tiens. Le reste en découle — extensions, App Group, entitlements.
-
-Targets : `Specula-iOS`, `Specula-macOS`, `Specula-Watch` (autonome), plus les
-extensions widgets iOS et complications watchOS. `project.yml` est la source de
-vérité — relancer `xcodegen generate` après tout ajout de fichier.
+Il faut **iOS ou iPadOS 26, macOS 26, watchOS 26** : aucune version antérieure
+n'est prise en charge. Pour compiler depuis les sources, voir
+[CONTRIBUTING.md](CONTRIBUTING.md).
 
 ## Modes de données
 
