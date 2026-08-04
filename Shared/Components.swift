@@ -75,6 +75,11 @@ struct MSeg<T: Hashable>: View {
                 } label: {
                     Text(LocalizedStringKey(opt.1))
                         .font(.archivo(fontSize, .semibold))
+                        // Un segment tient sur une ligne : à l'étroit, il vaut
+                        // mieux que la rangée déborde que « Français » coupé en
+                        // « Françai / s ».
+                        .lineLimit(1)
+                        .fixedSize(horizontal: true, vertical: false)
                         .padding(.horizontal, 12)
                         .padding(.vertical, 5)
                         .background(selection == opt.0 ? Ink.text : .clear)

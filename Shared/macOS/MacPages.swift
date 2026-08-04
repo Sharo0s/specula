@@ -171,10 +171,14 @@ struct MacSettingsPage: View {
                     }
 
                     settingsBlock("Langue") {
-                        labelRow("Langue") {
+                        // Six segments ne tiennent pas à côté du libellé dans la
+                        // colonne de 420 pt : le sélecteur prend sa propre ligne.
+                        VStack(alignment: .leading, spacing: 8) {
+                            Text("Langue").font(.archivo(13.5, .bold))
                             MSeg(options: AppLanguage.segments,
                                  selection: $store.appLanguage, fontSize: 10)
                         }
+                        .padding(.vertical, 10)
                         HRule()
                         VStack(alignment: .leading, spacing: 6) {
                             Text("Relance l'app pour appliquer partout.")
