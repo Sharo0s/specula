@@ -148,7 +148,9 @@ enum YamlConfig {
             }
             root.append([group: list])
         }
-        return try Yams.dump(object: root, sortKeys: false)
+        // `allowUnicode` sinon Yams échappe les accents (« M\xE9dia ») : le
+        // fichier reste lisible par un parseur, mais plus par un humain.
+        return try Yams.dump(object: root, allowUnicode: true, sortKeys: false)
     }
 
     // MARK: Aides

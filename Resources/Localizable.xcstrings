@@ -9207,31 +9207,31 @@
         }
       }
     },
-    "services.yaml copié dans le presse-papiers" : {
+    "services.yaml enregistré" : {
       "extractionState" : "manual",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "تم نسخ services.yaml إلى الحافظة"
+            "value" : "تم حفظ services.yaml"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "services.yaml copied to the clipboard"
+            "value" : "services.yaml saved"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "services.yaml copiado al portapapeles"
+            "value" : "services.yaml guardado"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "已将 services.yaml 拷贝到剪贴板"
+            "value" : "已保存 services.yaml"
           }
         }
       }

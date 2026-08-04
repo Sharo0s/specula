@@ -91,7 +91,7 @@ struct MacDashboard: View {
                         if let text = try? String(contentsOf: url, encoding: .utf8) {
                             store.importYAML(text)
                         } else {
-                            store.fireToast("Import impossible — fichier illisible")
+                            store.fireToast(String(localized: "Import impossible — fichier illisible"))
                         }
                     }
                 MSecondaryButton(title: "Scanner le réseau…") { showScan = true }

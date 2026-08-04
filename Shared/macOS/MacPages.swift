@@ -142,10 +142,10 @@ struct MacSettingsPage: View {
                                     if let text = try? String(contentsOf: url, encoding: .utf8) {
                                         store.importYAML(text)
                                     } else {
-                                        store.fireToast("Import impossible — fichier illisible")
+                                        store.fireToast(String(localized: "Import impossible — fichier illisible"))
                                     }
                                 }
-                            MSecondaryButton(title: "Exporter") { store.exportYAML() }
+                            MSecondaryButton(title: "Exporter") { store.exportYAMLToFile() }
                                 .frame(maxWidth: .infinity)
                         }
                         .padding(.top, 10)

@@ -11,6 +11,8 @@ struct SettingsView: View {
     @Binding var path: [IOSRoute]
     @State private var showScan = false
     @State private var importingYAML = false
+    @State private var exportingYAML = false
+    @State private var exportDoc: YAMLDocument?
     @AppStorage("hasOnboarded") private var hasOnboarded = false
 
     var body: some View {
@@ -155,7 +157,7 @@ struct SettingsView: View {
                 MSecondaryButton(title: "Prévisualiser le profil invité") {
                     store.guestPreview = true
                     path.removeAll()
-                    store.fireToast("Aperçu invité — « Quitter » pour revenir")
+                    store.fireToast(String(localized: "Aperçu invité — « Quitter » pour revenir"))
                 }
                 .padding(.bottom, 10)
             }
@@ -185,9 +187,24 @@ struct SettingsView: View {
             HRule()
             HStack(spacing: 8) {
                 MSecondaryButton(title: "Importer…") { importingYAML = true }
-                MSecondaryButton(title: "Exporter") { store.exportYAML() }
+                MSecondaryButton(title: "Exporter") {
+                    guard let text = store.exportYAMLText() else { return }
+                    exportDoc = YAMLDocument(text: text)
+                    exportingYAML = true
+                }
             }
             .padding(.vertical, 10)
+            .fileExporter(isPresented: $exportingYAML, document: exportDoc,
+                          // « services » seul donnerait services.yml : l'extension
+                          // préférée du type système. Or tout, ici et chez
+                          // gethomepage, s'appelle services.yaml.
+                          contentType: .yaml, defaultFilename: "services.yaml") { result in
+                if case .success = result {
+                    store.fireToast(String(localized: "services.yaml enregistré"))
+                } else {
+                    store.fireToast(String(localized: "Export impossible"))
+                }
+            }
             .fileImporter(isPresented: $importingYAML,
                           allowedContentTypes: [.yaml, .plainText, .data]) { result in
                 guard case .success(let url) = result else { return }
@@ -196,7 +213,7 @@ struct SettingsView: View {
                 if let text = try? String(contentsOf: url, encoding: .utf8) {
                     store.importYAML(text)
                 } else {
-                    store.fireToast("Import impossible — fichier illisible")
+                    store.fireToast(String(localized: "Import impossible — fichier illisible"))
                 }
             }
             MSecondaryButton(title: "Scanner le réseau (Bonjour)…") { showScan = true }
@@ -362,6 +379,27 @@ struct FlowLayout: Layout {
             width = max(width, x - spacing)
         }
         return (CGSize(width: width, height: y + rowH), points)
+    }
+}
+
+/// Enveloppe minimale pour `fileExporter` — le contenu est déjà du texte, seul
+/// le type déclaré compte pour que la feuille propose « services.yaml ».
+struct YAMLDocument: FileDocument {
+    static let readableContentTypes: [UTType] = [.yaml]
+    var text: String
+
+    init(text: String) { self.text = text }
+
+    init(configuration: ReadConfiguration) throws {
+        guard let data = configuration.file.regularFileContents,
+              let text = String(data: data, encoding: .utf8) else {
+            throw CocoaError(.fileReadCorruptFile)
+        }
+        self.text = text
+    }
+
+    func fileWrapper(configuration: WriteConfiguration) throws -> FileWrapper {
+        FileWrapper(regularFileWithContents: Data(text.utf8))
     }
 }
 #endif

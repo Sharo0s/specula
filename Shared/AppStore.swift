@@ -1,5 +1,6 @@
 import SwiftUI
 import Observation
+import UniformTypeIdentifiers
 #if canImport(WidgetKit)
 import WidgetKit
 #endif
@@ -1146,22 +1147,37 @@ final class AppStore {
         }
     }
 
-    /// Export services.yaml (copié dans le presse-papiers).
-    func exportYAML() {
+    /// Contenu du services.yaml. La destination est du ressort de l'appelant :
+    /// panneau d'enregistrement sur macOS, feuille d'export sur iOS. Le fichier
+    /// porte les clés API en clair — c'est ce qui rend la config transportable
+    /// d'un appareil à l'autre, mais ça se range comme un secret.
+    func exportYAMLText() -> String? {
         do {
-            let yaml = try YamlConfig.export(groups: mainGroups, services: mainServices,
-                                             types: serviceTypes, keys: config.apiKeys ?? [:])
-            #if os(macOS)
-            NSPasteboard.general.clearContents()
-            NSPasteboard.general.setString(yaml, forType: .string)
-            #elseif os(iOS)
-            UIPasteboard.general.string = yaml
-            #endif
-            fireToast(String(localized: "services.yaml copié dans le presse-papiers"))
+            return try YamlConfig.export(groups: mainGroups, services: mainServices,
+                                         types: serviceTypes, keys: config.apiKeys ?? [:])
+        } catch {
+            fireToast(String(localized: "Export impossible"))
+            return nil
+        }
+    }
+
+    #if os(macOS)
+    /// Enregistre le services.yaml là où l'utilisateur le demande.
+    func exportYAMLToFile() {
+        guard let yaml = exportYAMLText() else { return }
+        let panel = NSSavePanel()
+        panel.nameFieldStringValue = "services.yaml"
+        panel.allowedContentTypes = [.yaml]
+        panel.canCreateDirectories = true
+        guard panel.runModal() == .OK, let url = panel.url else { return }
+        do {
+            try yaml.write(to: url, atomically: true, encoding: .utf8)
+            fireToast(String(localized: "services.yaml enregistré"))
         } catch {
             fireToast(String(localized: "Export impossible"))
         }
     }
+    #endif
 
     // MARK: - Live Activity (île dynamique + écran verrouillé)
 
