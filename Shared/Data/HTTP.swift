@@ -76,14 +76,49 @@ final class HTTPClient: NSObject, URLSessionDelegate, @unchecked Sendable {
         return try await json(url, headers: headers)
     }
 
-    // Auto-signé : on fait confiance au trust présenté (homelab).
+    // Certificats auto-signés : acceptés sur le réseau local, où ils sont la
+    // norme (UniFi :8443, Proxmox :8006) et où personne ne délivre de certificat
+    // reconnu pour un nom en .local. Hors du réseau local — homelab joint par un
+    // reverse proxy ou un tunnel — la validation reste celle du système : sinon
+    // n'importe qui en position d'interception présenterait son propre
+    // certificat et récolterait la clé API envoyée derrière.
     func urlSession(_ session: URLSession, didReceive challenge: URLAuthenticationChallenge,
                     completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void) {
-        if let trust = challenge.protectionSpace.serverTrust {
-            completionHandler(.useCredential, URLCredential(trust: trust))
-        } else {
+        guard challenge.protectionSpace.authenticationMethod == NSURLAuthenticationMethodServerTrust,
+              let trust = challenge.protectionSpace.serverTrust,
+              Self.isLocalHost(challenge.protectionSpace.host) else {
             completionHandler(.performDefaultHandling, nil)
+            return
         }
+        completionHandler(.useCredential, URLCredential(trust: trust))
+    }
+
+    /// Hôte du réseau local : plages privées RFC 1918, lien-local, boucle
+    /// locale, ULA IPv6, et les noms sans point ou en .local/.home/.lan/.internal
+    /// — un nom qu'aucune autorité publique ne peut certifier.
+    static func isLocalHost(_ host: String) -> Bool {
+        let h = host.lowercased().trimmingCharacters(in: CharacterSet(charactersIn: "[]"))
+        if h == "localhost" || h == "::1" { return true }
+
+        let parts = h.split(separator: ".")
+        if parts.count == 4, parts.allSatisfy({ UInt8($0) != nil }) {
+            let o = parts.map { UInt8($0)! }
+            switch (o[0], o[1]) {
+            case (10, _), (127, _), (192, 168): return true
+            case (172, 16...31): return true
+            case (169, 254): return true    // lien-local
+            case (100, 64...127): return true // CGNAT — plage des tailnets
+            default: return false
+            }
+        }
+        // IPv6 : boucle locale, lien-local (fe80::/10), ULA (fc00::/7)
+        if h.contains(":") {
+            return h.hasPrefix("fe8") || h.hasPrefix("fe9") || h.hasPrefix("fea")
+                || h.hasPrefix("feb") || h.hasPrefix("fc") || h.hasPrefix("fd")
+        }
+        if !h.contains(".") { return true }  // nom court, résolu par le LAN
+        return [".local", ".home", ".lan", ".internal", ".home.arpa"]
+            .contains { h.hasSuffix($0) }
     }
 }
 
