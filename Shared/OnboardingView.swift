@@ -500,6 +500,11 @@ struct OnboardingView: View {
             Text("Specula interroge désormais tes services. Le mode Démo est désactivé — tu peux le réactiver dans Réglages à tout moment.")
                 .font(.archivo(13))
                 .foregroundStyle(Ink.muted)
+                .padding(.bottom, 8)
+            Text("Réglages → Exporter enregistre un services.yaml : c'est ce fichier qui te sert à reprendre la même configuration sur un autre appareil.")
+                .font(.archivo(13))
+                .foregroundStyle(Ink.muted)
+                .fixedSize(horizontal: false, vertical: true)
                 .padding(.bottom, 22)
             HStack(spacing: 0) {
                 statCell("\(store.mainServices.count)", "Services")

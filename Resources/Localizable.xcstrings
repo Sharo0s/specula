@@ -8252,6 +8252,35 @@
         }
       }
     },
+    "Réglages → Exporter enregistre un services.yaml : c'est ce fichier qui te sert à reprendre la même configuration sur un autre appareil." : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "الإعدادات ← تصدير يحفظ ملف services.yaml: هذا الملف هو ما يتيح لك استعادة الإعدادات نفسها على جهاز آخر."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Settings → Export saves a services.yaml: that file is how you carry the same setup to another device."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ajustes → Exportar guarda un services.yaml: ese archivo es lo que te permite recuperar la misma configuración en otro dispositivo."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "设置 →「导出」会保存一个 services.yaml：正是这个文件让你在另一台设备上沿用同一套配置。"
+          }
+        }
+      }
+    },
     "Relance l'app pour appliquer partout." : {
       "localizations" : {
         "ar" : {
