@@ -82,7 +82,7 @@ est branché sur release-please, un en-tête mal formé est ignoré par l'outil.
 
 ## Licence
 
-[GPL-3.0](LICENSE) © Sylvain Malard. Toute redistribution, modifiée ou non, reste
+[GPL-3.0](LICENSE) © nysia. Toute redistribution, modifiée ou non, reste
 sous la même licence et publie ses sources.
 
 L'app est par ailleurs publiée sur l'App Store, dont les conditions sont

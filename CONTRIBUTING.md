@@ -100,7 +100,7 @@ projet, et tu en gardes le droit d'auteur.
 
 Specula est aussi publié sur l'App Store, dont les conditions sont
 incompatibles avec la GPLv3. En proposant une contribution, tu accordes donc en
-plus au mainteneur (Sylvain Malard) une licence non exclusive, irrévocable,
+plus à nysia, éditeur du projet, une licence non exclusive, irrévocable,
 mondiale et gratuite de l'utiliser, la modifier et la distribuer sous d'autres
 conditions, y compris celles des magasins d'applications d'Apple et des
 binaires signés qui en découlent.
