@@ -124,7 +124,7 @@ enum Catalog {
         Service(id: "uptimekuma", mono: "Uk", name: "Uptime Kuma", desc: "Surveillance — nouveau", group: 1, url: "kuma.local:3001", iconSlug: "uptime-kuma", metrics: nil),
         Service(id: "proxmox", mono: "Px", name: "Proxmox VE", desc: "Hyperviseur — nouveau", group: 2, url: "pve.local:8006", iconSlug: "proxmox", metrics: [["3", "VM"], ["5", "Conteneurs"], ["64 Go", "RAM"]]),
         Service(id: "omv", mono: "Om", name: "OpenMediaVault", desc: "NAS principal", group: 2, url: "nas.local", iconSlug: "openmediavault", metrics: [["284 Go", "Libres"], ["501 Go", "Total"], ["4", "Partages"]]),
-        Service(id: "nextcloud", mono: "Nc", name: "Nextcloud", desc: "Cloud personnel", group: 2, url: "cloud.smalard.ovh", iconSlug: "nextcloud", metrics: [["264 Gio", "Libres"], ["992", "Fichiers"], ["1", "Utilisateur"]]),
+        Service(id: "nextcloud", mono: "Nc", name: "Nextcloud", desc: "Cloud personnel", group: 2, url: "cloud.example.net", iconSlug: "nextcloud", metrics: [["264 Gio", "Libres"], ["992", "Fichiers"], ["1", "Utilisateur"]]),
         Service(id: "filebrowser", mono: "Fb", name: "FileBrowser", desc: "Fichiers NAS + Mini-NAS", group: 2, url: "files.local:8080", iconSlug: "filebrowser", metrics: [["12 340", "Fichiers"], ["2", "Sources"], ["1", "Utilisateur"]]),
         Service(id: "vaultwarden", mono: "Vw", name: "Vaultwarden", desc: "Mots de passe — nouveau", group: 3, url: "vault.local:8222", iconSlug: "vaultwarden", metrics: [["128", "Éléments"], ["6", "Collections"], ["2", "Utilisateurs"]]),
         Service(id: "paperless", mono: "Pp", name: "Paperless-ngx", desc: "Documents — nouveau", group: 3, url: "docs.local:8010", iconSlug: "paperless-ngx", metrics: [["1 240", "Documents"], ["36", "Étiquettes"], ["12", "À trier"]]),
@@ -132,11 +132,11 @@ enum Catalog {
     ]
 
     static let seedServices: [Service] = [
-        Service(id: "seed-qbit", mono: "Qb", name: "qBittorrent", desc: "Client BitTorrent", group: 0, url: "seed.ovh:8080", iconSlug: "qbittorrent", metrics: nil),
-        Service(id: "seed-radarr", mono: "Ra", name: "Radarr", desc: "Gestion films — seedbox", group: 0, url: "seed.ovh:7878", iconSlug: "radarr", metrics: [["8", "Manquants"], ["1", "En attente"], ["214", "Films"]]),
-        Service(id: "seed-plex", mono: "Pl", name: "Plex", desc: "Serveur multimédia", group: 1, url: "seed.ovh:32400", iconSlug: "plex", metrics: [["214", "Films"], ["48", "Séries"], ["2", "Lectures"]]),
-        Service(id: "seed-traefik", mono: "Tk", name: "Traefik", desc: "Reverse proxy", group: 2, url: "seed.ovh:8081", iconSlug: "traefik", metrics: [["12", "Routes"], ["9", "Certificats"], ["0", "Erreurs"]]),
-        Service(id: "seed-glances", mono: "Gl", name: "Glances", desc: "Monitoring VPS", group: 2, url: "seed.ovh:61208", iconSlug: "glances", metrics: [["4", "vCPU"], ["8 Go", "RAM"], ["1,2 To", "Disque"]]),
+        Service(id: "seed-qbit", mono: "Qb", name: "qBittorrent", desc: "Client BitTorrent", group: 0, url: "seed.example.net:8080", iconSlug: "qbittorrent", metrics: nil),
+        Service(id: "seed-radarr", mono: "Ra", name: "Radarr", desc: "Gestion films — seedbox", group: 0, url: "seed.example.net:7878", iconSlug: "radarr", metrics: [["8", "Manquants"], ["1", "En attente"], ["214", "Films"]]),
+        Service(id: "seed-plex", mono: "Pl", name: "Plex", desc: "Serveur multimédia", group: 1, url: "seed.example.net:32400", iconSlug: "plex", metrics: [["214", "Films"], ["48", "Séries"], ["2", "Lectures"]]),
+        Service(id: "seed-traefik", mono: "Tk", name: "Traefik", desc: "Reverse proxy", group: 2, url: "seed.example.net:8081", iconSlug: "traefik", metrics: [["12", "Routes"], ["9", "Certificats"], ["0", "Erreurs"]]),
+        Service(id: "seed-glances", mono: "Gl", name: "Glances", desc: "Monitoring VPS", group: 2, url: "seed.example.net:61208", iconSlug: "glances", metrics: [["4", "vCPU"], ["8 Go", "RAM"], ["1,2 To", "Disque"]]),
     ]
 
     static let all: [Service] = services + seedServices
