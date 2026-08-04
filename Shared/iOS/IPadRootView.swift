@@ -54,7 +54,7 @@ struct IPadRootView: View {
                     .foregroundStyle(Ink.accent2Text)
             }
             Spacer()
-            Text(String(localized: "\(store.onlineCount) en ligne \(netNote)· CPU \(store.cpuText) · \(Date.now.formatted(.dateTime.hour().minute()))"))
+            Text(String(localized: "\(store.onlineCount) en ligne · CPU \(store.cpuText) · \(Date.now.formatted(.dateTime.hour().minute()))"))
                 .font(.archivo(11)).monospacedDigit()
                 .foregroundStyle(Ink.muted)
             Button {
@@ -72,10 +72,6 @@ struct IPadRootView: View {
         }
         .padding(.horizontal, 18)
         .padding(.vertical, 12)
-    }
-
-    private var netNote: String {
-        store.net == .tailscale ? String(localized: "· via Tailscale ") : ""
     }
 
     // MARK: Colonne latérale

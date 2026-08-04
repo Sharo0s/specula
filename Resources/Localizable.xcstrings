@@ -4,34 +4,6 @@
     "" : {
       "shouldTranslate" : false
     },
-    "· via Tailscale " : {
-      "localizations" : {
-        "ar" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "· عبر Tailscale "
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "· via Tailscale "
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "· vía Tailscale "
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "· 通过 Tailscale "
-          }
-        }
-      }
-    },
     "« %@ » modifié" : {
       "localizations" : {
         "ar" : {
@@ -590,30 +562,31 @@
     "%lld" : {
       "shouldTranslate" : false
     },
-    "%lld en ligne %@· CPU %@ · %@" : {
+    "%lld en ligne · CPU %@ · %@" : {
+      "extractionState" : "manual",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%lld متصل %@· المعالج %@ · %@"
+            "value" : "%lld متصل · المعالج %@ · %@"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%lld online %@· CPU %@ · %@"
+            "value" : "%lld online · CPU %@ · %@"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%lld en línea %@· CPU %@ · %@"
+            "value" : "%lld en línea · CPU %@ · %@"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%lld 在线 %@· CPU %@ · %@"
+            "value" : "%lld 在线 · CPU %@ · %@"
           }
         }
       }
@@ -2169,64 +2142,6 @@
         }
       }
     },
-    "Bascule automatique" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "ar" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "التبديل التلقائي"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Automatic switching"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Cambio automático"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "自动切换"
-          }
-        }
-      }
-    },
-    "Bascule automatique Tailscale" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "ar" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "التبديل التلقائي لـ Tailscale"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Automatic Tailscale switching"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Cambio automático a Tailscale"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Tailscale 自动切换"
-          }
-        }
-      }
-    },
     "Beaucoup de homelabs (reverse proxy, Docker) n'annoncent pas en Bonjour. Tu peux importer ton services.yaml à la place." : {
       "localizations" : {
         "ar" : {
@@ -2524,35 +2439,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "歌曲"
-          }
-        }
-      }
-    },
-    "Choisit l'URL locale ou Tailscale selon le réseau" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "ar" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "يختار العنوان المحلي أو Tailscale حسب الشبكة"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Picks the local or Tailscale URL based on the network"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Elige la URL local o Tailscale según la red"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "根据网络自动选择本地或 Tailscale 地址"
           }
         }
       }
@@ -3057,62 +2943,6 @@
         }
       }
     },
-    "Connecté via tail1a2b.ts.net — +18 ms" : {
-      "localizations" : {
-        "ar" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "متصل عبر tail1a2b.ts.net — ‏+18 مللي ثانية"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Connected via tail1a2b.ts.net — +18 ms"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Conectado vía tail1a2b.ts.net — +18 ms"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "已通过 tail1a2b.ts.net 连接 — +18 毫秒"
-          }
-        }
-      }
-    },
-    "Connexion" : {
-      "localizations" : {
-        "ar" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "الاتصال"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Connection"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Conexión"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "连接"
-          }
-        }
-      }
-    },
     "Connexion réussie — %lld ms · %@" : {
       "localizations" : {
         "ar" : {
@@ -3605,34 +3435,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "密度"
-          }
-        }
-      }
-    },
-    "Déplacement" : {
-      "localizations" : {
-        "ar" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "خارج المنزل"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Away"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Fuera"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "离家"
           }
         }
       }
@@ -6647,34 +6449,6 @@
         }
       }
     },
-    "Maison" : {
-      "localizations" : {
-        "ar" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "المنزل"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Home"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Casa"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "家"
-          }
-        }
-      }
-    },
     "Manquants" : {
       "localizations" : {
         "ar" : {
@@ -8619,34 +8393,6 @@
         }
       }
     },
-    "Réseau local détecté" : {
-      "localizations" : {
-        "ar" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "تم اكتشاف الشبكة المحلية"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Local network detected"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Red local detectada"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "已检测到本地网络"
-          }
-        }
-      }
-    },
     "Réseau UniFi" : {
       "localizations" : {
         "ar" : {
@@ -9519,34 +9265,6 @@
         }
       }
     },
-    "Simulateur" : {
-      "localizations" : {
-        "ar" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "المحاكي"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Simulator"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Simulador"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "模拟器"
-          }
-        }
-      }
-    },
     "Simulation du prototype" : {
       "localizations" : {
         "ar" : {
@@ -10119,34 +9837,6 @@
         }
       }
     },
-    "Tailscale" : {
-      "localizations" : {
-        "ar" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Tailscale"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Tailscale"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Tailscale"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Tailscale"
-          }
-        }
-      }
-    },
     "Téléchargement" : {
       "localizations" : {
         "ar" : {
@@ -10635,22 +10325,6 @@
         }
       }
     },
-    "TS" : {
-      "localizations" : {
-        "ar" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "TS"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "TS"
-          }
-        }
-      }
-    },
     "Tu en as déjà un ? Choisis-le dans les fichiers ou reçois-le par AirDrop." : {
       "extractionState" : "manual",
       "localizations" : {
@@ -10809,35 +10483,6 @@
         }
       }
     },
-    "URL locale à la maison, tail1a2b.ts.net en déplacement" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "ar" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "العنوان المحلي في المنزل، وtail1a2b.ts.net أثناء التنقل"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Local URL at home, tail1a2b.ts.net on the go"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "URL local en casa, tail1a2b.ts.net fuera"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "在家用本地地址，外出用 tail1a2b.ts.net"
-          }
-        }
-      }
-    },
     "Utilisateur" : {
       "localizations" : {
         "ar" : {
@@ -10946,34 +10591,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "vCPU"
-          }
-        }
-      }
-    },
-    "VIA TAILSCALE" : {
-      "localizations" : {
-        "ar" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "عبر TAILSCALE"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "VIA TAILSCALE"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "VÍA TAILSCALE"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "通过 TAILSCALE"
           }
         }
       }

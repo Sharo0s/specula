@@ -76,39 +76,6 @@ struct SettingsView: View {
                       isOn: $store.showSystemBand)
         }
 
-        // Connexion
-        section("Connexion") {
-            HStack {
-                VStack(alignment: .leading, spacing: 1) {
-                    Text("Tailscale")
-                        .font(.archivo(13.5, .bold))
-                    Text(store.net == .tailscale
-                         ? "Connecté via tail1a2b.ts.net — +18 ms"
-                         : "Réseau local détecté")
-                        .font(.archivo(11))
-                        .foregroundStyle(Ink.muted)
-                }
-                Spacer()
-                Rectangle()
-                    .fill(store.net == .tailscale ? Ink.accent : Ink.text.opacity(0.25))
-                    .frame(width: 10, height: 10)
-            }
-            .padding(.vertical, 10)
-            HRule()
-            toggleRow("Bascule automatique",
-                      sub: "Choisit l'URL locale ou Tailscale selon le réseau",
-                      isOn: $store.tsAuto)
-            HRule()
-            HStack {
-                Text("Simulateur")
-                    .font(.archivo(13.5, .bold))
-                Spacer()
-                MSeg(options: [(NetMode.local, "Maison"), (NetMode.tailscale, "Déplacement")],
-                     selection: $store.net)
-            }
-            .padding(.vertical, 10)
-        }
-
         // Groupes
         section("Groupes") {
             ForEach(Array(store.gOrder.enumerated()), id: \.element) { idx, gi in

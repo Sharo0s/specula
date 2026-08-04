@@ -89,7 +89,6 @@ enum IntegrationType: String, Codable, CaseIterable {
     case bookstack, fireflyiii, grocy, healthchecks, changedetection
     case wordpress, ghost, matomo, n8n
 }
-enum NetMode: String, CaseIterable { case local, tailscale }
 enum DetailMetric: String, CaseIterable {
     case lat, cpu, net
     var label: String {

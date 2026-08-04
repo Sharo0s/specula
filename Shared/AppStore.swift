@@ -81,8 +81,6 @@ final class AppStore {
     var layout: LayoutMode = .grille
     var iosLayout: LayoutMode = .liste
     var logosOn = true
-    var net: NetMode = .local
-    var tsAuto = true
     var gOrder = [0, 1, 2, 3]
     var gHidden: Set<Int> = []
     var pins: [String] = Catalog.defaultPins
@@ -194,7 +192,6 @@ final class AppStore {
     /// ne sait pas ce qui est tombé, elle sait qu'elle ne joint rien.
     var homelabUnreachable: Bool { dataMode == .live && unreachableSince != nil }
 
-    let network = NetworkMonitor()
     let scanner = BonjourScanner()
 
     // MARK: Navigation partagée
@@ -258,8 +255,6 @@ final class AppStore {
         if dataMode == .live { zeroHistories() }
         logs = Array(Catalog.logPool.shuffled().prefix(6))
 
-        network.onChange = { [weak self] in self?.applyNetwork() }
-        applyNetwork()
         // Tant que le tutoriel n'est pas fini, ni horloge ni demande
         // d'autorisation : la panne scénarisée de la démo posterait une
         // notification système et une Live Activity par-dessus l'écran
@@ -307,16 +302,6 @@ final class AppStore {
     private func persist() {
         config.dataMode = dataMode
         ConfigStore.save(config)
-    }
-
-    /// Bascule locale/Tailscale selon le réseau (README : NWPathMonitor + daemon TS).
-    private func applyNetwork() {
-        guard tsAuto else { return }
-        if network.onLocalNetwork {
-            net = .local
-        } else if network.tailscaleActive {
-            net = .tailscale
-        }
     }
 
     // MARK: - Horloge
@@ -728,11 +713,7 @@ final class AppStore {
     var downList: [Service] { services.filter { isDown($0) } }
     var downName: String { downList.first?.name ?? "Komga" }
 
-    /// Latence affichée, +18 ms via Tailscale (mode démo uniquement — en live
-    /// la latence mesurée inclut déjà le détour).
-    func ping(_ s: Service) -> Int {
-        (pings[s.id] ?? 0) + (dataMode == .demo && net == .tailscale ? 18 : 0)
-    }
+    func ping(_ s: Service) -> Int { pings[s.id] ?? 0 }
 
     /// Latence pas encore mesurée (mode live, avant la première réponse).
     func isPending(_ s: Service) -> Bool {
@@ -795,10 +776,10 @@ final class AppStore {
         isDown(s) ? String(localized: "HORS LIGNE") : (pending(s) ? String(localized: "CONNEXION…") : String(localized: "EN LIGNE · \(ping(s)) MS"))
     }
 
-    /// URL affichée (démo : bascule Tailscale simulée).
-    func url(_ s: Service) -> String {
-        dataMode == .demo && net == .tailscale ? "\(s.id).tail1a2b.ts.net" : s.url
-    }
+    /// URL affichée. Une seule adresse par service : ce qui rend un homelab
+    /// joignable de l'extérieur (tailnet, reverse proxy, tunnel) se règle sous
+    /// l'app, pas dedans.
+    func url(_ s: Service) -> String { s.url }
 
     /// URL requêtable (schéma inclus).
     func fullURL(_ s: Service) -> String {

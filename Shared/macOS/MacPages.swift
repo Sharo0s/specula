@@ -90,15 +90,6 @@ struct MacSettingsPage: View {
                                   isOn: $store.menuBarOnly)
                     }
 
-                    settingsBlock("Connexion") {
-                        toggleRow("Bascule automatique Tailscale",
-                                  sub: "URL locale à la maison, tail1a2b.ts.net en déplacement",
-                                  isOn: $store.tsAuto)
-                        HRule()
-                        labelRow("Simulateur") {
-                            MSeg(options: [(NetMode.local, "Maison"), (NetMode.tailscale, "Déplacement")], selection: $store.net)
-                        }
-                    }
                 }
                 .frame(maxWidth: 420, alignment: .leading)
                 VStack(alignment: .leading, spacing: 26) {

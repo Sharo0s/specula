@@ -29,7 +29,10 @@ tout ajout de fichier.
   (`iOS/`, `macOS/`, racine partagée).
 - `Shared/Data/` — couche réelle : HTTP (latence mesurée, TLS auto-signé),
   intégrations (détection automatique + métriques par API), YAML gethomepage
-  aller-retour (Yams), Keychain, découverte Bonjour, NWPathMonitor/Tailscale.
+  aller-retour (Yams), Keychain, découverte Bonjour.
+
+Une seule URL par service : ce qui rend un homelab joignable de l'extérieur
+(tailnet, reverse proxy, tunnel) se règle sous l'app, pas dedans.
 - `Widgets/`, `WatchWidgets/`, `Watch/` — extensions et app Watch, nourries
   par `SharedState` via l'App Group `group.ovh.smalard.specula`.
 
