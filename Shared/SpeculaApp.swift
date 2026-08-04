@@ -52,7 +52,8 @@ struct SpeculaApp: App {
             MenuBarPopover()
                 .environment(store)
         } label: {
-            Image(systemName: store.anyDown ? "exclamationmark.square.fill" : "square.fill")
+            Image(systemName: store.anyDown || store.homelabUnreachable
+                  ? "exclamationmark.square.fill" : "square.fill")
         }
         .menuBarExtraStyle(.window)
         #else

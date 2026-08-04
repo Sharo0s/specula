@@ -72,6 +72,15 @@ struct HomeView: View {
                     .background(Ink.accent2Bg)
                     .foregroundStyle(Ink.accent2Text)
             }
+            if store.homelabUnreachable {
+                Text("INJOIGNABLE")
+                    .font(.archivo(9, .heavy))
+                    .tracking(0.45)
+                    .padding(.horizontal, 7)
+                    .padding(.vertical, 2)
+                    .background(Ink.accent)
+                    .foregroundStyle(Ink.bg)
+            }
             if store.net == .tailscale {
                 Text("VIA TAILSCALE")
                     .font(.archivo(9, .heavy))

@@ -22,6 +22,14 @@ struct MacSidebar: View {
                         .background(Ink.accent2Bg)
                         .foregroundStyle(Ink.accent2Text)
                 }
+                if store.homelabUnreachable {
+                    Text("INJOIGNABLE")
+                        .font(.archivo(8, .heavy))
+                        .padding(.horizontal, 5)
+                        .padding(.vertical, 2)
+                        .background(Ink.accent)
+                        .foregroundStyle(Ink.bg)
+                }
                 if store.net == .tailscale {
                     Text("TS")
                         .font(.archivo(8, .heavy))

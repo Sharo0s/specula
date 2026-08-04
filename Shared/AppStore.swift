@@ -177,6 +177,15 @@ final class AppStore {
     private var measured: Set<String> = []
     private var polling = false
 
+    /// Depuis quand plus rien ne répond — `nil` dès qu'un service redonne signe.
+    /// Voir la garde en tête d'`applyLive`.
+    private(set) var unreachableSince: Date?
+    private var unreachableCycles = 0
+
+    /// Plus aucune route vers le homelab. Un état distinct d'une panne : l'app
+    /// ne sait pas ce qui est tombé, elle sait qu'elle ne joint rien.
+    var homelabUnreachable: Bool { dataMode == .live && unreachableSince != nil }
+
     let network = NetworkMonitor()
     let scanner = BonjourScanner()
 
@@ -578,6 +587,38 @@ final class AppStore {
                            sessions: [String: [LiveFetcher.NowPlayingSession]],
                            volumes: [String: [LiveFetcher.VolumeFill]],
                            system: LiveFetcher.SystemBand?) {
+        // Porte : dix-sept services qui tombent à la même seconde, ce ne sont pas
+        // dix-sept pannes — c'est une absence de route (sortie du Wi-Fi, VPN
+        // coupé, box à terre). Impossible de la distinguer d'un homelab
+        // entièrement éteint, donc on ne tranche pas : ni compteur d'échec, ni
+        // panne persistée, ni notification par service. Un seul état, signalé
+        // une fois. Avec un seul service configuré la question ne se pose pas,
+        // c'est bien lui qui est tombé.
+        let failed = results.values.filter { !$0.ok }.count
+        if results.count > 1 && failed == results.count {
+            unreachableCycles += 1
+            // Même seuil que pour un service isolé, pour rester cohérent.
+            if unreachableCycles == 3 {
+                unreachableSince = Date()
+                if rules["down"] == true {
+                    pushNotif(title: String(localized: "Homelab injoignable"),
+                              sub: String(localized: "Aucun service ne répond — vérifie le réseau ou le VPN."))
+                }
+            }
+            polling = false
+            // Pas de `lastTick` ici : rien n'a été observé, et c'est lui qui
+            // bornera une panne réelle restée ouverte avant la coupure.
+            publishSharedState()
+            return
+        }
+        if unreachableSince != nil && rules["down"] == true {
+            pushNotif(title: String(localized: "Homelab de nouveau joignable"),
+                      sub: String(localized: "Tes services répondent à nouveau."),
+                      critical: false)
+        }
+        unreachableCycles = 0
+        unreachableSince = nil
+
         for target in targets {
             guard let result = results[target.id] else { continue }
             if result.ok {

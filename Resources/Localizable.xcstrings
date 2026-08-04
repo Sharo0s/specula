@@ -1,8 +1,10 @@
 {
   "sourceLanguage" : "fr",
   "strings" : {
+    "" : {
+      "shouldTranslate" : false
+    },
     "· via Tailscale " : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -168,6 +170,64 @@
         }
       }
     },
+    "%@ — %@ rempli à %lld %%" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@ — %2$@ ممتلئ بنسبة %3$lld %%"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@ — %2$@ is %3$lld%% full"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@ — %2$@ al %3$lld %%"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@ — %2$@ 已用 %3$lld %%"
+          }
+        }
+      }
+    },
+    "%@ — volume rempli à %lld %%" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@ — وحدة التخزين ممتلئة بنسبة %2$lld %%"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@ — volume %2$lld%% full"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@ — volumen al %2$lld %%"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@ — 卷已用 %2$lld %%"
+          }
+        }
+      }
+    },
     "%@ · %lld %%" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -226,7 +286,6 @@
       }
     },
     "%@ en ligne" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -255,7 +314,6 @@
       }
     },
     "%@ en panne" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -368,7 +426,6 @@
       }
     },
     "%@ HORS LIGNE" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -480,64 +537,6 @@
         }
       }
     },
-    "%lld service%@ concerné%@" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ar" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%1$lld خدمة معنيّة"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%1$lld service%2$@ affected"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%1$lld servicio%2$@ afectado%3$@"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%1$lld 个服务受影响"
-          }
-        }
-      }
-    },
-    "%lld services · %lld groupes · %lld clés à compléter" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ar" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%lld خدمة · %lld مجموعة · %lld مفتاح ناقص"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%lld services · %lld groups · %lld keys to fill in"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%lld servicios · %lld grupos · %lld claves por completar"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%lld 个服务 · %lld 个分组 · %lld 个待填密钥"
-          }
-        }
-      }
-    },
     "%@ To" : {
       "localizations" : {
         "ar" : {
@@ -588,95 +587,10 @@
         }
       }
     },
-    "%lld/%lld" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ar" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%lld/%lld"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%lld/%lld"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%lld/%lld"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%lld/%lld"
-          }
-        }
-      }
-    },
-    "%@ — %@ rempli à %lld %%" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ar" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%1$@ — %2$@ ممتلئ بنسبة %3$lld %%"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%1$@ — %2$@ is %3$lld%% full"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%1$@ — %2$@ al %3$lld %%"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%1$@ — %2$@ 已用 %3$lld %%"
-          }
-        }
-      }
-    },
-    "%@ — volume rempli à %lld %%" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ar" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%1$@ — وحدة التخزين ممتلئة بنسبة %2$lld %%"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%1$@ — volume %2$lld%% full"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%1$@ — volumen al %2$lld %%"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%1$@ — 卷已用 %2$lld %%"
-          }
-        }
-      }
+    "%lld" : {
+      "shouldTranslate" : false
     },
     "%lld en ligne %@· CPU %@ · %@" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -788,8 +702,94 @@
         }
       }
     },
+    "%lld service%@ concerné%@" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$lld خدمة معنيّة"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$lld service%2$@ affected"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$lld servicio%2$@ afectado%3$@"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$lld 个服务受影响"
+          }
+        }
+      }
+    },
+    "%lld services · %lld groupes · %lld clés à compléter" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld خدمة · %lld مجموعة · %lld مفتاح ناقص"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld services · %lld groups · %lld keys to fill in"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld servicios · %lld grupos · %lld claves por completar"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld 个服务 · %lld 个分组 · %lld 个待填密钥"
+          }
+        }
+      }
+    },
+    "%lld/%lld" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld/%lld"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld/%lld"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld/%lld"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld/%lld"
+          }
+        }
+      }
+    },
     "%lld/%lld EN LIGNE · %lld PANNE" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -818,7 +818,6 @@
       }
     },
     "%lld/%lld en ligne · CPU %@" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -847,7 +846,6 @@
       }
     },
     "%lld/%lld services en ligne" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -876,7 +874,6 @@
       }
     },
     "%lld/%lld SERVICES EN LIGNE" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -2015,6 +2012,35 @@
         }
       }
     },
+    "Aucun service ne répond — vérifie le réseau ou le VPN." : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "لا تستجيب أي خدمة — تحقّق من الشبكة أو VPN."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No service is responding — check the network or the VPN."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ningún servicio responde: comprueba la red o la VPN."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "没有服务响应 — 请检查网络或 VPN。"
+          }
+        }
+      }
+    },
     "Aucune réponse — vérifie l'URL et le réseau" : {
       "localizations" : {
         "ar" : {
@@ -2044,7 +2070,6 @@
       }
     },
     "aujourd'hui · en cours" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -3005,7 +3030,6 @@
       }
     },
     "Confirmer la suppression" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -3034,7 +3058,6 @@
       }
     },
     "Connecté via tail1a2b.ts.net — +18 ms" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -3344,7 +3367,6 @@
       }
     },
     "CPU, température et services en ligne." : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -4206,7 +4228,6 @@
       }
     },
     "EN LIGNE" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -4375,7 +4396,6 @@
       }
     },
     "Épinglés" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -4404,7 +4424,6 @@
       }
     },
     "Épinglés et services en ligne, sur l'écran verrouillé." : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -4561,7 +4580,6 @@
       }
     },
     "État du homelab" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -5198,6 +5216,64 @@
         }
       }
     },
+    "Homelab de nouveau joignable" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "أصبح Homelab قابلاً للوصول مجددًا"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Homelab reachable again"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Homelab accesible de nuevo"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Homelab 恢复可达"
+          }
+        }
+      }
+    },
+    "Homelab injoignable" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تعذّر الوصول إلى Homelab"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Homelab unreachable"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Homelab inaccesible"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Homelab 无法访问"
+          }
+        }
+      }
+    },
     "HORS LIGNE" : {
       "localizations" : {
         "ar" : {
@@ -5670,7 +5746,6 @@
       }
     },
     "INCIDENT — %@" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -5722,6 +5797,35 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "INFO  30 秒后重试"
+          }
+        }
+      }
+    },
+    "INJOIGNABLE" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "غير قابل للوصول"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "UNREACHABLE"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "INACCESIBLE"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "无法访问"
           }
         }
       }
@@ -5840,7 +5944,6 @@
       }
     },
     "J-%lld" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -8133,7 +8236,6 @@
       }
     },
     "Rechercher un service, une action…" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -8489,7 +8591,6 @@
       }
     },
     "Réseau local détecté" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -8630,22 +8731,6 @@
         }
       }
     },
-    "Revoir le tutoriel de premier lancement." : {
-      "localizations" : {
-        "ar" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "إعادة مشاهدة الدليل التعليمي للتشغيل الأول."
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "重新观看首次启动教程。"
-          }
-        }
-      }
-    },
     "Revoir l'introduction" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -8671,6 +8756,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "重看介绍"
+          }
+        }
+      }
+    },
+    "Revoir le tutoriel de premier lancement." : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "إعادة مشاهدة الدليل التعليمي للتشغيل الأول."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "重新观看首次启动教程。"
           }
         }
       }
@@ -9217,7 +9318,6 @@
       }
     },
     "Services en ligne — carré rouge en cas de panne." : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -9303,35 +9403,6 @@
         }
       }
     },
-    "services.yaml copié dans le presse-papiers" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ar" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "تم نسخ services.yaml إلى الحافظة"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "services.yaml copied to the clipboard"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "services.yaml copiado al portapapeles"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "已将 services.yaml 拷贝到剪贴板"
-          }
-        }
-      }
-    },
     "services.yaml copié — compatible gethomepage.dev" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -9357,6 +9428,35 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "已拷贝 services.yaml — 兼容 gethomepage.dev"
+          }
+        }
+      }
+    },
+    "services.yaml copié dans le presse-papiers" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تم نسخ services.yaml إلى الحافظة"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "services.yaml copied to the clipboard"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "services.yaml copiado al portapapeles"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "已将 services.yaml 拷贝到剪贴板"
           }
         }
       }
@@ -9419,7 +9519,6 @@
       }
     },
     "Simulation du prototype" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -9508,7 +9607,6 @@
       }
     },
     "Specula — %@ ✕" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -9537,7 +9635,6 @@
       }
     },
     "Specula — %@ hors ligne" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -9566,7 +9663,6 @@
       }
     },
     "Specula — %lld/%lld en ligne" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -10164,7 +10260,6 @@
       }
     },
     "Tes services épinglés et leur latence." : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -10188,6 +10283,35 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "你置顶的服务及其延迟。"
+          }
+        }
+      }
+    },
+    "Tes services répondent à nouveau." : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "عادت خدماتك إلى الاستجابة."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Your services are responding again."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tus servicios vuelven a responder."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "你的服务已恢复响应。"
           }
         }
       }
@@ -10325,7 +10449,6 @@
       }
     },
     "Tous en ligne" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -10996,7 +11119,6 @@
       }
     },
     "Vraies requêtes vers tes services" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
