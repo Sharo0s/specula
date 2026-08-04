@@ -28,6 +28,12 @@
     "NSLocalNetworkUsageDescription" : {
       "comment" : "Privacy - Local Network Usage Description",
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "يكتشف Specula خدماتك المستضافة ذاتيًا على الشبكة المحلية ويستعلم عنها."
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -44,6 +50,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Specula découvre et interroge tes services selfhosted sur le réseau local."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Specula 会在本地网络上发现并查询你的自托管服务。"
           }
         }
       }

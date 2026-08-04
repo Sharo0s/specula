@@ -245,7 +245,7 @@ struct ServiceRow: View {
             Spacer()
             LatencyTag(text: store.pingText(service), down: store.isDown(service),
                        slow: store.isSlow(service))
-            Image(systemName: "chevron.right")
+            Image(systemName: "chevron.forward")
                 .font(.system(size: 11, weight: .semibold))
                 .foregroundStyle(Ink.muted)
         }

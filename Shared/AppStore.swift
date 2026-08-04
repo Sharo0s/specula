@@ -12,6 +12,18 @@ import AppKit
 import WatchKit
 #endif
 
+// MARK: - Langues proposées
+// Chaque libellé reste dans sa propre langue (endonyme) : une liste de langues
+// ne se traduit pas, sinon l'utilisateur ne reconnaît plus la sienne.
+enum AppLanguage {
+    @MainActor
+    static var segments: [(String, String)] {
+        [("system", String(localized: "Système")),
+         ("fr", "Français"), ("en", "English"), ("es", "Español"),
+         ("zh-Hans", "简体中文"), ("ar", "العربية")]
+    }
+}
+
 // MARK: - Store central
 // Deux sources de données :
 // - `.demo` : le simulateur du prototype (random-walk, panne Komga scénarisée).
@@ -81,7 +93,7 @@ final class AppStore {
     var guestIds: Set<String> = ["jellyfin", "immich"]
     var syncOn = true
 
-    /// Langue de l'app : "system", "fr", "en" ou "es".
+    /// Langue de l'app : "system" ou un code de `AppLanguage.segments`.
     /// L'environnement SwiftUI bascule immédiatement ; les chaînes construites
     /// (statuts, toasts) suivent au relancement via AppleLanguages.
     var appLanguage: String = UserDefaults.standard.string(forKey: "appLanguage") ?? "system" {
@@ -99,6 +111,13 @@ final class AppStore {
 
     var localeOverride: Locale? {
         appLanguage == "system" ? nil : Locale(identifier: appLanguage)
+    }
+
+    /// L'environnement `locale` ne retourne pas la mise en page à lui seul :
+    /// l'arabe choisi à la main resterait en LTR jusqu'au relancement.
+    var layoutDirectionOverride: LayoutDirection? {
+        guard let locale = localeOverride else { return nil }
+        return locale.language.characterDirection == .rightToLeft ? .rightToLeft : .leftToRight
     }
 
     /// macOS : relance l'app pour appliquer la langue partout.

@@ -172,8 +172,7 @@ struct MacSettingsPage: View {
 
                     settingsBlock("Langue") {
                         labelRow("Langue") {
-                            MSeg(options: [("system", String(localized: "Système")),
-                                           ("fr", "Français"), ("en", "English"), ("es", "Español")],
+                            MSeg(options: AppLanguage.segments,
                                  selection: $store.appLanguage, fontSize: 10)
                         }
                         HRule()

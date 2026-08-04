@@ -31,6 +31,11 @@ struct SpeculaApp: App {
             MacRootView()
                 .environment(store)
                 .environment(\.locale, store.localeOverride ?? .autoupdatingCurrent)
+                // `transformEnvironment` et pas `environment` : en mode « Système »
+                // la direction héritée du réglage iOS/macOS doit rester intacte.
+                .transformEnvironment(\.layoutDirection) {
+                    if let direction = store.layoutDirectionOverride { $0 = direction }
+                }
         }
         .windowStyle(.hiddenTitleBar)
         .defaultSize(Self.defaultWindowSize)
@@ -55,6 +60,11 @@ struct SpeculaApp: App {
             IOSRootView()
                 .environment(store)
                 .environment(\.locale, store.localeOverride ?? .autoupdatingCurrent)
+                // `transformEnvironment` et pas `environment` : en mode « Système »
+                // la direction héritée du réglage iOS/macOS doit rester intacte.
+                .transformEnvironment(\.layoutDirection) {
+                    if let direction = store.layoutDirectionOverride { $0 = direction }
+                }
         }
         #endif
     }

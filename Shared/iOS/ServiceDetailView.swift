@@ -17,7 +17,7 @@ struct ServiceDetailView: View {
                     dismiss()
                 } label: {
                     HStack(spacing: 6) {
-                        Image(systemName: "chevron.left")
+                        Image(systemName: "chevron.backward")
                             .font(.system(size: 13, weight: .semibold))
                         Text("Retour")
                             .font(.archivo(13, .semibold))

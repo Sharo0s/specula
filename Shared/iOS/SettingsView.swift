@@ -21,7 +21,7 @@ struct SettingsView: View {
                     dismiss()
                 } label: {
                     HStack(spacing: 6) {
-                        Image(systemName: "chevron.left")
+                        Image(systemName: "chevron.backward")
                             .font(.system(size: 13, weight: .semibold))
                         Text("Retour")
                             .font(.archivo(13, .semibold))
@@ -243,13 +243,16 @@ struct SettingsView: View {
 
         // Langue
         section("Langue", note: "Relance l'app pour appliquer partout.") {
-            HStack {
+            // Six segments ne tiennent plus sur une ligne d'iPhone : libellé au-dessus
+            // et défilement horizontal plutôt qu'un rognage silencieux.
+            VStack(alignment: .leading, spacing: 8) {
                 Text("Langue")
                     .font(.archivo(13.5, .bold))
-                Spacer()
-                MSeg(options: [("system", String(localized: "Système")),
-                               ("fr", "Français"), ("en", "English"), ("es", "Español")],
-                     selection: $store.appLanguage, fontSize: 9.5)
+                ScrollView(.horizontal, showsIndicators: false) {
+                    MSeg(options: AppLanguage.segments,
+                         selection: $store.appLanguage, fontSize: 9.5)
+                }
+                .scrollBounceBehavior(.basedOnSize)
             }
             .padding(.vertical, 10)
         }
