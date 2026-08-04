@@ -96,6 +96,18 @@
             "value" : "يريد «Specula» العثور على الأجهزة في شبكتك المحلية والاتصال بها"
           }
         },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "“Specula” would like to find and connect to devices on your local network"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "«Specula» quiere encontrar y conectarse a dispositivos de tu red local"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -112,6 +124,18 @@
             "value" : "%@"
           }
         },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -123,6 +147,18 @@
     "%@ — %@" : {
       "localizations" : {
         "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ — %@"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ — %@"
+          }
+        },
+        "es" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "%@ — %@"
@@ -545,6 +581,18 @@
             "value" : "%@:%@%@"
           }
         },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@:%@%@"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@:%@%@"
+          }
+        },
         "fr" : {
           "stringUnit" : {
             "state" : "new",
@@ -882,6 +930,18 @@
             "value" : "←"
           }
         },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "→"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "→"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -926,6 +986,18 @@
             "value" : "⌘K"
           }
         },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "⌘K"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "⌘K"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -937,6 +1009,18 @@
     "✓" : {
       "localizations" : {
         "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "✓"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "✓"
+          }
+        },
+        "es" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "✓"
@@ -1745,7 +1829,6 @@
       }
     },
     "Aperçu invité — « Quitter » pour revenir" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -1949,6 +2032,18 @@
             "value" : "لا توجد خدمات معلنة عبر Bonjour."
           }
         },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No services advertised over Bonjour."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ningún servicio anunciado por Bonjour."
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2106,6 +2201,18 @@
             "value" : "اسمح بالوصول\nإلى الشبكة المحلية"
           }
         },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Allow local\nnetwork access"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Autoriza la red\nlocal"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2148,6 +2255,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "كثير من أنظمة Homelab (البروكسي العكسي، Docker) لا تُعلن عبر Bonjour. يمكنك استيراد ملف services.yaml بدلاً من ذلك."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Many homelabs (reverse proxy, Docker) don't advertise over Bonjour. You can import your services.yaml instead."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Muchos homelabs (proxy inverso, Docker) no se anuncian por Bonjour. Puedes importar tu services.yaml en su lugar."
           }
         },
         "zh-Hans" : {
@@ -2279,6 +2398,18 @@
             "value" : "‏Bonjour على شبكتك المحلية"
           }
         },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bonjour on your local network"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bonjour en tu red local"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2349,6 +2480,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "تتطلب بعض الخدمات مفتاحًا لعرض مقاييسها. اختياري — يمكنك فعل ذلك لاحقًا من تفاصيل الخدمة."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Some services need a key to show their metrics. Optional — you can do it later, from the service details."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Algunos servicios necesitan una clave para mostrar sus métricas. Opcional: puedes hacerlo más tarde, desde el detalle del servicio."
           }
         },
         "zh-Hans" : {
@@ -2449,6 +2592,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "المفتاح"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Key"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Clave"
           }
         },
         "zh-Hans" : {
@@ -2748,6 +2903,18 @@
             "value" : "كيف تضيف\nخدماتك؟"
           }
         },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "How do you add\nyour services?"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "¿Cómo añadir\ntus servicios?"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2819,6 +2986,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "تم استيراد الإعدادات"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Config imported"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Configuración importada"
           }
         },
         "zh-Hans" : {
@@ -3400,6 +3579,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "تجريبي"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "DEMO"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "DEMO"
           }
         },
         "zh-Hans" : {
@@ -4373,6 +4564,18 @@
             "value" : "ESC"
           }
         },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ESC"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ESC"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4443,6 +4646,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "استكشف العرض التجريبي أولاً"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Explore the demo first"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Explorar la demo primero"
           }
         },
         "zh-Hans" : {
@@ -5252,6 +5467,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "بيانات اعتماد فارغة = دون تغيير"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Empty credentials = unchanged"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Credenciales vacías = sin cambios"
           }
         },
         "zh-Hans" : {
@@ -6655,6 +6882,18 @@
             "value" : "وضع Homelab: يستعلم Specula عن خدماتك فقط. استورد ملف services.yaml أو افحص الشبكة من الإعدادات."
           }
         },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Homelab mode: Specula only polls your services. Import your services.yaml or scan the network from Settings."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Modo Homelab: Specula solo consulta tus servicios. Importa tu services.yaml o escanea la red desde Ajustes."
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -6669,6 +6908,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "وضع Homelab: يستعلم Specula عن خدماتك فقط. استورد ملف services.yaml أو افحص الشبكة للبدء."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Homelab mode: Specula only polls your services. Import your services.yaml or scan the network to get started."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Modo Homelab: Specula solo consulta tus servicios. Importa tu services.yaml o escanea la red para empezar."
           }
         },
         "zh-Hans" : {
@@ -7620,6 +7871,18 @@
             "value" : "لاحقًا"
           }
         },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Later"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Más tarde"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -7776,6 +8039,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "بعض مفاتيح API"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A few API keys"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Algunas claves API"
           }
         },
         "zh-Hans" : {
@@ -8074,6 +8349,18 @@
             "value" : "موصى به"
           }
         },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Recommended"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Recomendado"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -8223,35 +8510,6 @@
         }
       }
     },
-    "Réglages…" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "ar" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "الإعدادات…"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Settings…"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Ajustes…"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "设置…"
-          }
-        }
-      }
-    },
     "Réglages → Exporter enregistre un services.yaml : c'est ce fichier qui te sert à reprendre la même configuration sur un autre appareil." : {
       "extractionState" : "manual",
       "localizations" : {
@@ -8277,6 +8535,35 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "设置 →「导出」会保存一个 services.yaml：正是这个文件让你在另一台设备上沿用同一套配置。"
+          }
+        }
+      }
+    },
+    "Réglages…" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "الإعدادات…"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Settings…"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ajustes…"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "设置…"
           }
         }
       }
@@ -8570,6 +8857,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "إعادة مشاهدة الدليل التعليمي للتشغيل الأول."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Replay the first-launch tutorial."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Volver a ver el tutorial de primer inicio."
           }
         },
         "zh-Hans" : {
@@ -9358,6 +9657,18 @@
             "value" : "Specula"
           }
         },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Specula"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Specula"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -9369,6 +9680,18 @@
     "SPECULA" : {
       "localizations" : {
         "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "SPECULA"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "SPECULA"
+          }
+        },
+        "es" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "SPECULA"
@@ -9474,6 +9797,18 @@
             "value" : "يستعلم Specula الآن عن خدماتك. تم إيقاف وضع العرض التجريبي — يمكنك تفعيله مجددًا من الإعدادات في أي وقت."
           }
         },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Specula is now polling your services. Demo mode is off — you can turn it back on in Settings at any time."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Specula ya consulta tus servicios. El modo Demo está desactivado: puedes reactivarlo en Ajustes cuando quieras."
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -9488,6 +9823,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "يستعلم Specula عن خدماتك مباشرة من منزلك. سيطلب iOS الوصول إلى شبكتك المحلية — بدونه يتعذّر الفحص أو الاتصال بأجهزتك."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Specula polls your services right at home. iOS will ask for local network access — without it, it can't scan or reach your machines."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Specula consulta tus servicios directamente en tu casa. iOS te pedirá acceso a la red local: sin él, no puede escanear ni contactar con tus máquinas."
           }
         },
         "zh-Hans" : {
@@ -10072,6 +10419,18 @@
             "value" : "خدماتك المستضافة ذاتيًا، ومقاييسها المباشرة، والأعطال التي تهمّك."
           }
         },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Your self-hosted services, their live metrics and the outages that matter."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tus servicios autoalojados, sus métricas en directo y las caídas que importan."
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -10144,6 +10503,18 @@
             "value" : "أصبح Homelab\nجاهزًا."
           }
         },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Your homelab\nis ready."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tu homelab\nestá listo."
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -10158,6 +10529,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "‏Homelab كامل\nفي لمحة."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Your homelab,\nat a glance."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tu homelab,\nde un vistazo."
           }
         },
         "zh-Hans" : {
@@ -10346,6 +10729,18 @@
             "value" : "ثلاث طرق للبدء. يمكنك دائمًا إضافة المزيد لاحقًا."
           }
         },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Three ways to get started. You can always add more later."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tres formas de empezar. Siempre podrás añadir más después."
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -10389,6 +10784,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "سيظهر تنبيه من النظام عند بدء الفحص. اضغط «سماح» للمتابعة."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A system prompt will appear when the scan starts. Tap “Allow” to continue."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aparecerá un aviso del sistema al iniciar el escaneo. Toca «Permitir» para continuar."
           }
         },
         "zh-Hans" : {
