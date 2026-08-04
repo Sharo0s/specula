@@ -91,9 +91,10 @@ struct AppConfig: Codable {
     /// ouverte parce que l'app a été quittée avant le retour du service : le
     /// temps où personne ne regardait n'est imputé à aucun service.
     var lastTick: Date?
-    /// Clés API par id de service. Stockage principal : le trousseau redemande
-    /// l'autorisation à chaque rebuild ad hoc (le Keychain reste écrit en
-    /// best-effort pour le passage à une vraie signature).
+    /// Clés API par id de service. **Hérité** : les clés vivent dans le
+    /// trousseau. Ce champ n'est plus écrit, il n'est lu qu'une fois au
+    /// lancement, le temps de verser les configurations antérieures
+    /// (`migrateKeysToKeychain`), puis effacé.
     var apiKeys: [String: String]?
 }
 

@@ -251,6 +251,8 @@ final class AppStore {
         }
         unread = notifs.filter(\.unread).count
 
+        migrateKeysToKeychain()
+
         for s in Catalog.all + (importedList ?? []) + customList { seedHistory(s.id) }
         gOrder = Array(mainGroups.indices)
         if dataMode == .live { zeroHistories() }
@@ -959,19 +961,47 @@ final class AppStore {
         return fr((pct * 100).rounded() / 100, 2) + " %"
     }
 
-    // MARK: - Clés API (config-first — le trousseau redemande à chaque rebuild)
+    // MARK: - Clés API (trousseau uniquement)
+
+    // Les clés vivaient en clair dans `config.json`, contournement d'une gêne de
+    // développement : une resignature ad hoc change l'identité de l'app, et le
+    // trousseau redemande alors l'autorisation. Sous une signature stable il ne
+    // redemande rien, alors qu'un fichier en clair, lui, part dans les
+    // sauvegardes et se lit sous le compte de l'utilisateur sur macOS.
 
     func apiKey(for id: String) -> String? {
-        if let keys = config.apiKeys { return keys[id] }
-        // Migration : anciennes configs sans apiKeys → trousseau
-        return KeychainStore.get(id)
+        if let key = KeychainStore.get(id) { return key }
+        // Configuration antérieure à la migration, ou migration impossible.
+        return config.apiKeys?[id]
     }
 
     private func setApiKey(_ key: String, for id: String) {
-        var keys = config.apiKeys ?? [:]
-        keys[id] = key
-        config.apiKeys = keys
         KeychainStore.set(key, for: id)
+        config.apiKeys?[id] = nil
+        if config.apiKeys?.isEmpty == true { config.apiKeys = nil }
+        persist()
+    }
+
+    /// Clés des services exportés, relues une à une dans le trousseau.
+    private func exportableKeys() -> [String: String] {
+        var keys: [String: String] = [:]
+        for s in mainServices {
+            if let key = apiKey(for: s.id) { keys[s.id] = key }
+        }
+        return keys
+    }
+
+    /// Verse dans le trousseau les clés des configurations antérieures, puis les
+    /// efface du fichier. Une clé qui n'a pas pu être écrite y reste : mieux
+    /// vaut un service qui fonctionne qu'une clé perdue en silence.
+    func migrateKeysToKeychain() {
+        guard let keys = config.apiKeys, !keys.isEmpty else { return }
+        var remaining: [String: String] = [:]
+        for (id, key) in keys {
+            KeychainStore.set(key, for: id)
+            if KeychainStore.get(id) != key { remaining[id] = key }
+        }
+        config.apiKeys = remaining.isEmpty ? nil : remaining
         persist()
     }
 
@@ -1076,8 +1106,10 @@ final class AppStore {
         config.importedServices?.removeAll { $0.id == s.id }
         config.custom.removeAll { $0.id == s.id }
         config.apiKeys?[s.id] = nil
-        // Pas de SecItemDelete : toucher un élément de trousseau créé par un
-        // autre build redéclencherait la boîte de dialogue d'autorisation.
+        // Le service part, sa clé aussi : la laisser dans le trousseau
+        // maintiendrait un identifiant valide pour un service que
+        // l'utilisateur croit avoir retiré.
+        KeychainStore.delete(s.id)
         serviceTypes[s.id] = nil
         downIDs.remove(s.id)
         downNotified.remove(s.id)
@@ -1118,12 +1150,9 @@ final class AppStore {
                 serviceTypes[stored.id] = IntegrationType(rawValue: stored.type) ?? .generic
                 seedHistory(stored.id)
             }
-            var keys = config.apiKeys ?? [:]
             for (id, key) in result.keys {
-                keys[id] = key
                 KeychainStore.set(key, for: id)
             }
-            config.apiKeys = keys
             switchToLive()
             gOrder = Array(result.groups.indices)
             gHidden = []
@@ -1135,7 +1164,7 @@ final class AppStore {
             // Clés restées en {{HOMEPAGE_VAR_…}} : Homepage les lit dans son
             // .env, pas nous. Sans ce message la carte reste muette sans raison.
             let pending = result.services
-                .filter { result.unresolved[$0.id] != nil && keys[$0.id] == nil }
+                .filter { result.unresolved[$0.id] != nil && apiKey(for: $0.id) == nil }
                 .map(\.name)
             if pending.isEmpty {
                 fireToast(String(localized: "Import de services.yaml — \(result.services.count) services et \(result.groups.count) groupes reconnus"))
@@ -1154,7 +1183,7 @@ final class AppStore {
     func exportYAMLText() -> String? {
         do {
             return try YamlConfig.export(groups: mainGroups, services: mainServices,
-                                         types: serviceTypes, keys: config.apiKeys ?? [:])
+                                         types: serviceTypes, keys: exportableKeys())
         } catch {
             fireToast(String(localized: "Export impossible"))
             return nil

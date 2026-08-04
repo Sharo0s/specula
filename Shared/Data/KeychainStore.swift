@@ -14,6 +14,10 @@ enum KeychainStore {
             kSecAttrService as String: service,
             kSecAttrAccount as String: account,
             kSecValueData as String: Data(value.utf8),
+            // AfterFirstUnlock : le rafraîchissement de fond interroge les
+            // services appareil verrouillé, `WhenUnlocked` le ferait échouer.
+            // ThisDeviceOnly : jamais dans une sauvegarde ni sur iCloud.
+            kSecAttrAccessible as String: kSecAttrAccessibleAfterFirstUnlockThisDeviceOnly,
         ]
         SecItemAdd(query as CFDictionary, nil)
     }
