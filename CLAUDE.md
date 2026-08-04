@@ -47,7 +47,11 @@ chore(release): build 16 pour l'archive macOS
   release-please (annotation `# x-release-please-version`) — ne pas l'éditer à la
   main.
 - `CURRENT_PROJECT_VERSION` (numéro de build) reste manuel : App Store Connect
-  refuse un build déjà téléversé, et iOS et macOS puisent dans la même suite.
+  refuse un numéro déjà téléversé **pour la même plateforme**. iOS et macOS ont
+  chacun leur espace de numérotation — le 4 août 2026, un build 19 a été
+  téléversé sur les deux à trois minutes d'intervalle, sans conflit (16, 8, 7 et
+  6 existent aussi des deux côtés). Une seule valeur partagée suffit donc, et
+  les deux archives peuvent partir d'affilée sans bump entre elles.
 - Ne jamais pousser (`git push`) ni créer de tag sans demande explicite.
 
 ## Construire
