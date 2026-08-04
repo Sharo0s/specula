@@ -90,5 +90,16 @@ incompatibles avec la GPLv3 : les contributions demandent donc une autorisation
 de distribution supplémentaire, décrite dans
 [CONTRIBUTING.md](CONTRIBUTING.md#licence-et-distribution).
 
+### Nom et icône
+
+La GPL-3.0 porte sur le code. Le nom « Specula » et l'icône de l'application
+(`Resources/Assets.xcassets/AppIcon.appiconset/`) n'en font pas partie et restent
+la propriété de leur auteur.
+
+Concrètement : compiler, étudier, modifier et redistribuer le code reste
+entièrement libre — c'est le propos de la licence. Mais un fork distribué
+publiquement doit porter un autre nom et une autre icône, comme le veut l'usage
+du logiciel libre : Firefox devient Iceweasel, Chrome devient Chromium.
+
 La police Archivo (Omnibus-Type) est distribuée sous
 [SIL Open Font License 1.1](Resources/Fonts/OFL.txt), indépendamment du code.
