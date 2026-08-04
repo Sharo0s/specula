@@ -5,7 +5,7 @@
 	<key>ATSApplicationFontsPath</key>
 	<string>.</string>
 	<key>CFBundleDevelopmentRegion</key>
-	<string>$(DEVELOPMENT_LANGUAGE)</string>
+	<string>en</string>
 	<key>CFBundleDisplayName</key>
 	<string>Specula</string>
 	<key>CFBundleExecutable</key>
