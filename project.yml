@@ -1,12 +1,21 @@
 name: Specula
 options:
   developmentLanguage: fr
+  # Repli XcodeGen pour une cible sans identifiant explicite — ici toutes en ont
+  # un, dérivé de SPECULA_BUNDLE_PREFIX (voir Signing.xcconfig).
   bundleIdPrefix: com.smalard
   deploymentTarget:
     iOS: "26.0"
     macOS: "26.0"
     watchOS: "26.0"
   createIntermediateGroups: true
+
+# DEVELOPMENT_TEAM et SPECULA_BUNDLE_PREFIX viennent de là, pas d'ici : un
+# contributeur pose son Signing.local.xcconfig (ignoré par git) et compile sans
+# modifier un seul fichier suivi.
+configFiles:
+  Debug: Signing.xcconfig
+  Release: Signing.xcconfig
 
 settings:
   base:
@@ -15,7 +24,6 @@ settings:
     # est reformulé, et la chaîne repart en français dans toutes les langues.
     SWIFT_EMIT_LOC_STRINGS: YES
     CODE_SIGN_STYLE: Automatic
-    DEVELOPMENT_TEAM: F98837R8GC
     MARKETING_VERSION: "1.0.0" # x-release-please-version
     CURRENT_PROJECT_VERSION: "21"
 
@@ -54,14 +62,14 @@ targets:
       - package: Yams
     settings:
       base:
-        PRODUCT_BUNDLE_IDENTIFIER: com.smalard.specula
+        PRODUCT_BUNDLE_IDENTIFIER: "$(SPECULA_BUNDLE_PREFIX).specula"
         PRODUCT_NAME: Specula
         INFOPLIST_KEY_UILaunchScreen_Generation: YES
         TARGETED_DEVICE_FAMILY: "1,2"
     entitlements:
       path: Resources/Specula-iOS.entitlements
       properties:
-        com.apple.security.application-groups: [group.com.smalard.specula]
+        com.apple.security.application-groups: ["group.$(SPECULA_BUNDLE_PREFIX).specula"]
     info:
       path: Resources/Info-iOS.plist
       properties:
@@ -71,6 +79,9 @@ targets:
         # comme langue source, c'est indépendant.
         CFBundleDevelopmentRegion: en
         CFBundleDisplayName: Specula
+        # Lu par SharedState.groupID : le conteneur partagé suit le préfixe
+        # d'identifiants, sinon un fork perd widgets et complications.
+        SpeculaAppGroup: "group.$(SPECULA_BUNDLE_PREFIX).specula"
         CFBundleShortVersionString: $(MARKETING_VERSION)
         CFBundleVersion: $(CURRENT_PROJECT_VERSION)
         ITSAppUsesNonExemptEncryption: false
@@ -105,13 +116,13 @@ targets:
       - path: Resources/Localizable.xcstrings
     settings:
       base:
-        PRODUCT_BUNDLE_IDENTIFIER: com.smalard.specula.widgets
+        PRODUCT_BUNDLE_IDENTIFIER: "$(SPECULA_BUNDLE_PREFIX).specula.widgets"
         SKIP_INSTALL: YES
         TARGETED_DEVICE_FAMILY: "1,2"
     entitlements:
       path: Resources/Specula-Widgets.entitlements
       properties:
-        com.apple.security.application-groups: [group.com.smalard.specula]
+        com.apple.security.application-groups: ["group.$(SPECULA_BUNDLE_PREFIX).specula"]
     info:
       path: Resources/Info-Widgets.plist
       properties:
@@ -121,6 +132,9 @@ targets:
         # comme langue source, c'est indépendant.
         CFBundleDevelopmentRegion: en
         CFBundleDisplayName: Specula
+        # Lu par SharedState.groupID : le conteneur partagé suit le préfixe
+        # d'identifiants, sinon un fork perd widgets et complications.
+        SpeculaAppGroup: "group.$(SPECULA_BUNDLE_PREFIX).specula"
         CFBundleShortVersionString: $(MARKETING_VERSION)
         CFBundleVersion: $(CURRENT_PROJECT_VERSION)
         UIAppFonts: [Archivo-Variable.ttf]
@@ -148,10 +162,10 @@ targets:
         # l'utilisateur, l'export en écrit un là où il le demande.
         com.apple.security.files.user-selected.read-write: true
         com.apple.security.application-groups:
-          - group.com.smalard.specula
+          - "group.$(SPECULA_BUNDLE_PREFIX).specula"
     settings:
       base:
-        PRODUCT_BUNDLE_IDENTIFIER: com.smalard.specula
+        PRODUCT_BUNDLE_IDENTIFIER: "$(SPECULA_BUNDLE_PREFIX).specula"
         PRODUCT_NAME: Specula
         ENABLE_HARDENED_RUNTIME: NO
     info:
@@ -163,6 +177,9 @@ targets:
         # comme langue source, c'est indépendant.
         CFBundleDevelopmentRegion: en
         CFBundleDisplayName: Specula
+        # Lu par SharedState.groupID : le conteneur partagé suit le préfixe
+        # d'identifiants, sinon un fork perd widgets et complications.
+        SpeculaAppGroup: "group.$(SPECULA_BUNDLE_PREFIX).specula"
         CFBundleShortVersionString: $(MARKETING_VERSION)
         CFBundleVersion: $(CURRENT_PROJECT_VERSION)
         LSApplicationCategoryType: public.app-category.utilities
@@ -196,13 +213,13 @@ targets:
       - package: Yams
     settings:
       base:
-        PRODUCT_BUNDLE_IDENTIFIER: com.smalard.specula.watchkitapp
+        PRODUCT_BUNDLE_IDENTIFIER: "$(SPECULA_BUNDLE_PREFIX).specula.watchkitapp"
         PRODUCT_NAME: Specula
         TARGETED_DEVICE_FAMILY: "4"
     entitlements:
       path: Resources/Specula-Watch.entitlements
       properties:
-        com.apple.security.application-groups: [group.com.smalard.specula]
+        com.apple.security.application-groups: ["group.$(SPECULA_BUNDLE_PREFIX).specula"]
     info:
       path: Resources/Info-Watch.plist
       properties:
@@ -212,11 +229,14 @@ targets:
         # comme langue source, c'est indépendant.
         CFBundleDevelopmentRegion: en
         CFBundleDisplayName: Specula
+        # Lu par SharedState.groupID : le conteneur partagé suit le préfixe
+        # d'identifiants, sinon un fork perd widgets et complications.
+        SpeculaAppGroup: "group.$(SPECULA_BUNDLE_PREFIX).specula"
         CFBundleShortVersionString: $(MARKETING_VERSION)
         CFBundleVersion: $(CURRENT_PROJECT_VERSION)
         ITSAppUsesNonExemptEncryption: false
         WKApplication: true
-        WKCompanionAppBundleIdentifier: com.smalard.specula
+        WKCompanionAppBundleIdentifier: "$(SPECULA_BUNDLE_PREFIX).specula"
         WKRunsIndependentlyOfCompanionApp: true
         NSAppTransportSecurity:
           NSAllowsArbitraryLoads: true
@@ -238,13 +258,13 @@ targets:
       - path: Resources/Localizable.xcstrings
     settings:
       base:
-        PRODUCT_BUNDLE_IDENTIFIER: com.smalard.specula.watchkitapp.widgets
+        PRODUCT_BUNDLE_IDENTIFIER: "$(SPECULA_BUNDLE_PREFIX).specula.watchkitapp.widgets"
         SKIP_INSTALL: YES
         TARGETED_DEVICE_FAMILY: "4"
     entitlements:
       path: Resources/Specula-WatchWidgets.entitlements
       properties:
-        com.apple.security.application-groups: [group.com.smalard.specula]
+        com.apple.security.application-groups: ["group.$(SPECULA_BUNDLE_PREFIX).specula"]
     info:
       path: Resources/Info-WatchWidgets.plist
       properties:
@@ -254,6 +274,9 @@ targets:
         # comme langue source, c'est indépendant.
         CFBundleDevelopmentRegion: en
         CFBundleDisplayName: Specula
+        # Lu par SharedState.groupID : le conteneur partagé suit le préfixe
+        # d'identifiants, sinon un fork perd widgets et complications.
+        SpeculaAppGroup: "group.$(SPECULA_BUNDLE_PREFIX).specula"
         CFBundleShortVersionString: $(MARKETING_VERSION)
         CFBundleVersion: $(CURRENT_PROJECT_VERSION)
         UIAppFonts: [Archivo-Variable.ttf]

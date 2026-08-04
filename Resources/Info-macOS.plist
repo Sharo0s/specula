@@ -42,5 +42,7 @@
 	<string>Specula découvre et interroge tes services selfhosted sur le réseau local.</string>
 	<key>NSMainStoryboardFile</key>
 	<string></string>
+	<key>SpeculaAppGroup</key>
+	<string>group.$(SPECULA_BUNDLE_PREFIX).specula</string>
 </dict>
 </plist>

@@ -17,3 +17,6 @@ Specula.xcodeproj/
 
 # Artefacts de build/export
 build/
+
+# Signature locale (Team ID, préfixe d'identifiants) — voir Signing.xcconfig
+Signing.local.xcconfig

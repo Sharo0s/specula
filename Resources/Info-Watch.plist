@@ -34,6 +34,8 @@
 	</array>
 	<key>NSLocalNetworkUsageDescription</key>
 	<string>Specula découvre et interroge tes services selfhosted sur le réseau local.</string>
+	<key>SpeculaAppGroup</key>
+	<string>group.$(SPECULA_BUNDLE_PREFIX).specula</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>Archivo-Variable.ttf</string>
@@ -41,7 +43,7 @@
 	<key>WKApplication</key>
 	<true/>
 	<key>WKCompanionAppBundleIdentifier</key>
-	<string>com.smalard.specula</string>
+	<string>$(SPECULA_BUNDLE_PREFIX).specula</string>
 	<key>WKRunsIndependentlyOfCompanionApp</key>
 	<true/>
 </dict>

@@ -25,6 +25,8 @@
 		<key>NSExtensionPointIdentifier</key>
 		<string>com.apple.widgetkit-extension</string>
 	</dict>
+	<key>SpeculaAppGroup</key>
+	<string>group.$(SPECULA_BUNDLE_PREFIX).specula</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>Archivo-Variable.ttf</string>

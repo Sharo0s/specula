@@ -1,0 +1,9 @@
+// Copier ce fichier en Signing.local.xcconfig (ignoré par git) et compléter.
+//
+// DEVELOPMENT_TEAM      identifiant à dix caractères de ton équipe Apple
+//                       Developer — portail développeur, onglet Membership.
+// SPECULA_BUNDLE_PREFIX préfixe reverse-DNS qui t'appartient ; il fabrique les
+//                       identifiants de l'app, des extensions et de l'App Group.
+
+DEVELOPMENT_TEAM = ABCDE12345
+SPECULA_BUNDLE_PREFIX = com.exemple

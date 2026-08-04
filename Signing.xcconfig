@@ -1,0 +1,17 @@
+// Signature et identifiants — valeurs par défaut du dépôt.
+//
+// Rien de personnel ici : ce fichier est suivi par git. Pour compiler avec ton
+// propre compte développeur sans salir l'arbre de travail :
+//
+//     cp Signing.local.xcconfig.example Signing.local.xcconfig
+//
+// puis renseigne DEVELOPMENT_TEAM et SPECULA_BUNDLE_PREFIX. Le fichier local
+// est ignoré par git et, inclus en dernier, écrase les valeurs ci-dessous.
+//
+// Le préfixe compte autant que l'équipe : identifiants d'app et App Groups sont
+// uniques à l'échelle mondiale, ceux en com.smalard sont déjà déposés.
+
+SPECULA_BUNDLE_PREFIX = com.smalard
+DEVELOPMENT_TEAM =
+
+#include? "Signing.local.xcconfig"

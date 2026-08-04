@@ -23,7 +23,11 @@ struct SharedState: Codable {
     var temp: Double?
     var pinned: [SharedPinned]
 
-    static let groupID = "group.com.smalard.specula"
+    /// Injecté à la compilation depuis `SPECULA_BUNDLE_PREFIX` (Signing.xcconfig)
+    /// via la clé `SpeculaAppGroup` de chaque Info.plist : app, extensions et
+    /// entitlements partagent ainsi un seul préfixe, celui du compte qui signe.
+    static let groupID = Bundle.main.object(forInfoDictionaryKey: "SpeculaAppGroup") as? String
+        ?? "group.com.smalard.specula"
 
     static var fileURL: URL {
         let base = FileManager.default

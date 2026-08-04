@@ -38,6 +38,8 @@
 	<string>Specula découvre et interroge tes services selfhosted sur le réseau local.</string>
 	<key>NSSupportsLiveActivities</key>
 	<true/>
+	<key>SpeculaAppGroup</key>
+	<string>group.$(SPECULA_BUNDLE_PREFIX).specula</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>Archivo-Variable.ttf</string>
