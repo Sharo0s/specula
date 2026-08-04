@@ -65,6 +65,11 @@ targets:
     info:
       path: Resources/Info-iOS.plist
       properties:
+        # Langue de repli quand aucune des cinq ne correspond. `fr` y
+        # enverrait un utilisateur allemand ou japonais sur du français ;
+        # l'anglais est le secours attendu. Le catalogue garde le français
+        # comme langue source, c'est indépendant.
+        CFBundleDevelopmentRegion: en
         CFBundleDisplayName: Specula
         CFBundleShortVersionString: $(MARKETING_VERSION)
         CFBundleVersion: $(CURRENT_PROJECT_VERSION)
@@ -110,6 +115,11 @@ targets:
     info:
       path: Resources/Info-Widgets.plist
       properties:
+        # Langue de repli quand aucune des cinq ne correspond. `fr` y
+        # enverrait un utilisateur allemand ou japonais sur du français ;
+        # l'anglais est le secours attendu. Le catalogue garde le français
+        # comme langue source, c'est indépendant.
+        CFBundleDevelopmentRegion: en
         CFBundleDisplayName: Specula
         CFBundleShortVersionString: $(MARKETING_VERSION)
         CFBundleVersion: $(CURRENT_PROJECT_VERSION)
@@ -147,6 +157,11 @@ targets:
     info:
       path: Resources/Info-macOS.plist
       properties:
+        # Langue de repli quand aucune des cinq ne correspond. `fr` y
+        # enverrait un utilisateur allemand ou japonais sur du français ;
+        # l'anglais est le secours attendu. Le catalogue garde le français
+        # comme langue source, c'est indépendant.
+        CFBundleDevelopmentRegion: en
         CFBundleDisplayName: Specula
         CFBundleShortVersionString: $(MARKETING_VERSION)
         CFBundleVersion: $(CURRENT_PROJECT_VERSION)
@@ -191,6 +206,11 @@ targets:
     info:
       path: Resources/Info-Watch.plist
       properties:
+        # Langue de repli quand aucune des cinq ne correspond. `fr` y
+        # enverrait un utilisateur allemand ou japonais sur du français ;
+        # l'anglais est le secours attendu. Le catalogue garde le français
+        # comme langue source, c'est indépendant.
+        CFBundleDevelopmentRegion: en
         CFBundleDisplayName: Specula
         CFBundleShortVersionString: $(MARKETING_VERSION)
         CFBundleVersion: $(CURRENT_PROJECT_VERSION)
@@ -228,6 +248,11 @@ targets:
     info:
       path: Resources/Info-WatchWidgets.plist
       properties:
+        # Langue de repli quand aucune des cinq ne correspond. `fr` y
+        # enverrait un utilisateur allemand ou japonais sur du français ;
+        # l'anglais est le secours attendu. Le catalogue garde le français
+        # comme langue source, c'est indépendant.
+        CFBundleDevelopmentRegion: en
         CFBundleDisplayName: Specula
         CFBundleShortVersionString: $(MARKETING_VERSION)
         CFBundleVersion: $(CURRENT_PROJECT_VERSION)
