@@ -167,7 +167,10 @@ targets:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: "$(SPECULA_BUNDLE_PREFIX).specula"
         PRODUCT_NAME: Specula
-        ENABLE_HARDENED_RUNTIME: NO
+        # Empêche l'injection de code dans le processus. Le sandbox suffirait à
+        # l'App Store, mais rien ici ne réclame les dérogations que le runtime
+        # durci retire (pas de JIT, pas de chargement de bibliothèque tierce).
+        ENABLE_HARDENED_RUNTIME: YES
     info:
       path: Resources/Info-macOS.plist
       properties:
