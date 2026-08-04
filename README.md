@@ -34,7 +34,9 @@ complications alimentés par l'état réel.
 
 ## Installation
 
-TestFlight — lien public à venir.
+**[Rejoindre la bêta TestFlight](https://testflight.apple.com/join/mXBXqMnN)** —
+le même lien sert l'iPhone, l'iPad et le Mac ; l'app Watch arrive avec celle de
+l'iPhone.
 
 Il faut **iOS ou iPadOS 26, macOS 26, watchOS 26** : aucune version antérieure
 n'est prise en charge. Pour compiler depuis les sources, voir
