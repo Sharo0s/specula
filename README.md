@@ -12,7 +12,25 @@ Transmission…) : latences en direct, métriques par intégration, détection d
 panne (3 échecs → hors ligne + notification + Live Activity), widgets et
 complications alimentés par l'état réel.
 
-<!-- Captures à ajouter ici : docs/screenshots/{ios,macos,watch}.png -->
+## Captures
+
+<p align="center">
+  <img src="docs/screenshots/macos.png" width="880"
+       alt="Fenêtre macOS en trois colonnes : à gauche les sources et les groupes, au centre les services en cartes avec leurs métriques, à droite l'inspecteur de Jellyfin — histogramme de latence, compteurs, journal du conteneur. En haut le bandeau système ; Komga est signalé hors ligne en rouge.">
+</p>
+
+<p align="center">
+  <img src="docs/screenshots/ios.png" width="215"
+       alt="iPhone : liste des services par groupe avec la latence de chacun, bandeau système en tête, Komga marqué hors ligne.">
+  <img src="docs/screenshots/ios-detail.png" width="215"
+       alt="iPhone, fiche Jellyfin : histogramme de latence sur une minute, compteurs de films, séries et épisodes, disponibilité sur 30 jours, journal du conteneur.">
+  <img src="docs/screenshots/ipados.png" width="290"
+       alt="iPad : les dix-sept services des quatre groupes en grille, chacun avec ses métriques lues via son API.">
+  <img src="docs/screenshots/watchos.png" width="105"
+       alt="Apple Watch : seize services en ligne sur dix-sept, panne de Komga en tête, puis les services épinglés avec leur latence.">
+</p>
+
+<p align="center"><em>Mode démo — toutes les surfaces fonctionnent sans homelab.</em></p>
 
 ## Installation
 
