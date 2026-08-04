@@ -24,6 +24,21 @@ l'échelle mondiale.
 vérité**. Tout ajout, déplacement ou suppression de fichier passe par lui, suivi
 d'un `xcodegen generate`.
 
+## Repères dans le code
+
+- `Shared/` — design system Modernist (`Theme`, `Components`), modèles, `AppStore`
+  (@Observable, scheduler démo/live), vues par plateforme (`iOS/`, `macOS/`, racine
+  partagée pour ce qui vaut partout).
+- `Shared/Data/` — la couche réelle : HTTP (latence mesurée, tolérance TLS bornée au
+  réseau local), intégrations (détection automatique et métriques par API), YAML
+  gethomepage aller-retour via Yams, trousseau, découverte Bonjour.
+- `Widgets/`, `WatchWidgets/`, `Watch/` — extensions et app Watch, nourries par
+  `SharedState` à travers l'App Group.
+
+Une seule URL par service : ce qui rend un homelab joignable de l'extérieur — VPN,
+reverse proxy, tunnel — se règle sous l'app, pas dedans. C'est une décision de
+conception, pas un manque.
+
 ## Vérifier avant de proposer
 
 Le code de `Shared/` est partagé entre les trois plateformes, gardé par des

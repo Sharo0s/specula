@@ -1,107 +1,117 @@
-# Specula
+<p align="center">
+  <img src="docs/icon.png" width="110" alt="Specula icon">
+</p>
 
-[![Licence: GPL-3.0](https://img.shields.io/badge/licence-GPL--3.0-ec3013)](LICENSE)
-![Plateformes: iOS · iPadOS · macOS · watchOS](https://img.shields.io/badge/plateformes-iOS%20%C2%B7%20iPadOS%20%C2%B7%20macOS%20%C2%B7%20watchOS-111)
+<h1 align="center">Specula</h1>
 
-Dashboard homelab natif pour iOS, iPadOS, macOS et watchOS — le principe de
-[gethomepage.dev](https://gethomepage.dev) porté en SwiftUI. *Specula* : la tour
-de guet, en latin.
+<p align="center">
+  <img src="https://img.shields.io/badge/iOS-26%2B-111" alt="iOS 26+">
+  <img src="https://img.shields.io/badge/macOS-26%2B-111" alt="macOS 26+">
+  <img src="https://img.shields.io/badge/watchOS-26%2B-111" alt="watchOS 26+">
+  <a href="LICENSE"><img src="https://img.shields.io/badge/license-GPL--3.0-ec3013" alt="License: GPL-3.0"></a>
+  <a href="README.fr.md"><img src="https://img.shields.io/badge/lire%20en-fran%C3%A7ais-111" alt="Lire en français"></a>
+</p>
 
-Surveille tes services selfhosted (Jellyfin, \*arr, AdGuard, Proxmox, Immich,
-Transmission…) : latences en direct, métriques par intégration, détection de
-panne (3 échecs → hors ligne + notification + Live Activity), widgets et
-complications alimentés par l'état réel.
+<p align="center">
+  <b>Specula</b> is a native homelab dashboard for iPhone, iPad, Mac and Apple Watch —
+  the idea behind <a href="https://gethomepage.dev">gethomepage.dev</a>, rebuilt in SwiftUI.<br>
+  It reads the <b>real metrics</b> of your self-hosted services, catches outages,
+  and feeds widgets and complications from live state.
+</p>
 
-## Captures
+<p align="center"><i>Specula</i> — the watchtower, in Latin.</p>
+
+## 🛠 TestFlight
+
+The beta is open. One link covers iPhone, iPad and Mac; the Watch app installs
+alongside the iPhone one.
+
+<a href="https://testflight.apple.com/join/mXBXqMnN"><img src="https://img.shields.io/badge/Get%20the%20beta%20on-TestFlight-0D96F6?logo=apple&logoColor=white" alt="Get the beta on TestFlight" height="34"></a>
+
+Requires **iOS/iPadOS 26, macOS 26, watchOS 26**. No earlier version is supported.
+
+## 📸 Screenshots
 
 <p align="center">
   <img src="docs/screenshots/macos.png" width="880"
-       alt="Fenêtre macOS en trois colonnes : à gauche les sources et les groupes, au centre les services en cartes avec leurs métriques, à droite l'inspecteur de Jellyfin — histogramme de latence, compteurs, journal du conteneur. En haut le bandeau système ; Komga est signalé hors ligne en rouge.">
+       alt="Specula on macOS, three columns: sources and groups on the left, service cards with their metrics in the middle, the Jellyfin inspector on the right with a latency histogram, counters and the container log. The system band sits on top; Komga is flagged offline in red.">
 </p>
 
 <p align="center">
   <img src="docs/screenshots/ios.png" width="215"
-       alt="iPhone : liste des services par groupe avec la latence de chacun, bandeau système en tête, Komga marqué hors ligne.">
+       alt="iPhone: services listed by group with each latency, system band on top, Komga flagged offline.">
   <img src="docs/screenshots/ios-detail.png" width="215"
-       alt="iPhone, fiche Jellyfin : histogramme de latence sur une minute, compteurs de films, séries et épisodes, disponibilité sur 30 jours, journal du conteneur.">
+       alt="iPhone, Jellyfin detail: one-minute latency histogram, movie, series and episode counters, 30-day availability, container log.">
   <img src="docs/screenshots/ipados.png" width="290"
-       alt="iPad : les dix-sept services des quatre groupes en grille, chacun avec ses métriques lues via son API.">
+       alt="iPad: the seventeen services of four groups in a grid, each with metrics read from its own API.">
   <img src="docs/screenshots/watchos.png" width="105"
-       alt="Apple Watch : seize services en ligne sur dix-sept, panne de Komga en tête, puis les services épinglés avec leur latence.">
+       alt="Apple Watch: sixteen services online out of seventeen, the Komga outage on top, then pinned services with their latency.">
 </p>
 
-<p align="center"><em>Mode démo — toutes les surfaces fonctionnent sans homelab.</em></p>
+<p align="center"><em>Demo mode — every surface works without a homelab.</em></p>
 
-## Installation
+## ✨ Features
 
-**[Rejoindre la bêta TestFlight](https://testflight.apple.com/join/mXBXqMnN)** —
-le même lien sert l'iPhone, l'iPad et le Mac ; l'app Watch arrive avec celle de
-l'iPhone.
+- **Over sixty integrations** — Jellyfin, \*arr, AdGuard, Proxmox, Immich, Nextcloud,
+  Home Assistant, UniFi, Portainer, Vaultwarden, Paperless and more, each recognised
+  automatically and read through its own API.
+- **Outage detection** — three failed attempts mark a service offline, with a
+  notification and a Live Activity. The status wall keeps thirty days of history and
+  computes real availability.
+- **Every screen you look at** — widgets on the Home Screen, complications on the
+  wrist, a menu bar item on the Mac.
+- **Demo mode** — simulated data, scripted outage, no homelab needed. It is what the
+  app opens on first launch.
 
-Il faut **iOS ou iPadOS 26, macOS 26, watchOS 26** : aucune version antérieure
-n'est prise en charge. Pour compiler depuis les sources, voir
-[CONTRIBUTING.md](CONTRIBUTING.md).
+## 🚀 Setup
 
-## Modes de données
+Three ways to add your services, offered on first launch and available any time in
+Settings:
 
-- **Démo** — le simulateur du prototype de design (random-walk, panne
-  scénarisée) : toutes les surfaces fonctionnent sans homelab, dès le premier
-  lancement.
-- **Homelab** — vraies requêtes vers tes services : importe ton
-  `services.yaml` (format gethomepage.dev), scanne le réseau en Bonjour, ou
-  ajoute tes URLs à la main. Réglages → Configuration → Données.
+- **Scan the network** over Bonjour — Specula finds what is advertised and guesses
+  each type.
+- **Import a `services.yaml`** in gethomepage.dev format — groups, URLs and widgets
+  come over as they are.
+- **Type an address** by hand.
 
-## Architecture
+One URL per service: whatever makes your homelab reachable from outside — VPN,
+reverse proxy, tunnel — is configured below the app, not inside it.
 
-- `Shared/` — design system Modernist (`Theme`, `Components`), modèles,
-  `AppStore` (@Observable, scheduler démo/live), vues par plateforme
-  (`iOS/`, `macOS/`, racine partagée).
-- `Shared/Data/` — couche réelle : HTTP (latence mesurée, TLS auto-signé),
-  intégrations (détection automatique + métriques par API), YAML gethomepage
-  aller-retour (Yams), Keychain, découverte Bonjour.
+## 🔒 Privacy
 
-Une seule URL par service : ce qui rend un homelab joignable de l'extérieur
-(tailnet, reverse proxy, tunnel) se règle sous l'app, pas dedans.
-- `Widgets/`, `WatchWidgets/`, `Watch/` — extensions et app Watch, nourries
-  par `SharedState` via l'App Group `group.<préfixe>.specula`.
+No account, no telemetry, no server in the middle. The app talks to your machines and
+nothing else, and API keys live in the Keychain — never in a backup, never on iCloud.
 
-Design : système « Modernist » — flat, architectural, radius 0, filets
-structurels, un seul accent rouge (`#ec3013`), typographie Archivo.
+One exception: service logos come from the public
+[dashboard-icons](https://github.com/homarr-labs/dashboard-icons) CDN through jsDelivr,
+which therefore sees which logos are requested — never your addresses or your data.
+A switch in Settings turns it off, and the app falls back to monograms.
 
-## Vie privée
+## ⚙️ Development
 
-Aucune télémétrie, aucun compte, aucun serveur intermédiaire : l'app parle à tes
-services et à rien d'autre, jetons et mots de passe restent dans le trousseau.
-Seule exception, les icônes de services, chargées depuis le CDN public
-[dashboard-icons](https://github.com/homarr-labs/dashboard-icons) via jsDelivr —
-qui voit donc quelles icônes sont demandées, jamais tes URLs ni tes données.
+`project.yml` is the source of truth — the Xcode project is generated by
+[XcodeGen](https://github.com/yonaskolb/XcodeGen). See
+[CONTRIBUTING.md](CONTRIBUTING.md) to get set up.
 
-## Contribuer
+Commits must be valid [Conventional Commits](https://www.conventionalcommits.org):
+the repository runs on release-please, and a malformed header is silently ignored.
 
-Voir [CONTRIBUTING.md](CONTRIBUTING.md). Les commits doivent être des
-[Conventional Commits](https://www.conventionalcommits.org) valides : le dépôt
-est branché sur release-please, un en-tête mal formé est ignoré par l'outil.
+Design follows a *Modernist* system — flat, architectural, zero radius, structural
+rules, a single red accent (`#ec3013`), Archivo type.
 
-## Licence
+## 📄 License
 
-[GPL-3.0](LICENSE) © nysia. Toute redistribution, modifiée ou non, reste
-sous la même licence et publie ses sources.
+[GPL-3.0](LICENSE) © nysia. Any redistribution, modified or not, stays under the same
+license and publishes its sources.
 
-L'app est par ailleurs publiée sur l'App Store, dont les conditions sont
-incompatibles avec la GPLv3 : les contributions demandent donc une autorisation
-de distribution supplémentaire, décrite dans
+The app is also published on the App Store, whose terms are incompatible with GPLv3:
+contributions therefore need an extra distribution grant, described in
 [CONTRIBUTING.md](CONTRIBUTING.md#licence-et-distribution).
 
-### Nom et icône
+**Name and icon** — the license covers the code. The name “Specula” and the app icon
+are not part of it and remain the property of their author. Building, studying,
+modifying and redistributing the code stays entirely free; a publicly distributed fork
+just has to carry another name and another icon, as free software custom goes.
 
-La GPL-3.0 porte sur le code. Le nom « Specula » et l'icône de l'application
-(`Resources/Assets.xcassets/AppIcon.appiconset/`) n'en font pas partie et restent
-la propriété de leur auteur.
-
-Concrètement : compiler, étudier, modifier et redistribuer le code reste
-entièrement libre — c'est le propos de la licence. Mais un fork distribué
-publiquement doit porter un autre nom et une autre icône, comme le veut l'usage
-du logiciel libre : Firefox devient Iceweasel, Chrome devient Chromium.
-
-La police Archivo (Omnibus-Type) est distribuée sous
-[SIL Open Font License 1.1](Resources/Fonts/OFL.txt), indépendamment du code.
+The Archivo typeface (Omnibus-Type) ships under the
+[SIL Open Font License 1.1](Resources/Fonts/OFL.txt), independently of the code.
