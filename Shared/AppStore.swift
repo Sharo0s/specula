@@ -139,6 +139,7 @@ final class AppStore {
             gOrder = Array(mainGroups.indices)
             gHidden = []
             downIDs = []
+            downNotified = []
             failCounts = [:]
             measured = []
             systemLive = false
@@ -176,6 +177,13 @@ final class AppStore {
     /// tant qu'ils n'y sont pas, on affiche « … », pas les valeurs d'amorçage.
     private var measured: Set<String> = []
     private var polling = false
+
+    /// Services dont la panne a déjà été notifiée — l'alerte ne part qu'une fois.
+    private var downNotified: Set<String> = []
+    /// Seuil de la règle « Hors ligne > 5 min ». Trois échecs suffisent à
+    /// afficher le service hors ligne ; l'alerte, elle, attend que la panne
+    /// dure, sinon un redémarrage de conteneur réveille tout le monde.
+    private static let downAlertDelay: TimeInterval = 5 * 60
 
     /// Depuis quand plus rien ne répond — `nil` dès qu'un service redonne signe.
     /// Voir la garde en tête d'`applyLive`.
@@ -458,6 +466,23 @@ final class AppStore {
     /// remontées plutôt qu'une requête dédiée : « Occupation » et « Plus rempli »
     /// sont des pourcentages entiers, et le libellé stocké est toujours la clé
     /// source française quelle que soit la langue affichée.
+    /// Règle « Hors ligne > 5 min » : on alerte quand la panne dure, pas quand
+    /// elle est détectée. La date de référence est celle de l'enregistrement
+    /// ouvert, donc une panne reprise au lancement garde son ancienneté.
+    private func checkDownAlerts() {
+        guard rules["down"] == true else { return }
+        let now = Date()
+        for id in downIDs where !downNotified.contains(id) {
+            guard let start = (config.outages ?? [])
+                    .last(where: { $0.serviceID == id && $0.end == nil })?.start,
+                  now.timeIntervalSince(start) >= Self.downAlertDelay,
+                  let s = services.first(where: { $0.id == id }) else { continue }
+            downNotified.insert(id)
+            pushNotif(title: String(localized: "\(s.name) ne répond plus"),
+                      sub: String(localized: "Hors ligne depuis plus de 5 minutes."))
+        }
+    }
+
     private func checkDiskAlerts() {
         for s in services {
             // OMV détaille ses volumes : on alerte celui qui déborde, et les
@@ -628,7 +653,10 @@ final class AppStore {
                 measured.insert(target.id)
                 if downIDs.remove(target.id) != nil {
                     closeOutageRecord(target.id)
-                    if rules["down"] == true {
+                    // Retour à la ligne seulement si le départ a été signalé :
+                    // sinon on annonce la fin d'une panne dont personne n'a
+                    // entendu parler.
+                    if downNotified.remove(target.id) != nil && rules["down"] == true {
                         pushNotif(title: String(localized: "\(target.name) de nouveau en ligne"),
                                   sub: String(localized: "Le service répond à nouveau."),
                                   critical: false)
@@ -651,10 +679,9 @@ final class AppStore {
                     }
                     persist()
                     if downAt == nil { downAt = Date() }
-                    if rules["down"] == true {
-                        pushNotif(title: String(localized: "\(target.name) ne répond plus"),
-                                  sub: String(localized: "Délai dépassé (timeout) — 3 tentatives échouées"))
-                    }
+                    // Pas de notification ici : la règle promet « > 5 min », et
+                    // trois échecs ne font qu'une quinzaine de secondes. L'alerte
+                    // part plus bas, quand la panne a duré.
                     startOutageActivity(serviceName: target.name)
                     #if os(watchOS)
                     WKInterfaceDevice.current().play(.failure)
@@ -663,6 +690,7 @@ final class AppStore {
             }
             trimHistories(target.id)
         }
+        checkDownAlerts()
         for (id, m) in metrics { liveMetricsCache[id] = m }
         for (id, v) in volumes { volumeFills[id] = v }
         if !metrics.isEmpty { checkDiskAlerts() }
@@ -1070,6 +1098,7 @@ final class AppStore {
         // autre build redéclencherait la boîte de dialogue d'autorisation.
         serviceTypes[s.id] = nil
         downIDs.remove(s.id)
+        downNotified.remove(s.id)
         failCounts[s.id] = nil
         measured.remove(s.id)
         liveMetricsCache[s.id] = nil
@@ -1117,6 +1146,7 @@ final class AppStore {
             gOrder = Array(result.groups.indices)
             gHidden = []
             downIDs = []
+            downNotified = []
             failCounts = [:]
             liveMetricsCache = [:]
             persist()

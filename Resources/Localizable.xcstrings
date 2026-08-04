@@ -5330,6 +5330,35 @@
         }
       }
     },
+    "Hors ligne depuis plus de 5 minutes." : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "غير متصل منذ أكثر من 5 دقائق."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Offline for more than 5 minutes."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sin conexión desde hace más de 5 minutos."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "已离线超过 5 分钟。"
+          }
+        }
+      }
+    },
     "http://…" : {
       "extractionState" : "stale",
       "localizations" : {
