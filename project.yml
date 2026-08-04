@@ -11,6 +11,9 @@ options:
 settings:
   base:
     SWIFT_VERSION: "5.10"
+    # Sans ça, aucune extraction : le catalogue dérive du code dès qu'un libellé
+    # est reformulé, et la chaîne repart en français dans toutes les langues.
+    SWIFT_EMIT_LOC_STRINGS: YES
     CODE_SIGN_STYLE: Automatic
     DEVELOPMENT_TEAM: F98837R8GC
     MARKETING_VERSION: "1.0.0" # x-release-please-version
