@@ -17,9 +17,6 @@ settings:
     CODE_SIGN_STYLE: Automatic
     DEVELOPMENT_TEAM: F98837R8GC
     MARKETING_VERSION: "1.0.0" # x-release-please-version
-    # Suite iOS : l'app, les widgets et la Watch doivent partager le même numéro,
-    # une extension embarquée dont le CFBundleVersion diffère fait rejeter
-    # l'archive. macOS a sa propre suite, plus bas dans son target.
     CURRENT_PROJECT_VERSION: "19"
 
 packages:
@@ -145,12 +142,6 @@ targets:
         PRODUCT_BUNDLE_IDENTIFIER: com.smalard.specula
         PRODUCT_NAME: Specula
         ENABLE_HARDENED_RUNTIME: NO
-        # Suite macOS, indépendante de celle d'iOS. Bande à part (1000+) et non
-        # une simple reprise du compteur : App Store Connect a déjà refusé un
-        # numéro macOS parce que l'iOS l'avait pris (cf. « build 13 pour
-        # l'archive macOS »). Des plages disjointes rendent la collision
-        # impossible, quelle que soit la règle appliquée côté Apple.
-        CURRENT_PROJECT_VERSION: "1001"
     info:
       path: Resources/Info-macOS.plist
       properties:
