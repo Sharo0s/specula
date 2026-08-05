@@ -51,6 +51,19 @@ xcodebuild -project Specula.xcodeproj -scheme Specula-macOS build
 xcodebuild -project Specula.xcodeproj -scheme Specula-Watch -destination 'generic/platform=watchOS Simulator' build
 ```
 
+Et lancer les tests — ils portent sur du code de `Shared/`, hébergés par la
+cible macOS, donc sans simulateur à démarrer :
+
+```bash
+xcodebuild test -project Specula.xcodeproj -scheme Specula-macOS -destination 'platform=macOS'
+```
+
+Ils couvrent l'aller-retour `services.yaml`, la classification des hôtes locaux
+qui borne la dérogation TLS, l'encodage des clés en query string et les aides de
+lecture JSON. Les fonctions qui interrogent réellement un service ne sont pas
+couvertes : elles appellent `HTTPClient` directement, il faudrait injecter le
+client pour les tester.
+
 Une PR qui touche l'interface gagne à montrer une capture avant/après.
 
 ## Commits

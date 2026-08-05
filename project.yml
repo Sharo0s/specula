@@ -42,6 +42,11 @@ schemes:
     build:
       targets:
         Specula-macOS: all
+    # Les tests portent sur du code de `Shared/`, commun aux trois plateformes.
+    # Hébergés par la cible macOS, ils tournent sans simulateur.
+    test:
+      targets:
+        - Specula-Tests
 
 targets:
   Specula-iOS:
@@ -285,3 +290,23 @@ targets:
         UIAppFonts: [Archivo-Variable.ttf]
         NSExtension:
           NSExtensionPointIdentifier: com.apple.widgetkit-extension
+
+  # Tests unitaires du code partagé — YAML gethomepage, intégrations,
+  # classification des hôtes. Hébergés par l'app macOS : pas de simulateur à
+  # démarrer, `xcodebuild test -scheme Specula-macOS` suffit.
+  Specula-Tests:
+    type: bundle.unit-test
+    platform: macOS
+    sources:
+      - path: Tests
+    dependencies:
+      - target: Specula-macOS
+    settings:
+      base:
+        # `PRODUCT_NAME` vaut Specula, pas Specula-macOS : sans ça, XcodeGen
+        # déduit le chemin de l'hôte du nom de cible et le bundle reste
+        # introuvable au lancement des tests.
+        TEST_HOST: "$(BUILT_PRODUCTS_DIR)/Specula.app/Contents/MacOS/Specula"
+        BUNDLE_LOADER: "$(TEST_HOST)"
+        # Un bundle de test n'a pas d'Info.plist à écrire à la main.
+        GENERATE_INFOPLIST_FILE: YES
