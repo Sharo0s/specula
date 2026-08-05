@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Specula — Support</title>
+<style>
+  :root { --bg:#f1f0f0; --text:#1a1a1a; --muted:rgba(26,26,26,.55); --accent:#ec3013; --rule:rgba(26,26,26,.15); --card:#f8f4f4; }
+  @media (prefers-color-scheme: dark) { :root { --bg:#1a1a1a; --text:#f3f2f2; --muted:rgba(243,242,242,.55); --rule:rgba(243,242,242,.18); --card:#262323; } }
+  * { box-sizing:border-box; }
+  body { margin:0; padding:48px 24px 96px; background:var(--bg); color:var(--text);
+         font:16px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+  main { max-width:720px; margin:0 auto; }
+  .brand { display:flex; align-items:center; gap:10px; margin-bottom:36px; }
+  .square { width:16px; height:16px; background:var(--accent); }
+  .brand span { font-weight:800; font-size:19px; letter-spacing:-.01em; }
+  .lang { margin-left:auto; font-size:14px; }
+  h1 { font-size:34px; line-height:1.1; letter-spacing:-.02em; margin:0 0 8px; }
+  .lede { color:var(--muted); margin:0 0 32px; }
+  h2 { font-size:12px; text-transform:uppercase; letter-spacing:.09em; margin:36px 0 6px; }
+  hr { border:0; border-top:2px solid var(--text); margin:0 0 14px; }
+  h3 { font-size:16px; margin:20px 0 4px; }
+  ul { padding-left:20px; }
+  li { margin-bottom:6px; }
+  a { color:var(--accent); }
+  code { background:var(--card); padding:1px 5px; font-size:14px; }
+  .contact { background:var(--card); padding:18px 20px; margin-top:12px; }
+  footer { margin-top:56px; padding-top:14px; border-top:1px solid var(--rule); color:var(--muted); font-size:14px; }
+</style>
+</head>
+<body>
+<main>
+  <div class="brand"><div class="square"></div><span>Specula</span>
+    <a class="lang" href="./assistance.html">Français</a></div>
+
+  <h1>Support</h1>
+  <p class="lede">A dashboard for self-hosted services, on iPhone, iPad, Mac and
+  Apple Watch.</p>
+
+  <h2>Get in touch</h2><hr>
+  <div class="contact">
+    <p style="margin:0"><a href="mailto:contact@smalard.ovh">contact@smalard.ovh</a><br>
+    <span style="color:var(--muted); font-size:14px">Expect a reply within a few days.
+    Please mention the app version, the device and, if possible, the service
+    involved.</span></p>
+  </div>
+
+  <h2>Install the beta</h2><hr>
+  <p>Specula is in public testing on TestFlight:
+  <a href="https://testflight.apple.com/join/mXBXqMnN">join the beta</a>. The same link
+  covers iPhone, iPad and Mac; the Apple&nbsp;Watch app installs alongside the iPhone one.
+  Install the TestFlight app from the App&nbsp;Store first, then open the link on the
+  device you want to test on.</p>
+  <p>A beta build expires after 90&nbsp;days: TestFlight lets you know when a new one is
+  available.</p>
+
+  <h2>Getting started</h2><hr>
+  <h3>Adding your services</h3>
+  <p>Three ways, offered on first launch and available any time in Settings:</p>
+  <ul>
+    <li><strong>Scan the network</strong> — Specula looks for services advertised around
+      you and guesses their type.</li>
+    <li><strong>Import a <code>services.yaml</code></strong> — the gethomepage format.
+      Groups, addresses and widgets come over as they are.</li>
+    <li><strong>Add one by hand</strong> — an address and a name.</li>
+  </ul>
+
+  <h3>Trying it without installing anything</h3>
+  <p>Choose “Explore the demo first” on launch, or Settings → Configuration → Data →
+  Demo. The whole interface runs on simulated data.</p>
+
+  <h2>Frequently asked</h2><hr>
+
+  <h3>A card says “API key required”</h3>
+  <p>The integration needs a credential to read its metrics. Select the service, then
+  Edit, and enter the key in the format shown under the field (a token, or
+  <code>username:password</code> depending on the service).</p>
+
+  <h3>I imported a services.yaml but the keys are missing</h3>
+  <p>If your file uses <code>{{HOMEPAGE_VAR_…}}</code> variables, Homepage resolves them
+  from its <code>.env</code> file, which Specula has no access to. The app tells you which
+  services are affected: enter their key once in the app.</p>
+
+  <h3>A service shows as offline even though it works</h3>
+  <p>Specula marks a service offline after three failed attempts. Check that the address
+  is reachable from the device, exactly as entered: a service on <code>http://</code> on
+  your local network stops answering once you leave home, unless a VPN is up. Specula
+  handles one address per service and never switches on its own — if you check your
+  homelab from outside, enter the address that works from both sides (VPN, reverse proxy
+  or tunnel).</p>
+
+  <h3>A disk alert comes back on every launch</h3>
+  <p>That volume is full by design (archives, a read-only mount). Settings → Alerts →
+  Monitored volumes: uncheck it and it will be ignored.</p>
+
+  <h3>The system band stays empty</h3>
+  <p>CPU, temperature and RAM come from a Glances source. Without one, the band has
+  nothing to show — you can hide it under Settings → Icons → System band.</p>
+
+  <h3>Where are my keys stored?</h3>
+  <p>In your device's Keychain, and nowhere else: not in a backup, not on iCloud. They are
+  only ever sent to the machines you configured. See the
+  <a href="./privacy.html">privacy policy</a>.</p>
+
+  <h3>Changing the app's language</h3>
+  <p>Specula is available in English, French, Spanish, Simplified Chinese and Arabic. It
+  follows the system language by default; to pick another one without changing your
+  device: Settings → Language. Relaunch the app for the change to apply everywhere.</p>
+
+  <h2>Compatibility</h2><hr>
+  <p>iOS and iPadOS 26, macOS 26, watchOS 26.</p>
+
+  <footer>Specula — <a href="./privacy.html">Privacy policy</a> —
+  <a href="./assistance.html">Version française</a></footer>
+</main>
+</body>
+</html>

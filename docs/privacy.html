@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Specula — Privacy policy</title>
+<style>
+  :root { --bg:#f1f0f0; --text:#1a1a1a; --muted:rgba(26,26,26,.55); --accent:#ec3013; --rule:rgba(26,26,26,.15); }
+  @media (prefers-color-scheme: dark) { :root { --bg:#1a1a1a; --text:#f3f2f2; --muted:rgba(243,242,242,.55); --rule:rgba(243,242,242,.18); } }
+  * { box-sizing:border-box; }
+  body { margin:0; padding:48px 24px 96px; background:var(--bg); color:var(--text);
+         font:16px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+  main { max-width:720px; margin:0 auto; }
+  .brand { display:flex; align-items:center; gap:10px; margin-bottom:36px; }
+  .square { width:16px; height:16px; background:var(--accent); }
+  .brand span { font-weight:800; font-size:19px; letter-spacing:-.01em; }
+  .lang { margin-left:auto; font-size:14px; }
+  h1 { font-size:34px; line-height:1.1; letter-spacing:-.02em; margin:0 0 6px; }
+  .date { color:var(--muted); font-size:14px; margin:0 0 32px; }
+  h2 { font-size:12px; text-transform:uppercase; letter-spacing:.09em; margin:36px 0 6px; }
+  hr { border:0; border-top:2px solid var(--text); margin:0 0 14px; }
+  p, li { color:var(--text); }
+  ul { padding-left:20px; }
+  li { margin-bottom:6px; }
+  a { color:var(--accent); }
+  code { padding:1px 5px; font-size:14px; }
+  footer { margin-top:56px; padding-top:14px; border-top:1px solid var(--rule); color:var(--muted); font-size:14px; }
+</style>
+</head>
+<body>
+<main>
+  <div class="brand"><div class="square"></div><span>Specula</span>
+    <a class="lang" href="./confidentialite.html">Français</a></div>
+
+  <h1>Privacy policy</h1>
+  <p class="date">Last updated: 5 August 2026</p>
+
+  <h2>In one paragraph</h2><hr>
+  <p>Specula collects no personal data. The app has no account, no server, no telemetry
+  and no advertising. It queries the services you host yourself, from your device, and
+  sends nothing to the developer or to any third party.</p>
+
+  <h2>Data we collect</h2><hr>
+  <p>None. We receive neither your email address, nor your IP address, nor the list of
+  your services, nor a single usage statistic. There is no Specula server for such
+  information to be sent to.</p>
+
+  <h2>Data stored on your device</h2><hr>
+  <p>Everything you configure stays local:</p>
+  <ul>
+    <li>the addresses, names and groups of your services;</li>
+    <li>your API keys and credentials, kept in the Keychain — never in a backup, never on
+        iCloud;</li>
+    <li>your outage and notification history, and your display preferences.</li>
+  </ul>
+  <p>This data is shared between the app, its widgets and the Apple Watch app through an
+  app group on your device. Deleting the app erases it.</p>
+
+  <h2>Network connections</h2><hr>
+  <p>Specula opens two kinds of connection, and nothing else:</p>
+  <ul>
+    <li><strong>Your services</strong> — at the addresses you entered or imported,
+        generally on your local network or through your own VPN. Your API keys are sent to
+        those machines, and to them alone, to read their metrics.</li>
+    <li><strong>Service logos</strong> — fetched from the public
+        <code>cdn.jsdelivr.net</code> CDN (the open-source <em>dashboard-icons</em>
+        project). That request carries only the name of the requested logo, never your
+        addresses or your keys. You can turn it off: Settings → Icons → Service logos.</li>
+  </ul>
+
+  <h2>Notifications</h2><hr>
+  <p>Alerts (service offline, disk almost full, temperature) are computed and displayed
+  locally by the device. No remote notification service is involved.</p>
+
+  <h2>Children</h2><hr>
+  <p>The app is not directed at children and collects no data concerning them.</p>
+
+  <h2>Your rights</h2><hr>
+  <p>Since we hold no data about you, we have nothing to disclose, correct, export or
+  delete on request. Your rights under the GDPR are exercised directly on your device, by
+  changing or deleting the app.</p>
+
+  <h2>Changes</h2><hr>
+  <p>Any change to this policy will be published on this page, with a new update date.</p>
+
+  <h2>Contact</h2><hr>
+  <p>Questions: <a href="mailto:contact@smalard.ovh">contact@smalard.ovh</a></p>
+
+  <footer>Specula — <a href="./support.html">Support</a> —
+  <a href="./confidentialite.html">Version française</a></footer>
+</main>
+</body>
+</html>
