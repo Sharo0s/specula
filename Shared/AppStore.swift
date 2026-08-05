@@ -252,6 +252,10 @@ final class AppStore {
         unread = notifs.filter(\.unread).count
 
         migrateKeysToKeychain()
+        // Les clés d'une version antérieure dorment dans l'ancien trousseau de
+        // macOS, dont chaque lecture réclame une autorisation. Une seule passe,
+        // au premier lancement, puis plus jamais.
+        KeychainStore.migrateFromLegacyIfNeeded()
 
         for s in Catalog.all + (importedList ?? []) + customList { seedHistory(s.id) }
         gOrder = Array(mainGroups.indices)
