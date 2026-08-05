@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.1.1](https://github.com/Sharo0s/specula/compare/v1.1.0...v1.1.1) (2026-08-05)
+
+
+### Corrections
+
+* **keychain:** passe au trousseau protégé et dérive le service du préfixe ([8ead137](https://github.com/Sharo0s/specula/commit/8ead137eda6ad21bf438017bf9775c7b0dd9fce6))
+* **keychain:** reprend l'ancien trousseau en une seule passe énumérée ([73e7b13](https://github.com/Sharo0s/specula/commit/73e7b13c252ed8a5b86650b0ddeb9183203ef71c))
+
 ## [1.1.0](https://github.com/Sharo0s/specula/compare/v1.0.0...v1.1.0) (2026-08-04)
 
 
