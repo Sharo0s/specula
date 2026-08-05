@@ -1,0 +1,67 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+# Une PR poussée trois fois de suite n'occupe qu'un runner : les exécutions
+# précédentes sont abandonnées.
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    name: Compile et teste les trois plateformes
+    runs-on: macos-26
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Environnement
+        run: |
+          xcodebuild -version
+          swift --version
+
+      - name: XcodeGen
+        run: |
+          brew install xcodegen
+          xcodegen generate
+
+      # Le runner n'a ni équipe Apple ni Signing.local.xcconfig : les valeurs
+      # par défaut du dépôt laissent DEVELOPMENT_TEAM vide, d'où la signature
+      # désactivée sur les cibles simulateur.
+      - name: Tests unitaires (macOS)
+        run: |
+          xcodebuild test \
+            -project Specula.xcodeproj \
+            -scheme Specula-macOS \
+            -destination 'platform=macOS' \
+            CODE_SIGN_STYLE=Manual \
+            CODE_SIGN_IDENTITY=- \
+            CODE_SIGNING_REQUIRED=NO \
+            CODE_SIGN_ENTITLEMENTS=""
+
+      # L'App Group réclamerait un profil de provisionnement, que le runner n'a
+      # pas : les entitlements sont écartés le temps des tests. Ils ne changent
+      # rien à ce qui est vérifié — `SharedState` retombe alors sur
+      # Application Support, et aucun test ne touche au conteneur partagé.
+
+      - name: Compilation iOS
+        run: |
+          xcodebuild build \
+            -project Specula.xcodeproj \
+            -scheme Specula-iOS \
+            -destination 'generic/platform=iOS Simulator' \
+            CODE_SIGNING_ALLOWED=NO
+
+      - name: Compilation watchOS
+        run: |
+          xcodebuild build \
+            -project Specula.xcodeproj \
+            -scheme Specula-Watch \
+            -destination 'generic/platform=watchOS Simulator' \
+            CODE_SIGNING_ALLOWED=NO

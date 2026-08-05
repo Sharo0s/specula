@@ -5,6 +5,7 @@
 <h1 align="center">Specula</h1>
 
 <p align="center">
+  <a href="https://github.com/Sharo0s/specula/actions/workflows/ci.yml"><img src="https://github.com/Sharo0s/specula/actions/workflows/ci.yml/badge.svg" alt="CI"></a>
   <img src="https://img.shields.io/badge/iOS-26%2B-111" alt="iOS 26+">
   <img src="https://img.shields.io/badge/macOS-26%2B-111" alt="macOS 26+">
   <img src="https://img.shields.io/badge/watchOS-26%2B-111" alt="watchOS 26+">
