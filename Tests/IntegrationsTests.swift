@@ -102,6 +102,25 @@ struct LocalHostTests {
     }
 }
 
+@Suite("État partagé")
+struct SharedStateTests {
+
+    @Test("L'App Group garde son préfixe conventionnel")
+    func groupIDShape() {
+        // `KeychainStore` dérive le service du trousseau de cette valeur en lui
+        // retirant « group. ». Si la forme change, les clés d'une version
+        // antérieure deviennent introuvables.
+        #expect(SharedState.groupID.hasPrefix("group."))
+        #expect(SharedState.groupID.hasSuffix(".specula"))
+    }
+
+    @Test("L'identifiant est lu dans l'Info.plist, pas figé dans le code")
+    func groupIDComesFromBundle() {
+        let fromBundle = Bundle.main.object(forInfoDictionaryKey: "SpeculaAppGroup") as? String
+        #expect(fromBundle == SharedState.groupID)
+    }
+}
+
 @Suite("Query string")
 struct QueryValueTests {
 
