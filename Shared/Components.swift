@@ -387,7 +387,6 @@ extension View {
     }
 }
 
-// Compilé aussi pour watchOS : le target Watch embarque Components.swift.
 #if !os(macOS)
 extension View {
     /// Tap simple → `tap`, double-tap → `open`. Gestes **exclusifs** : SwiftUI

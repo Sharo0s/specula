@@ -33,7 +33,6 @@ body:
         - label: iOS
         - label: iPadOS
         - label: macOS
-        - label: watchOS
 
   - type: textarea
     id: alternatives

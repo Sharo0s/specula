@@ -30,7 +30,7 @@ Types utilisés :
 Changement cassant : `!` après le scope (`feat(api)!: …`) ou un pied de page
 `BREAKING CHANGE: …` → bump major.
 
-Scopes courants : `onboarding`, `ios`, `macos`, `watch`, `widgets`, `live`,
+Scopes courants : `onboarding`, `ios`, `macos`, `widgets`, `live`,
 `demo`, `notifs`, `theme`, `yaml`, `keychain`, `release`.
 
 Exemples :
@@ -62,8 +62,7 @@ ajout ou suppression de fichier.
 ```bash
 xcodebuild -project Specula.xcodeproj -scheme Specula-iOS -destination 'generic/platform=iOS Simulator' build
 xcodebuild -project Specula.xcodeproj -scheme Specula-macOS build
-xcodebuild -project Specula.xcodeproj -scheme Specula-Watch -destination 'generic/platform=watchOS Simulator' build
 ```
 
-Vérifier les trois plateformes après une modification de `Shared/` : le code y
+Vérifier les deux plateformes après une modification de `Shared/` : le code y
 est partagé, mais gardé par des `#if os(...)`.

@@ -8,28 +8,26 @@
   <a href="https://github.com/Sharo0s/specula/actions/workflows/ci.yml"><img src="https://github.com/Sharo0s/specula/actions/workflows/ci.yml/badge.svg" alt="CI"></a>
   <img src="https://img.shields.io/badge/iOS-26%2B-111" alt="iOS 26+">
   <img src="https://img.shields.io/badge/macOS-26%2B-111" alt="macOS 26+">
-  <img src="https://img.shields.io/badge/watchOS-26%2B-111" alt="watchOS 26+">
   <a href="LICENSE"><img src="https://img.shields.io/badge/licence-GPL--3.0-ec3013" alt="Licence : GPL-3.0"></a>
   <a href="README.md"><img src="https://img.shields.io/badge/read%20in-english-111" alt="Read in English"></a>
 </p>
 
 <p align="center">
-  <b>Specula</b> est un tableau de bord homelab natif pour iPhone, iPad, Mac et Apple Watch —
+  <b>Specula</b> est un tableau de bord homelab natif pour iPhone, iPad et Mac —
   le principe de <a href="https://gethomepage.dev">gethomepage.dev</a>, porté en SwiftUI.<br>
   Il lit les <b>vraies métriques</b> de tes services auto-hébergés, repère les pannes,
-  et alimente widgets et complications avec l'état réel.
+  et alimente les widgets avec l'état réel.
 </p>
 
 <p align="center"><i>Specula</i> : la tour de guet, en latin.</p>
 
 ## 🛠 TestFlight
 
-La bêta est ouverte. Un seul lien pour l'iPhone, l'iPad et le Mac ; l'app Watch
-s'installe avec celle de l'iPhone.
+La bêta est ouverte. Un seul lien pour l'iPhone, l'iPad et le Mac.
 
 <a href="https://testflight.apple.com/join/mXBXqMnN"><img src="https://img.shields.io/badge/Rejoindre%20la%20b%C3%AAta%20sur-TestFlight-0D96F6?logo=apple&logoColor=white" alt="Rejoindre la bêta sur TestFlight" height="34"></a>
 
-Nécessite **iOS/iPadOS 26, macOS 26, watchOS 26**. Aucune version antérieure n'est
+Nécessite **iOS/iPadOS 26, macOS 26**. Aucune version antérieure n'est
 prise en charge.
 
 ## 📸 Captures
@@ -46,8 +44,6 @@ prise en charge.
        alt="iPhone, fiche Jellyfin : histogramme de latence sur une minute, compteurs de films, séries et épisodes, disponibilité sur 30 jours, journal du conteneur.">
   <img src="docs/screenshots/ipados.png" width="290"
        alt="iPad : les dix-sept services des quatre groupes en grille, chacun avec ses métriques lues via son API.">
-  <img src="docs/screenshots/watchos.png" width="105"
-       alt="Apple Watch : seize services en ligne sur dix-sept, panne de Komga en tête, puis les services épinglés avec leur latence.">
 </p>
 
 <p align="center"><em>Mode démo — toutes les surfaces fonctionnent sans homelab.</em></p>
@@ -60,8 +56,8 @@ prise en charge.
 - **Détection de panne** — trois tentatives échouées passent un service hors ligne,
   avec notification et Live Activity. Le mur de statut garde trente jours d'historique
   et calcule la disponibilité réelle.
-- **Sur tous tes écrans** — widgets sur l'écran d'accueil, complications au poignet,
-  accès depuis la barre de menus du Mac.
+- **Sur tous tes écrans** — widgets sur l'écran d'accueil, accès depuis la barre
+  de menus du Mac.
 - **Mode démo** — données simulées, panne scénarisée, aucun homelab requis. C'est là
   que l'app s'ouvre au premier lancement.
 

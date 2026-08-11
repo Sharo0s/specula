@@ -36,7 +36,6 @@ body:
         - label: iOS
         - label: iPadOS
         - label: macOS
-        - label: watchOS
     validations:
       required: true
 

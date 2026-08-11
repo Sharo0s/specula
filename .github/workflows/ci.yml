@@ -16,7 +16,7 @@ permissions:
 
 jobs:
   build:
-    name: Compile et teste les trois plateformes
+    name: Compile et teste les deux plateformes
     runs-on: macos-26
     steps:
       - uses: actions/checkout@v7
@@ -58,10 +58,3 @@ jobs:
             -destination 'generic/platform=iOS Simulator' \
             CODE_SIGNING_ALLOWED=NO
 
-      - name: Compilation watchOS
-        run: |
-          xcodebuild build \
-            -project Specula.xcodeproj \
-            -scheme Specula-Watch \
-            -destination 'generic/platform=watchOS Simulator' \
-            CODE_SIGNING_ALLOWED=NO

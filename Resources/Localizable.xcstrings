@@ -293,62 +293,6 @@
         }
       }
     },
-    "%@ en ligne" : {
-      "localizations" : {
-        "ar" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%@ متصل"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%@ online"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%@ en línea"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%@ 在线"
-          }
-        }
-      }
-    },
-    "%@ en panne" : {
-      "localizations" : {
-        "ar" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%@ متوقّف"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%@ down"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%@ caído"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%@ 故障"
-          }
-        }
-      }
-    },
     "%@ Go" : {
       "localizations" : {
         "ar" : {
@@ -1602,31 +1546,30 @@
         }
       }
     },
-    "Affichés dans le widget, la barre de menus et sur la Watch — 4 maximum." : {
-      "extractionState" : "stale",
+    "Affichés dans le widget et la barre de menus — 4 maximum." : {
       "localizations" : {
         "ar" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "تظهر في الأداة وشريط القوائم وعلى Watch — 4 كحد أقصى."
+            "value" : "تظهر في الأداة وشريط القوائم — 4 كحد أقصى."
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Shown in the widget, the menu bar and on the Watch — 4 max."
+            "value" : "Shown in the widget and the menu bar — 4 max."
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Se muestran en el widget, la barra de menús y el Watch — máximo 4."
+            "value" : "Se muestran en el widget y la barra de menús — máximo 4."
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "显示在小组件、菜单栏和 Watch 上 — 最多 4 个。"
+            "value" : "显示在小组件和菜单栏中 — 最多 4 个。"
           }
         }
       }
@@ -6197,31 +6140,31 @@
         }
       }
     },
-    "Jellyfin, Proxmox, Home Assistant, AdGuard… tes services selfhosted, leurs métriques en direct et les pannes qui comptent — sur iPhone, iPad, Mac et Watch." : {
+    "Jellyfin, Proxmox, Home Assistant, AdGuard… tes services selfhosted, leurs métriques en direct et les pannes qui comptent — sur iPhone, iPad et Mac." : {
       "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "‏Jellyfin، ‏Proxmox، ‏Home Assistant، ‏AdGuard… خدماتك المستضافة ذاتيًا، ومقاييسها المباشرة، والأعطال التي تهمّك — على iPhone وiPad وMac وWatch."
+            "value" : "‏Jellyfin، ‏Proxmox، ‏Home Assistant، ‏AdGuard… خدماتك المستضافة ذاتيًا، ومقاييسها المباشرة، والأعطال التي تهمّك — على iPhone وiPad وMac."
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Jellyfin, Proxmox, Home Assistant, AdGuard… your self-hosted services, their live metrics and the outages that matter — on iPhone, iPad, Mac and Watch."
+            "value" : "Jellyfin, Proxmox, Home Assistant, AdGuard… your self-hosted services, their live metrics and the outages that matter — on iPhone, iPad and Mac."
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Jellyfin, Proxmox, Home Assistant, AdGuard… tus servicios autoalojados, sus métricas en directo y las caídas que importan — en iPhone, iPad, Mac y Watch."
+            "value" : "Jellyfin, Proxmox, Home Assistant, AdGuard… tus servicios autoalojados, sus métricas en directo y las caídas que importan — en iPhone, iPad y Mac."
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Jellyfin、Proxmox、Home Assistant、AdGuard… 你的自托管服务、实时指标，以及真正要紧的故障 — iPhone、iPad、Mac 和 Watch 全都支持。"
+            "value" : "Jellyfin、Proxmox、Home Assistant、AdGuard… 你的自托管服务、实时指标，以及真正要紧的故障 — iPhone、iPad 和 Mac 全都支持。"
           }
         }
       }
@@ -9588,34 +9531,6 @@
         }
       }
     },
-    "Services en ligne — carré rouge en cas de panne." : {
-      "localizations" : {
-        "ar" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "الخدمات المتصلة — مربع أحمر عند وجود عطل."
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Services online — red square when something is down."
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Servicios en línea — cuadrado rojo si algo cae."
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "在线服务数 — 出现故障时显示红色方块。"
-          }
-        }
-      }
-    },
     "services.yaml" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -9869,34 +9784,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "SPECULA"
-          }
-        }
-      }
-    },
-    "Specula — %@ ✕" : {
-      "localizations" : {
-        "ar" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "‏Specula — %@ ✕"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Specula — %@ ✕"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Specula — %@ ✕"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Specula — %@ ✕"
           }
         }
       }
@@ -10743,34 +10630,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "总计"
-          }
-        }
-      }
-    },
-    "Tous en ligne" : {
-      "localizations" : {
-        "ar" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "الكل متصل"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "All online"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Todo en línea"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "全部在线"
           }
         }
       }

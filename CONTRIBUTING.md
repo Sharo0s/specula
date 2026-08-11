@@ -32,8 +32,8 @@ d'un `xcodegen generate`.
 - `Shared/Data/` — la couche réelle : HTTP (latence mesurée, tolérance TLS bornée au
   réseau local), intégrations (détection automatique et métriques par API), YAML
   gethomepage aller-retour via Yams, trousseau, découverte Bonjour.
-- `Widgets/`, `WatchWidgets/`, `Watch/` — extensions et app Watch, nourries par
-  `SharedState` à travers l'App Group.
+- `Widgets/` — extensions widgets et Live Activities, nourries par `SharedState`
+  à travers l'App Group.
 
 Une seule URL par service : ce qui rend un homelab joignable de l'extérieur — VPN,
 reverse proxy, tunnel — se règle sous l'app, pas dedans. C'est une décision de
@@ -41,14 +41,13 @@ conception, pas un manque.
 
 ## Vérifier avant de proposer
 
-Le code de `Shared/` est partagé entre les trois plateformes, gardé par des
-`#if os(...)` : une modification qui compile sur iOS peut casser watchOS. Les
-trois cibles, systématiquement.
+Le code de `Shared/` est partagé entre les deux plateformes, gardé par des
+`#if os(...)` : une modification qui compile sur iOS peut casser macOS. Les
+deux cibles, systématiquement.
 
 ```bash
 xcodebuild -project Specula.xcodeproj -scheme Specula-iOS -destination 'generic/platform=iOS Simulator' build
 xcodebuild -project Specula.xcodeproj -scheme Specula-macOS build
-xcodebuild -project Specula.xcodeproj -scheme Specula-Watch -destination 'generic/platform=watchOS Simulator' build
 ```
 
 Et lancer les tests — ils portent sur du code de `Shared/`, hébergés par la
@@ -94,7 +93,7 @@ cadratins) ; seule la ligne d'en-tête est contrainte par le parser.
 Changement cassant : `!` après le scope (`feat(api)!: …`) ou un pied de page
 `BREAKING CHANGE: …` → bump majeur.
 
-Scopes courants : `onboarding`, `ios`, `macos`, `watch`, `widgets`, `live`,
+Scopes courants : `onboarding`, `ios`, `macos`, `widgets`, `live`,
 `demo`, `notifs`, `theme`, `yaml`, `keychain`, `i18n`, `release`.
 
 ```
