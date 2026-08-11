@@ -8,6 +8,10 @@ struct ServiceDetailView: View {
     @Environment(\.dismiss) private var dismiss
     let service: Service
     @State private var metric: DetailMetric = .lat
+    /// Feuille d'édition du service.
+    @State private var showEdit = false
+    /// Suppression en deux temps — pas de dialogue système.
+    @State private var confirmDelete = false
 
     var body: some View {
         VStack(spacing: 0) {
@@ -46,6 +50,8 @@ struct ServiceDetailView: View {
                 .padding(.bottom, 40)
             }
         }
+        .onChange(of: service.id) { confirmDelete = false }
+        .sheet(isPresented: $showEdit) { EditServiceSheet(service: service).environment(store) }
     }
 
     private var isDown: Bool { store.isDown(service) }
@@ -155,12 +161,40 @@ struct ServiceDetailView: View {
 
     // MARK: Actions
 
+    // Mêmes actions que le panneau de détail du Mac : le redémarrage ne dépend
+    // pas de l'état du service, et l'édition/suppression n'ont de sens qu'en
+    // mode live (la démo travaille sur un catalogue figé).
+
     private var actions: some View {
         VStack(spacing: 8) {
             MPrimaryButton(title: "Ouvrir l'interface web") { store.openWeb(service) }
             MSecondaryButton(title: "Copier l'URL") { store.copyURL(service) }
-            if isDown {
-                MSecondaryButton(title: "Redémarrer le conteneur") { store.restart(service) }
+            MSecondaryButton(title: "Redémarrer le conteneur") { store.restart(service) }
+            if store.dataMode == .live {
+                MSecondaryButton(title: "Modifier…") { showEdit = true }
+                // Suppression en deux temps — pas de dialogue système
+                Button {
+                    if confirmDelete {
+                        store.removeService(service)
+                        // Le service n'existe plus : la vue de détail sortirait
+                        // sur une fiche fantôme.
+                        dismiss()
+                    } else {
+                        confirmDelete = true
+                    }
+                } label: {
+                    Text(confirmDelete ? "Confirmer la suppression" : "Supprimer le service")
+                        .font(.archivo(14, .heavy))
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .padding(.horizontal, 14)
+                        .padding(.vertical, 12)
+                        .background(confirmDelete ? Ink.accent : .clear)
+                        .foregroundStyle(confirmDelete ? .white : Ink.accentText)
+                        .overlay(Rectangle().strokeBorder(
+                            confirmDelete ? .clear : Ink.accentRing, lineWidth: 1))
+                        .contentShape(.rect)
+                }
+                .buttonStyle(.plain)
             }
         }
     }
