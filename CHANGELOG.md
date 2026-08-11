@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.2.0](https://github.com/Sharo0s/specula/compare/v1.1.1...v1.2.0) (2026-08-11)
+
+
+### Fonctionnalités
+
+* **ios:** aligne les actions du détail sur celles du Mac ([46f1b78](https://github.com/Sharo0s/specula/commit/46f1b78810a11816a3740e236e20ed41dda05ebc))
+* **watch:** retire l'application et les complications watchOS ([dad22f4](https://github.com/Sharo0s/specula/commit/dad22f4e3b25f7fc67acfaab1634ee71bfcda6d4))
+
 ## [1.1.1](https://github.com/Sharo0s/specula/compare/v1.1.0...v1.1.1) (2026-08-05)
 
 
