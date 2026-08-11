@@ -9,8 +9,6 @@ import UIKit
 import ActivityKit
 #elseif os(macOS)
 import AppKit
-#elseif os(watchOS)
-import WatchKit
 #endif
 
 // MARK: - Langues proposées
@@ -273,13 +271,8 @@ final class AppStore {
     }
 
     /// Le tutoriel de premier lancement gèle le simulateur.
-    /// watchOS n'a pas d'onboarding : l'horloge y démarre tout de suite.
     private var onboardingDone: Bool {
-        #if os(watchOS)
-        true
-        #else
         UserDefaults.standard.bool(forKey: "hasOnboarded")
-        #endif
     }
 
     /// Sortie du tutoriel : autorisation notifications puis démarrage de l'horloge.
@@ -342,7 +335,7 @@ final class AppStore {
         }
     }
 
-    // MARK: - État partagé (widgets / complications)
+    // MARK: - État partagé (widgets)
 
     private var lastWidgetSignature = ""
     private var lastWidgetReload = Date.distantPast
@@ -418,9 +411,6 @@ final class AppStore {
             pushNotif(title: String(localized: "Komga ne répond plus"),
                       sub: String(localized: "Délai dépassé (timeout) — 3 tentatives échouées"))
             startOutageActivity(serviceName: "Komga")
-            #if os(watchOS)
-            WKInterfaceDevice.current().play(.failure)
-            #endif
         }
     }
 
@@ -675,9 +665,6 @@ final class AppStore {
                     // trois échecs ne font qu'une quinzaine de secondes. L'alerte
                     // part plus bas, quand la panne a duré.
                     startOutageActivity(serviceName: target.name)
-                    #if os(watchOS)
-                    WKInterfaceDevice.current().play(.failure)
-                    #endif
                 }
             }
             trimHistories(target.id)

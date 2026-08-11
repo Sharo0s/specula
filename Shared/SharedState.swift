@@ -1,6 +1,6 @@
 import Foundation
 
-// MARK: - État partagé app ↔ widgets/complications (App Group)
+// MARK: - État partagé app ↔ widgets (App Group)
 // L'app écrit un instantané JSON à chaque tick ; les extensions le lisent
 // dans leur timeline provider. Au-delà de 30 min sans écriture, les widgets
 // retombent sur le scénario de démonstration.

@@ -103,7 +103,7 @@ struct SettingsView: View {
         }
 
         // Épinglés
-        section("Épinglés", note: "Affichés dans le widget, la barre de menus et sur la Watch — 4 maximum.") {
+        section("Épinglés", note: "Affichés dans le widget et la barre de menus — 4 maximum.") {
             chips(store.mainServices.map(\.id),
                   isOn: { store.pins.contains($0) },
                   toggle: { store.togglePin($0) })

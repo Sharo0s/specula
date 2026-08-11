@@ -25,7 +25,7 @@ l'utilisateur et n'expose aucun serveur. Sont donc particulièrement pertinents 
   homelab, tout élargissement involontaire de cette tolérance est une faille ;
 - traitement d'un `services.yaml` importé, ou d'une réponse hostile d'un service
   interrogé ;
-- données atteignables par les extensions widgets et complications via l'App
+- données atteignables par les extensions widgets via l'App
   Group.
 
 Hors périmètre : le fait que l'app joigne des services en HTTP simple sur le

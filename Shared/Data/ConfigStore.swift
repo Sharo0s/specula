@@ -76,7 +76,7 @@ struct AppConfig: Codable {
     /// Import services.yaml : remplace le catalogue de démo.
     var importedGroups: [String]?
     var importedServices: [StoredService]?
-    /// Services épinglés (widget, barre de menus, Watch).
+    /// Services épinglés (widget, barre de menus).
     var pins: [String]?
     /// Pannes observées (30 jours glissants).
     var outages: [StoredOutage]?

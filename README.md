@@ -8,28 +8,26 @@
   <a href="https://github.com/Sharo0s/specula/actions/workflows/ci.yml"><img src="https://github.com/Sharo0s/specula/actions/workflows/ci.yml/badge.svg" alt="CI"></a>
   <img src="https://img.shields.io/badge/iOS-26%2B-111" alt="iOS 26+">
   <img src="https://img.shields.io/badge/macOS-26%2B-111" alt="macOS 26+">
-  <img src="https://img.shields.io/badge/watchOS-26%2B-111" alt="watchOS 26+">
   <a href="LICENSE"><img src="https://img.shields.io/badge/license-GPL--3.0-ec3013" alt="License: GPL-3.0"></a>
   <a href="README.fr.md"><img src="https://img.shields.io/badge/lire%20en-fran%C3%A7ais-111" alt="Lire en français"></a>
 </p>
 
 <p align="center">
-  <b>Specula</b> is a native homelab dashboard for iPhone, iPad, Mac and Apple Watch —
+  <b>Specula</b> is a native homelab dashboard for iPhone, iPad and Mac —
   the idea behind <a href="https://gethomepage.dev">gethomepage.dev</a>, rebuilt in SwiftUI.<br>
   It reads the <b>real metrics</b> of your self-hosted services, catches outages,
-  and feeds widgets and complications from live state.
+  and feeds widgets from live state.
 </p>
 
 <p align="center"><i>Specula</i> — the watchtower, in Latin.</p>
 
 ## 🛠 TestFlight
 
-The beta is open. One link covers iPhone, iPad and Mac; the Watch app installs
-alongside the iPhone one.
+The beta is open. One link covers iPhone, iPad and Mac.
 
 <a href="https://testflight.apple.com/join/mXBXqMnN"><img src="https://img.shields.io/badge/Get%20the%20beta%20on-TestFlight-0D96F6?logo=apple&logoColor=white" alt="Get the beta on TestFlight" height="34"></a>
 
-Requires **iOS/iPadOS 26, macOS 26, watchOS 26**. No earlier version is supported.
+Requires **iOS/iPadOS 26, macOS 26**. No earlier version is supported.
 
 ## 📸 Screenshots
 
@@ -45,8 +43,6 @@ Requires **iOS/iPadOS 26, macOS 26, watchOS 26**. No earlier version is supporte
        alt="iPhone, Jellyfin detail: one-minute latency histogram, movie, series and episode counters, 30-day availability, container log.">
   <img src="docs/screenshots/ipados.png" width="290"
        alt="iPad: the seventeen services of four groups in a grid, each with metrics read from its own API.">
-  <img src="docs/screenshots/watchos.png" width="105"
-       alt="Apple Watch: sixteen services online out of seventeen, the Komga outage on top, then pinned services with their latency.">
 </p>
 
 <p align="center"><em>Demo mode — every surface works without a homelab.</em></p>
@@ -59,8 +55,8 @@ Requires **iOS/iPadOS 26, macOS 26, watchOS 26**. No earlier version is supporte
 - **Outage detection** — three failed attempts mark a service offline, with a
   notification and a Live Activity. The status wall keeps thirty days of history and
   computes real availability.
-- **Every screen you look at** — widgets on the Home Screen, complications on the
-  wrist, a menu bar item on the Mac.
+- **Every screen you look at** — widgets on the Home Screen, a menu bar item on
+  the Mac.
 - **Demo mode** — simulated data, scripted outage, no homelab needed. It is what the
   app opens on first launch.
 

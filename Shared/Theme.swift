@@ -13,10 +13,7 @@ enum Ink {
 
     // Couleur dynamique clair / sombre
     private static func dyn(_ light: String, _ dark: String) -> Color {
-        #if os(watchOS)
-        // watchOS est toujours sombre
-        return Color(hex: dark)
-        #elseif canImport(UIKit)
+        #if canImport(UIKit)
         return Color(UIColor { traits in
             traits.userInterfaceStyle == .dark ? UIColor(hex: dark) : UIColor(hex: light)
         })

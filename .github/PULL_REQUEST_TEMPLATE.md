@@ -4,7 +4,7 @@
 
 ## Vérifications
 
-- [ ] Les trois cibles compilent (`Specula-iOS`, `Specula-macOS`, `Specula-Watch`)
+- [ ] Les deux cibles compilent (`Specula-iOS`, `Specula-macOS`)
 - [ ] `project.yml` mis à jour et `xcodegen generate` relancé si des fichiers ont bougé
 - [ ] Aucune chaîne visible en dur : tout passe par `Resources/Localizable.xcstrings`
 - [ ] Aucune couleur ni espacement en dur : tout passe par `Theme`
