@@ -81,6 +81,11 @@ One exception: service logos come from the public
 which therefore sees which logos are requested — never your addresses or your data.
 A switch in Settings turns it off, and the app falls back to monograms.
 
+## ⚙️ Development
+
+Thank you for your interest in Specula! Please check out the
+[Contribution Guidelines](CONTRIBUTING.md) to get started.
+
 ## 📄 License
 
 [GPL-3.0](LICENSE) © nysia. Any redistribution, modified or not, stays under the same
