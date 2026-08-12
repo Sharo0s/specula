@@ -13,13 +13,10 @@
 </p>
 
 <p align="center">
-  <b>Specula</b> est un tableau de bord homelab natif pour iPhone, iPad et Mac —
-  le principe de <a href="https://gethomepage.dev">gethomepage.dev</a>, porté en SwiftUI.<br>
+  <b>Specula</b> est un tableau de bord homelab natif pour iPhone, iPad et Mac.<br>
   Il lit les <b>vraies métriques</b> de tes services auto-hébergés, repère les pannes,
   et alimente les widgets avec l'état réel.
 </p>
-
-<p align="center"><i>Specula</i> : la tour de guet, en latin.</p>
 
 ## 🛠 TestFlight
 

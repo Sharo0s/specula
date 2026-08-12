@@ -13,13 +13,10 @@
 </p>
 
 <p align="center">
-  <b>Specula</b> is a native homelab dashboard for iPhone, iPad and Mac —
-  the idea behind <a href="https://gethomepage.dev">gethomepage.dev</a>, rebuilt in SwiftUI.<br>
+  <b>Specula</b> is a native homelab dashboard for iPhone, iPad and Mac.<br>
   It reads the <b>real metrics</b> of your self-hosted services, catches outages,
   and feeds widgets from live state.
 </p>
-
-<p align="center"><i>Specula</i> — the watchtower, in Latin.</p>
 
 ## 🛠 TestFlight
 
