@@ -83,19 +83,6 @@ Une exception : les logos des services viennent du CDN public
 voit donc quels logos sont demandés — jamais tes adresses ni tes données. Un
 interrupteur dans les réglages le coupe, l'app retombe alors sur des monogrammes.
 
-## ⚙️ Développement
-
-`project.yml` est la source de vérité — le projet Xcode est généré par
-[XcodeGen](https://github.com/yonaskolb/XcodeGen). Voir
-[CONTRIBUTING.md](CONTRIBUTING.md) pour l'installation.
-
-Les commits doivent être des [Conventional Commits](https://www.conventionalcommits.org)
-valides : le dépôt est branché sur release-please, et un en-tête mal formé est
-purement ignoré.
-
-Le design suit un système « Modernist » — flat, architectural, radius 0, filets
-structurels, un seul accent rouge (`#ec3013`), typographie Archivo.
-
 ## 📄 Licence
 
 [GPL-3.0](LICENSE) © nysia. Toute redistribution, modifiée ou non, reste sous la même
