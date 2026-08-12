@@ -125,8 +125,8 @@ jamais par `UserDefaults` ni par le YAML exporté.
 Ta contribution est distribuée sous [GPL-3.0](LICENSE), comme le reste du
 projet, et tu en gardes le droit d'auteur.
 
-Specula est aussi publié sur l'App Store, dont les conditions sont
-incompatibles avec la GPLv3. En proposant une contribution, tu accordes donc en
+Specula est aussi distribué par Apple — TestFlight aujourd'hui, l'App Store
+ensuite — dont les conditions sont incompatibles avec la GPLv3. En proposant une contribution, tu accordes donc en
 plus à nysia, éditeur du projet, une licence non exclusive, irrévocable,
 mondiale et gratuite de l'utiliser, la modifier et la distribuer sous d'autres
 conditions, y compris celles des magasins d'applications d'Apple et des

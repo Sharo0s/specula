@@ -18,6 +18,12 @@
   and feeds widgets from live state.
 </p>
 
+<p align="center">
+  <a href="https://sharo0s.github.io/specula/">Website</a> ·
+  <a href="https://sharo0s.github.io/specula/support.html">Support</a> ·
+  <a href="https://sharo0s.github.io/specula/privacy.html">Privacy policy</a>
+</p>
+
 ## 🛠 TestFlight
 
 The beta is open. One link covers iPhone, iPad and Mac.
@@ -107,8 +113,9 @@ Thank you for your interest in Specula! Please check out the
 [GPL-3.0](LICENSE) © nysia. Any redistribution, modified or not, stays under the same
 license and publishes its sources.
 
-The app is also published on the App Store, whose terms are incompatible with GPLv3:
-contributions therefore need an extra distribution grant, described in CONTRIBUTING.md.
+The app is also distributed through Apple — TestFlight today, the App Store next — whose
+terms are incompatible with GPLv3: contributions therefore need an extra distribution
+grant, described in CONTRIBUTING.md.
 
 **Name and icon** — the license covers the code. The name “Specula” and the app icon
 are not part of it and remain the property of their author. Building, studying,
