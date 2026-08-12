@@ -83,6 +83,11 @@ Une exception : les logos des services viennent du CDN public
 voit donc quels logos sont demandés — jamais tes adresses ni tes données. Un
 interrupteur dans les réglages le coupe, l'app retombe alors sur des monogrammes.
 
+## ⚙️ Développement
+
+Merci de l'intérêt que tu portes à Specula ! Jette un œil aux
+[règles de contribution](CONTRIBUTING.md) pour commencer.
+
 ## 📄 Licence
 
 [GPL-3.0](LICENSE) © nysia. Toute redistribution, modifiée ou non, reste sous la même
