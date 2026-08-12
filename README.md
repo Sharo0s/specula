@@ -86,6 +86,9 @@ A switch in Settings turns it off, and the app falls back to monograms.
 [GPL-3.0](LICENSE) © nysia. Any redistribution, modified or not, stays under the same
 license and publishes its sources.
 
+The app is also published on the App Store, whose terms are incompatible with GPLv3:
+contributions therefore need an extra distribution grant, described in CONTRIBUTING.md.
+
 **Name and icon** — the license covers the code. The name “Specula” and the app icon
 are not part of it and remain the property of their author. Building, studying,
 modifying and redistributing the code stays entirely free; a publicly distributed fork

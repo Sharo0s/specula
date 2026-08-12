@@ -88,6 +88,10 @@ interrupteur dans les réglages le coupe, l'app retombe alors sur des monogramme
 [GPL-3.0](LICENSE) © nysia. Toute redistribution, modifiée ou non, reste sous la même
 licence et publie ses sources.
 
+L'app est par ailleurs publiée sur l'App Store, dont les conditions sont incompatibles
+avec la GPLv3 : les contributions demandent donc une autorisation de distribution
+supplémentaire, décrite dans CONTRIBUTING.md.
+
 **Nom et icône** — la licence porte sur le code. Le nom « Specula » et l'icône de
 l'application n'en font pas partie et restent la propriété de leur auteur. Compiler,
 étudier, modifier et redistribuer le code reste entièrement libre ; un fork distribué
