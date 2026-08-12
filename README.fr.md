@@ -13,13 +13,10 @@
 </p>
 
 <p align="center">
-  <b>Specula</b> est un tableau de bord homelab natif pour iPhone, iPad et Mac —
-  le principe de <a href="https://gethomepage.dev">gethomepage.dev</a>, porté en SwiftUI.<br>
+  <b>Specula</b> est un tableau de bord homelab natif pour iPhone, iPad et Mac.<br>
   Il lit les <b>vraies métriques</b> de tes services auto-hébergés, repère les pannes,
   et alimente les widgets avec l'état réel.
 </p>
-
-<p align="center"><i>Specula</i> : la tour de guet, en latin.</p>
 
 ## 🛠 TestFlight
 
@@ -86,19 +83,6 @@ Une exception : les logos des services viennent du CDN public
 voit donc quels logos sont demandés — jamais tes adresses ni tes données. Un
 interrupteur dans les réglages le coupe, l'app retombe alors sur des monogrammes.
 
-## ⚙️ Développement
-
-`project.yml` est la source de vérité — le projet Xcode est généré par
-[XcodeGen](https://github.com/yonaskolb/XcodeGen). Voir
-[CONTRIBUTING.md](CONTRIBUTING.md) pour l'installation.
-
-Les commits doivent être des [Conventional Commits](https://www.conventionalcommits.org)
-valides : le dépôt est branché sur release-please, et un en-tête mal formé est
-purement ignoré.
-
-Le design suit un système « Modernist » — flat, architectural, radius 0, filets
-structurels, un seul accent rouge (`#ec3013`), typographie Archivo.
-
 ## 📄 Licence
 
 [GPL-3.0](LICENSE) © nysia. Toute redistribution, modifiée ou non, reste sous la même
@@ -106,8 +90,7 @@ licence et publie ses sources.
 
 L'app est par ailleurs publiée sur l'App Store, dont les conditions sont incompatibles
 avec la GPLv3 : les contributions demandent donc une autorisation de distribution
-supplémentaire, décrite dans
-[CONTRIBUTING.md](CONTRIBUTING.md#licence-et-distribution).
+supplémentaire, décrite dans CONTRIBUTING.md.
 
 **Nom et icône** — la licence porte sur le code. Le nom « Specula » et l'icône de
 l'application n'en font pas partie et restent la propriété de leur auteur. Compiler,
