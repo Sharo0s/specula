@@ -91,6 +91,11 @@ Aucun compte, aucune télémétrie, aucun serveur intermédiaire. L'app parle à
 machines et à rien d'autre, et les clés API vivent dans le trousseau — jamais dans une
 sauvegarde, jamais sur iCloud.
 
+Une seule exception, et elle est nommée : le **nombre** de places de service achetées
+est écrit dans ton stockage clé-valeur iCloud, pour qu'un changement d'appareil ne te
+les fasse pas perdre. Un entier, rien d'autre — ni tes services, ni leurs adresses, ni
+tes clés.
+
 Une exception : les logos des services viennent du CDN public
 [dashboard-icons](https://github.com/homarr-labs/dashboard-icons) via jsDelivr, qui
 voit donc quels logos sont demandés — jamais tes adresses ni tes données. Un

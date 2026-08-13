@@ -84,6 +84,10 @@ targets:
       path: Resources/Specula-iOS.entitlements
       properties:
         com.apple.security.application-groups: ["group.$(SPECULA_BUNDLE_PREFIX).specula"]
+        # Décompte des places achetées, partagé entre les appareils du compte.
+        # Les deux apps portent le même identifiant de lot, donc le même
+        # conteneur : une place achetée sur l'iPhone vaut sur le Mac.
+        com.apple.developer.ubiquity-kvstore-identifier: "$(TeamIdentifierPrefix)$(CFBundleIdentifier)"
     info:
       path: Resources/Info-iOS.plist
       properties:
@@ -179,6 +183,8 @@ targets:
         com.apple.security.files.user-selected.read-write: true
         com.apple.security.application-groups:
           - "group.$(SPECULA_BUNDLE_PREFIX).specula"
+        # Voir la cible iOS : même conteneur clé-valeur, mêmes places.
+        com.apple.developer.ubiquity-kvstore-identifier: "$(TeamIdentifierPrefix)$(CFBundleIdentifier)"
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: "$(SPECULA_BUNDLE_PREFIX).specula"

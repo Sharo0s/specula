@@ -48,6 +48,38 @@ enum SlotProduct {
     }
 }
 
+/// Décompte des places dans le stockage clé-valeur iCloud.
+///
+/// Apple documente les consommables comme non restaurables et renvoie le
+/// développeur vers son propre serveur : `Transaction.all` remonte bien leur
+/// historique en pratique, mais rien ne l'y engage. Or la boutique promet
+/// qu'une place reste acquise — la promesse ne peut pas reposer sur ce qu'un
+/// fournisseur refuse de garantir.
+///
+/// Quelques octets suffisent donc à couvrir la réinstallation et le changement
+/// d'appareil, sans serveur à tenir ni compte à créer : l'utilisateur est déjà
+/// connecté à iCloud. Le même conteneur sert à l'iPhone et au Mac, qui
+/// partagent l'identifiant d'app — une place achetée d'un côté vaut de l'autre.
+private enum CloudSlots {
+    private static let slotsKey = "purchasedSlots"
+    private static let unlimitedKey = "unlimitedUnlocked"
+    private static var store: NSUbiquitousKeyValueStore { .default }
+
+    static var slots: Int { Int(store.longLong(forKey: slotsKey)) }
+    static var unlimited: Bool { store.bool(forKey: unlimitedKey) }
+
+    static func save(slots: Int, unlimited: Bool) {
+        store.set(Int64(slots), forKey: slotsKey)
+        store.set(unlimited, forKey: unlimitedKey)
+        store.synchronize()
+    }
+
+    /// Réclame la dernière version connue du serveur au lancement.
+    static func start() {
+        store.synchronize()
+    }
+}
+
 @MainActor
 @Observable
 final class Billing {
@@ -71,10 +103,18 @@ final class Billing {
     /// Écoute des transactions arrivées hors de l'app (achat sur un autre
     /// appareil, « Demander à acheter » approuvé plus tard, remboursement).
     private var updatesTask: Task<Void, Never>?
+    /// Écoute du stockage iCloud — un achat fait sur l'iPhone doit apparaître
+    /// sur le Mac sans attendre un relancement.
+    private var cloudTask: Task<Void, Never>?
 
     init(purchasedSlots: Int = 0, unlimited: Bool = false) {
-        self.purchasedSlots = max(0, purchasedSlots)
-        self.unlimited = unlimited
+        CloudSlots.start()
+        // Trois sources, jamais l'une contre l'autre : le cache local pour
+        // l'affichage immédiat et le hors-ligne, iCloud pour l'appareil neuf,
+        // l'historique App Store pour le reste. On retient toujours la plus
+        // généreuse — voir `refresh()`.
+        self.purchasedSlots = max(0, max(purchasedSlots, CloudSlots.slots))
+        self.unlimited = unlimited || CloudSlots.unlimited
         updatesTask = Task { [weak self] in
             for await update in StoreKit.Transaction.updates {
                 guard let self else { return }
@@ -83,6 +123,19 @@ final class Billing {
                 await self.refresh()
             }
         }
+        cloudTask = Task { [weak self] in
+            for await _ in NotificationCenter.default.notifications(
+                named: NSUbiquitousKeyValueStore.didChangeExternallyNotification) {
+                guard let self else { return }
+                self.mergeCloud()
+            }
+        }
+    }
+
+    /// Reprend ce qu'un autre appareil a acheté.
+    private func mergeCloud() {
+        apply(slots: max(purchasedSlots, CloudSlots.slots),
+              unlimited: unlimited || CloudSlots.unlimited)
     }
 
     // MARK: Catalogue
@@ -203,12 +256,16 @@ final class Billing {
 
     // MARK: Droits
 
-    /// Recalcule les droits depuis l'historique App Store.
+    /// Recalcule les droits en confrontant les trois sources.
     ///
-    /// Le décompte local ne redescend jamais : Apple ne garantit pas de
-    /// conserver indéfiniment l'historique des consommables, et perdre des
-    /// places payées est une faute bien plus grave que d'en laisser une de trop
-    /// après un remboursement.
+    /// Le décompte ne redescend jamais, et c'est délibéré : chaque source peut
+    /// manquer à l'appel — le cache local disparaît à la réinstallation, iCloud
+    /// est muet si l'utilisateur en est déconnecté, et Apple ne garantit pas de
+    /// conserver indéfiniment l'historique des consommables. Il faudrait donc
+    /// que les trois défaillent en même temps pour qu'une place payée se perde.
+    ///
+    /// Le prix de cette prudence est qu'un remboursement ne retire pas la place
+    /// localement. C'est le bon côté où se tromper.
     func refresh() async {
         var tally = 0
         var unlimitedFound = false
@@ -221,7 +278,8 @@ final class Billing {
                 tally += SlotProduct.slots(transaction.productID) * transaction.purchasedQuantity
             }
         }
-        apply(slots: max(purchasedSlots, tally), unlimited: unlimited || unlimitedFound)
+        apply(slots: max(purchasedSlots, max(tally, CloudSlots.slots)),
+              unlimited: unlimited || unlimitedFound || CloudSlots.unlimited)
     }
 
     /// Crédite immédiatement l'achat qui vient d'aboutir, sans attendre que
@@ -239,6 +297,10 @@ final class Billing {
         guard slots != purchasedSlots || unlimited != self.unlimited else { return }
         purchasedSlots = slots
         self.unlimited = unlimited
+        // La garde ci-dessus suffit à couper toute boucle : iCloud ne notifie
+        // que les écritures venues d'un autre appareil, et une valeur déjà à
+        // jour ne repasse pas par ici.
+        CloudSlots.save(slots: slots, unlimited: unlimited)
         onChange?(slots, unlimited)
     }
 }
