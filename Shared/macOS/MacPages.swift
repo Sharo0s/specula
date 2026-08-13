@@ -285,7 +285,7 @@ struct MacAddServicePage: View {
                     MSeg(options: Array(store.mainGroups.enumerated()).map { ($0.offset, $0.element) },
                          selection: $group, fontSize: 10)
                 }
-                Text("Détection automatique du type de service à la connexion — 200+ intégrations reconnues.")
+                Text("Détection automatique du type de service à la connexion.")
                     .font(.archivo(11))
                     .foregroundStyle(Ink.muted)
                 HStack(spacing: 8) {

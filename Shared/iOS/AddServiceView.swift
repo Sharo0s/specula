@@ -78,7 +78,7 @@ struct AddServiceView: View {
                     .background(Ink.surface)
                     .padding(.top, 18)
 
-                    Text("Détection automatique du type de service à la connexion — 200+ intégrations reconnues (Jellyfin, *arr, Proxmox, AdGuard…).")
+                    Text("Détection automatique du type de service à la connexion (Immich, Proxmox, AdGuard, Home Assistant…).")
                         .font(.archivo(11))
                         .foregroundStyle(Ink.muted)
                         .padding(.top, 10)
