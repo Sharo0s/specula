@@ -248,7 +248,10 @@ struct PaywallView: View {
     private var stepper: some View {
         HStack(spacing: 0) {
             stepButton("minus", enabled: quantity > 1) { quantity -= 1 }
-            Text("\(quantity)")
+            // `Text(_:format:)` et pas une interpolation : un nombre nu
+            // déposerait une clé « %lld » dans le catalogue, à traduire dans
+            // les cinq langues pour n'y rien dire.
+            Text(quantity, format: .number)
                 .font(.archivo(13, .heavy))
                 .monospacedDigit()
                 .frame(minWidth: 38)
