@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.3.0](https://github.com/Sharo0s/specula/compare/v1.2.0...v1.3.0) (2026-08-13)
+
+
+### Fonctionnalités
+
+* **billing:** conserve les places achetées d'un appareil à l'autre ([#14](https://github.com/Sharo0s/specula/issues/14)) ([293ceae](https://github.com/Sharo0s/specula/commit/293ceaede54c593609962d5037950d0de09fd601))
+* **billing:** quatre services offerts, les suivants à l'unité ([#12](https://github.com/Sharo0s/specula/issues/12)) ([bbe3031](https://github.com/Sharo0s/specula/commit/bbe30313b25256069aeda068752625a2f6b04711))
+
 ## [1.2.0](https://github.com/Sharo0s/specula/compare/v1.1.1...v1.2.0) (2026-08-11)
 
 
