@@ -92,7 +92,10 @@ struct PaywallView: View {
                 VRule()
                 statCell(store.quota.capacity.map { "\($0)" } ?? "∞", "Places")
                 VRule()
-                statCell("\(ServiceQuota.free)", "Offerts")
+                // Les places achetées, et non le quota offert : celui-ci est
+                // constant, il répétait « Places » tant que rien n'était acheté,
+                // et la phrase juste en dessous l'annonce déjà.
+                statCell("\(billing.purchasedSlots)", "Achetées")
             }
             .frame(height: 66)
             .fixedSize(horizontal: false, vertical: true)
