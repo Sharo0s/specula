@@ -72,6 +72,18 @@ tout moment dans les réglages :
 Une seule URL par service : ce qui rend un homelab joignable de l'extérieur — VPN,
 reverse proxy, tunnel — se règle sous l'app, pas dedans.
 
+## 💳 Places de service
+
+Les **quatre premiers services sont gratuits**, sans limite de durée et sans compte.
+Au-delà, chaque place supplémentaire s'achète une fois — à l'unité, par pack de cinq,
+ou en déverrouillage illimité. Les prix sont ceux affichés par l'App Store, dans ta
+devise.
+
+Ce qui reste gratuit quoi qu'il arrive : le mode démo entier, toutes les intégrations,
+les alertes, les widgets, l'import et l'export de `services.yaml`. Le quota ne porte
+que sur le nombre de services surveillés en même temps — supprimer un service libère
+sa place pour un autre.
+
 ## 🔒 Vie privée
 
 Aucun compte, aucune télémétrie, aucun serveur intermédiaire. L'app parle à tes

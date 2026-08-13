@@ -32,6 +32,8 @@ struct ScanSheet: View {
                 .font(.archivo(11))
                 .foregroundStyle(Ink.muted)
                 .padding(.bottom, 12)
+            QuotaBanner()
+                .padding(.bottom, 12)
             HRule(weight: 2)
 
             if store.scanner.found.isEmpty {
@@ -76,8 +78,10 @@ struct ScanSheet: View {
                                         .foregroundStyle(Ink.muted)
                                 } else {
                                     Button {
-                                        store.addScanned(f)
-                                        added.insert(f.id)
+                                        // Quota plein : `addScanned` refuse et
+                                        // ouvre la boutique — la rangée ne doit
+                                        // pas passer à « AJOUTÉ » pour autant.
+                                        if store.addScanned(f) { added.insert(f.id) }
                                     } label: {
                                         Text("Ajouter")
                                             .font(.archivo(11, .heavy))
@@ -100,6 +104,9 @@ struct ScanSheet: View {
         .padding(18)
         .frame(minWidth: 380, minHeight: 340)
         .background(Ink.bg)
+        // La feuille est son propre contexte de présentation : sans ça, la
+        // boutique ouverte depuis une rangée s'afficherait derrière elle.
+        .speculaPaywall()
         .onAppear { store.scanner.start() }
         .onDisappear { store.scanner.stop() }
     }

@@ -193,6 +193,12 @@ final class AppStore {
 
     let scanner = BonjourScanner()
 
+    // MARK: Achats intégrés
+    /// Boutique StoreKit — places de service achetées, déverrouillage illimité.
+    let billing: Billing
+    /// Boutique ouverte (overlay plein cadre, cf. `speculaPaywall()`).
+    var paywallOpen = false
+
     // MARK: Navigation partagée
     var serverID = "main"
     var toast: String?
@@ -218,6 +224,8 @@ final class AppStore {
         let config = ConfigStore.load()
         self.config = config
         dataMode = config.dataMode
+        billing = Billing(purchasedSlots: config.purchasedSlots ?? 0,
+                          unlimited: config.unlimitedUnlocked ?? false)
         var types = Catalog.typeByID
         importedList = config.importedServices?.map(\.service)
         customList = config.custom.map(\.service)
@@ -268,6 +276,18 @@ final class AppStore {
             SystemNotifier.shared.requestAuthorization()
             startTimer()
         }
+
+        // Droits d'achat : le décompte persisté sert d'affichage immédiat, puis
+        // l'historique App Store le confirme (ou le complète, sur un appareil
+        // neuf). Pas de chargement du catalogue ici — c'est une requête réseau
+        // que la plupart des sessions n'auront jamais à faire.
+        billing.onChange = { [weak self] slots, unlimited in
+            guard let self else { return }
+            self.config.purchasedSlots = slots
+            self.config.unlimitedUnlocked = unlimited
+            self.persist()
+        }
+        Task { await self.billing.refresh() }
     }
 
     /// Le tutoriel de premier lancement gèle le simulateur.
@@ -1013,11 +1033,60 @@ final class AppStore {
         setApiKey(key, for: id)
     }
 
+    // MARK: - Quota de services (achats intégrés)
+
+    /// Services réellement configurés par l'utilisateur — importés et ajoutés à
+    /// la main. Le catalogue de démo n'en fait pas partie : ses dix-sept
+    /// services fictifs ne consomment aucune place, sinon la démo deviendrait
+    /// un paywall déguisé. Le décompte ignore `dataMode` à dessein : ce qui est
+    /// ajouté en démo réapparaît en Homelab, ce serait un contournement.
+    var configuredCount: Int {
+        (importedList?.count ?? 0) + customList.count
+    }
+
+    var quota: ServiceQuota {
+        ServiceQuota(purchasedSlots: billing.purchasedSlots, unlimited: billing.unlimited)
+    }
+
+    /// Reste-t-il une place ?
+    var canAddService: Bool {
+        quota.allowsAdding(current: configuredCount)
+    }
+
+    /// Places libres — `nil` si illimité.
+    var remainingSlots: Int? {
+        quota.remaining(current: configuredCount)
+    }
+
+    /// Services écartés du dernier import faute de place — l'écran de
+    /// confirmation du tutoriel le dit, un toast passe trop vite pour ça.
+    private(set) var lastImportDropped = 0
+
+    /// Ouvre la boutique et charge le catalogue au passage.
+    func openPaywall() {
+        paywallOpen = true
+        Task { await self.billing.loadProducts() }
+    }
+
+    /// Refus d'ajout faute de place : un toast qui dit pourquoi, puis la
+    /// boutique. Jamais d'échec silencieux.
+    private func refuseForQuota() {
+        fireToast(String(localized: "Limite atteinte — \(ServiceQuota.free) services offerts, débloque les suivants."))
+        openPaywall()
+    }
+
     // MARK: - Configuration (ajout, YAML)
 
     /// Ajout manuel (« + ») ou depuis le scan — le type est détecté à la connexion.
+    /// `false` quand le quota est plein : l'appelant garde la main sur son état
+    /// (feuille de scan, formulaire) plutôt que de croire l'ajout fait.
+    @discardableResult
     func addService(name: String, url: String, group: Int, apiKey: String,
-                    knownType: IntegrationType? = nil) {
+                    knownType: IntegrationType? = nil) -> Bool {
+        guard canAddService else {
+            refuseForQuota()
+            return false
+        }
         let id = "custom-" + UUID().uuidString.prefix(8).lowercased()
         let service = Service(id: id, mono: YamlConfig.mono(name), name: name,
                               desc: String(localized: "Ajouté à la main"), group: group, url: url,
@@ -1031,7 +1100,7 @@ final class AppStore {
         fireToast(String(localized: "Service « \(name) » ajouté au groupe \(mainGroups[group])"))
 
         // Détection asynchrone du type si inconnu
-        guard knownType == nil else { return }
+        guard knownType == nil else { return true }
         Task { [weak self] in
             let detected = await LiveFetcher.detect(YamlConfig.fullURL(url))
             guard let self, let type = detected.type, type != .generic else { return }
@@ -1042,10 +1111,12 @@ final class AppStore {
             }
             fireToast(String(localized: "« \(name) » reconnu : \(type.rawValue)"))
         }
+        return true
     }
 
     /// Ajout depuis le scan Bonjour.
-    func addScanned(_ found: BonjourScanner.Found) {
+    @discardableResult
+    func addScanned(_ found: BonjourScanner.Found) -> Bool {
         addService(name: found.name, url: found.url, group: 0, apiKey: "",
                    knownType: found.type)
     }
@@ -1144,16 +1215,29 @@ final class AppStore {
     func importYAML(_ text: String) {
         do {
             let result = try YamlConfig.parse(text)
-            importedList = result.services.map(\.service)
+            // L'import remplace la configuration : le quota se compte donc à
+            // partir de zéro. Au-delà, on tronque plutôt que de refuser le
+            // fichier en bloc — un services.yaml de vingt entrées reste
+            // exploitable, et l'utilisateur voit exactement ce qui manque.
+            // `keptServices` et pas `services` : la propriété du même nom
+            // désigne les services affichés, ce n'est pas la même liste.
+            let keepCount = quota.acceptableCount(result.services.count)
+            let keptServices = Array(result.services.prefix(keepCount))
+            lastImportDropped = result.services.count - keptServices.count
+
+            importedList = keptServices.map(\.service)
             customList = []
             config.importedGroups = result.groups
-            config.importedServices = result.services
+            config.importedServices = keptServices
             config.custom = []
-            for stored in result.services {
+            for stored in keptServices {
                 serviceTypes[stored.id] = IntegrationType(rawValue: stored.type) ?? .generic
                 seedHistory(stored.id)
             }
-            for (id, key) in result.keys {
+            // Pas de clé écrite pour un service laissé de côté : le trousseau
+            // garderait un identifiant valide pour un service absent de l'app.
+            let keptIDs = Set(keptServices.map(\.id))
+            for (id, key) in result.keys where keptIDs.contains(id) {
                 KeychainStore.set(key, for: id)
             }
             switchToLive()
@@ -1166,15 +1250,18 @@ final class AppStore {
             persist()
             // Clés restées en {{HOMEPAGE_VAR_…}} : Homepage les lit dans son
             // .env, pas nous. Sans ce message la carte reste muette sans raison.
-            let pending = result.services
+            let pending = keptServices
                 .filter { result.unresolved[$0.id] != nil && apiKey(for: $0.id) == nil }
                 .map(\.name)
-            if pending.isEmpty {
-                fireToast(String(localized: "Import de services.yaml — \(result.services.count) services et \(result.groups.count) groupes reconnus"))
+            if lastImportDropped > 0 {
+                fireToast(String(localized: "Import de services.yaml — \(keptServices.count) services importés, \(lastImportDropped) laissés de côté faute de place."))
+            } else if pending.isEmpty {
+                fireToast(String(localized: "Import de services.yaml — \(keptServices.count) services et \(result.groups.count) groupes reconnus"))
             } else {
-                fireToast(String(localized: "Import de services.yaml — \(result.services.count) services, \(pending.count) en attente de clé API : \(pending.joined(separator: ", "))"))
+                fireToast(String(localized: "Import de services.yaml — \(keptServices.count) services, \(pending.count) en attente de clé API : \(pending.joined(separator: ", "))"))
             }
         } catch {
+            lastImportDropped = 0
             fireToast(String(localized: "Import impossible — services.yaml illisible"))
         }
     }

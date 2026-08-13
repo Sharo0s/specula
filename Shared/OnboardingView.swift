@@ -220,6 +220,24 @@ struct OnboardingView: View {
                     .foregroundStyle(Ink.accent2Text)
             }
             .padding(.bottom, 16)
+            // Un toast passe en deux secondes : si le fichier contenait plus de
+            // services que de places, ça se dit ici, en toutes lettres.
+            if store.lastImportDropped > 0 {
+                VStack(alignment: .leading, spacing: 8) {
+                    Text("\(store.lastImportDropped) services de ton fichier n'ont pas été importés faute de place.")
+                        .font(.archivo(12, .heavy))
+                        .foregroundStyle(Ink.accentText)
+                        .fixedSize(horizontal: false, vertical: true)
+                    Text("Débloque des places puis réimporte le fichier : il reste ta source de vérité, rien n'est perdu de ton côté.")
+                        .font(.archivo(11))
+                        .foregroundStyle(Ink.muted)
+                        .fixedSize(horizontal: false, vertical: true)
+                    MSecondaryButton(title: "Débloquer des services") { store.openPaywall() }
+                }
+                .padding(12)
+                .overlay(Rectangle().strokeBorder(Ink.accentRing, lineWidth: 2))
+                .padding(.bottom, 16)
+            }
             ScrollView {
                 VStack(alignment: .leading, spacing: 22) {
                     ForEach(Array(store.mainGroups.enumerated()), id: \.offset) { gi, g in
@@ -293,6 +311,8 @@ struct OnboardingView: View {
                 .font(.archivo(11.5))
                 .foregroundStyle(Ink.muted)
                 .padding(.bottom, 14)
+            QuotaBanner()
+                .padding(.bottom, 14)
 
             if store.scanner.found.isEmpty {
                 VStack(alignment: .leading, spacing: 12) {
@@ -349,8 +369,9 @@ struct OnboardingView: View {
                 Text("AJOUTÉ").upperLabel(9, .heavy).foregroundStyle(Ink.muted)
             } else {
                 Button {
-                    store.addScanned(f)
-                    added.insert(f.id)
+                    // Refus faute de place : la rangée reste « à ajouter » et
+                    // la boutique s'ouvre par-dessus le tutoriel.
+                    if store.addScanned(f) { added.insert(f.id) }
                 } label: {
                     Text("Ajouter")
                         .font(.archivo(11, .heavy))

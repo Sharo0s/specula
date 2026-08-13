@@ -91,6 +91,16 @@ struct AppConfig: Codable {
     /// ouverte parce que l'app a été quittée avant le retour du service : le
     /// temps où personne ne regardait n'est imputé à aucun service.
     var lastTick: Date?
+    /// Places de service achetées (achats intégrés). Cache local : la source de
+    /// vérité reste l'App Store, relue au lancement par `Billing.refresh()`.
+    /// Sert hors ligne et au premier affichage, avant la réponse de StoreKit.
+    ///
+    /// Optionnel comme tous les champs ajoutés après coup : le décodeur
+    /// synthétisé n'applique pas les valeurs par défaut, un champ non optionnel
+    /// ferait échouer la lecture de toutes les configurations existantes.
+    var purchasedSlots: Int?
+    /// Déverrouillage illimité (achat non consommable).
+    var unlimitedUnlocked: Bool?
     /// Clés API par id de service. **Hérité** : les clés vivent dans le
     /// trousseau. Ce champ n'est plus écrit, il n'est lu qu'une fois au
     /// lancement, le temps de verser les configurations antérieures
