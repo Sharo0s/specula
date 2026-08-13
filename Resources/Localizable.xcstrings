@@ -433,6 +433,9 @@
         }
       }
     },
+    "%@ la place, acquise définitivement." : {
+
+    },
     "%@ Mo/s" : {
       "localizations" : {
         "ar" : {
@@ -554,6 +557,16 @@
     "%lld" : {
       "shouldTranslate" : false
     },
+    "%lld / %lld services · %lld offerts" : {
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$lld / %2$lld services · %3$lld offerts"
+          }
+        }
+      }
+    },
     "%lld en ligne · CPU %@ · %@" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -667,6 +680,9 @@
         }
       }
     },
+    "%lld places libres" : {
+
+    },
     "%lld service%@ concerné%@" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -724,6 +740,12 @@
           }
         }
       }
+    },
+    "%lld services configurés · aucune limite" : {
+
+    },
+    "%lld services de ton fichier n'ont pas été importés faute de place." : {
+
     },
     "%lld/%lld" : {
       "extractionState" : "manual",
@@ -922,118 +944,6 @@
         }
       }
     },
-    "Avec les clés" : {
-      "localizations" : {
-        "ar" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "مع المفاتيح"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "With keys"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Con las claves"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "包含密钥"
-          }
-        }
-      }
-    },
-    "Avec les clés API" : {
-      "localizations" : {
-        "ar" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "مع مفاتيح API"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "With API keys"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Con las claves API"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "包含 API 密钥"
-          }
-        }
-      }
-    },
-    "Avec les clés, le fichier suffit à rejouer la configuration ailleurs — et se range comme un secret. Sans elles, les clés sont remplacées par des variables Homepage." : {
-      "localizations" : {
-        "ar" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "مع المفاتيح، يكفي الملف لإعادة بناء الإعداد في مكان آخر — ويجب حفظه كأنه سر. وبدونها، تُستبدل المفاتيح بمتغيرات Homepage."
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "With keys, the file is enough to recreate the configuration elsewhere — and has to be kept like a secret. Without them, the keys are replaced by Homepage variables."
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Con las claves, el archivo basta para recrear la configuración en otro sitio — y hay que guardarlo como un secreto. Sin ellas, las claves se sustituyen por variables de Homepage."
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "包含密钥时，这个文件足以在别处还原整套配置——因此要像密钥一样保管。不含密钥时，密钥会被替换为 Homepage 变量。"
-          }
-        }
-      }
-    },
-    "Exporter services.yaml" : {
-      "localizations" : {
-        "ar" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "تصدير services.yaml"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Export services.yaml"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Exportar services.yaml"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "导出 services.yaml"
-          }
-        }
-      }
-    },
     "⌘K" : {
       "localizations" : {
         "ar" : {
@@ -1146,6 +1056,9 @@
           }
         }
       }
+    },
+    "1 place libre" : {
+
     },
     "1,6 s" : {
       "localizations" : {
@@ -1431,6 +1344,18 @@
           }
         }
       }
+    },
+    "Achat en attente d'approbation — la place s'ajoutera dès l'accord." : {
+
+    },
+    "Achat impossible — %@" : {
+
+    },
+    "Achat non vérifié par l'App Store." : {
+
+    },
+    "Acquis" : {
+
     },
     "ACTIF" : {
       "localizations" : {
@@ -2051,6 +1976,9 @@
         }
       }
     },
+    "Aucun produit disponible — vérifie ta connexion." : {
+
+    },
     "Aucun service annoncé en Bonjour sur ce réseau." : {
       "localizations" : {
         "ar" : {
@@ -2276,6 +2204,90 @@
         }
       }
     },
+    "Avec les clés" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "مع المفاتيح"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "With keys"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Con las claves"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "包含密钥"
+          }
+        }
+      }
+    },
+    "Avec les clés API" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "مع مفاتيح API"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "With API keys"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Con las claves API"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "包含 API 密钥"
+          }
+        }
+      }
+    },
+    "Avec les clés, le fichier suffit à rejouer la configuration ailleurs — et se range comme un secret. Sans elles, les clés sont remplacées par des variables Homepage." : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "مع المفاتيح، يكفي الملف لإعادة بناء الإعداد في مكان آخر — ويجب حفظه كأنه سر. وبدونها، تُستبدل المفاتيح بمتغيرات Homepage."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "With keys, the file is enough to recreate the configuration elsewhere — and has to be kept like a secret. Without them, the keys are replaced by Homepage variables."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Con las claves, el archivo basta para recrear la configuración en otro sitio — y hay que guardarlo como un secreto. Sin ellas, las claves se sustituyen por variables de Homepage."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "包含密钥时，这个文件足以在别处还原整套配置——因此要像密钥一样保管。不含密钥时，密钥会被替换为 Homepage 变量。"
+          }
+        }
+      }
+    },
     "Bandeau système" : {
       "localizations" : {
         "ar" : {
@@ -2473,6 +2485,12 @@
         }
       }
     },
+    "Boutique indisponible." : {
+
+    },
+    "Boutique injoignable — réessaie dans un instant." : {
+
+    },
     "Caméras" : {
       "localizations" : {
         "ar" : {
@@ -2641,6 +2659,9 @@
         }
       }
     },
+    "Chargement de la boutique…" : {
+
+    },
     "Clé" : {
       "localizations" : {
         "ar" : {
@@ -2782,6 +2803,7 @@
       }
     },
     "Client BitTorrent" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -3485,6 +3507,15 @@
           }
         }
       }
+    },
+    "Débloque des places puis réimporte le fichier : il reste ta source de vérité, rien n'est perdu de ton côté." : {
+
+    },
+    "Débloquer" : {
+
+    },
+    "Débloquer des services" : {
+
     },
     "Délai dépassé (timeout) — 3 tentatives échouées" : {
       "localizations" : {
@@ -4779,6 +4810,34 @@
         }
       }
     },
+    "Exporter services.yaml" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تصدير services.yaml"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Export services.yaml"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Exportar services.yaml"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "导出 services.yaml"
+          }
+        }
+      }
+    },
     "fermer" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -5035,6 +5094,7 @@
       }
     },
     "Gestion films" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -5063,6 +5123,7 @@
       }
     },
     "Gestion films — seedbox" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -5091,6 +5152,7 @@
       }
     },
     "Gestion séries" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -5601,6 +5663,16 @@
         }
       }
     },
+    "Import de services.yaml — %lld services importés, %lld laissés de côté faute de place." : {
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Import de services.yaml — %1$lld services importés, %2$lld laissés de côté faute de place."
+          }
+        }
+      }
+    },
     "Import de services.yaml — %lld services, %lld en attente de clé API : %@" : {
       "localizations" : {
         "ar" : {
@@ -5684,6 +5756,9 @@
           }
         }
       }
+    },
+    "Import terminé" : {
+
     },
     "Importer ou scanner…" : {
       "extractionState" : "stale",
@@ -6534,6 +6609,12 @@
         }
       }
     },
+    "Les %lld premiers services sont offerts, sans limite de durée. Au-delà, chaque place s'achète une fois et reste acquise." : {
+
+    },
+    "Les 4 premiers services sont offerts. Une place achetée reste acquise : supprimer un service la libère pour un autre." : {
+
+    },
     "Libre" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -6618,6 +6699,12 @@
           }
         }
       }
+    },
+    "Limite atteinte" : {
+
+    },
+    "Limite atteinte — %lld services offerts, débloque les suivants." : {
+
     },
     "Liste" : {
       "localizations" : {
@@ -6788,6 +6875,7 @@
       }
     },
     "Média" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -7438,6 +7526,7 @@
       }
     },
     "Nouvel épisode récupéré" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -7492,6 +7581,9 @@
           }
         }
       }
+    },
+    "Offres" : {
+
     },
     "OpenMediaVault — 284 Go vérifiés" : {
       "localizations" : {
@@ -7719,6 +7811,9 @@
         }
       }
     },
+    "Paiement par ton compte App Store. Les places achetées restent acquises : supprimer un service en libère une pour un autre." : {
+
+    },
     "PANNE" : {
       "localizations" : {
         "ar" : {
@@ -7746,6 +7841,9 @@
           }
         }
       }
+    },
+    "Paperless-ngx — 12 documents à trier" : {
+
     },
     "Partage famille" : {
       "extractionState" : "stale",
@@ -7917,6 +8015,12 @@
           }
         }
       }
+    },
+    "Places illimitées" : {
+
+    },
+    "Plus cher que les places à l'unité — c'est ce qui finance un projet libre, sans pub et sans mouchard." : {
+
     },
     "Plus rempli" : {
       "localizations" : {
@@ -8173,6 +8277,7 @@
       }
     },
     "Radarr — 2 films ajoutés à Jellyfin" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -8820,6 +8925,9 @@
         }
       }
     },
+    "Restauration impossible — %@" : {
+
+    },
     "Rester dans la barre de menus" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -9277,6 +9385,7 @@
       }
     },
     "Seedbox — OVH" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -9362,6 +9471,7 @@
       }
     },
     "Serveur multimédia" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -9731,6 +9841,9 @@
           }
         }
       }
+    },
+    "Soutien" : {
+
     },
     "Specula" : {
       "localizations" : {
@@ -10269,6 +10382,7 @@
       }
     },
     "Téléchargement" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -10776,6 +10890,9 @@
         }
       }
     },
+    "Tu as le déverrouillage illimité — ajoute autant de services que tu veux." : {
+
+    },
     "Tu en as déjà un ? Choisis-le dans les fichiers ou reçois-le par AirDrop." : {
       "extractionState" : "manual",
       "localizations" : {
@@ -11227,6 +11344,9 @@
         }
       }
     },
+    "VPS — Hetzner" : {
+
+    },
     "Vraies requêtes vers tes services" : {
       "localizations" : {
         "ar" : {
@@ -11282,6 +11402,9 @@
           }
         }
       }
+    },
+    "Web & Applis" : {
+
     },
     "WLAN" : {
       "localizations" : {
