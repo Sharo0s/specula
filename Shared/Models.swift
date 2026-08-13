@@ -2,7 +2,7 @@ import Foundation
 
 // MARK: - Modèle (README « State Management »)
 
-/// Une instance de serveur (multi-instances : NAS principal / Seedbox — OVH).
+/// Une instance de serveur (multi-instances : NAS principal / VPS — Hetzner).
 struct Server: Identifiable, Hashable {
     let id: String
     let name: String
@@ -144,8 +144,8 @@ enum Catalog {
 
     static let mainServer = Server(id: "main", name: String(localized: "NAS principal"),
                                    groups: [String(localized: "Média & Streaming"), String(localized: "Réseau & Domotique"), String(localized: "Serveurs & Stockage"), String(localized: "Outils")])
-    static let seedServer = Server(id: "seed", name: String(localized: "Seedbox — OVH"),
-                                   groups: [String(localized: "Téléchargement"), String(localized: "Média"), String(localized: "Système")])
+    static let seedServer = Server(id: "seed", name: String(localized: "VPS — Hetzner"),
+                                   groups: [String(localized: "Web & Applis"), String(localized: "Données"), String(localized: "Système")])
 
     static let cdn = "https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/png/"
 
@@ -166,11 +166,11 @@ enum Catalog {
     ]
 
     static let seedServices: [Service] = [
-        Service(id: "seed-qbit", mono: "Qb", name: "qBittorrent", desc: "Client BitTorrent", group: 0, url: "seed.example.net:8080", iconSlug: "qbittorrent", metrics: nil),
-        Service(id: "seed-radarr", mono: "Ra", name: "Radarr", desc: "Gestion films — seedbox", group: 0, url: "seed.example.net:7878", iconSlug: "radarr", metrics: [["8", "Manquants"], ["1", "En attente"], ["214", "Films"]]),
-        Service(id: "seed-plex", mono: "Pl", name: "Plex", desc: "Serveur multimédia", group: 1, url: "seed.example.net:32400", iconSlug: "plex", metrics: [["214", "Films"], ["48", "Séries"], ["2", "Lectures"]]),
-        Service(id: "seed-traefik", mono: "Tk", name: "Traefik", desc: "Reverse proxy", group: 2, url: "seed.example.net:8081", iconSlug: "traefik", metrics: [["12", "Routes"], ["9", "Certificats"], ["0", "Erreurs"]]),
-        Service(id: "seed-glances", mono: "Gl", name: "Glances", desc: "Monitoring VPS", group: 2, url: "seed.example.net:61208", iconSlug: "glances", metrics: [["4", "vCPU"], ["8 Go", "RAM"], ["1,2 To", "Disque"]]),
+        Service(id: "seed-gitea", mono: "Gt", name: "Gitea", desc: "Forge Git", group: 0, url: "vps.example.net:3000", iconSlug: "gitea", metrics: [["24", "Dépôts"], ["3", "Organisations"], ["1,4 Go", "Stockage"]]),
+        Service(id: "seed-matomo", mono: "Mt", name: "Matomo", desc: "Statistiques web", group: 0, url: "vps.example.net:8082", iconSlug: "matomo", metrics: [["8 420", "Visites / 30 j"], ["4", "Sites"], ["0", "Mouchard"]]),
+        Service(id: "seed-syncthing", mono: "Sy", name: "Syncthing", desc: "Synchronisation de fichiers", group: 1, url: "vps.example.net:8384", iconSlug: "syncthing", metrics: [["6", "Dossiers"], ["3", "Appareils"], ["2,1 Go", "Synchronisés"]]),
+        Service(id: "seed-traefik", mono: "Tk", name: "Traefik", desc: "Reverse proxy", group: 2, url: "vps.example.net:8081", iconSlug: "traefik", metrics: [["12", "Routes"], ["9", "Certificats"], ["0", "Erreurs"]]),
+        Service(id: "seed-glances", mono: "Gl", name: "Glances", desc: "Monitoring VPS", group: 2, url: "vps.example.net:61208", iconSlug: "glances", metrics: [["4", "vCPU"], ["8 Go", "RAM"], ["1,2 To", "Disque"]]),
     ]
 
     static let all: [Service] = services + seedServices
@@ -212,13 +212,12 @@ enum Catalog {
 
     /// Type d'intégration des services du catalogue.
     static let typeByID: [String: IntegrationType] = [
-        "jellyfin": .jellyfin, "radarr": .radarr, "sonarr": .sonarr,
-        "transmission": .transmission, "komga": .komga, "immich": .immich,
+        "komga": .komga, "immich": .immich,
         "unifi": .unifi, "adguard": .adguard, "homeassistant": .homeassistant,
         "uptimekuma": .uptimekuma, "proxmox": .proxmox, "omv": .omv,
         "nextcloud": .nextcloud, "filebrowser": .filebrowser,
         "vaultwarden": .vaultwarden, "paperless": .paperless, "kan": .generic,
-        "seed-qbit": .qbittorrent, "seed-radarr": .radarr, "seed-plex": .plex,
+        "seed-gitea": .gitea, "seed-matomo": .matomo, "seed-syncthing": .syncthing,
         "seed-traefik": .traefik, "seed-glances": .glances,
     ]
 

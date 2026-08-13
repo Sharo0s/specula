@@ -211,7 +211,7 @@ final class AppStore {
     var server: Server { serverID == "seed" ? Catalog.seedServer : Catalog.mainServer }
     var services: [Service] { serverID == "seed" ? Catalog.seedServices : mainServices }
 
-    /// Serveurs affichés dans la sidebar : la seedbox n'existe qu'en démo.
+    /// Serveurs affichés dans la sidebar : le second serveur n'existe qu'en démo.
     var serverList: [Server] {
         dataMode == .demo ? [Catalog.mainServer, Catalog.seedServer] : [Catalog.mainServer]
     }
@@ -820,10 +820,8 @@ final class AppStore {
             return liveMetricsCache[s.id] ?? s.metrics ?? []
         }
         switch s.id {
-        case "transmission":
-            return [["\(fr(rx)) Mo/s", "Réception"], ["\(fr(tx)) Mo/s", "Envoi"], ["30", "En partage"]]
-        case "seed-qbit":
-            return [["\(fr(rx * 2.1)) Mo/s", "Réception"], ["\(fr(tx * 3.4)) Mo/s", "Envoi"], ["142", "En partage"]]
+        case "seed-traefik":
+            return [["12", "Routes"], ["9", "Certificats"], ["\(fr(rx)) Mo/s", "Trafic"]]
         case "homeassistant":
             return [["1 / 3", "Présents"], ["\(lights) / 10", "Lumières"], ["27 / 68", "Interrupteurs"]]
         case "uptimekuma":
@@ -847,7 +845,7 @@ final class AppStore {
     var rxText: String { dataMode == .live ? "—" : "\(fr(rx)) Mo/s" }
     var txText: String { dataMode == .live ? "—" : "\(fr(tx)) Mo/s" }
 
-    /// Groupes visibles, dans l'ordre configuré (le seedbox n'est pas réordonnable).
+    /// Groupes visibles, dans l'ordre configuré (ceux du second serveur ne le sont pas).
     func visibleGroups(of server: Server? = nil) -> [(index: Int, name: String, services: [Service])] {
         let srv = server ?? self.server
         let list = srv.id == "seed" ? Catalog.seedServices : mainServices

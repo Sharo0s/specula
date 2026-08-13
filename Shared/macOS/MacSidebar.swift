@@ -38,7 +38,7 @@ struct MacSidebar: View {
 
             ScrollView {
                 VStack(alignment: .leading, spacing: 0) {
-                    // Serveurs multi-instances (la seedbox n'existe qu'en démo)
+                    // Serveurs multi-instances (le second serveur n'existe qu'en démo)
                     sectionLabel("Serveurs")
                     ForEach(store.serverList, id: \.id) { server in
                         let active = store.serverID == server.id
