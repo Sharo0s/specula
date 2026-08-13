@@ -8,13 +8,13 @@
       "internalID": "1000000001",
       "localizations": [
         {
-          "description": "Une place de service supplémentaire, acquise définitivement.",
-          "displayName": "Une place de service",
+          "description": "Un service de plus, définitivement.",
+          "displayName": "Place de service",
           "locale": "fr_FR"
         },
         {
-          "description": "One more service slot, yours for good.",
-          "displayName": "One service slot",
+          "description": "One more monitored service, forever.",
+          "displayName": "Service slot",
           "locale": "en_US"
         }
       ],
@@ -28,12 +28,12 @@
       "internalID": "1000000003",
       "localizations": [
         {
-          "description": "Places illimitées. Plus cher que d'acheter les places à l'unité — c'est ce qui finance un projet libre, sans pub et sans mouchard.",
+          "description": "Places illimitées. Soutient le projet.",
           "displayName": "Services illimités",
           "locale": "fr_FR"
         },
         {
-          "description": "Unlimited slots. More expensive than buying slots one by one — that is what funds a free, ad-free, tracker-free project.",
+          "description": "Unlimited slots. Supports the project.",
           "displayName": "Unlimited services",
           "locale": "en_US"
         }
