@@ -56,6 +56,7 @@ struct IOSRootView: View {
 
             ToastOverlay()
         }
+        .speculaPaywall()
         .sheet(item: $editService) { s in EditServiceSheet(service: s).environment(store) }
         .tint(Ink.accent)
     }

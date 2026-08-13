@@ -39,6 +39,8 @@ struct AddServiceView: View {
                         .padding(.bottom, 14)
                     HRule(weight: 2).padding(.bottom, 18)
 
+                    QuotaBanner().padding(.bottom, 18)
+
                     field("Nom", text: $name, placeholder: "Jellyfin")
                     field("URL", text: $url, placeholder: "http://jellyfin.local:8096")
                         .padding(.top, 14)
@@ -83,9 +85,13 @@ struct AddServiceView: View {
 
                     VStack(spacing: 8) {
                         MPrimaryButton(title: "Ajouter le service") {
-                            store.addService(name: name.isEmpty ? "Nouveau service" : name,
-                                             url: url, group: group, apiKey: apiKey)
-                            dismiss()
+                            // Refus faute de place : on reste sur le formulaire,
+                            // la boutique s'ouvre par-dessus et la saisie est
+                            // toujours là au retour.
+                            if store.addService(name: name.isEmpty ? "Nouveau service" : name,
+                                                url: url, group: group, apiKey: apiKey) {
+                                dismiss()
+                            }
                         }
                         MSecondaryButton(title: "Tester la connexion") {
                             store.testConnection(url: url)

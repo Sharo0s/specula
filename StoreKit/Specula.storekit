@@ -1,0 +1,60 @@
+{
+  "identifier": "A1B2C3D4",
+  "nonRenewingSubscriptions": [],
+  "products": [
+    {
+      "displayPrice": "0.49",
+      "familyShareable": false,
+      "internalID": "1000000001",
+      "localizations": [
+        {
+          "description": "Un service de plus, définitivement.",
+          "displayName": "Place de service",
+          "locale": "fr_FR"
+        },
+        {
+          "description": "One more monitored service, forever.",
+          "displayName": "Service slot",
+          "locale": "en_US"
+        }
+      ],
+      "productID": "com.smalard.specula.slot.one",
+      "referenceName": "Une place de service",
+      "type": "Consumable"
+    },
+    {
+      "displayPrice": "19.99",
+      "familyShareable": true,
+      "internalID": "1000000003",
+      "localizations": [
+        {
+          "description": "Places illimitées. Soutient le projet.",
+          "displayName": "Services illimités",
+          "locale": "fr_FR"
+        },
+        {
+          "description": "Unlimited slots. Supports the project.",
+          "displayName": "Unlimited services",
+          "locale": "en_US"
+        }
+      ],
+      "productID": "com.smalard.specula.unlimited",
+      "referenceName": "Illimité — soutien au projet",
+      "type": "NonConsumable"
+    }
+  ],
+  "settings": {
+    "_applicationInternalID": "0000000000",
+    "_developerTeamID": "",
+    "_failTransactionsEnabled": false,
+    "_lastSynchronizedDate": 0,
+    "_locale": "fr_FR",
+    "_storefront": "FRA",
+    "_storeKitErrors": []
+  },
+  "subscriptionGroups": [],
+  "version": {
+    "major": 3,
+    "minor": 0
+  }
+}

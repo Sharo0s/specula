@@ -73,6 +73,44 @@ struct IncidentSelection: Equatable {
     let cause: String
 }
 
+/// Quota de services — les quatre premiers sont offerts, les suivants se
+/// débloquent à l'unité (achats intégrés, cf. `Billing`).
+///
+/// Structure sans dépendance à StoreKit : c'est elle qui porte l'arithmétique
+/// du modèle, et elle se teste sans boutique.
+struct ServiceQuota: Equatable {
+    /// Services configurables sans rien payer.
+    static let free = 4
+
+    var purchasedSlots: Int = 0
+    var unlimited: Bool = false
+
+    /// Nombre total de services configurables — `nil` si illimité.
+    var capacity: Int? {
+        unlimited ? nil : Self.free + max(0, purchasedSlots)
+    }
+
+    /// Reste-t-il une place quand `current` services sont déjà configurés ?
+    func allowsAdding(current: Int) -> Bool {
+        guard let capacity else { return true }
+        return current < capacity
+    }
+
+    /// Places libres — `nil` si illimité.
+    func remaining(current: Int) -> Int? {
+        guard let capacity else { return nil }
+        return max(0, capacity - current)
+    }
+
+    /// Combien d'une fournée de `count` services tiennent dans le quota, sachant
+    /// que `current` sont déjà là. Sert à l'import services.yaml, qui tronque
+    /// plutôt que d'échouer en bloc.
+    func acceptableCount(_ count: Int, current: Int = 0) -> Int {
+        guard let remaining = remaining(current: current) else { return count }
+        return min(count, remaining)
+    }
+}
+
 enum Density: String, CaseIterable { case aere, compact }
 enum LayoutMode: String, CaseIterable { case grille, liste }
 

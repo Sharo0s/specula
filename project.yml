@@ -32,15 +32,23 @@ packages:
     from: "5.1.0"
 
 # Schemes partagés (sinon Xcode les autocrée de façon instable à chaque régénération)
+# `storeKitConfiguration` branche la boutique locale : les achats intégrés se
+# testent au simulateur sans App Store Connect ni compte sandbox. Le fichier ne
+# vaut qu'au débogage — en TestFlight et en production, StoreKit interroge le
+# vrai catalogue.
 schemes:
   Specula-iOS:
     build:
       targets:
         Specula-iOS: all
+    run:
+      storeKitConfiguration: StoreKit/Specula.storekit
   Specula-macOS:
     build:
       targets:
         Specula-macOS: all
+    run:
+      storeKitConfiguration: StoreKit/Specula.storekit
     # Les tests portent sur du code de `Shared/`, commun aux deux plateformes.
     # Hébergés par la cible macOS, ils tournent sans simulateur.
     test:
@@ -58,6 +66,10 @@ targets:
       - path: Resources
         excludes:
           - "Info-*.plist"
+      # Boutique locale du scheme : référencée dans le projet pour être
+      # éditable dans Xcode, `buildPhase: none` la garde hors du bundle.
+      - path: StoreKit/Specula.storekit
+        buildPhase: none
     dependencies:
       - target: Specula-Widgets
         embed: true
@@ -153,6 +165,8 @@ targets:
       - path: Resources
         excludes:
           - "Info-*.plist"
+      - path: StoreKit/Specula.storekit
+        buildPhase: none
     dependencies:
       - package: Yams
     entitlements:

@@ -25,6 +25,7 @@ struct MacRootView: View {
 
     var body: some View {
         gate
+            .speculaPaywall()
             .background(WindowSizer())
             .task {
                 // Ouverture de session : on applique la visibilité du Dock puis

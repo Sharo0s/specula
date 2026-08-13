@@ -113,6 +113,19 @@ struct SettingsView: View {
 
     @ViewBuilder private var columnB: some View {
         @Bindable var store = store
+        // Places de service (achats intégrés)
+        // Le « 4 » est écrit en clair : `note` est une `String`, une
+        // interpolation y casserait l'extraction du catalogue. `QuotaTests`
+        // vérifie que la constante vaut toujours ça.
+        section("Services",
+                note: "Les 4 premiers services sont offerts. Une place achetée reste acquise : supprimer un service la libère pour un autre.") {
+            // Pas de bouton pleine largeur en plus : le bandeau porte déjà
+            // « Débloquer », et deux fois la même action à vingt points d'écart
+            // fait douter qu'elles fassent la même chose.
+            QuotaBanner(showsUnlimited: true)
+                .padding(.vertical, 10)
+        }
+
         // Alertes
         section("Alertes") {
             ForEach(Array(Catalog.alertRules.enumerated()), id: \.element.id) { i, rule in

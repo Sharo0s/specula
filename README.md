@@ -71,6 +71,18 @@ Settings:
 One URL per service: whatever makes your homelab reachable from outside — VPN,
 reverse proxy, tunnel — is configured below the app, not inside it.
 
+## 💳 Service slots
+
+The **first four services are free**, forever and without an account. Beyond that,
+each extra slot is a one-off purchase. Pricing is strictly linear — no packs, no
+tiers: pick how many slots you want and pay in a single transaction. An unlimited
+unlock exists separately, to support the project. Prices are whatever the App Store
+shows, in your currency.
+
+Free no matter what: the whole demo mode, every integration, alerts, widgets, and
+`services.yaml` import and export. The quota only covers how many services you watch
+at once — removing a service frees its slot for another.
+
 ## 🔒 Privacy
 
 No account, no telemetry, no server in the middle. The app talks to your machines and

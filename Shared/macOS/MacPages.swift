@@ -93,6 +93,18 @@ struct MacSettingsPage: View {
                 }
                 .frame(maxWidth: 420, alignment: .leading)
                 VStack(alignment: .leading, spacing: 26) {
+                    settingsBlock("Services") {
+                        QuotaBanner(showsUnlimited: true)
+                            .padding(.vertical, 10)
+                        Text("Les 4 premiers services sont offerts. Une place achetée reste acquise : supprimer un service la libère pour un autre.")
+                            .font(.archivo(11))
+                            .foregroundStyle(Ink.muted)
+                            .fixedSize(horizontal: false, vertical: true)
+                            .padding(.bottom, 10)
+                        // Pas de bouton en plus : le bandeau porte déjà
+                        // « Débloquer ».
+                    }
+
                     settingsBlock("Alertes") {
                         ForEach(Array(Catalog.alertRules.enumerated()), id: \.element.id) { i, rule in
                             if i > 0 { HRule() }
@@ -262,6 +274,7 @@ struct MacAddServicePage: View {
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 14) {
+                QuotaBanner()
                 field("Nom", text: $name, placeholder: "Jellyfin")
                 field("URL", text: $url, placeholder: "http://jellyfin.local:8096")
                 field("Clé API (optionnelle — rangée dans le Keychain)", text: $apiKey, placeholder: "")
@@ -277,9 +290,13 @@ struct MacAddServicePage: View {
                     .foregroundStyle(Ink.muted)
                 HStack(spacing: 8) {
                     MPrimaryButton(title: "Ajouter le service") {
-                        store.addService(name: name.isEmpty ? "Nouveau service" : name,
-                                         url: url, group: group, apiKey: apiKey)
-                        ui.view = .dash
+                        // Refus faute de place : on reste sur le formulaire, la
+                        // boutique s'ouvre par-dessus et la saisie est
+                        // toujours là au retour.
+                        if store.addService(name: name.isEmpty ? "Nouveau service" : name,
+                                            url: url, group: group, apiKey: apiKey) {
+                            ui.view = .dash
+                        }
                     }
                     .frame(width: 220)
                     MSecondaryButton(title: "Tester la connexion") {
