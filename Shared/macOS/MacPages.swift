@@ -101,9 +101,8 @@ struct MacSettingsPage: View {
                             .foregroundStyle(Ink.muted)
                             .fixedSize(horizontal: false, vertical: true)
                             .padding(.bottom, 10)
-                        if !store.billing.unlimited {
-                            MSecondaryButton(title: "Débloquer des services") { store.openPaywall() }
-                        }
+                        // Pas de bouton en plus : le bandeau porte déjà
+                        // « Débloquer ».
                     }
 
                     settingsBlock("Alertes") {

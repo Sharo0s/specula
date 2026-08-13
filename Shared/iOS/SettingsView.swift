@@ -119,12 +119,11 @@ struct SettingsView: View {
         // vérifie que la constante vaut toujours ça.
         section("Services",
                 note: "Les 4 premiers services sont offerts. Une place achetée reste acquise : supprimer un service la libère pour un autre.") {
+            // Pas de bouton pleine largeur en plus : le bandeau porte déjà
+            // « Débloquer », et deux fois la même action à vingt points d'écart
+            // fait douter qu'elles fassent la même chose.
             QuotaBanner(showsUnlimited: true)
                 .padding(.vertical, 10)
-            if !store.billing.unlimited {
-                MSecondaryButton(title: "Débloquer des services") { store.openPaywall() }
-                    .padding(.bottom, 10)
-            }
         }
 
         // Alertes
