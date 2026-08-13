@@ -25,7 +25,7 @@
       "type" : "Consumable"
     },
     {
-      "displayPrice" : "1.99",
+      "displayPrice" : "1.49",
       "familyShareable" : false,
       "internalID" : "1000000002",
       "localizations" : [
@@ -45,23 +45,23 @@
       "type" : "Consumable"
     },
     {
-      "displayPrice" : "9.99",
+      "displayPrice" : "14.99",
       "familyShareable" : true,
       "internalID" : "1000000003",
       "localizations" : [
         {
-          "description" : "Autant de services que tu veux, pour toujours.",
+          "description" : "Places illimitées. Plus cher que d'acheter les places à l'unité — c'est ce qui finance un projet libre, sans pub et sans mouchard.",
           "displayName" : "Services illimités",
           "locale" : "fr_FR"
         },
         {
-          "description" : "As many services as you want, forever.",
+          "description" : "Unlimited slots. More expensive than buying slots one by one — that is what funds a free, ad-free, tracker-free project.",
           "displayName" : "Unlimited services",
           "locale" : "en_US"
         }
       ],
       "productID" : "com.smalard.specula.unlimited",
-      "referenceName" : "Déverrouillage illimité",
+      "referenceName" : "Illimité — soutien au projet",
       "type" : "NonConsumable"
     }
   ],

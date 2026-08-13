@@ -172,7 +172,7 @@ struct PaywallView: View {
                     Text(offer.name)
                         .font(.archivo(13.5, .heavy))
                     if offer.isUnlimited {
-                        Text("Sans limite")
+                        Text("Soutien")
                             .font(.archivo(8, .heavy))
                             .textCase(.uppercase)
                             .tracking(0.4)
@@ -217,9 +217,14 @@ struct PaywallView: View {
 
     /// `LocalizedStringKey` et pas `String` : l'interpolation reste littérale,
     /// donc extractible dans le catalogue (« %lld places d'un coup. »).
+    ///
+    /// L'illimité coûte plus cher que d'acheter les places une à une, et on le
+    /// dit. Le taire ferait de la boutique un calcul caché — celui que
+    /// l'utilisateur refera de toute façon, et qu'il nous reprochera. Annoncé,
+    /// c'est un choix qu'il fait en connaissance de cause.
     private func subtitle(_ offer: Billing.Offer) -> LocalizedStringKey {
         switch offer.slots {
-        case 0: "Places illimitées, une fois pour toutes."
+        case 0: "Plus cher que les places à l'unité — c'est ce qui finance un projet libre, sans pub et sans mouchard."
         case 1: "Une place de service de plus."
         default: "\(offer.slots) places d'un coup."
         }
