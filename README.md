@@ -88,6 +88,10 @@ at once — removing a service frees its slot for another.
 No account, no telemetry, no server in the middle. The app talks to your machines and
 nothing else, and API keys live in the Keychain — never in a backup, never on iCloud.
 
+One exception, and it is named: the **number** of service slots you bought is written
+to your iCloud key-value store, so that switching devices does not lose them. One
+integer, nothing else — not your services, not their addresses, not your keys.
+
 One exception: service logos come from the public
 [dashboard-icons](https://github.com/homarr-labs/dashboard-icons) CDN through jsDelivr,
 which therefore sees which logos are requested — never your addresses or your data.
