@@ -38,16 +38,25 @@ struct PaywallView: View {
         VStack(alignment: .leading, spacing: 0) {
             header
             HRule(weight: 2)
-            ScrollView {
-                VStack(alignment: .leading, spacing: 0) {
-                    quotaBlock
-                    offersBlock
-                    footer
-                }
-                .padding(18)
+            // Le panneau épouse son contenu et ne défile que s'il déborde.
+            // Une `ScrollView` seule prend toute la hauteur qu'on lui offre :
+            // elle laissait un grand vide sous « Restaurer mes achats » tant
+            // que la boutique tenait dans le cadre.
+            ViewThatFits(in: .vertical) {
+                sections
+                ScrollView { sections }
+                    .scrollBounceBehavior(.basedOnSize)
             }
-            .scrollBounceBehavior(.basedOnSize)
         }
+    }
+
+    private var sections: some View {
+        VStack(alignment: .leading, spacing: 0) {
+            quotaBlock
+            offersBlock
+            footer
+        }
+        .padding(18)
     }
 
     // MARK: En-tête
@@ -285,7 +294,7 @@ struct PaywallView: View {
     private func subtitle(_ offer: Billing.Offer) -> LocalizedStringKey {
         offer.isUnlimited
             ? "Plus cher que les places à l'unité — c'est ce qui finance un projet libre, sans pub et sans mouchard."
-            : "\(offer.price) la place, payées en une fois."
+            : "\(offer.price) la place, acquise définitivement."
     }
 
     // MARK: Pied
