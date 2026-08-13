@@ -10,6 +10,10 @@ import SwiftUI
 
 struct PaywallView: View {
     @Environment(AppStore.self) private var store
+    /// Places à acheter d'un coup. Amorcé sur ce qu'il a manqué au dernier
+    /// import : celui qui vient de perdre onze services trouve onze au
+    /// compteur, pas un.
+    @State private var quantity = 1
 
     var body: some View {
         ZStack {
@@ -25,6 +29,7 @@ struct PaywallView: View {
                 .overlay(Rectangle().strokeBorder(Ink.text, lineWidth: 2))
                 .padding(20)
         }
+        .onAppear { quantity = store.suggestedSlotCount }
     }
 
     private var billing: Billing { store.billing }
@@ -162,57 +167,109 @@ struct PaywallView: View {
         }
     }
 
+    /// Les places s'achètent en quantité : sélecteur, et le bouton porte le
+    /// total. L'illimité s'achète une fois, sa rangée reste sur une ligne.
+    @ViewBuilder
     private func offerRow(_ offer: Billing.Offer) -> some View {
-        let busy = billing.purchasing == offer.id
-        return HStack(alignment: .center, spacing: 12) {
-            VStack(alignment: .leading, spacing: 2) {
-                HStack(spacing: 7) {
-                    // Nom venu de l'App Store : pas de LocalizedStringKey, il
-                    // est déjà rendu dans la langue du compte.
-                    Text(offer.name)
-                        .font(.archivo(13.5, .heavy))
-                    if offer.isUnlimited {
-                        Text("Soutien")
-                            .font(.archivo(8, .heavy))
-                            .textCase(.uppercase)
-                            .tracking(0.4)
-                            .padding(.horizontal, 5)
-                            .padding(.vertical, 2)
-                            .background(Ink.accent2Bg)
-                            .foregroundStyle(Ink.accent2Text)
-                    }
-                }
-                Text(subtitle(offer))
-                    .font(.archivo(11))
-                    .foregroundStyle(Ink.muted)
-                    .fixedSize(horizontal: false, vertical: true)
+        if offer.isUnlimited {
+            HStack(alignment: .center, spacing: 12) {
+                offerLabel(offer)
+                Spacer(minLength: 8)
+                buyButton(offer, quantity: 1)
             }
-            Spacer(minLength: 8)
-            Button {
-                Task { await billing.purchase(offerID: offer.id) }
-            } label: {
-                Group {
-                    if busy {
-                        ProgressView().controlSize(.small)
-                    } else {
-                        // Prix rendu par StoreKit — devise et format du compte.
-                        Text(offer.price)
-                            .font(.archivo(12.5, .heavy))
-                            .monospacedDigit()
-                    }
+            .padding(.vertical, 11)
+        } else {
+            VStack(alignment: .leading, spacing: 10) {
+                offerLabel(offer)
+                HStack(spacing: 12) {
+                    stepper
+                    Spacer(minLength: 8)
+                    buyButton(offer, quantity: quantity)
                 }
-                .frame(minWidth: 74)
-                .padding(.horizontal, 10)
-                .padding(.vertical, 9)
-                .background(Ink.accent)
-                .foregroundStyle(.white)
-                .contentShape(.rect)
             }
-            .buttonStyle(.plain)
-            .disabled(billing.purchasing != nil)
-            .opacity(billing.purchasing != nil && !busy ? 0.5 : 1)
+            .padding(.vertical, 11)
         }
-        .padding(.vertical, 11)
+    }
+
+    private func offerLabel(_ offer: Billing.Offer) -> some View {
+        VStack(alignment: .leading, spacing: 2) {
+            HStack(spacing: 7) {
+                // Nom venu de l'App Store : pas de LocalizedStringKey, il
+                // est déjà rendu dans la langue du compte.
+                Text(offer.name)
+                    .font(.archivo(13.5, .heavy))
+                if offer.isUnlimited {
+                    Text("Soutien")
+                        .font(.archivo(8, .heavy))
+                        .textCase(.uppercase)
+                        .tracking(0.4)
+                        .padding(.horizontal, 5)
+                        .padding(.vertical, 2)
+                        .background(Ink.accent2Bg)
+                        .foregroundStyle(Ink.accent2Text)
+                }
+            }
+            Text(subtitle(offer))
+                .font(.archivo(11))
+                .foregroundStyle(Ink.muted)
+                .fixedSize(horizontal: false, vertical: true)
+        }
+        .frame(maxWidth: .infinity, alignment: .leading)
+    }
+
+    private func buyButton(_ offer: Billing.Offer, quantity: Int) -> some View {
+        let busy = billing.purchasing == offer.id
+        return Button {
+            Task { await billing.purchase(offerID: offer.id, quantity: quantity) }
+        } label: {
+            Group {
+                if busy {
+                    ProgressView().controlSize(.small)
+                } else {
+                    // Total rendu par StoreKit — devise et format du compte.
+                    Text(billing.displayTotal(offer.id, quantity: quantity))
+                        .font(.archivo(12.5, .heavy))
+                        .monospacedDigit()
+                }
+            }
+            .frame(minWidth: 80)
+            .padding(.horizontal, 10)
+            .padding(.vertical, 9)
+            .background(Ink.accent)
+            .foregroundStyle(.white)
+            .contentShape(.rect)
+        }
+        .buttonStyle(.plain)
+        .disabled(billing.purchasing != nil)
+        .opacity(billing.purchasing != nil && !busy ? 0.5 : 1)
+    }
+
+    /// Sélecteur de quantité — carrés bordés, comme le reste du système.
+    private var stepper: some View {
+        HStack(spacing: 0) {
+            stepButton("minus", enabled: quantity > 1) { quantity -= 1 }
+            Text("\(quantity)")
+                .font(.archivo(13, .heavy))
+                .monospacedDigit()
+                .frame(minWidth: 38)
+            stepButton("plus", enabled: quantity < SlotProduct.maxQuantity) { quantity += 1 }
+        }
+        .frame(height: 30)
+        .overlay(Rectangle().strokeBorder(Ink.divider, lineWidth: 1))
+    }
+
+    private func stepButton(_ symbol: String, enabled: Bool,
+                            action: @escaping () -> Void) -> some View {
+        Button(action: action) {
+            Image(systemName: symbol)
+                .font(.system(size: 10, weight: .bold))
+                .frame(width: 30, height: 30)
+                .contentShape(.rect)
+        }
+        .buttonStyle(.plain)
+        .foregroundStyle(Ink.text)
+        .disabled(!enabled)
+        .opacity(enabled ? 1 : 0.3)
     }
 
     /// `LocalizedStringKey` et pas `String` : l'interpolation reste littérale,
@@ -223,11 +280,9 @@ struct PaywallView: View {
     /// l'utilisateur refera de toute façon, et qu'il nous reprochera. Annoncé,
     /// c'est un choix qu'il fait en connaissance de cause.
     private func subtitle(_ offer: Billing.Offer) -> LocalizedStringKey {
-        switch offer.slots {
-        case 0: "Plus cher que les places à l'unité — c'est ce qui finance un projet libre, sans pub et sans mouchard."
-        case 1: "Une place de service de plus."
-        default: "\(offer.slots) places d'un coup."
-        }
+        offer.isUnlimited
+            ? "Plus cher que les places à l'unité — c'est ce qui finance un projet libre, sans pub et sans mouchard."
+            : "\(offer.price) la place, payées en une fois."
     }
 
     // MARK: Pied

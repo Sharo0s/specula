@@ -1062,6 +1062,15 @@ final class AppStore {
     /// confirmation du tutoriel le dit, un toast passe trop vite pour ça.
     private(set) var lastImportDropped = 0
 
+    /// Places à proposer d'emblée dans la boutique. Celui qui vient de perdre
+    /// onze services à l'import doit trouver onze au compteur, pas un — sinon
+    /// il repart pour onze achats. On retranche les places déjà libres : après
+    /// un achat, la suggestion retombe d'elle-même.
+    var suggestedSlotCount: Int {
+        let missing = lastImportDropped - (remainingSlots ?? 0)
+        return max(1, min(SlotProduct.maxQuantity, missing))
+    }
+
     /// Ouvre la boutique et charge le catalogue au passage.
     func openPaywall() {
         paywallOpen = true

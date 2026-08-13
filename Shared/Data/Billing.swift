@@ -5,11 +5,15 @@ import StoreKit
 // MARK: - Achats intégrés (StoreKit 2)
 //
 // Modèle : les quatre premiers services sont offerts, les suivants s'achètent.
-// Trois produits, à déclarer dans App Store Connect avec ces identifiants :
+// Deux produits, à déclarer dans App Store Connect avec ces identifiants :
 //
 //   <bundle>.slot.one    consommable      une place de service
-//   <bundle>.slot.five   consommable      cinq places (pack)
 //   <bundle>.unlimited   non consommable  places illimitées
+//
+// Pas de pack : StoreKit vend plusieurs exemplaires d'un consommable en une
+// seule transaction (`PurchaseOption.quantity`). Un pack n'apporterait qu'une
+// remise à justifier et une fiche de plus à tenir, là où un sélecteur de
+// quantité donne le même confort avec un prix strictement linéaire.
 //
 // Aucun prix n'est écrit ici. Il vient de `Product.displayPrice`, dans la
 // devise et le format du compte App Store de l'utilisateur — une valeur codée
@@ -24,18 +28,23 @@ enum SlotProduct {
     }
 
     static var one: String { prefix + ".slot.one" }
-    static var five: String { prefix + ".slot.five" }
     static var unlimited: String { prefix + ".unlimited" }
 
-    /// Ordre d'affichage de la boutique : l'unité d'abord, l'illimité en dernier.
-    static var all: [String] { [one, five, unlimited] }
+    /// Ordre d'affichage de la boutique : les places d'abord, l'illimité ensuite.
+    static var all: [String] { [one, unlimited] }
+
+    /// Exemplaires achetables en une transaction. L'App Store borne la quantité
+    /// d'un consommable ; au-delà, StoreKit refuse l'achat. Mieux vaut arrêter
+    /// le sélecteur avant que l'utilisateur ne bute dessus.
+    ///
+    /// À confirmer au simulateur : la valeur n'est pas lisible depuis le code,
+    /// et 10 est la limite historique de l'App Store.
+    static let maxQuantity = 10
 
     /// Places débloquées par un exemplaire du produit (0 pour l'illimité, qui
     /// ne se compte pas en places).
     static func slots(_ id: String) -> Int {
-        if id == one { return 1 }
-        if id == five { return 5 }
-        return 0
+        id == one ? 1 : 0
     }
 }
 
@@ -118,22 +127,38 @@ final class Billing {
         }
     }
 
+    /// Prix de `quantity` exemplaires, formaté par l'App Store. Le calcul passe
+    /// par `Product.price` et son format de devise plutôt que par la chaîne
+    /// `displayPrice` : multiplier un texte déjà mis en forme donnerait des
+    /// séparateurs faux dès qu'on dépasse le millier.
+    func displayTotal(_ offerID: String, quantity: Int) -> String {
+        guard let product = products.first(where: { $0.id == offerID }) else { return "" }
+        guard quantity > 1 else { return product.displayPrice }
+        return (product.price * Decimal(quantity)).formatted(product.priceFormatStyle)
+    }
+
     // MARK: Achat
 
     @discardableResult
-    func purchase(offerID: String) async -> Bool {
+    func purchase(offerID: String, quantity: Int = 1) async -> Bool {
         guard let product = products.first(where: { $0.id == offerID }) else { return false }
-        return await purchase(product)
+        return await purchase(product, quantity: quantity)
     }
 
     /// `true` si l'achat a été conclu et crédité.
     @discardableResult
-    func purchase(_ product: Product) async -> Bool {
+    func purchase(_ product: Product, quantity: Int = 1) async -> Bool {
         guard purchasing == nil else { return false }
         purchasing = product.id
         defer { purchasing = nil }
         do {
-            switch try await product.purchase() {
+            // `quantity` ne vaut que pour un consommable : StoreKit rejette
+            // l'option sur un non consommable, qui ne s'achète qu'une fois.
+            var options: Set<Product.PurchaseOption> = []
+            if product.type == .consumable, quantity > 1 {
+                options.insert(.quantity(min(quantity, SlotProduct.maxQuantity)))
+            }
+            switch try await product.purchase(options: options) {
             case .success(let verification):
                 guard let transaction = try? verification.payloadValue else {
                     lastError = String(localized: "Achat non vérifié par l'App Store.")

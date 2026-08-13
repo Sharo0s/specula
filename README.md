@@ -74,8 +74,10 @@ reverse proxy, tunnel — is configured below the app, not inside it.
 ## 💳 Service slots
 
 The **first four services are free**, forever and without an account. Beyond that,
-each extra slot is a one-off purchase — one at a time, in packs of five, or as an
-unlimited unlock. Prices are whatever the App Store shows, in your currency.
+each extra slot is a one-off purchase. Pricing is strictly linear — no packs, no
+tiers: pick how many slots you want and pay in a single transaction. An unlimited
+unlock exists separately, to support the project. Prices are whatever the App Store
+shows, in your currency.
 
 Free no matter what: the whole demo mode, every integration, alerts, widgets, and
 `services.yaml` import and export. The quota only covers how many services you watch

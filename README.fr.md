@@ -75,9 +75,10 @@ reverse proxy, tunnel — se règle sous l'app, pas dedans.
 ## 💳 Places de service
 
 Les **quatre premiers services sont gratuits**, sans limite de durée et sans compte.
-Au-delà, chaque place supplémentaire s'achète une fois — à l'unité, par pack de cinq,
-ou en déverrouillage illimité. Les prix sont ceux affichés par l'App Store, dans ta
-devise.
+Au-delà, chaque place supplémentaire s'achète une fois. Le prix est strictement
+linéaire — pas de pack, pas de palier : tu choisis combien de places tu veux et tu
+paies en une transaction. Un déverrouillage illimité existe à part, pour soutenir le
+projet. Les prix sont ceux affichés par l'App Store, dans ta devise.
 
 Ce qui reste gratuit quoi qu'il arrive : le mode démo entier, toutes les intégrations,
 les alertes, les widgets, l'import et l'export de `services.yaml`. Le quota ne porte
