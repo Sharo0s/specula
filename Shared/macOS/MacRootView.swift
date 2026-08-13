@@ -13,7 +13,7 @@ final class MacUIState {
     /// Groupe filtré dans le dashboard (nil = tous).
     var group: Int?
     /// Service sélectionné → inspecteur.
-    var selection: String? = "jellyfin"
+    var selection: String? = "immich"
     var paletteOpen = false
     var forceDark = false
 }

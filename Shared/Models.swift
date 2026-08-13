@@ -150,10 +150,6 @@ enum Catalog {
     static let cdn = "https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/png/"
 
     static let services: [Service] = [
-        Service(id: "jellyfin", mono: "Jf", name: "Jellyfin", desc: "Serveur multimédia", group: 0, url: "jellyfin.local:8096", iconSlug: "jellyfin", metrics: [["516", "Films"], ["202", "Séries"], ["8 335", "Épisodes"]]),
-        Service(id: "radarr", mono: "Ra", name: "Radarr", desc: "Gestion films", group: 0, url: "radarr.local:7878", iconSlug: "radarr", metrics: [["15", "Manquants"], ["2", "En attente"], ["516", "Films"]]),
-        Service(id: "sonarr", mono: "So", name: "Sonarr", desc: "Gestion séries", group: 0, url: "sonarr.local:8989", iconSlug: "sonarr", metrics: [["202", "Séries"], ["2", "En attente"], ["0", "Recherché"]]),
-        Service(id: "transmission", mono: "Tr", name: "Transmission", desc: "Client BitTorrent", group: 0, url: "nas.local:9091", iconSlug: "transmission", metrics: nil),
         Service(id: "komga", mono: "Ko", name: "Komga", desc: "Comics, livres & mangas", group: 0, url: "komga.local:25600", iconSlug: "komga", metrics: [["3", "Bibliothèques"], ["75", "Séries"], ["852", "Livres"]]),
         Service(id: "immich", mono: "Im", name: "Immich", desc: "Photothèque", group: 0, url: "immich.local:2283", iconSlug: "immich", metrics: [["10 967", "Photos"], ["314", "Vidéos"], ["112 Go", "Stockage"]]),
         Service(id: "unifi", mono: "Un", name: "UniFi Controller", desc: "Réseau UniFi", group: 1, url: "unifi.local:8443", iconSlug: "unifi", metrics: [["6", "LAN"], ["35", "WLAN"], ["15,2 j", "Uptime"]]),
@@ -179,17 +175,17 @@ enum Catalog {
 
     static let all: [Service] = services + seedServices
 
-    static let defaultPins = ["jellyfin", "homeassistant", "nextcloud", "unifi"]
+    static let defaultPins = ["immich", "homeassistant", "nextcloud", "unifi"]
 
     /// Chips proposées au partage famille.
-    static let guestChoices = ["jellyfin", "immich", "komga", "nextcloud"]
+    static let guestChoices = ["immich", "komga", "nextcloud", "filebrowser"]
 
     static let seedNotifs: [NotifItem] = [
         NotifItem(title: String(localized: "Sauvegarde terminée"), sub: String(localized: "OpenMediaVault — 284 Go vérifiés"),
                   date: Date().addingTimeInterval(-45 * 60), alert: false, unread: false),
-        NotifItem(title: String(localized: "Mise à jour disponible"), sub: "Sonarr 4.0.3 → 4.0.4",
+        NotifItem(title: String(localized: "Mise à jour disponible"), sub: "Immich 1.119.0 → 1.120.0",
                   date: Date().addingTimeInterval(-3 * 3600), alert: false, unread: false),
-        NotifItem(title: String(localized: "Nouvel épisode récupéré"), sub: String(localized: "Radarr — 2 films ajoutés à Jellyfin"),
+        NotifItem(title: String(localized: "Import terminé"), sub: String(localized: "Paperless-ngx — 12 documents à trier"),
                   date: Date().addingTimeInterval(-4 * 3600), alert: false, unread: false),
     ]
 

@@ -87,7 +87,7 @@ final class AppStore {
     private(set) var rules: [String: Bool] = ["temp": true, "disk": true, "down": true]
     var guestOn = false
     var guestPreview = false
-    var guestIds: Set<String> = ["jellyfin", "immich"]
+    var guestIds: Set<String> = ["immich", "komga"]
     var syncOn = true
 
     /// Langue de l'app : "system" ou un code de `AppLanguage.segments`.
@@ -827,7 +827,7 @@ final class AppStore {
         case "homeassistant":
             return [["1 / 3", "Présents"], ["\(lights) / 10", "Lumières"], ["27 / 68", "Interrupteurs"]]
         case "uptimekuma":
-            return [[down ? "16 / 17" : "17 / 17", "En ligne"], ["99,98 %", "Dispo. 30 j"], ["3", "Alertes conf."]]
+            return [["\(onlineCount) / \(totalCount)", "En ligne"], ["99,98 %", "Dispo. 30 j"], ["3", "Alertes conf."]]
         default:
             return s.metrics ?? []
         }
