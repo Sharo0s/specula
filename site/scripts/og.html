@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<style>
+@font-face {
+  font-family: 'Archivo';
+  src: url('file:///Users/sylvain/Specula/Specula/Resources/Fonts/Archivo-Variable.ttf');
+  font-weight: 100 900;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html, body { width: 1200px; height: 630px; }
+body {
+  background: #1a1a1a;
+  color: #f3f2f2;
+  font-family: 'Archivo', sans-serif;
+  position: relative;
+  overflow: hidden;
+}
+/* le halo rouge du hero, en plus dense : l'image est vue en petit */
+.wash {
+  position: absolute; inset: -160px auto auto -120px;
+  width: 900px; height: 700px;
+  background: radial-gradient(circle, rgba(236,48,19,.30), transparent 62%);
+}
+.inner { position: relative; padding: 58px 64px; height: 100%; }
+
+.brand { display: flex; align-items: center; gap: 13px; font-size: 27px; font-weight: 800; letter-spacing: -.02em; }
+.brand::before { content: ''; width: 23px; height: 23px; background: #ec3013; }
+
+h1 {
+  font-size: 70px; font-weight: 800; letter-spacing: -.042em; line-height: 1.02;
+  margin-top: 58px; max-width: 13ch;
+}
+/* la portion rouge tient sa propre ligne : sinon « in » restait suspendu
+   en fin de première ligne */
+h1 em { font-style: normal; color: #ec3013; display: block; }
+
+p { margin-top: 24px; font-size: 24px; line-height: 1.4; color: rgba(243,242,242,.66); max-width: 17ch; }
+
+.foot { position: absolute; bottom: 58px; left: 64px; display: flex; align-items: center; gap: 14px; }
+.foot span {
+  font-size: 17px; font-weight: 600; color: rgba(243,242,242,.8);
+  border: 1px solid rgba(243,242,242,.2); border-radius: 999px; padding: 7px 16px;
+}
+
+/* Les appareils sortent du cadre à droite : on lit l'app, pas une vignette. */
+.mac {
+  position: absolute; right: -150px; top: 150px; width: 700px;
+  background: #0b0b0c; border: 1px solid rgba(255,255,255,.16);
+  border-radius: 14px; padding: 10px;
+  box-shadow: 0 34px 70px rgba(0,0,0,.6);
+}
+.mac img { width: 100%; display: block; border-radius: 5px; }
+.phone {
+  position: absolute; right: 505px; top: 268px; width: 156px;
+  background: #0b0b0c; border: 1px solid rgba(255,255,255,.2);
+  border-radius: 26px; padding: 5px;
+  box-shadow: 0 30px 60px rgba(0,0,0,.66);
+}
+.phone img { width: 100%; display: block; border-radius: 21px; }
+</style>
+</head>
+<body>
+  <div class="wash"></div>
+
+  <div class="mac">
+    <img src="file:///Users/sylvain/Specula/Specula/site/public/shots/mac-dark.webp" alt="">
+  </div>
+  <div class="phone">
+    <img src="file:///Users/sylvain/Specula/Specula/site/public/shots/iphone-dark.webp" alt="">
+  </div>
+
+  <div class="inner">
+    <div class="brand">Specula</div>
+    <h1>Your homelab <em>in your hand</em></h1>
+    <p>Real metrics from your self-hosted services.</p>
+    <div class="foot">
+      <span>iPhone · iPad · Mac</span>
+      <span>No account, no server</span>
+    </div>
+  </div>
+</body>
+</html>

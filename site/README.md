@@ -59,6 +59,13 @@ tout script.
 - **Les captures sont en français** alors que le site parle cinq langues.
   L'app étant localisée, il faut les refaire par langue (simulateur en `es`,
   `zh-Hans`, `ar`) et les ranger en `public/screenshots/<lang>/`.
-- **L'image Open Graph** (`public/og.png`) est un recadrage de la capture
-  macOS. Elle fait le travail, mais une image dessinée pour le partage ferait
-  mieux — c'est la première chose que voient Reddit et Hacker News.
+- **L'image Open Graph** (`public/og.png`) est composée à part : la source est
+  `scripts/og.html`, rendue en 1200×630 par Chrome sans interface. Refaire
+  l'image après un changement de discours ou de captures :
+
+  ```bash
+  "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" --headless \
+    --allow-file-access-from-files --force-device-scale-factor=2 \
+    --screenshot=/tmp/og.png --window-size=1200,630 file://$PWD/scripts/og.html
+  sips --resampleWidth 1200 /tmp/og.png --out public/og.png
+  ```
