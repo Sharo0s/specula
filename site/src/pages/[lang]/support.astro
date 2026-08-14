@@ -1,0 +1,31 @@
+---
+import Page from '../../layouts/Page.astro';
+import LegalDocument from '../../components/LegalDocument.astro';
+import { LOCALES, useTranslations, type Locale } from '../../i18n';
+import { SUPPORT } from '../../data/legal';
+
+export function getStaticPaths() {
+  return LOCALES.map((lang) => ({ params: { lang } }));
+}
+
+const lang = Astro.params.lang as Locale;
+const t = useTranslations(lang);
+
+const docLang = lang === 'fr' ? 'fr' : 'en';
+const doc = SUPPORT[docLang];
+---
+
+<Page
+  {lang}
+  route="support/"
+  title={`${doc.title} — Specula`}
+  description={doc.intro ?? ''}
+>
+  <LegalDocument
+    {doc}
+    {docLang}
+    {lang}
+    notice={t('legal.notice')}
+    updatedLabel={t('legal.updated')}
+  />
+</Page>

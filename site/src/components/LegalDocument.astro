@@ -1,0 +1,59 @@
+---
+import type { LegalDoc } from '../data/legal';
+import type { Locale } from '../i18n';
+
+interface Props {
+  doc: LegalDoc;
+  /** Langue réelle du document servi — pas forcément celle de la page. */
+  docLang: 'fr' | 'en';
+  lang: Locale;
+  /** Avertissement affiché quand le document n'existe pas dans la langue de la page. */
+  notice?: string;
+  updatedLabel: string;
+}
+
+const { doc, docLang, lang, notice, updatedLabel } = Astro.props;
+
+const dateFormat = new Intl.DateTimeFormat(docLang, {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+});
+---
+
+<section class="wrap section head">
+  <h1>{doc.title}</h1>
+  {doc.updated && <p class="date">{updatedLabel} {dateFormat.format(new Date(doc.updated))}</p>}
+  {doc.intro && <p class="lede">{doc.intro}</p>}
+  {notice && docLang !== lang && <p class="notice">{notice}</p>}
+</section>
+
+<section class="wrap doc" lang={docLang} dir="ltr">
+  {
+    doc.sections.map((section) => (
+      <div class="block">
+        <h2>{section.h}</h2>
+        <hr class="rule" />
+        <div set:html={section.html} />
+      </div>
+    ))
+  }
+</section>
+
+<style>
+  .head { padding-block-end: 24px; }
+  .date { color: var(--muted); font-size: 14px; }
+  .notice {
+    border-inline-start: 2px solid var(--accent);
+    padding-inline-start: 14px;
+    color: var(--muted);
+    font-size: 15px;
+  }
+  .doc { padding-block-end: 72px; }
+  .block { margin-block-end: 30px; max-width: 68ch; }
+  .block h2 { font-size: 13px; text-transform: uppercase; letter-spacing: 0.09em; margin-block-end: 8px; }
+  .block .rule { margin-block-end: 14px; }
+  .doc :global(ul) { padding-inline-start: 22px; }
+  .doc :global(li) { margin-block-end: 6px; }
+  .doc :global(.muted) { color: var(--muted); font-size: 14px; }
+</style>

@@ -1,0 +1,15 @@
+{
+  "name": "specula-site",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "catalog": "python3 scripts/extract-integrations.py .. > src/data/integrations.json"
+  },
+  "dependencies": {
+    "@astrojs/sitemap": "^3.7.3",
+    "astro": "^7.2.1"
+  }
+}

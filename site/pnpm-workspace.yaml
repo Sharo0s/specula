@@ -1,0 +1,5 @@
+# pnpm 11 ne lit plus le champ « pnpm » de package.json : les réglages vivent
+# ici. esbuild télécharge son binaire natif dans un script d'installation —
+# sans cette autorisation, Astro ne peut pas construire le site.
+allowBuilds:
+  esbuild: true

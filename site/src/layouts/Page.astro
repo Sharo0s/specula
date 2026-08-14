@@ -1,0 +1,180 @@
+---
+import '../styles/base.css';
+import { BCP47, LOCALES, LOCALE_NAMES, dir, useTranslations, type Locale } from '../i18n';
+import { STORE_URL, IS_LIVE } from '../data/links';
+
+interface Props {
+  lang: Locale;
+  /** Chemin sans la langue : '' pour l'accueil, 'integrations/jellyfin/' etc. */
+  route?: string;
+  title: string;
+  description: string;
+  /** Section de navigation à marquer comme courante. */
+  current?: string;
+}
+
+const { lang, route = '', title, description, current } = Astro.props;
+const t = useTranslations(lang);
+const site = Astro.site ?? new URL('https://specula.app');
+const url = (l: Locale) => new URL(`/${l}/${route}`, site).href;
+
+const nav = [
+  { key: 'integrations', label: t('nav.integrations'), href: `/${lang}/integrations/` },
+  { key: 'pricing', label: t('nav.pricing'), href: `/${lang}/pricing/` },
+  { key: 'privacy', label: t('nav.privacy'), href: `/${lang}/privacy/` },
+  { key: 'changelog', label: t('nav.changelog'), href: `/${lang}/changelog/` },
+];
+
+const REPO = 'https://github.com/Sharo0s/specula';
+---
+
+<!doctype html>
+<html lang={BCP47[lang]} dir={dir(lang)}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={url(lang)} />
+    {LOCALES.map((l) => <link rel="alternate" hreflang={BCP47[l]} href={url(l)} />)}
+    <link rel="alternate" hreflang="x-default" href={url('en')} />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link
+      rel="preload"
+      href="/fonts/archivo-latin.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={url(lang)} />
+    <meta property="og:locale" content={BCP47[lang]} />
+    <meta property="og:image" content={new URL('/og.png', site).href} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="color-scheme" content="light dark" />
+    {/* Le seul script du site. Il applique le thème choisi avant la première
+        peinture (sinon la page clignote), puis écoute les clics du bouton par
+        délégation — il n'a donc pas besoin d'attendre le DOM. Toute retouche
+        ici oblige à recalculer le hash SHA-256 déclaré dans vercel.json,
+        sans quoi la CSP le bloquera en production. */}
+    <script is:inline>
+      (function () {
+        var d = document.documentElement,
+          s = localStorage.getItem('theme');
+        if (s) d.dataset.theme = s;
+        document.addEventListener('click', function (e) {
+          var b = e.target.closest('[data-theme-toggle]');
+          if (!b) return;
+          var dark =
+            (d.dataset.theme ||
+              (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light')) === 'dark';
+          d.dataset.theme = dark ? 'light' : 'dark';
+          localStorage.setItem('theme', d.dataset.theme);
+          b.setAttribute('aria-pressed', String(!dark));
+        });
+      })();
+    </script>
+  </head>
+  <body>
+    <header class="wrap">
+      <nav class="nav">
+        <a class="brand" href={`/${lang}/`}>Specula</a>
+        <div class="nav-links">
+          {
+            nav.map((item) => (
+              <a href={item.href} aria-current={current === item.key ? 'page' : undefined}>
+                {item.label}
+              </a>
+            ))
+          }
+          <a href={STORE_URL} class="nav-cta">{IS_LIVE ? t('nav.cta.live') : t('nav.cta')}</a>
+          <button type="button" class="theme" data-theme-toggle aria-label={t('theme.toggle')}>
+            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+              {/* lune et soleil dans le même gabarit : le CSS montre celui qui
+                  correspond au thème courant */}
+              <path
+                class="moon"
+                fill="currentColor"
+                d="M21 13.2A9 9 0 1 1 10.8 3a7 7 0 0 0 10.2 10.2z"
+              />
+              <g class="sun" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                <circle cx="12" cy="12" r="4" />
+                <path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M19.1 4.9l-1.4 1.4M6.3 17.7l-1.4 1.4" />
+              </g>
+            </svg>
+          </button>
+        </div>
+      </nav>
+    </header>
+
+    <main>
+      <slot />
+    </main>
+
+    <footer class="wrap">
+      <div class="footer-grid">
+        <p class="footer-links">
+          <a href={REPO}>{t('footer.source')}</a>
+          <a href={`/${lang}/support/`}>{t('footer.support')}</a>
+          <a href={`/${lang}/privacy/`}>{t('footer.privacy')}</a>
+          <a href={`/${lang}/changelog/`}>{t('footer.changelog')}</a>
+        </p>
+        <p class="footer-langs">
+          <span class="visually-hidden">{t('footer.language')}</span>
+          {
+            LOCALES.map((l) => (
+              <a href={`/${l}/${route}`} lang={BCP47[l]} aria-current={l === lang ? 'true' : undefined}>
+                {LOCALE_NAMES[l]}
+              </a>
+            ))
+          }
+        </p>
+      </div>
+      <p class="footer-license">{t('footer.license')}</p>
+    </footer>
+
+    <style>
+      .nav-cta { color: var(--accent); }
+
+      .theme {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 34px;
+        height: 34px;
+        padding: 0;
+        border: 1px solid var(--rule);
+        border-radius: 999px;
+        background: transparent;
+        color: var(--text);
+        cursor: pointer;
+      }
+      .theme:hover { border-color: var(--accent); color: var(--accent); }
+      .theme svg { width: 17px; height: 17px; }
+
+      /* En clair on propose la lune, en sombre le soleil : l'icône annonce où
+         le clic mène, pas où l'on est. */
+      .theme .sun { display: none; }
+      @media (prefers-color-scheme: dark) {
+        :root:not([data-theme='light']) .theme .moon { display: none; }
+        :root:not([data-theme='light']) .theme .sun { display: inline; }
+      }
+      :root[data-theme='dark'] .theme .moon { display: none; }
+      :root[data-theme='dark'] .theme .sun { display: inline; }
+      :root[data-theme='light'] .theme .moon { display: inline; }
+      :root[data-theme='light'] .theme .sun { display: none; }
+      .footer-grid {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px 32px;
+        justify-content: space-between;
+      }
+      .footer-links a, .footer-langs a { margin-inline-end: 16px; text-decoration: none; }
+      .footer-links a:hover, .footer-langs a:hover { text-decoration: underline; }
+      .footer-langs a[aria-current] { color: var(--accent); font-weight: 700; }
+      .footer-license { max-width: none; margin-block-start: 18px; font-size: 13px; }
+    </style>
+  </body>
+</html>

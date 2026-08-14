@@ -1,0 +1,188 @@
+/* Specula — socle visuel du site.
+   Repris de l'app et de docs/index.html : Archivo, le rouge #ec3013 dépensé
+   comme une marque et non comme un aplat, des filets de 2px pour dessiner la
+   structure. Tout l'espacement est en propriétés logiques : l'arabe passe en
+   RTL sans feuille séparée. */
+
+@font-face {
+  font-family: 'Archivo';
+  src: url('/fonts/archivo-latin.woff2') format('woff2-variations');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  --bg: #f1f0f0;
+  --text: #1a1a1a;
+  --muted: rgba(26, 26, 26, 0.58);
+  --accent: #ec3013;
+  --accent-text: #ffffff;
+  --rule: rgba(26, 26, 26, 0.15);
+  --rule-strong: #1a1a1a;
+  --card: #f8f4f4;
+  --ok: #1f8b4c;
+
+  /* Archivo ne couvre ni le chinois ni l'arabe : le système prend le relais
+     pour ces écritures, sans requête réseau supplémentaire. */
+  --font: 'Archivo', ui-sans-serif, -apple-system, BlinkMacSystemFont, 'Segoe UI',
+    'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei',
+    'SF Arabic', 'Geeza Pro', 'Noto Sans Arabic', sans-serif;
+  --mono: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, monospace;
+
+  /* Les captures flottent au-dessus du fond : ombre portée en thème clair,
+     halo froid + liseré en thème sombre, où une ombre noire ne se verrait pas. */
+  --shadow: 0 22px 46px rgba(0, 0, 0, 0.22);
+  --shot-border: rgba(26, 26, 26, 0.12);
+  --hero-wash: linear-gradient(160deg, rgba(236, 48, 19, 0.07), transparent 62%);
+
+  --edge: clamp(20px, 5vw, 72px);
+  --wrap: 1120px;
+  --measure: 62ch;
+  --step: 28px;
+}
+
+/* La palette sombre vit dans une seule règle, appliquée par deux chemins :
+   la préférence système (sauf si le lecteur a explicitement choisi le clair),
+   et le choix explicite du bouton. */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    --bg: #1a1a1a;
+    --text: #f3f2f2;
+    --muted: rgba(243, 242, 242, 0.58);
+    --rule: rgba(243, 242, 242, 0.18);
+    --rule-strong: #f3f2f2;
+    --card: #262323;
+    --ok: #4ade80;
+    --shadow: 0 26px 60px rgba(0, 0, 0, 0.55);
+    --shot-border: rgba(243, 242, 242, 0.14);
+    --hero-wash: linear-gradient(160deg, rgba(236, 48, 19, 0.14), transparent 60%);
+  }
+}
+
+:root[data-theme='dark'] {
+  --bg: #1a1a1a;
+  --text: #f3f2f2;
+  --muted: rgba(243, 242, 242, 0.58);
+  --rule: rgba(243, 242, 242, 0.18);
+  --rule-strong: #f3f2f2;
+  --card: #262323;
+  --ok: #4ade80;
+  --shadow: 0 26px 60px rgba(0, 0, 0, 0.55);
+  --shot-border: rgba(243, 242, 242, 0.14);
+  --hero-wash: linear-gradient(160deg, rgba(236, 48, 19, 0.14), transparent 60%);
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+@media (prefers-reduced-motion: no-preference) { html { scroll-behavior: smooth; } }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font);
+  font-size: 17px;
+  line-height: 1.65;
+  text-wrap: pretty;
+  font-synthesis-weight: none;
+}
+
+h1, h2, h3 { font-weight: 800; letter-spacing: -0.02em; line-height: 1.08; text-wrap: balance; margin: 0; }
+h1 { font-size: clamp(38px, 6.2vw, 66px); letter-spacing: -0.035em; }
+h2 { font-size: clamp(26px, 3.4vw, 36px); }
+h3 { font-size: 19px; letter-spacing: -0.015em; }
+p { margin: 0 0 var(--step); max-width: var(--measure); }
+
+a { color: var(--accent); text-underline-offset: 3px; }
+a:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+
+code {
+  font-family: var(--mono);
+  font-size: 0.88em;
+  background: var(--card);
+  padding: 1px 5px;
+  border-radius: 2px;
+}
+
+/* — structure — */
+.wrap { max-width: var(--wrap); margin-inline: auto; padding-inline: var(--edge); }
+.section { padding-block: clamp(56px, 8vw, 104px); }
+.rule { height: 2px; border: 0; margin: 0; background: var(--rule-strong); }
+.rule-thin { height: 1px; border: 0; margin: 0; background: var(--rule); }
+
+/* Le sur-titre de section : petites capitales, filet en dessous. */
+.eyebrow {
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--muted);
+  margin: 0 0 8px;
+}
+
+.lede { font-size: clamp(18px, 2.1vw, 21px); color: var(--muted); max-width: 54ch; }
+
+/* — boutons — */
+.btn {
+  display: inline-block;
+  padding: 13px 22px;
+  font-weight: 700;
+  font-size: 15px;
+  text-decoration: none;
+  border: 2px solid transparent;
+}
+.btn-primary { background: var(--accent); color: var(--accent-text); }
+.btn-secondary { border-color: var(--rule-strong); color: var(--text); }
+.btn:hover { opacity: 0.85; }
+
+/* — en-tête et pied — */
+.nav {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+  padding-block: 18px;
+  border-block-end: 2px solid var(--rule-strong);
+  flex-wrap: wrap;
+}
+.brand { display: flex; align-items: center; gap: 9px; text-decoration: none; color: var(--text); font-weight: 800; letter-spacing: -0.02em; }
+.brand::before { content: ''; width: 15px; height: 15px; background: var(--accent); flex: none; }
+.nav-links { display: flex; gap: 18px; margin-inline-start: auto; flex-wrap: wrap; }
+.nav-links a { color: var(--text); text-decoration: none; font-size: 15px; font-weight: 600; }
+.nav-links a:hover, .nav-links a[aria-current] { color: var(--accent); }
+
+footer { border-block-start: 1px solid var(--rule); padding-block: 32px 56px; color: var(--muted); font-size: 14px; }
+footer a { color: inherit; }
+
+/* — grilles — */
+.grid { display: grid; gap: 2px; background: var(--rule); border: 2px solid var(--rule-strong); }
+.grid > * { background: var(--bg); padding: 22px; }
+/* Colonnes fixes plutôt qu'auto-fit : le nombre d'éléments est connu, et
+   auto-fit ouvrait une troisième colonne qui laissait deux cases vides — le
+   fond de la grille apparaissait alors comme un trou. */
+.cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.cols-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.cols-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+
+@media (max-width: 860px) {
+  .cols-3, .cols-4 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 600px) {
+  .cols-2, .cols-3, .cols-4 { grid-template-columns: 1fr; }
+}
+
+/* — pastille d'état, reprise du mur de statut de l'app — */
+.dot { width: 9px; height: 9px; border-radius: 50%; display: inline-block; background: var(--ok); }
+.dot-off { background: var(--accent); }
+
+img { max-width: 100%; height: auto; display: block; }
+
+/* — l'arabe : le sens de lecture s'inverse, les glyphes latins restent LTR — */
+[dir='rtl'] .btn, [dir='rtl'] .nav-links { direction: rtl; }
+[dir='rtl'] code, [dir='rtl'] .ltr { direction: ltr; unicode-bidi: embed; display: inline-block; }
+
+.visually-hidden {
+  position: absolute; width: 1px; height: 1px; overflow: hidden;
+  clip-path: inset(50%); white-space: nowrap;
+}

@@ -1,0 +1,1176 @@
+[
+  {
+    "slug": "jellyfin",
+    "metrics": [
+      "Films",
+      "Séries",
+      "Épisodes"
+    ],
+    "needsKey": true,
+    "endpoints": [
+      "/Items/Counts"
+    ],
+    "keyHint": {
+      "fr": "Clé API du service",
+      "en": "Service API key",
+      "es": "Clave API del servicio",
+      "zh": "服务 API 密钥",
+      "ar": "مفتاح API الخاص بالخدمة"
+    },
+    "keyStyle": "token"
+  },
+  {
+    "slug": "radarr",
+    "metrics": [
+      "Manquants",
+      "En attente",
+      "Films"
+    ],
+    "needsKey": true,
+    "endpoints": [
+      "/api/v3/movie",
+      "/api/v3/queue",
+      "/api/v3/wanted/missing"
+    ],
+    "keyHint": {
+      "fr": "Clé API du service",
+      "en": "Service API key",
+      "es": "Clave API del servicio",
+      "zh": "服务 API 密钥",
+      "ar": "مفتاح API الخاص بالخدمة"
+    },
+    "keyStyle": "token"
+  },
+  {
+    "slug": "sonarr",
+    "metrics": [
+      "Séries",
+      "En attente",
+      "Recherché"
+    ],
+    "needsKey": true,
+    "endpoints": [
+      "/api/v3/queue",
+      "/api/v3/series",
+      "/api/v3/wanted/missing"
+    ],
+    "keyHint": {
+      "fr": "Clé API du service",
+      "en": "Service API key",
+      "es": "Clave API del servicio",
+      "zh": "服务 API 密钥",
+      "ar": "مفتاح API الخاص بالخدمة"
+    },
+    "keyStyle": "token"
+  },
+  {
+    "slug": "adguard",
+    "metrics": [
+      "Requêtes / j",
+      "Bloquées",
+      "Clients DNS"
+    ],
+    "needsKey": false,
+    "endpoints": [
+      "/control/stats"
+    ],
+    "keyHint": {
+      "fr": "Clé API du service",
+      "en": "Service API key",
+      "es": "Clave API del servicio",
+      "zh": "服务 API 密钥",
+      "ar": "مفتاح API الخاص بالخدمة"
+    },
+    "keyStyle": "token"
+  },
+  {
+    "slug": "transmission",
+    "metrics": [
+      "Réception",
+      "Envoi",
+      "En partage"
+    ],
+    "needsKey": false,
+    "endpoints": [],
+    "keyHint": {
+      "fr": "Format : utilisateur:motdepasse",
+      "en": "Format: username:password",
+      "es": "Formato: usuario:contraseña",
+      "zh": "格式：用户名:密码",
+      "ar": "الصيغة: المستخدم:كلمة السر"
+    },
+    "keyStyle": "userPassword"
+  },
+  {
+    "slug": "proxmox",
+    "metrics": [
+      "VM",
+      "Conteneurs",
+      "RAM"
+    ],
+    "needsKey": true,
+    "endpoints": [
+      "/api2/json/cluster/resources"
+    ],
+    "keyHint": {
+      "fr": "Clé API du service",
+      "en": "Service API key",
+      "es": "Clave API del servicio",
+      "zh": "服务 API 密钥",
+      "ar": "مفتاح API الخاص بالخدمة"
+    },
+    "keyStyle": "token"
+  },
+  {
+    "slug": "immich",
+    "metrics": [
+      "Photos",
+      "Vidéos",
+      "Stockage"
+    ],
+    "needsKey": true,
+    "endpoints": [
+      "/api/server/statistics"
+    ],
+    "keyHint": {
+      "fr": "Clé API du service",
+      "en": "Service API key",
+      "es": "Clave API del servicio",
+      "zh": "服务 API 密钥",
+      "ar": "مفتاح API الخاص بالخدمة"
+    },
+    "keyStyle": "token"
+  },
+  {
+    "slug": "glances",
+    "metrics": [
+      "CPU",
+      "Temp.",
+      "RAM libre"
+    ],
+    "needsKey": false,
+    "endpoints": [],
+    "keyHint": {
+      "fr": "Clé API du service",
+      "en": "Service API key",
+      "es": "Clave API del servicio",
+      "zh": "服务 API 密钥",
+      "ar": "مفتاح API الخاص بالخدمة"
+    },
+    "keyStyle": "token"
+  },
+  {
+    "slug": "homeassistant",
+    "metrics": [
+      "Présents",
+      "Lumières",
+      "Interrupteurs"
+    ],
+    "needsKey": true,
+    "endpoints": [
+      "/api/states"
+    ],
+    "keyHint": {
+      "fr": "Jeton d'accès longue durée (profil → Sécurité)",
+      "en": "Long-lived access token (profile → Security)",
+      "es": "Token de acceso de larga duración (perfil → Seguridad)",
+      "zh": "长期访问令牌（个人资料 → 安全）",
+      "ar": "رمز وصول طويل الأمد (الملف الشخصي ← الأمان)"
+    },
+    "keyStyle": "token"
+  },
+  {
+    "slug": "uptimekuma",
+    "metrics": [
+      "En ligne"
+    ],
+    "needsKey": true,
+    "endpoints": [
+      "/metrics"
+    ],
+    "keyHint": {
+      "fr": "Clé API du service",
+      "en": "Service API key",
+      "es": "Clave API del servicio",
+      "zh": "服务 API 密钥",
+      "ar": "مفتاح API الخاص بالخدمة"
+    },
+    "keyStyle": "token"
+  },
+  {
+    "slug": "nextcloud",
+    "metrics": [
+      "Libres",
+      "Fichiers",
+      "Utilisateurs"
+    ],
+    "needsKey": true,
+    "endpoints": [
+      "/ocs/v2.php/apps/serverinfo/api/v1/info"
+    ],
+    "keyHint": {
+      "fr": "Format : utilisateur:motdepasse",
+      "en": "Format: username:password",
+      "es": "Formato: usuario:contraseña",
+      "zh": "格式：用户名:密码",
+      "ar": "الصيغة: المستخدم:كلمة السر"
+    },
+    "keyStyle": "userPassword"
+  },
+  {
+    "slug": "vaultwarden",
+    "metrics": [],
+    "needsKey": false,
+    "endpoints": [],
+    "keyHint": null,
+    "keyStyle": "token"
+  },
+  {
+    "slug": "paperless",
+    "metrics": [
+      "Documents",
+      "Étiquettes",
+      "À trier"
+    ],
+    "needsKey": true,
+    "endpoints": [
+      "/api/statistics/"
+    ],
+    "keyHint": {
+      "fr": "Clé API du service",
+      "en": "Service API key",
+      "es": "Clave API del servicio",
+      "zh": "服务 API 密钥",
+      "ar": "مفتاح API الخاص بالخدمة"
+    },
+    "keyStyle": "token"
+  },
+  {
+    "slug": "komga",
+    "metrics": [
+      "Bibliothèques",
+      "Séries",
+      "Livres"
+    ],
+    "needsKey": true,
+    "endpoints": [
+      "/api/v1/books",
+      "/api/v1/libraries",
+      "/api/v1/series"
+    ],
+    "keyHint": {
+      "fr": "Format : utilisateur:motdepasse",
+      "en": "Format: username:password",
+      "es": "Formato: usuario:contraseña",
+      "zh": "格式：用户名:密码",
+      "ar": "الصيغة: المستخدم:كلمة السر"
+    },
+    "keyStyle": "userPassword"
+  },
+  {
+    "slug": "filebrowser",
+    "metrics": [
+      "Utilisé",
+      "Libres",
+      "Occupation"
+    ],
+    "needsKey": false,
+    "endpoints": [
+      "/api/login"
+    ],
+    "keyHint": {
+      "fr": "Format : utilisateur:motdepasse",
+      "en": "Format: username:password",
+      "es": "Formato: usuario:contraseña",
+      "zh": "格式：用户名:密码",
+      "ar": "الصيغة: المستخدم:كلمة السر"
+    },
+    "keyStyle": "userPassword"
+  },
+  {
+    "slug": "unifi",
+    "metrics": [
+      "LAN",
+      "WLAN",
+      "Uptime"
+    ],
+    "needsKey": true,
+    "endpoints": [
+      "/proxy/network/api/s/default/stat/health",
+      "/proxy/network/api/s/default/stat/sysinfo"
+    ],
+    "keyHint": {
+      "fr": "Clé API du service",
+      "en": "Service API key",
+      "es": "Clave API del servicio",
+      "zh": "服务 API 密钥",
+      "ar": "مفتاح API الخاص بالخدمة"
+    },
+    "keyStyle": "token"
+  },
+  {
+    "slug": "omv",
+    "metrics": [
+      "Libres",
+      "Volumes",
+      "Occupation"
+    ],
+    "needsKey": false,
+    "endpoints": [
+      "/rpc.php"
+    ],
+    "keyHint": {
+      "fr": "Format : utilisateur:motdepasse",
+      "en": "Format: username:password",
+      "es": "Formato: usuario:contraseña",
+      "zh": "格式：用户名:密码",
+      "ar": "الصيغة: المستخدم:كلمة السر"
+    },
+    "keyStyle": "userPassword"
+  },
+  {
+    "slug": "plex",
+    "metrics": [
+      "Lectures",
+      "Bibliothèques"
+    ],
+    "needsKey": true,
+    "endpoints": [
+      "/library/sections",
+      "/status/sessions"
+    ],
+    "keyHint": {
+      "fr": "Jeton X-Plex-Token",
+      "en": "X-Plex-Token token",
+      "es": "Token X-Plex-Token",
+      "zh": "X-Plex-Token 令牌",
+      "ar": "رمز X-Plex-Token"
+    },
+    "keyStyle": "token"
+  },
+  {
+    "slug": "qbittorrent",
+    "metrics": [
+      "Réception",
+      "Envoi",
+      "En partage"
+    ],
+    "needsKey": true,
+    "endpoints": [
+      "/api/v2/auth/login",
+      "/api/v2/torrents/info",
+      "/api/v2/transfer/info"
+    ],
+    "keyHint": {
+      "fr": "Format : utilisateur:motdepasse",
+      "en": "Format: username:password",
+      "es": "Formato: usuario:contraseña",
+      "zh": "格式：用户名:密码",
+      "ar": "الصيغة: المستخدم:كلمة السر"
+    },
+    "keyStyle": "userPassword"
+  },
+  {
+    "slug": "traefik",
+    "metrics": [
+      "Routes",
+      "Sources",
+      "Erreurs"
+    ],
+    "needsKey": false,
+    "endpoints": [
+      "/api/overview"
+    ],
+    "keyHint": null,
+    "keyStyle": "token"
+  },
+  {
+    "slug": "generic",
+    "metrics": [],
+    "needsKey": false,
+    "endpoints": [],
+    "keyHint": null,
+    "keyStyle": "token"
+  },
+  {
+    "slug": "pihole",
+    "metrics": [
+      "Requêtes / j",
+      "Bloquées",
+      "Clients DNS"
+    ],
+    "needsKey": false,
+    "endpoints": [
+      "/admin/api.php"
+    ],
+    "keyHint": {
+      "fr": "Clé API du service",
+      "en": "Service API key",
+      "es": "Clave API del servicio",
+      "zh": "服务 API 密钥",
+      "ar": "مفتاح API الخاص بالخدمة"
+    },
+    "keyStyle": "token"
+  },
+  {
+    "slug": "portainer",
+    "metrics": [
+      "En cours",
+      "Conteneurs",
+      "Environnements"
+    ],
+    "needsKey": true,
+    "endpoints": [
+      "/api/endpoints",
+      "/api/endpoints/"
+    ],
+    "keyHint": {
+      "fr": "Clé API du service",
+      "en": "Service API key",
+      "es": "Clave API del servicio",
+      "zh": "服务 API 密钥",
+      "ar": "مفتاح API الخاص بالخدمة"
+    },
+    "keyStyle": "token"
+  },
+  {
+    "slug": "sabnzbd",
+    "metrics": [
+      "Réception",
+      "En attente"
+    ],
+    "needsKey": true,
+    "endpoints": [
+      "/api"
+    ],
+    "keyHint": {
+      "fr": "Clé API du service",
+      "en": "Service API key",
+      "es": "Clave API del servicio",
+      "zh": "服务 API 密钥",
+      "ar": "مفتاح API الخاص بالخدمة"
+    },
+    "keyStyle": "token"
+  },
+  {
+    "slug": "prowlarr",
+    "metrics": [
+      "Sources",
+      "Actives"
+    ],
+    "needsKey": true,
+    "endpoints": [
+      "/api/v1/indexer"
+    ],
+    "keyHint": {
+      "fr": "Clé API du service",
+      "en": "Service API key",
+      "es": "Clave API del servicio",
+      "zh": "服务 API 密钥",
+      "ar": "مفتاح API الخاص بالخدمة"
+    },
+    "keyStyle": "token"
+  },
+  {
+    "slug": "lidarr",
+    "metrics": [
+      "En attente",
+      "Manquants"
+    ],
+    "needsKey": true,
+    "endpoints": [
+      "/api/v1/",
+      "/api/v1/queue",
+      "/api/v1/wanted/missing"
+    ],
+    "keyHint": {
+      "fr": "Clé API du service",
+      "en": "Service API key",
+      "es": "Clave API del servicio",
+      "zh": "服务 API 密钥",
+      "ar": "مفتاح API الخاص بالخدمة"
+    },
+    "keyStyle": "token"
+  },
+  {
+    "slug": "readarr",
+    "metrics": [
+      "En attente",
+      "Manquants"
+    ],
+    "needsKey": true,
+    "endpoints": [
+      "/api/v1/",
+      "/api/v1/queue",
+      "/api/v1/wanted/missing"
+    ],
+    "keyHint": {
+      "fr": "Clé API du service",
+      "en": "Service API key",
+      "es": "Clave API del servicio",
+      "zh": "服务 API 密钥",
+      "ar": "مفتاح API الخاص بالخدمة"
+    },
+    "keyStyle": "token"
+  },
+  {
+    "slug": "bazarr",
+    "metrics": [
+      "Épisodes",
+      "Films"
+    ],
+    "needsKey": true,
+    "endpoints": [
+      "/api/episodes/wanted",
+      "/api/movies/wanted"
+    ],
+    "keyHint": {
+      "fr": "Clé API du service",
+      "en": "Service API key",
+      "es": "Clave API del servicio",
+      "zh": "服务 API 密钥",
+      "ar": "مفتاح API الخاص بالخدمة"
+    },
+    "keyStyle": "token"
+  },
+  {
+    "slug": "overseerr",
+    "metrics": [
+      "En attente",
+      "Demandes"
+    ],
+    "needsKey": true,
+    "endpoints": [
+      "/api/v1/request/count"
+    ],
+    "keyHint": {
+      "fr": "Clé API du service",
+      "en": "Service API key",
+      "es": "Clave API del servicio",
+      "zh": "服务 API 密钥",
+      "ar": "مفتاح API الخاص بالخدمة"
+    },
+    "keyStyle": "token"
+  },
+  {
+    "slug": "tautulli",
+    "metrics": [
+      "Lectures",
+      "Bibliothèques"
+    ],
+    "needsKey": true,
+    "endpoints": [
+      "/api/v2"
+    ],
+    "keyHint": {
+      "fr": "Clé API du service",
+      "en": "Service API key",
+      "es": "Clave API del servicio",
+      "zh": "服务 API 密钥",
+      "ar": "مفتاح API الخاص بالخدمة"
+    },
+    "keyStyle": "token"
+  },
+  {
+    "slug": "gitea",
+    "metrics": [
+      "Dépôts"
+    ],
+    "needsKey": true,
+    "endpoints": [
+      "/api/v1/repos/search"
+    ],
+    "keyHint": {
+      "fr": "Clé API du service",
+      "en": "Service API key",
+      "es": "Clave API del servicio",
+      "zh": "服务 API 密钥",
+      "ar": "مفتاح API الخاص بالخدمة"
+    },
+    "keyStyle": "token"
+  },
+  {
+    "slug": "grafana",
+    "metrics": [
+      "Tableaux"
+    ],
+    "needsKey": true,
+    "endpoints": [
+      "/api/search"
+    ],
+    "keyHint": {
+      "fr": "Clé API du service",
+      "en": "Service API key",
+      "es": "Clave API del servicio",
+      "zh": "服务 API 密钥",
+      "ar": "مفتاح API الخاص بالخدمة"
+    },
+    "keyStyle": "token"
+  },
+  {
+    "slug": "syncthing",
+    "metrics": [
+      "Appareils",
+      "Dossiers"
+    ],
+    "needsKey": true,
+    "endpoints": [
+      "/rest/config/folders",
+      "/rest/system/connections"
+    ],
+    "keyHint": {
+      "fr": "Clé API du service",
+      "en": "Service API key",
+      "es": "Clave API del servicio",
+      "zh": "服务 API 密钥",
+      "ar": "مفتاح API الخاص بالخدمة"
+    },
+    "keyStyle": "token"
+  },
+  {
+    "slug": "audiobookshelf",
+    "metrics": [
+      "Bibliothèques"
+    ],
+    "needsKey": true,
+    "endpoints": [
+      "/api/libraries"
+    ],
+    "keyHint": {
+      "fr": "Clé API du service",
+      "en": "Service API key",
+      "es": "Clave API del servicio",
+      "zh": "服务 API 密钥",
+      "ar": "مفتاح API الخاص بالخدمة"
+    },
+    "keyStyle": "token"
+  },
+  {
+    "slug": "navidrome",
+    "metrics": [
+      "Chansons"
+    ],
+    "needsKey": true,
+    "endpoints": [
+      "/rest/getScanStatus.view"
+    ],
+    "keyHint": {
+      "fr": "Format : utilisateur:motdepasse",
+      "en": "Format: username:password",
+      "es": "Formato: usuario:contraseña",
+      "zh": "格式：用户名:密码",
+      "ar": "الصيغة: المستخدم:كلمة السر"
+    },
+    "keyStyle": "userPassword"
+  },
+  {
+    "slug": "frigate",
+    "metrics": [
+      "Caméras"
+    ],
+    "needsKey": false,
+    "endpoints": [
+      "/api/stats"
+    ],
+    "keyHint": null,
+    "keyStyle": "token"
+  },
+  {
+    "slug": "kavita",
+    "metrics": [
+      "Bibliothèques"
+    ],
+    "needsKey": true,
+    "endpoints": [
+      "/api/Plugin/authenticate"
+    ],
+    "keyHint": {
+      "fr": "Clé API du service",
+      "en": "Service API key",
+      "es": "Clave API del servicio",
+      "zh": "服务 API 密钥",
+      "ar": "مفتاح API الخاص بالخدمة"
+    },
+    "keyStyle": "token"
+  },
+  {
+    "slug": "mealie",
+    "metrics": [
+      "Recettes"
+    ],
+    "needsKey": true,
+    "endpoints": [
+      "/api/recipes"
+    ],
+    "keyHint": {
+      "fr": "Clé API du service",
+      "en": "Service API key",
+      "es": "Clave API del servicio",
+      "zh": "服务 API 密钥",
+      "ar": "مفتاح API الخاص بالخدمة"
+    },
+    "keyStyle": "token"
+  },
+  {
+    "slug": "miniflux",
+    "metrics": [
+      "Non lus"
+    ],
+    "needsKey": true,
+    "endpoints": [
+      "/v1/entries"
+    ],
+    "keyHint": {
+      "fr": "Clé API du service",
+      "en": "Service API key",
+      "es": "Clave API del servicio",
+      "zh": "服务 API 密钥",
+      "ar": "مفتاح API الخاص بالخدمة"
+    },
+    "keyStyle": "token"
+  },
+  {
+    "slug": "linkding",
+    "metrics": [
+      "Liens"
+    ],
+    "needsKey": true,
+    "endpoints": [
+      "/api/bookmarks/"
+    ],
+    "keyHint": {
+      "fr": "Clé API du service",
+      "en": "Service API key",
+      "es": "Clave API del servicio",
+      "zh": "服务 API 密钥",
+      "ar": "مفتاح API الخاص بالخدمة"
+    },
+    "keyStyle": "token"
+  },
+  {
+    "slug": "speedtest",
+    "metrics": [
+      "Réception",
+      "Envoi",
+      "Latence"
+    ],
+    "needsKey": true,
+    "endpoints": [
+      "/api/speedtest/latest"
+    ],
+    "keyHint": {
+      "fr": "Clé API du service",
+      "en": "Service API key",
+      "es": "Clave API del servicio",
+      "zh": "服务 API 密钥",
+      "ar": "مفتاح API الخاص بالخدمة"
+    },
+    "keyStyle": "token"
+  },
+  {
+    "slug": "scrutiny",
+    "metrics": [
+      "Disques"
+    ],
+    "needsKey": false,
+    "endpoints": [
+      "/api/summary"
+    ],
+    "keyHint": null,
+    "keyStyle": "token"
+  },
+  {
+    "slug": "netdata",
+    "metrics": [
+      "Alertes"
+    ],
+    "needsKey": false,
+    "endpoints": [
+      "/api/v1/alarms"
+    ],
+    "keyHint": null,
+    "keyStyle": "token"
+  },
+  {
+    "slug": "gotify",
+    "metrics": [
+      "Applications"
+    ],
+    "needsKey": true,
+    "endpoints": [
+      "/application"
+    ],
+    "keyHint": {
+      "fr": "Clé API du service",
+      "en": "Service API key",
+      "es": "Clave API del servicio",
+      "zh": "服务 API 密钥",
+      "ar": "مفتاح API الخاص بالخدمة"
+    },
+    "keyStyle": "token"
+  },
+  {
+    "slug": "authentik",
+    "metrics": [
+      "Utilisateurs"
+    ],
+    "needsKey": true,
+    "endpoints": [
+      "/api/v3/core/users/"
+    ],
+    "keyHint": {
+      "fr": "Clé API du service",
+      "en": "Service API key",
+      "es": "Clave API del servicio",
+      "zh": "服务 API 密钥",
+      "ar": "مفتاح API الخاص بالخدمة"
+    },
+    "keyStyle": "token"
+  },
+  {
+    "slug": "truenas",
+    "metrics": [
+      "Volumes",
+      "Alertes"
+    ],
+    "needsKey": true,
+    "endpoints": [
+      "/api/v2.0/alert/list",
+      "/api/v2.0/pool"
+    ],
+    "keyHint": {
+      "fr": "Clé API du service",
+      "en": "Service API key",
+      "es": "Clave API del servicio",
+      "zh": "服务 API 密钥",
+      "ar": "مفتاح API الخاص بالخدمة"
+    },
+    "keyStyle": "token"
+  },
+  {
+    "slug": "octoprint",
+    "metrics": [
+      "Progression"
+    ],
+    "needsKey": true,
+    "endpoints": [
+      "/api/job"
+    ],
+    "keyHint": {
+      "fr": "Clé API du service",
+      "en": "Service API key",
+      "es": "Clave API del servicio",
+      "zh": "服务 API 密钥",
+      "ar": "مفتاح API الخاص بالخدمة"
+    },
+    "keyStyle": "token"
+  },
+  {
+    "slug": "esphome",
+    "metrics": [
+      "Appareils"
+    ],
+    "needsKey": false,
+    "endpoints": [
+      "/devices"
+    ],
+    "keyHint": null,
+    "keyStyle": "token"
+  },
+  {
+    "slug": "ollama",
+    "metrics": [
+      "Modèles"
+    ],
+    "needsKey": false,
+    "endpoints": [
+      "/api/tags"
+    ],
+    "keyHint": null,
+    "keyStyle": "token"
+  },
+  {
+    "slug": "npm",
+    "metrics": [
+      "Routes"
+    ],
+    "needsKey": true,
+    "endpoints": [
+      "/api/nginx/proxy-hosts",
+      "/api/tokens"
+    ],
+    "keyHint": {
+      "fr": "Format : utilisateur:motdepasse",
+      "en": "Format: username:password",
+      "es": "Formato: usuario:contraseña",
+      "zh": "格式：用户名:密码",
+      "ar": "الصيغة: المستخدم:كلمة السر"
+    },
+    "keyStyle": "userPassword"
+  },
+  {
+    "slug": "wgeasy",
+    "metrics": [
+      "Appareils"
+    ],
+    "needsKey": true,
+    "endpoints": [
+      "/api/session",
+      "/api/wireguard/client"
+    ],
+    "keyHint": {
+      "fr": "Mot de passe de l'interface",
+      "en": "Web UI password",
+      "es": "Contraseña de la interfaz",
+      "zh": "网页界面密码",
+      "ar": "كلمة سر واجهة الويب"
+    },
+    "keyStyle": "password"
+  },
+  {
+    "slug": "jackett",
+    "metrics": [
+      "Sources"
+    ],
+    "needsKey": true,
+    "endpoints": [
+      "/api/v2.0/indexers"
+    ],
+    "keyHint": {
+      "fr": "Clé API du service",
+      "en": "Service API key",
+      "es": "Clave API del servicio",
+      "zh": "服务 API 密钥",
+      "ar": "مفتاح API الخاص بالخدمة"
+    },
+    "keyStyle": "token"
+  },
+  {
+    "slug": "deluge",
+    "metrics": [
+      "Réception",
+      "Envoi"
+    ],
+    "needsKey": true,
+    "endpoints": [
+      "/json"
+    ],
+    "keyHint": {
+      "fr": "Mot de passe de l'interface",
+      "en": "Web UI password",
+      "es": "Contraseña de la interfaz",
+      "zh": "网页界面密码",
+      "ar": "كلمة سر واجهة الويب"
+    },
+    "keyStyle": "password"
+  },
+  {
+    "slug": "photoprism",
+    "metrics": [
+      "Photos",
+      "Vidéos",
+      "Albums"
+    ],
+    "needsKey": true,
+    "endpoints": [
+      "/api/v1/session"
+    ],
+    "keyHint": {
+      "fr": "Format : utilisateur:motdepasse",
+      "en": "Format: username:password",
+      "es": "Formato: usuario:contraseña",
+      "zh": "格式：用户名:密码",
+      "ar": "الصيغة: المستخدم:كلمة السر"
+    },
+    "keyStyle": "userPassword"
+  },
+  {
+    "slug": "gitlab",
+    "metrics": [
+      "Dépôts"
+    ],
+    "needsKey": true,
+    "endpoints": [
+      "/api/v4/projects"
+    ],
+    "keyHint": {
+      "fr": "Clé API du service",
+      "en": "Service API key",
+      "es": "Clave API del servicio",
+      "zh": "服务 API 密钥",
+      "ar": "مفتاح API الخاص بالخدمة"
+    },
+    "keyStyle": "token"
+  },
+  {
+    "slug": "peertube",
+    "metrics": [
+      "Vidéos"
+    ],
+    "needsKey": false,
+    "endpoints": [
+      "/api/v1/videos"
+    ],
+    "keyHint": null,
+    "keyStyle": "token"
+  },
+  {
+    "slug": "bookstack",
+    "metrics": [
+      "Livres"
+    ],
+    "needsKey": true,
+    "endpoints": [
+      "/api/books"
+    ],
+    "keyHint": {
+      "fr": "Format : id:secret (jeton API)",
+      "en": "Format: id:secret (API token)",
+      "es": "Formato: id:secreto (token API)",
+      "zh": "格式：id:secret（API 令牌）",
+      "ar": "الصيغة: id:secret (رمز API)"
+    },
+    "keyStyle": "token"
+  },
+  {
+    "slug": "fireflyiii",
+    "metrics": [
+      "Comptes"
+    ],
+    "needsKey": true,
+    "endpoints": [
+      "/api/v1/accounts"
+    ],
+    "keyHint": {
+      "fr": "Clé API du service",
+      "en": "Service API key",
+      "es": "Clave API del servicio",
+      "zh": "服务 API 密钥",
+      "ar": "مفتاح API الخاص بالخدمة"
+    },
+    "keyStyle": "token"
+  },
+  {
+    "slug": "grocy",
+    "metrics": [
+      "Produits"
+    ],
+    "needsKey": true,
+    "endpoints": [
+      "/api/stock"
+    ],
+    "keyHint": {
+      "fr": "Clé API du service",
+      "en": "Service API key",
+      "es": "Clave API del servicio",
+      "zh": "服务 API 密钥",
+      "ar": "مفتاح API الخاص بالخدمة"
+    },
+    "keyStyle": "token"
+  },
+  {
+    "slug": "healthchecks",
+    "metrics": [
+      "En ligne"
+    ],
+    "needsKey": true,
+    "endpoints": [
+      "/api/v3/checks/"
+    ],
+    "keyHint": {
+      "fr": "Clé API du service",
+      "en": "Service API key",
+      "es": "Clave API del servicio",
+      "zh": "服务 API 密钥",
+      "ar": "مفتاح API الخاص بالخدمة"
+    },
+    "keyStyle": "token"
+  },
+  {
+    "slug": "changedetection",
+    "metrics": [
+      "Suivis"
+    ],
+    "needsKey": true,
+    "endpoints": [
+      "/api/v1/watch"
+    ],
+    "keyHint": {
+      "fr": "Clé API du service",
+      "en": "Service API key",
+      "es": "Clave API del servicio",
+      "zh": "服务 API 密钥",
+      "ar": "مفتاح API الخاص بالخدمة"
+    },
+    "keyStyle": "token"
+  },
+  {
+    "slug": "wordpress",
+    "metrics": [
+      "Articles"
+    ],
+    "needsKey": false,
+    "endpoints": [
+      "/wp-json/wp/v2/posts"
+    ],
+    "keyHint": null,
+    "keyStyle": "token"
+  },
+  {
+    "slug": "ghost",
+    "metrics": [
+      "Articles"
+    ],
+    "needsKey": true,
+    "endpoints": [
+      "/ghost/api/content/posts/"
+    ],
+    "keyHint": {
+      "fr": "Clé API du service",
+      "en": "Service API key",
+      "es": "Clave API del servicio",
+      "zh": "服务 API 密钥",
+      "ar": "مفتاح API الخاص بالخدمة"
+    },
+    "keyStyle": "token"
+  },
+  {
+    "slug": "matomo",
+    "metrics": [
+      "Visites"
+    ],
+    "needsKey": true,
+    "endpoints": [
+      "/index.php"
+    ],
+    "keyHint": {
+      "fr": "Clé API du service",
+      "en": "Service API key",
+      "es": "Clave API del servicio",
+      "zh": "服务 API 密钥",
+      "ar": "مفتاح API الخاص بالخدمة"
+    },
+    "keyStyle": "token"
+  },
+  {
+    "slug": "n8n",
+    "metrics": [
+      "Workflows",
+      "Libres",
+      "Volumes"
+    ],
+    "needsKey": true,
+    "endpoints": [
+      "/api/v1/workflows",
+      "/rpc.php"
+    ],
+    "keyHint": {
+      "fr": "Clé API du service",
+      "en": "Service API key",
+      "es": "Clave API del servicio",
+      "zh": "服务 API 密钥",
+      "ar": "مفتاح API الخاص بالخدمة"
+    },
+    "keyStyle": "token"
+  }
+]

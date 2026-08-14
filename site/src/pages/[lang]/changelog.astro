@@ -1,0 +1,109 @@
+---
+import { readFileSync } from 'node:fs';
+import Page from '../../layouts/Page.astro';
+import { LOCALES, useTranslations, type Locale } from '../../i18n';
+
+export function getStaticPaths() {
+  return LOCALES.map((lang) => ({ params: { lang } }));
+}
+
+const lang = Astro.params.lang as Locale;
+const t = useTranslations(lang);
+
+/**
+ * Le CHANGELOG est écrit par release-please à partir des messages de commit,
+ * qui sont en français : on le rend tel quel plutôt que d'en traduire une
+ * copie qui divergerait à la première release.
+ */
+const raw = readFileSync(new URL('../../../../CHANGELOG.md', import.meta.url), 'utf8');
+
+type Section = { title: string; items: string[] };
+type Release = { version: string; date: string; url?: string; sections: Section[] };
+
+const releases: Release[] = [];
+for (const line of raw.split('\n')) {
+  const version = line.match(/^## \[?([\d.]+)\]?(?:\(([^)]+)\))?\s*\((\d{4}-\d{2}-\d{2})\)/);
+  if (version) {
+    releases.push({ version: version[1], url: version[2], date: version[3], sections: [] });
+    continue;
+  }
+  const section = line.match(/^### (.+)$/);
+  if (section && releases.length) {
+    releases.at(-1)!.sections.push({ title: section[1].trim(), items: [] });
+    continue;
+  }
+  const item = line.match(/^\* (.+)$/);
+  if (item && releases.at(-1)?.sections.length) {
+    // on garde le texte, on jette les liens de commit et de ticket
+    const text = item[1]
+      .replace(/\s*\(\[[^\]]+\]\([^)]+\)\)/g, '')
+      .replace(/\*\*(.+?)\*\*/g, '$1')
+      .trim();
+    releases.at(-1)!.sections.at(-1)!.items.push(text);
+  }
+}
+
+const dateFormat = new Intl.DateTimeFormat(lang === 'zh' ? 'zh-Hans' : lang, {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+});
+
+const title = `${t('nav.changelog')} — Specula`;
+---
+
+<Page
+  {lang}
+  route="changelog/"
+  {title}
+  description={t('changelog.description')}
+  current="changelog"
+>
+  <section class="wrap section">
+    <p class="eyebrow">{t('nav.changelog')}</p>
+    <h1>{t('changelog.title')}</h1>
+    <p class="lede">{t('changelog.description')}</p>
+    {lang !== 'fr' && <p class="note">{t('changelog.language')}</p>}
+  </section>
+
+  <section class="wrap">
+    {
+      releases.map((release) => (
+        <article class="release">
+          <hr class="rule" />
+          <header>
+            <h2>{release.version}</h2>
+            <p class="date">{dateFormat.format(new Date(release.date))}</p>
+          </header>
+          <div class="body">
+            {release.sections.map((section) => (
+              <div class="section-block">
+                <h3>{section.title}</h3>
+                <ul>
+                  {section.items.map((item) => (
+                    <li>{item}</li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
+        </article>
+      ))
+    }
+  </section>
+</Page>
+
+<style>
+  .release { display: grid; grid-template-columns: 160px 1fr; gap: 8px 32px; padding-block: 26px 34px; }
+  .release .rule { grid-column: 1 / -1; margin-block-end: 18px; }
+  .release h2 { font-size: 26px; }
+  .date { color: var(--muted); font-size: 14px; margin: 0; }
+  .section-block { margin-block-end: 20px; }
+  .section-block h3 { font-size: 13px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); margin-block-end: 6px; }
+  .section-block ul { margin: 0; padding-inline-start: 20px; }
+  .section-block li { margin-block-end: 4px; }
+  .note { color: var(--muted); font-size: 14px; }
+  @media (max-width: 720px) {
+    .release { grid-template-columns: 1fr; }
+  }
+</style>

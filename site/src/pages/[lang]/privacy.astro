@@ -1,0 +1,33 @@
+---
+import Page from '../../layouts/Page.astro';
+import LegalDocument from '../../components/LegalDocument.astro';
+import { LOCALES, useTranslations, type Locale } from '../../i18n';
+import { PRIVACY } from '../../data/legal';
+
+export function getStaticPaths() {
+  return LOCALES.map((lang) => ({ params: { lang } }));
+}
+
+const lang = Astro.params.lang as Locale;
+const t = useTranslations(lang);
+
+// Le texte juridique n'existe qu'en français et en anglais.
+const docLang = lang === 'fr' ? 'fr' : 'en';
+const doc = PRIVACY[docLang];
+---
+
+<Page
+  {lang}
+  route="privacy/"
+  title={`${doc.title} — Specula`}
+  description={t('privacy.body')}
+  current="privacy"
+>
+  <LegalDocument
+    {doc}
+    {docLang}
+    {lang}
+    notice={t('legal.notice')}
+    updatedLabel={t('legal.updated')}
+  />
+</Page>

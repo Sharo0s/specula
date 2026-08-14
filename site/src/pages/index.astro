@@ -1,0 +1,38 @@
+---
+// La racine ne porte pas de contenu : elle renvoie vers la langue par défaut.
+// Astro l'exige dès que `redirectToDefaultLocale` est actif. En production,
+// Vercel répond une vraie 308 avant même de servir ce fichier (vercel.json) —
+// cette page est le filet pour tout autre hébergeur.
+import { LOCALES, BCP47, LOCALE_NAMES } from '../i18n';
+const target = '/en/';
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="refresh" content={`0; url=${target}`} />
+    <link rel="canonical" href={new URL(target, Astro.site ?? 'https://specula.app').href} />
+    {
+      LOCALES.map((l) => (
+        <link
+          rel="alternate"
+          hreflang={BCP47[l]}
+          href={new URL(`/${l}/`, Astro.site ?? 'https://specula.app').href}
+        />
+      ))
+    }
+    <meta name="robots" content="noindex" />
+    <title>Specula</title>
+  </head>
+  <body>
+    <p>Specula —
+      {LOCALES.map((l, i) => (
+        <>
+          {i > 0 && ' · '}
+          <a href={`/${l}/`} lang={BCP47[l]}>{LOCALE_NAMES[l]}</a>
+        </>
+      ))}
+    </p>
+  </body>
+</html>

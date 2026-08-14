@@ -1,0 +1,162 @@
+---
+import Page from '../../../layouts/Page.astro';
+import { LOCALES, useTranslations, type Locale } from '../../../i18n';
+import { metricLabel } from '../../../i18n/metrics';
+import { SERVICES } from '../../../data/services';
+import catalog from '../../../data/integrations.json';
+import { STORE_URL } from '../../../data/links';
+
+export function getStaticPaths() {
+  const named = catalog.filter((c) => c.slug !== 'generic' && SERVICES[c.slug]);
+  return LOCALES.flatMap((lang) =>
+    named.map((entry) => ({
+      params: { lang, slug: entry.slug },
+      props: { entry },
+    })),
+  );
+}
+
+type Entry = (typeof catalog)[number];
+const { entry } = Astro.props as { entry: Entry };
+const lang = Astro.params.lang as Locale;
+const t = useTranslations(lang);
+
+const meta = SERVICES[entry.slug]!;
+
+const metrics = entry.metrics.map((m) => metricLabel(m, lang));
+
+// « Films, Séries et Épisodes » — la conjonction suit la langue.
+const listFormat = new Intl.ListFormat(lang === 'zh' ? 'zh-Hans' : lang, {
+  style: 'long',
+  type: 'conjunction',
+});
+const metricsSentence = listFormat.format(metrics.map((m) => m.toLowerCase()));
+
+const fill = (key: 'integration.heading' | 'integration.lede' | 'integration.lede.plain' | 'integration.cta') =>
+  t(key).replace('{service}', meta.name).replace('{metrics}', metricsSentence);
+
+const heading = fill('integration.heading');
+const lede = metrics.length ? fill('integration.lede') : fill('integration.lede.plain');
+
+const keyLabel = entry.keyHint
+  ? entry.keyStyle === 'userPassword'
+    ? t('integrations.key.userPassword')
+    : entry.keyStyle === 'password'
+      ? t('integrations.key.password')
+      : t('integrations.key.token')
+  : t('integrations.key.none');
+
+// L'aide à la saisie vient du catalogue de l'app, déjà traduite. On ne
+// l'affiche que lorsqu'elle dit plus que le libellé générique.
+const hints = entry.keyHint as Record<string, string> | null;
+const keyHint = hints && hints.fr !== 'Clé API du service' ? (hints[lang] ?? hints.fr) : null;
+
+const siblings = catalog
+  .filter(
+    (c) =>
+      c.slug !== entry.slug &&
+      c.slug !== 'generic' &&
+      SERVICES[c.slug]?.family === meta.family,
+  )
+  .map((c) => ({ slug: c.slug, name: SERVICES[c.slug]!.name }))
+  .sort((a, b) => a.name.localeCompare(b.name));
+
+const title = `${meta.name} — Specula`;
+---
+
+<Page
+  {lang}
+  route={`integrations/${entry.slug}/`}
+  {title}
+  description={lede}
+  current="integrations"
+>
+  <section class="wrap section head">
+    <p class="eyebrow">
+      <a href={`/${lang}/integrations/`}>{t('integration.back')}</a>
+      <span class="sep">·</span>
+      {t(`family.${meta.family}` as 'family.media')}
+    </p>
+    <h1>{heading}</h1>
+    <p class="lede">{lede}</p>
+    <div class="actions">
+      <a class="btn btn-primary" href={STORE_URL}>{fill('integration.cta')}</a>
+      <a class="btn btn-secondary" href={meta.site} rel="noopener">{t('integration.official')}</a>
+    </div>
+  </section>
+
+  <section class="wrap">
+    <div class="grid cols-2">
+      <div>
+        <h2 class="small">{t('integrations.metrics.title')}</h2>
+        {
+          metrics.length ? (
+            <ul class="metrics">
+              {metrics.map((m) => (
+                <li>{m}</li>
+              ))}
+            </ul>
+          ) : (
+            <p>{t('integrations.metrics.none')}</p>
+          )
+        }
+      </div>
+
+      <div>
+        <h2 class="small">{t('integrations.key.title')}</h2>
+        <p>{keyLabel}</p>
+        {keyHint && <p class="hint">{keyHint}</p>}
+      </div>
+
+      {
+        entry.endpoints.length > 0 && (
+          <div>
+            <h2 class="small">{t('integrations.endpoints.title')}</h2>
+            <ul class="endpoints">
+              {entry.endpoints.map((e) => (
+                <li>
+                  <code class="ltr">{e}</code>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )
+      }
+
+      <div>
+        <h2 class="small">{t('integration.setup')}</h2>
+        <p>{t('integration.setup.body')}</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="wrap section">
+    <hr class="rule-thin" />
+    <p class="eyebrow siblings-title">{t(`family.${meta.family}` as 'family.media')}</p>
+    <p class="siblings">
+      {
+        siblings.map((s, i) => (
+          <>
+            {i > 0 && <span class="sep">·</span>}
+            <a href={`/${lang}/integrations/${s.slug}/`}>{s.name}</a>
+          </>
+        ))
+      }
+    </p>
+  </section>
+</Page>
+
+<style>
+  .head .eyebrow a { text-decoration: none; }
+  .sep { color: var(--rule); margin-inline: 6px; }
+  .actions { display: flex; flex-wrap: wrap; gap: 12px; margin-block-start: 26px; }
+  h2.small { font-size: 13px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); margin-block-end: 10px; }
+  .metrics { list-style: none; padding: 0; margin: 0; }
+  .metrics li { font-size: 19px; font-weight: 700; letter-spacing: -0.015em; padding-block: 3px; }
+  .endpoints { list-style: none; padding: 0; margin: 0; }
+  .endpoints li { padding-block: 3px; }
+  .hint { color: var(--muted); font-size: 14px; }
+  .siblings { max-width: none; }
+  .siblings a { text-decoration: none; }
+  .siblings-title { margin-block-start: 22px; }
+</style>

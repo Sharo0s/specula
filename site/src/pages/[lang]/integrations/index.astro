@@ -1,0 +1,99 @@
+---
+import Page from '../../../layouts/Page.astro';
+import { LOCALES, useTranslations, type Locale } from '../../../i18n';
+import { metricLabel } from '../../../i18n/metrics';
+import { SERVICES, FAMILY_ORDER } from '../../../data/services';
+import catalog from '../../../data/integrations.json';
+
+export function getStaticPaths() {
+  return LOCALES.map((lang) => ({ params: { lang } }));
+}
+
+const lang = Astro.params.lang as Locale;
+const t = useTranslations(lang);
+
+const ISSUE_TEMPLATE = 'https://github.com/Sharo0s/specula/issues/new?template=feature.yml';
+
+const named = catalog.filter((c) => c.slug !== 'generic' && SERVICES[c.slug]);
+
+const groups = FAMILY_ORDER.map((family) => ({
+  label: t(`family.${family}` as 'family.media'),
+  rows: named
+    .filter((c) => SERVICES[c.slug]!.family === family)
+    .map((c) => ({
+      slug: c.slug,
+      name: SERVICES[c.slug]!.name,
+      metrics: c.metrics.map((m) => metricLabel(m, lang)),
+    }))
+    .sort((a, b) => a.name.localeCompare(b.name)),
+}));
+
+const title = `${t('integrations.title')} — Specula`;
+---
+
+<Page
+  {lang}
+  route="integrations/"
+  {title}
+  description={t('integrations.lede')}
+  current="integrations"
+>
+  <section class="wrap section">
+    <p class="eyebrow">{t('integrations.eyebrow')}</p>
+    <h1>{t('integrations.title')}</h1>
+    <p class="lede">{t('integrations.lede')}</p>
+  </section>
+
+  <section class="wrap">
+    {
+      groups.map((group) => (
+        <div class="family">
+          <h2>{group.label}</h2>
+          <hr class="rule" />
+          <ul class="list">
+            {group.rows.map((row) => (
+              <li>
+                <a href={`/${lang}/integrations/${row.slug}/`}>{row.name}</a>
+                <span class="metrics">
+                  {row.metrics.length ? row.metrics.join(' · ') : t('integrations.metrics.none')}
+                </span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))
+    }
+  </section>
+
+  <section class="wrap section">
+    <hr class="rule-thin" />
+    <h2 class="missing">{t('integrations.missing')}</h2>
+    <p>{t('integrations.missing.body')}</p>
+    {/* le formulaire dédié du dépôt : les issues vierges y sont désactivées,
+        c'est donc le seul chemin — autant y mener directement */}
+    <p>
+      <a class="btn btn-secondary" href={ISSUE_TEMPLATE} rel="noopener">
+        {t('integrations.missing.cta')}
+      </a>
+    </p>
+  </section>
+</Page>
+
+<style>
+  .family { margin-block-end: 44px; }
+  .family h2 { font-size: 20px; text-transform: uppercase; letter-spacing: 0.06em; margin-block-end: 8px; }
+  .list { list-style: none; padding: 0; margin: 0; }
+  .list li {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px 18px;
+    align-items: baseline;
+    justify-content: space-between;
+    padding-block: 11px;
+    border-block-end: 1px solid var(--rule);
+  }
+  .list a { font-weight: 700; text-decoration: none; color: var(--text); font-size: 17px; }
+  .list a:hover { color: var(--accent); }
+  .metrics { color: var(--muted); font-size: 14px; text-align: end; }
+  .missing { margin-block-start: 24px; }
+</style>

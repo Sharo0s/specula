@@ -1,0 +1,347 @@
+---
+import Page from '../../layouts/Page.astro';
+import { LOCALES, useTranslations, type Locale } from '../../i18n';
+import StoreButton from '../../components/StoreButton.astro';
+import { metricLabel } from '../../i18n/metrics';
+import { IS_LIVE } from '../../data/links';
+
+export function getStaticPaths() {
+  return LOCALES.map((lang) => ({ params: { lang } }));
+}
+
+const lang = Astro.params.lang as Locale;
+const t = useTranslations(lang);
+
+const features = [
+  { title: t('features.metrics.title'), body: t('features.metrics.body') },
+  { title: t('features.outage.title'), body: t('features.outage.body') },
+  { title: t('features.surfaces.title'), body: t('features.surfaces.body') },
+  { title: t('features.demo.title'), body: t('features.demo.body') },
+];
+
+const setup = [
+  { title: t('setup.scan.title'), body: t('setup.scan.body') },
+  { title: t('setup.yaml.title'), body: t('setup.yaml.body') },
+  { title: t('setup.manual.title'), body: t('setup.manual.body') },
+];
+
+const faq = [
+  { q: t('faq.remote.q'), a: t('faq.remote.a') },
+  { q: t('faq.selfhost.q'), a: t('faq.selfhost.a') },
+  { q: t('faq.homepage.q'), a: t('faq.homepage.a') },
+  { q: t('faq.versions.q'), a: t('faq.versions.a') },
+];
+
+// Le titre se colore par morceaux : la portion accentuée est une chaîne
+// traduite, pas un découpage à l'index — chaque langue place l'accent où sa
+// grammaire le met.
+const accent = t('hero.title.accent');
+const [before, after] = t('hero.title').split(accent);
+
+const title = `Specula — ${t('site.tagline')}`;
+---
+
+<Page {lang} route="" {title} description={t('site.description')}>
+  <section class="hero-band">
+    <div class="wrap hero">
+      <div class="hero-text">
+        <h1>
+          {after === undefined ? t('hero.title') : (
+            <>
+              {before}
+              <em>{accent}</em>
+              {after}
+            </>
+          )}
+        </h1>
+        <p class="lede">{t('hero.lede')}</p>
+        <StoreButton
+          {lang}
+          secondary={{ href: `/${lang}/integrations/`, label: t('hero.cta.secondary') }}
+        />
+        <p class="proof">
+          <span>{t('hero.proof.privacy')}</span>
+          <span>{t('hero.proof.platforms')}</span>
+        </p>
+      </div>
+
+      {/* Les deux appareils se chevauchent : l'iPad porte la vue d'ensemble,
+          l'iPhone passe devant pour dire que tout tient dans une main. */}
+      <div class="hero-shots">
+        <img
+          class="shot-pad"
+          src="/screenshots/ipados.png"
+          width="600"
+          height="800"
+          alt={t('shot.ipados.alt')}
+          fetchpriority="high"
+        />
+        <img
+          class="shot-phone"
+          src="/screenshots/ios.png"
+          width="322"
+          height="700"
+          alt={t('shot.ios.alt')}
+          fetchpriority="high"
+        />
+      </div>
+    </div>
+  </section>
+
+  <section class="wrap section" id="features">
+    <p class="eyebrow">{t('features.eyebrow')}</p>
+    <h2>{t('features.title')}</h2>
+
+    {/* Chaque bloc porte une petite démonstration, pas une icône décorative :
+        ce que l'app affiche vraiment, en HTML — donc net partout et traduit
+        avec le reste. Les valeurs sont celles du mode démo de l'app. */}
+    <div class="cards">
+      <article class="card">
+        <h3>{features[0].title}</h3>
+        <p>{features[0].body}</p>
+        <div class="demo demo-metrics">
+          <div class="svc-name"><i class="dot"></i>Immich</div>
+          <div class="svc-values">
+            {[
+              ['10 967', metricLabel('Photos', lang)],
+              ['314', metricLabel('Vidéos', lang)],
+              ['112 Go', metricLabel('Stockage', lang)],
+            ].map(([value, label]) => (
+              <div>
+                <b>{value}</b>
+                <span>{label}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </article>
+
+      <article class="card">
+        <h3>{features[1].title}</h3>
+        <p>{features[1].body}</p>
+        <div class="demo">
+          <div class="bars">
+            {Array.from({ length: 30 }, (_, i) => <i class={i === 21 ? 'down' : ''} />)}
+          </div>
+          <p class="demo-caption">{t('feature.uptime')}</p>
+        </div>
+      </article>
+
+      <article class="card">
+        <h3>{features[2].title}</h3>
+        <p>{features[2].body}</p>
+        <div class="demo chips">
+          <span>{t('surface.home')}</span>
+          <span>{t('surface.lock')}</span>
+          <span>{t('surface.menubar')}</span>
+          <span>Live Activity</span>
+        </div>
+      </article>
+
+      <article class="card">
+        <h3>{features[3].title}</h3>
+        <p>{features[3].body}</p>
+        <div class="demo">
+          <span class="pill">{t('feature.demo.chip')}</span>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <section class="wrap section" id="setup">
+    <p class="eyebrow">{t('setup.eyebrow')}</p>
+    <h2>{t('setup.title')}</h2>
+    <ol class="steps">
+      {
+        setup.map((s, i) => (
+          <li>
+            <span class="step-n">{i + 1}</span>
+            <h3>{s.title}</h3>
+            <p>{s.body}</p>
+          </li>
+        ))
+      }
+    </ol>
+  </section>
+
+  <section class="wrap section" id="faq">
+    <p class="eyebrow">{t('faq.eyebrow')}</p>
+    <h2>{t('faq.title')}</h2>
+    {/* `details`/`summary` : un accordéon natif, sans une ligne de JavaScript —
+        la CSP du site interdit les scripts, et le contenu replié reste dans le
+        HTML, donc indexé. La première question s'ouvre pour montrer le geste. */}
+    <div class="faq">
+      {
+        faq.map((f, i) => (
+          <details class="faq-item" open={i === 0}>
+            <summary>
+              <h3>{f.q}</h3>
+            </summary>
+            <p>{f.a}</p>
+          </details>
+        ))
+      }
+    </div>
+  </section>
+
+  <section class="wrap section close">
+    <hr class="rule" />
+    <h2>{IS_LIVE ? t('cta.title.live') : t('cta.title')}</h2>
+    <p class="lede">{IS_LIVE ? t('cta.body.live') : t('cta.body')}</p>
+    <StoreButton {lang} />
+  </section>
+</Page>
+
+<style>
+  /* — hero en deux colonnes : le discours, puis les appareils — */
+  .hero-band { background: var(--hero-wash); }
+  .hero {
+    display: grid;
+    grid-template-columns: 1.02fr 0.98fr;
+    gap: clamp(28px, 4vw, 60px);
+    align-items: center;
+    padding-block: clamp(44px, 6vw, 76px) clamp(36px, 5vw, 64px);
+  }
+  .hero h1 em { font-style: normal; color: var(--accent); }
+  .hero .lede { margin-block-start: 20px; }
+
+  .proof {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px 26px;
+    margin-block-start: 26px;
+    color: var(--muted);
+    font-size: 14px;
+    max-width: none;
+  }
+  .proof span { display: inline-flex; align-items: center; gap: 8px; }
+  .proof span::before { content: ''; width: 6px; height: 6px; background: var(--accent); flex: none; }
+
+  /* Position relative plutôt qu'absolue : la hauteur suit les images, et
+     l'inversion RTL se fait toute seule (propriétés logiques). */
+  .hero-shots { position: relative; padding-inline-start: 16%; }
+  .hero-shots img {
+    border-radius: 14px;
+    border: 1px solid var(--shot-border);
+    box-shadow: var(--shadow);
+  }
+  .shot-pad { width: 100%; }
+  .shot-phone {
+    width: 38%;
+    position: absolute;
+    inset-block-end: -6%;
+    inset-inline-start: 0;
+    border-radius: 18px;
+  }
+
+  @media (max-width: 860px) {
+    .hero { grid-template-columns: 1fr; }
+    .hero-shots { padding-inline-start: 22%; margin-block-start: 12px; }
+  }
+
+  /* — blocs de fonctionnalités : des cartes qui respirent, chacune finissant
+       sur une petite démonstration plutôt que sur du vide — */
+  .cards {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
+    margin-block-start: 34px;
+  }
+  .card {
+    background: var(--card);
+    border: 1px solid var(--shot-border);
+    border-radius: 16px;
+    padding: 26px 26px 22px;
+    display: flex;
+    flex-direction: column;
+  }
+  .card h3 { margin-block-end: 10px; }
+  .card p { margin-block-end: 20px; }
+  .card .demo { margin-block-start: auto; }
+
+  /* la carte de service, telle que l'app la dessine */
+  .demo-metrics {
+    background: var(--bg);
+    border: 1px solid var(--shot-border);
+    border-radius: 12px;
+    padding: 14px 16px;
+  }
+  .svc-name { display: flex; align-items: center; gap: 8px; font-weight: 700; font-size: 15px; }
+  .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--ok); flex: none; }
+  .svc-values { display: flex; gap: 22px; margin-block-start: 10px; flex-wrap: wrap; }
+  .svc-values b { display: block; font-size: 19px; letter-spacing: -0.02em; }
+  .svc-values span { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.06em; }
+
+  /* le mur de statut : trente barres, une panne */
+  .bars { display: flex; gap: 3px; }
+  .bars i { flex: 1; height: 30px; border-radius: 2px; background: color-mix(in srgb, var(--ok) 34%, var(--bg)); }
+  .bars i.down { background: var(--accent); }
+  .demo-caption { color: var(--muted); font-size: 13px; margin: 10px 0 0; }
+
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; }
+  .chips span, .pill {
+    border: 1px solid var(--shot-border);
+    border-radius: 999px;
+    padding: 7px 14px;
+    font-size: 13px;
+    font-weight: 600;
+    background: var(--bg);
+  }
+  .pill { color: var(--accent); border-color: currentColor; }
+
+  /* — prise en main : trois étapes numérotées, sans grille encadrée — */
+  .steps {
+    list-style: none;
+    padding: 0;
+    margin: 34px 0 0;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 32px;
+  }
+  .steps li { border-block-start: 2px solid var(--rule-strong); padding-block-start: 16px; }
+  .step-n {
+    display: block;
+    font-size: 34px;
+    font-weight: 800;
+    letter-spacing: -0.04em;
+    line-height: 1;
+    color: var(--accent);
+    margin-block-end: 10px;
+  }
+  .steps h3 { margin-block-end: 6px; }
+  .steps p { margin-block-end: 0; }
+
+  @media (max-width: 860px) {
+    .cards, .steps { grid-template-columns: 1fr; }
+  }
+
+  .faq-item { border-block-start: 1px solid var(--rule); }
+  .faq-item:last-of-type { border-block-end: 1px solid var(--rule); }
+
+  .faq-item summary {
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
+    padding-block: 18px;
+    cursor: pointer;
+    list-style: none; /* Firefox */
+  }
+  .faq-item summary::-webkit-details-marker { display: none; } /* Safari */
+  .faq-item summary h3 { flex: 1; }
+
+  /* Le marqueur : un + qui devient − une fois ouvert. `content` porte le
+     signe, pas une image — il suit donc la taille du texte. */
+  .faq-item summary::after {
+    content: '+';
+    font-size: 22px;
+    font-weight: 700;
+    line-height: 1;
+    color: var(--accent);
+  }
+  .faq-item[open] summary::after { content: '−'; }
+  .faq-item[open] summary h3 { color: var(--accent); }
+
+  .faq-item p { padding-block-end: 22px; margin-block-end: 0; }
+
+  .close h2 { margin-block-start: 32px; }
+</style>

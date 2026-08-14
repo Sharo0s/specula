@@ -1,0 +1,93 @@
+---
+import Page from '../../layouts/Page.astro';
+import { LOCALES, useTranslations, type Locale } from '../../i18n';
+import { PRICES, formatPrice } from '../../data/pricing';
+import StoreButton from '../../components/StoreButton.astro';
+import { IS_LIVE } from '../../data/links';
+
+export function getStaticPaths() {
+  return LOCALES.map((lang) => ({ params: { lang } }));
+}
+
+const lang = Astro.params.lang as Locale;
+const t = useTranslations(lang);
+
+const slotPrice = formatPrice(PRICES.slot, lang);
+const unlimitedPrice = formatPrice(PRICES.unlimited, lang);
+
+// « comment marche une place » et « illimité » portent désormais les tuiles de
+// prix : ne restent ici que les questions d'après-achat.
+const blocks = [
+  { title: t('pricing.quota.title'), body: t('pricing.quota.body') },
+  { title: t('pricing.restore.title'), body: t('pricing.restore.body') },
+  { title: t('pricing.refund.title'), body: t('pricing.refund.body') },
+];
+
+const title = `${t('pricing.page.title')} — Specula`;
+---
+
+<Page {lang} route="pricing/" {title} description={t('pricing.body')} current="pricing">
+  <section class="wrap section">
+    <p class="eyebrow">{t('pricing.eyebrow')}</p>
+    <h1>{t('pricing.title')}</h1>
+    <p class="lede">{t('pricing.body')}</p>
+  </section>
+
+  <section class="wrap">
+    <div class="tiers">
+      <div class="tier">
+        <p class="tier-n">4</p>
+        <h2>{t('pricing.free.title')}</h2>
+        <ul>{t('pricing.free.items').map((i) => <li>{i}</li>)}</ul>
+      </div>
+      <div class="tier accent">
+        <p class="tier-n">{slotPrice}</p>
+        <p class="tier-unit">{t('pricing.price.slot')}</p>
+        <h2>{t('pricing.how.title')}</h2>
+        <p>{t('pricing.how.body')}</p>
+      </div>
+      <div class="tier">
+        <p class="tier-n">{unlimitedPrice}</p>
+        <p class="tier-unit">{t('pricing.price.unlimited')}</p>
+        <h2>{t('pricing.unlimited.title')}</h2>
+        <p>{t('pricing.unlimited.body')}</p>
+      </div>
+    </div>
+    <p class="note wrap-note">{t('pricing.note')}</p>
+  </section>
+
+  <section class="wrap section">
+    <div class="grid cols-2">
+      {
+        blocks.map((b) => (
+          <div>
+            <h2 class="small">{b.title}</h2>
+            <p>{b.body}</p>
+          </div>
+        ))
+      }
+    </div>
+  </section>
+
+  <section class="wrap section">
+    <hr class="rule" />
+    <h2>{IS_LIVE ? t('cta.title.live') : t('cta.title')}</h2>
+    <p class="lede">{IS_LIVE ? t('cta.body.live') : t('cta.body')}</p>
+    <StoreButton {lang} />
+  </section>
+</Page>
+
+<style>
+  .tiers { display: grid; gap: 2px; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); background: var(--rule); border: 2px solid var(--rule-strong); }
+  .tier { background: var(--bg); padding: 26px; }
+  .tier-n { font-size: clamp(34px, 4.4vw, 46px); font-weight: 800; letter-spacing: -0.04em; line-height: 1; margin: 0 0 4px; }
+  .tier.accent .tier-n { color: var(--accent); }
+  .tier-unit { color: var(--muted); font-size: 14px; margin: 0 0 16px; }
+  .wrap-note { margin-block-start: 14px; }
+  .tier h2 { font-size: 20px; margin-block-end: 10px; }
+  .tier ul { padding-inline-start: 20px; margin: 0; }
+  .tier li { margin-block-end: 5px; }
+  h2.small { font-size: 13px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); margin-block-end: 8px; }
+  .note { color: var(--muted); font-size: 14px; margin-block-end: 0; }
+  .close h2 { margin-block-start: 26px; }
+</style>
