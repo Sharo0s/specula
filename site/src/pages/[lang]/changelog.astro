@@ -94,12 +94,22 @@ const title = `${t('nav.changelog')} — Specula`;
 </Page>
 
 <style>
-  .release { display: grid; grid-template-columns: 160px 1fr; gap: 8px 32px; padding-block: 26px 34px; }
-  .release .rule { grid-column: 1 / -1; margin-block-end: 18px; }
-  .release h2 { font-size: 26px; }
+  .release {
+    display: grid;
+    grid-template-columns: 160px 1fr;
+    gap: 8px 32px;
+    padding: 26px 28px 22px;
+    margin-block-end: 14px;
+    background: var(--card);
+    border: 1px solid var(--shot-border);
+    border-radius: 18px;
+  }
+  /* le filet séparait les versions ; la carte s'en charge désormais */
+  .release .rule { display: none; }
+  .release h2 { font-size: 26px; color: var(--accent); }
   .date { color: var(--muted); font-size: 14px; margin: 0; }
   .section-block { margin-block-end: 20px; }
-  .section-block h3 { font-size: 13px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); margin-block-end: 6px; }
+  .section-block h3 { font-size: 13px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent); margin-block-end: 6px; }
   .section-block ul { margin: 0; padding-inline-start: 20px; }
   .section-block li { margin-block-end: 4px; }
   .note { color: var(--muted); font-size: 14px; }

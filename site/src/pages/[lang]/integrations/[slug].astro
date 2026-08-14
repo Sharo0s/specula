@@ -80,14 +80,14 @@ const title = `${meta.name} — Specula`;
     <h1>{heading}</h1>
     <p class="lede">{lede}</p>
     <div class="actions">
-      <a class="btn btn-primary" href={STORE_URL}>{fill('integration.cta')}</a>
-      <a class="btn btn-secondary" href={meta.site} rel="noopener">{t('integration.official')}</a>
+      <a class="btn btn-primary" href={STORE_URL} target="_blank" rel="noopener">{fill('integration.cta')}</a>
+      <a class="btn btn-secondary" href={meta.site} target="_blank" rel="noopener">{t('integration.official')}</a>
     </div>
   </section>
 
   <section class="wrap">
     <div class="grid cols-2">
-      <div>
+      <div class="span-2">
         <h2 class="small">{t('integrations.metrics.title')}</h2>
         {
           metrics.length ? (
@@ -97,7 +97,7 @@ const title = `${meta.name} — Specula`;
               ))}
             </ul>
           ) : (
-            <p>{t('integrations.metrics.none')}</p>
+            <p class="none">{t('integrations.metrics.none')}</p>
           )
         }
       </div>
@@ -134,14 +134,7 @@ const title = `${meta.name} — Specula`;
     <hr class="rule-thin" />
     <p class="eyebrow siblings-title">{t(`family.${meta.family}` as 'family.media')}</p>
     <p class="siblings">
-      {
-        siblings.map((s, i) => (
-          <>
-            {i > 0 && <span class="sep">·</span>}
-            <a href={`/${lang}/integrations/${s.slug}/`}>{s.name}</a>
-          </>
-        ))
-      }
+      {siblings.map((s) => <a href={`/${lang}/integrations/${s.slug}/`}>{s.name}</a>)}
     </p>
   </section>
 </Page>
@@ -150,13 +143,38 @@ const title = `${meta.name} — Specula`;
   .head .eyebrow a { text-decoration: none; }
   .sep { color: var(--rule); margin-inline: 6px; }
   .actions { display: flex; flex-wrap: wrap; gap: 12px; margin-block-start: 26px; }
-  h2.small { font-size: 13px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); margin-block-end: 10px; }
-  .metrics { list-style: none; padding: 0; margin: 0; }
-  .metrics li { font-size: 19px; font-weight: 700; letter-spacing: -0.015em; padding-block: 3px; }
-  .endpoints { list-style: none; padding: 0; margin: 0; }
-  .endpoints li { padding-block: 3px; }
-  .hint { color: var(--muted); font-size: 14px; }
-  .siblings { max-width: none; }
-  .siblings a { text-decoration: none; }
+  h2.small { font-size: 12px; text-transform: uppercase; letter-spacing: 0.09em; color: var(--accent); margin-block-end: 12px; }
+
+  /* La carte des métriques tient les deux colonnes : c'est l'information que
+     le visiteur est venu chercher. */
+  .span-2 { grid-column: 1 / -1; }
+  .metrics { list-style: none; padding: 0; margin: 0; display: flex; flex-wrap: wrap; gap: 10px; }
+  .metrics li {
+    font-size: 19px;
+    font-weight: 700;
+    letter-spacing: -0.015em;
+    background: var(--bg);
+    border: 1px solid var(--shot-border);
+    border-radius: 12px;
+    padding: 10px 16px;
+  }
+  .none { color: var(--muted); margin: 0; }
+
+  .endpoints { list-style: none; padding: 0; margin: 0; display: flex; flex-wrap: wrap; gap: 8px; }
+  .endpoints li { padding: 0; }
+  .endpoints code { background: var(--bg); border: 1px solid var(--shot-border); border-radius: 8px; padding: 5px 10px; }
+  .hint { color: var(--muted); font-size: 14px; margin-block-end: 0; }
+
+  .siblings { max-width: none; display: flex; flex-wrap: wrap; gap: 8px; }
+  .siblings a {
+    text-decoration: none;
+    font-size: 14px;
+    color: var(--text);
+    background: var(--card);
+    border: 1px solid var(--shot-border);
+    border-radius: 999px;
+    padding: 6px 14px;
+  }
+  .siblings a:hover { border-color: var(--accent); color: var(--accent); }
   .siblings-title { margin-block-start: 22px; }
 </style>

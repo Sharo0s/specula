@@ -49,14 +49,21 @@ const title = `${t('integrations.title')} — Specula`;
       groups.map((group) => (
         <div class="family">
           <h2>{group.label}</h2>
-          <hr class="rule" />
           <ul class="list">
             {group.rows.map((row) => (
               <li>
-                <a href={`/${lang}/integrations/${row.slug}/`}>{row.name}</a>
-                <span class="metrics">
-                  {row.metrics.length ? row.metrics.join(' · ') : t('integrations.metrics.none')}
-                </span>
+                <a href={`/${lang}/integrations/${row.slug}/`}>
+                  <span class="name">{row.name}</span>
+                  {row.metrics.length ? (
+                    <span class="metrics">
+                      {row.metrics.map((m) => (
+                        <i>{m}</i>
+                      ))}
+                    </span>
+                  ) : (
+                    <span class="metrics none">{t('integrations.metrics.none')}</span>
+                  )}
+                </a>
               </li>
             ))}
           </ul>
@@ -72,7 +79,7 @@ const title = `${t('integrations.title')} — Specula`;
     {/* le formulaire dédié du dépôt : les issues vierges y sont désactivées,
         c'est donc le seul chemin — autant y mener directement */}
     <p>
-      <a class="btn btn-secondary" href={ISSUE_TEMPLATE} rel="noopener">
+      <a class="btn btn-secondary" href={ISSUE_TEMPLATE} target="_blank" rel="noopener">
         {t('integrations.missing.cta')}
       </a>
     </p>
@@ -80,20 +87,50 @@ const title = `${t('integrations.title')} — Specula`;
 </Page>
 
 <style>
-  .family { margin-block-end: 44px; }
-  .family h2 { font-size: 20px; text-transform: uppercase; letter-spacing: 0.06em; margin-block-end: 8px; }
-  .list { list-style: none; padding: 0; margin: 0; }
-  .list li {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 6px 18px;
-    align-items: baseline;
-    justify-content: space-between;
-    padding-block: 11px;
-    border-block-end: 1px solid var(--rule);
+  /* Une carte cliquable par service : les métriques deviennent des pastilles,
+     ce que la liste en deux colonnes ne montrait qu'en petit texte gris. */
+  .family { margin-block-end: 40px; }
+  .family h2 {
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.09em;
+    color: var(--accent);
+    margin-block-end: 14px;
   }
-  .list a { font-weight: 700; text-decoration: none; color: var(--text); font-size: 17px; }
-  .list a:hover { color: var(--accent); }
-  .metrics { color: var(--muted); font-size: 14px; text-align: end; }
+  .list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 12px;
+  }
+  .list a {
+    display: block;
+    height: 100%;
+    padding: 16px 18px;
+    background: var(--card);
+    border: 1px solid var(--shot-border);
+    border-radius: 14px;
+    text-decoration: none;
+    color: var(--text);
+  }
+  .list a:hover { border-color: var(--accent); }
+  .name { display: block; font-weight: 700; font-size: 17px; letter-spacing: -0.015em; }
+  .metrics { display: flex; flex-wrap: wrap; gap: 6px; margin-block-start: 12px; }
+  .metrics i {
+    font-style: normal;
+    font-size: 12px;
+    font-weight: 600;
+    /* Le rouge de marque est assombri de 12% pour ce seul usage : sur du texte
+       de 12px, #ec3013 plein ne donne que 4,2:1 contre le blanc, sous le seuil
+       AA de 4,5:1. Le mélange monte à ~5:1 sans changer la couleur perçue. */
+    background: color-mix(in srgb, var(--accent) 88%, #000);
+    color: #fff;
+    border: 1px solid transparent;
+    border-radius: 999px;
+    padding: 3px 10px;
+  }
+  .metrics.none { color: var(--muted); font-size: 13px; display: block; }
   .missing { margin-block-start: 24px; }
 </style>

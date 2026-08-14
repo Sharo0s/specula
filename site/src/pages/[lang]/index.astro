@@ -2,6 +2,7 @@
 import Page from '../../layouts/Page.astro';
 import { LOCALES, useTranslations, type Locale } from '../../i18n';
 import StoreButton from '../../components/StoreButton.astro';
+import DeviceHero from '../../components/DeviceHero.astro';
 import { metricLabel } from '../../i18n/metrics';
 import { IS_LIVE } from '../../data/links';
 
@@ -66,26 +67,7 @@ const title = `Specula — ${t('site.tagline')}`;
         </p>
       </div>
 
-      {/* Les deux appareils se chevauchent : l'iPad porte la vue d'ensemble,
-          l'iPhone passe devant pour dire que tout tient dans une main. */}
-      <div class="hero-shots">
-        <img
-          class="shot-pad"
-          src="/screenshots/ipados.png"
-          width="600"
-          height="800"
-          alt={t('shot.ipados.alt')}
-          fetchpriority="high"
-        />
-        <img
-          class="shot-phone"
-          src="/screenshots/ios.png"
-          width="322"
-          height="700"
-          alt={t('shot.ios.alt')}
-          fetchpriority="high"
-        />
-      </div>
+      <DeviceHero {lang} />
     </div>
   </section>
 
@@ -195,14 +177,19 @@ const title = `Specula — ${t('site.tagline')}`;
 
 <style>
   /* — hero en deux colonnes : le discours, puis les appareils — */
-  .hero-band { background: var(--hero-wash); }
+  /* `clip` et non `hidden` : les appareils débordent vers le bord de la
+     fenêtre sans jamais créer de défilement horizontal. */
+  .hero-band { background: var(--hero-wash); overflow-x: clip; }
   .hero {
     display: grid;
-    grid-template-columns: 1.02fr 0.98fr;
-    gap: clamp(28px, 4vw, 60px);
+    grid-template-columns: 0.87fr 1.13fr;
+    gap: clamp(26px, 3.4vw, 52px);
     align-items: center;
     padding-block: clamp(44px, 6vw, 76px) clamp(36px, 5vw, 64px);
   }
+  /* Un cran sous l'échelle globale : la colonne est plus étroite depuis que
+     les appareils ont pris de la place, et le titre doit tenir en deux lignes. */
+  .hero h1 { font-size: clamp(36px, 5vw, 60px); }
   .hero h1 em { font-style: normal; color: var(--accent); }
   .hero .lede { margin-block-start: 20px; }
 
@@ -218,27 +205,9 @@ const title = `Specula — ${t('site.tagline')}`;
   .proof span { display: inline-flex; align-items: center; gap: 8px; }
   .proof span::before { content: ''; width: 6px; height: 6px; background: var(--accent); flex: none; }
 
-  /* Position relative plutôt qu'absolue : la hauteur suit les images, et
-     l'inversion RTL se fait toute seule (propriétés logiques). */
-  .hero-shots { position: relative; padding-inline-start: 16%; }
-  .hero-shots img {
-    border-radius: 14px;
-    border: 1px solid var(--shot-border);
-    box-shadow: var(--shadow);
-  }
-  .shot-pad { width: 100%; }
-  .shot-phone {
-    width: 38%;
-    position: absolute;
-    inset-block-end: -6%;
-    inset-inline-start: 0;
-    border-radius: 18px;
-  }
-
   @media (max-width: 860px) {
     .hero { grid-template-columns: 1fr; }
-    .hero-shots { padding-inline-start: 22%; margin-block-start: 12px; }
-  }
+    }
 
   /* — blocs de fonctionnalités : des cartes qui respirent, chacune finissant
        sur une petite démonstration plutôt que sur du vide — */
