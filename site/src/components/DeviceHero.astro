@@ -1,0 +1,171 @@
+---
+import { useTranslations, type Locale } from '../i18n';
+
+interface Props {
+  lang: Locale;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+
+/**
+ * Les trois appareils, châssis dessinés en CSS plutôt que chargés en image :
+ * rien à télécharger, net à toutes les densités, et les proportions restent
+ * justes quand la colonne rétrécit.
+ *
+ * Les captures sont celles du mode démo de la build courante, sur iPhone 17
+ * Pro, iPad Pro 13" et macOS — chacune en clair et en sombre.
+ */
+---
+
+<div class="devices">
+  <!-- MacBook Pro : écran encoché, posé sur sa base -->
+  <div class="mac">
+    <div class="mac-screen">
+      <span class="mac-notch" aria-hidden="true"></span>
+      <div class="mac-display" role="img" aria-label={t('shot.macos.alt')}></div>
+    </div>
+    <div class="mac-base" aria-hidden="true"><span></span></div>
+  </div>
+
+  {/* Écrans en fond CSS et non en `picture` : `picture` ne connaît que la
+      préférence système, si bien qu'un lecteur ayant forcé le thème clair au
+      bouton voyait des captures sombres. Le fond, lui, suit les mêmes
+      sélecteurs que la palette — et le navigateur ne télécharge que la
+      variante réellement appliquée. */}
+
+  <!-- iPad Pro 13" -->
+  <div class="pad">
+    <div class="pad-screen" role="img" aria-label={t('shot.ipados.alt')}></div>
+  </div>
+
+  <!-- iPhone 17 Pro : Dynamic Island par-dessus la capture -->
+  <div class="phone">
+    <div class="phone-screen" role="img" aria-label={t('shot.ios.alt')}></div>
+    <span class="island" aria-hidden="true"></span>
+  </div>
+</div>
+
+<style>
+  .devices {
+    position: relative;
+    padding-block-end: 13%;
+    /* Le bloc reprend la gouttière et une part de la marge que le centrage du
+       conteneur laisse de ce côté — sinon, sur un grand écran, il paraît perdu
+       au milieu du vide. Le débord est plafonné : au-delà, les appareils
+       viendraient toucher le bord de la fenêtre et s'y feraient couper.
+       (Un `max-width` ferait mieux l'affaire en apparence, mais sur un enfant
+       de grille pourvu d'une marge négative il effondre la largeur.) */
+    margin-inline-end: calc(
+      -1 * min(var(--edge) + (100vw - min(100vw, var(--wrap))) / 2, 170px)
+    );
+
+    filter: drop-shadow(var(--shadow));
+  }
+
+  /* — MacBook Pro — */
+  .mac-screen {
+    position: relative;
+    background: #0b0b0c;
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    border-radius: 12px 12px 4px 4px;
+    padding: 9px 9px 10px;
+  }
+  .mac-display {
+    aspect-ratio: 1600 / 856;
+    border-radius: 3px;
+    background: url('/shots/mac-light.webp') center / cover no-repeat;
+  }
+  .mac-notch {
+    position: absolute;
+    inset-block-start: 0;
+    inset-inline-start: 50%;
+    transform: translateX(-50%);
+    width: 17%;
+    height: 9px;
+    background: #0b0b0c;
+    border-radius: 0 0 6px 6px;
+  }
+  /* la base : un trapèze clair, plus large que l'écran, avec l'encoche
+     d'ouverture au milieu */
+  .mac-base {
+    position: relative;
+    height: 11px;
+    margin-inline: -3.5%;
+    background: linear-gradient(180deg, #d4d4d6, #a9a9ad 62%, #85858a);
+    border-radius: 0 0 10px 10px;
+    clip-path: polygon(0 0, 100% 0, 98.6% 100%, 1.4% 100%);
+  }
+  .mac-base span {
+    position: absolute;
+    inset-block-start: 0;
+    inset-inline-start: 50%;
+    transform: translateX(-50%);
+    width: 13%;
+    height: 4px;
+    background: #9a9a9f;
+    border-radius: 0 0 5px 5px;
+  }
+
+  /* — iPad Pro, posé devant, débordant du Mac — */
+  .pad {
+    position: absolute;
+    inset-block-end: 0;
+    inset-inline-end: 0;
+    width: 36%;
+    background: #0b0b0c;
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    border-radius: 17px;
+    padding: 6px;
+  }
+  .pad-screen {
+    aspect-ratio: 1240 / 1653;
+    border-radius: 12px;
+    background: url('/shots/ipad-light.webp') center / cover no-repeat;
+  }
+
+  /* — iPhone 17 Pro, au premier plan — */
+  .phone {
+    position: absolute;
+    inset-block-end: -2%;
+    inset-inline-start: 1%;
+    width: 19.5%;
+    background: #0b0b0c;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    border-radius: 22px;
+    padding: 4px;
+  }
+  .phone-screen {
+    aspect-ratio: 620 / 1348;
+    border-radius: 18px;
+    background: url('/shots/iphone-light.webp') center / cover no-repeat;
+  }
+  .island {
+    position: absolute;
+    inset-block-start: 8px;
+    inset-inline-start: 50%;
+    transform: translateX(-50%);
+    width: 34%;
+    height: 7px;
+    background: #0b0b0c;
+    border-radius: 999px;
+  }
+
+  /* Les captures sombres, par les deux chemins du thème : préférence système
+     (sauf choix clair explicite) et choix explicite au bouton. */
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme='light']) .mac-display { background-image: url('/shots/mac-dark.webp'); }
+    :root:not([data-theme='light']) .pad-screen { background-image: url('/shots/ipad-dark.webp'); }
+    :root:not([data-theme='light']) .phone-screen { background-image: url('/shots/iphone-dark.webp'); }
+  }
+  :root[data-theme='dark'] .mac-display { background-image: url('/shots/mac-dark.webp'); }
+  :root[data-theme='dark'] .pad-screen { background-image: url('/shots/ipad-dark.webp'); }
+  :root[data-theme='dark'] .phone-screen { background-image: url('/shots/iphone-dark.webp'); }
+
+  /* Sous 560px, l'iPhone deviendrait illisible : on le retire et l'iPad
+     reprend la place. */
+  @media (max-width: 560px) {
+    .phone { display: none; }
+    .pad { width: 42%; }
+  }
+</style>
