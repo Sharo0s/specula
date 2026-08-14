@@ -6,9 +6,10 @@ body:
     id: probleme
     attributes:
       label: Le problème
-      description: Ce que l'app ne permet pas aujourd'hui, et dans quelle situation.
-    validations:
-      required: true
+      description: >-
+        Ce que l'app ne permet pas aujourd'hui, et dans quelle situation.
+        Facultatif : pour une simple demande d'intégration, le nom du service
+        et sa doc d'API suffisent.
 
   - type: textarea
     id: solution
