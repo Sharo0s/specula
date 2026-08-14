@@ -170,6 +170,9 @@ export const fr = {
   'faq.remote.q': 'Et si mon homelab n’est pas exposé sur Internet ?',
   'faq.remote.a':
     'Specula demande une seule URL par service et n’essaie pas de percer ton réseau. Ce qui rend ton homelab joignable de l’extérieur — VPN, reverse proxy, tunnel — se règle sous l’app. Depuis ton réseau local, rien à faire.',
+  'faq.away.q': 'Comment le consulter en déplacement ?',
+  'faq.away.a':
+    'Une seule adresse par service : celle qui fonctionne des deux côtés. Avec un réseau maillé comme Tailscale, saisis le nom MagicDNS — jellyfin.ton-tailnet.ts.net — il résout chez toi comme dehors, et le trafic passe en direct par ton réseau local quand tu y es. Un reverse proxy ou un tunnel font le même travail. Specula ne fabrique aucune route : elle suit la tienne, et continue d’accepter le certificat auto-signé de ton service sur la plage d’adresses du tailnet.',
   'faq.selfhost.q': 'Faut-il héberger quelque chose ?',
   'faq.selfhost.a':
     'Non. Pas d’agent à installer, pas de conteneur à lancer, pas de compte à créer. L’app interroge directement les API que tes services exposent déjà.',

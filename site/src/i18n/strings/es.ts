@@ -169,6 +169,9 @@ export const es = {
   'faq.remote.q': '¿Y si mi homelab no está expuesto a internet?',
   'faq.remote.a':
     'Specula pide una sola dirección por servicio y nunca intenta atravesar tu red. Lo que hace accesible tu homelab desde fuera —VPN, proxy inverso, túnel— se configura debajo de la app. En tu propia red no hay nada que hacer.',
+  'faq.away.q': '¿Cómo lo consulto fuera de casa?',
+  'faq.away.a':
+    'Una sola dirección por servicio: la que funciona desde ambos lados. Con una red mallada como Tailscale, escribe el nombre MagicDNS —jellyfin.tu-tailnet.ts.net—: resuelve en casa y fuera, y el tráfico sigue yendo directo por tu red local cuando estás en ella. Un proxy inverso o un túnel hacen lo mismo. Specula no crea ninguna ruta: sigue la tuya, y mantiene la aceptación del certificado autofirmado de tu servicio en el rango de direcciones del tailnet.',
   'faq.selfhost.q': '¿Tengo que alojar algo?',
   'faq.selfhost.a':
     'No. Ningún agente que instalar, ningún contenedor que arrancar, ninguna cuenta que crear. La app consulta las API que tus servicios ya exponen.',

@@ -168,6 +168,9 @@ export const zh = {
   'faq.remote.q': '如果我的 homelab 没有暴露在公网上呢？',
   'faq.remote.a':
     'Specula 每个服务只要一个地址，也从不尝试穿透你的网络。让 homelab 能从外部访问的方式——VPN、反向代理、隧道——属于应用之下的一层。在自己的网络里，什么都不用做。',
+  'faq.away.q': '不在家时怎么查看？',
+  'faq.away.a':
+    '每个服务只填一个地址：在家和在外都能用的那个。若使用 Tailscale 这类网状网络，填 MagicDNS 名称（jellyfin.你的-tailnet.ts.net）：在家在外都能解析，而当你在同一局域网时流量仍走直连。反向代理或隧道同样可行。Specula 不会自行构建线路，它只沿用你已经搭好的那条，并且在 tailnet 地址段内依然接受服务的自签名证书。',
   'faq.selfhost.q': '需要额外部署什么吗？',
   'faq.selfhost.a':
     '不需要。没有代理程序要装，没有容器要跑，也没有账号要注册。应用直接调用你的服务已经暴露的 API。',
