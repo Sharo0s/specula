@@ -22,9 +22,10 @@ export const en = {
   'hero.proof.platforms': 'iPhone, iPad and Mac — natively.',
   'hero.cta.primary': 'Join the TestFlight beta',
   'hero.cta.secondary': 'Browse the integrations',
-  'hero.caption': 'Demo mode — every surface of the app works without a homelab.',
 
   // — captures d'écran —
+  'shot.macos.alt':
+    'Specula on macOS: sources and groups down one side, service cards with their metrics in the middle, and one service’s detail alongside.',
   'shot.ios.alt':
     'Specula on iPhone: services listed by group with each one’s latency, the system band on top, Komga marked offline.',
   'shot.ipados.alt':
@@ -72,7 +73,6 @@ export const en = {
   // — privacy —
   'privacy.body':
     'The app talks to your machines and to nothing else. No signup, no middleman your addresses travel through, no tracker. API keys live in the device keychain — never in a backup, never on iCloud.',
-  'privacy.link': 'Read the privacy policy',
 
   // — pricing —
   'pricing.eyebrow': 'Pricing',
@@ -161,7 +161,6 @@ export const en = {
   'integration.setup.body':
     'Scan your network over Bonjour, import your existing services.yaml, or type the address. Specula guesses the type on its own.',
   'integration.cta': 'Try it with {service}',
-  'integration.family': 'Family',
 
   // — FAQ —
   'faq.eyebrow': 'Questions',
@@ -192,7 +191,6 @@ export const en = {
     'One TestFlight link for iPhone, iPad and Mac. Demo mode runs with nothing configured.',
 
   // — footer —
-  'footer.source': 'Source code',
   'footer.support': 'Support',
   'footer.privacy': 'Privacy',
   'footer.changelog': 'Changelog',

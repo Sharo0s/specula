@@ -22,9 +22,10 @@ export const es = {
   'hero.proof.platforms': 'iPhone, iPad y Mac, en nativo.',
   'hero.cta.primary': 'Unirse a la beta de TestFlight',
   'hero.cta.secondary': 'Ver las integraciones',
-  'hero.caption': 'Modo demo: toda la app funciona sin ningún homelab.',
 
   // — capturas —
+  'shot.macos.alt':
+    'Specula en macOS: las fuentes y los grupos a un lado, los servicios en tarjetas con sus métricas en el centro y el detalle de un servicio al lado.',
   'shot.ios.alt':
     'Specula en iPhone: la lista de servicios por grupo con la latencia de cada uno, la banda de sistema arriba y Komga marcado fuera de línea.',
   'shot.ipados.alt':
@@ -72,7 +73,6 @@ export const es = {
   // — privacidad —
   'privacy.body':
     'La app habla con tus máquinas y con nada más. Sin registro, sin intermediario por el que pasen tus direcciones, sin rastreadores. Las claves de API viven en el llavero del dispositivo: nunca en una copia de seguridad, nunca en iCloud.',
-  'privacy.link': 'Leer la política de privacidad',
 
   // — precio —
   'pricing.eyebrow': 'Precio',
@@ -161,7 +161,6 @@ export const es = {
   'integration.setup.body':
     'Escanea tu red por Bonjour, importa tu services.yaml o escribe la dirección. Specula adivina el tipo por su cuenta.',
   'integration.cta': 'Probarlo con {service}',
-  'integration.family': 'Familia',
 
   // — preguntas —
   'faq.eyebrow': 'Preguntas',
@@ -192,7 +191,6 @@ export const es = {
     'Un solo enlace de TestFlight para iPhone, iPad y Mac. El modo demo arranca sin configurar nada.',
 
   // — pie —
-  'footer.source': 'Código fuente',
   'footer.support': 'Soporte',
   'footer.privacy': 'Privacidad',
   'footer.changelog': 'Novedades',

@@ -20,7 +20,7 @@ export interface LegalDoc {
 
 import { APP_STORE, TESTFLIGHT } from './links';
 
-const MAIL = '<a href="mailto:contact@smalard.ovh">contact@smalard.ovh</a>';
+const MAIL = '<a href="mailto:specula@nysia.fr">specula@nysia.fr</a>';
 
 export const PRIVACY: Record<'fr' | 'en', LegalDoc> = {
   fr: {
@@ -166,12 +166,21 @@ export const SUPPORT: Record<'fr' | 'en', LegalDoc> = {
         de l'app, l'appareil et, si possible, le service concerné.</span></p>`,
       },
       {
+        h: 'Proposer une idée ou signaler un bogue',
+        html: `<p>Tout passe par le dépôt&nbsp;:
+        <a href="https://github.com/Sharo0s/specula/issues" target="_blank" rel="noopener">ouvrir une demande</a>. Deux formulaires vous attendent — l'un pour
+        les bogues, l'autre pour les propositions, y compris les demandes d'intégration&nbsp;:
+        le nom du service et un lien vers la documentation de son API suffisent.</p>
+        <p>Pour un bogue, indiquez la version de l'app, l'appareil et le service concerné&nbsp;;
+        c'est ce qui permet de reproduire.</p>`,
+      },
+      {
         h: 'Installer Specula',
         html: `<p>Specula est sur l'App&nbsp;Store&nbsp;:
-        <a href="${APP_STORE ?? TESTFLIGHT}">voir la fiche</a>. La même app couvre l'iPhone,
+        <a href="${APP_STORE ?? TESTFLIGHT}" target="_blank" rel="noopener">voir la fiche</a>. La même app couvre l'iPhone,
         l'iPad et le Mac. Le téléchargement est gratuit, quatre services compris&nbsp;; les
         places suivantes s'achètent depuis l'application.</p>
-        <p>Si vous utilisiez la bêta <a href="${TESTFLIGHT}">TestFlight</a>, installez la version
+        <p>Si vous utilisiez la bêta <a href="${TESTFLIGHT}" target="_blank" rel="noopener">TestFlight</a>, installez la version
         de l'App&nbsp;Store&nbsp;: vos services et vos clés restent en place, et vous cessez de
         dépendre d'une build qui expire.</p>`,
       },
@@ -248,12 +257,21 @@ export const SUPPORT: Record<'fr' | 'en', LegalDoc> = {
         the app version, the device and, if possible, the service involved.</span></p>`,
       },
       {
+        h: 'Suggest an idea or report a bug',
+        html: `<p>It all goes through the repository:
+        <a href="https://github.com/Sharo0s/specula/issues" target="_blank" rel="noopener">open a request</a>. Two forms are waiting — one for bugs, one for
+        proposals, integration requests included: the service's name and a link to its API
+        documentation are enough.</p>
+        <p>For a bug, mention the app version, the device and the service involved; that is what
+        makes it reproducible.</p>`,
+      },
+      {
         h: 'Install Specula',
         html: `<p>Specula is on the App Store:
-        <a href="${APP_STORE ?? TESTFLIGHT}">see the listing</a>. The same app covers iPhone,
+        <a href="${APP_STORE ?? TESTFLIGHT}" target="_blank" rel="noopener">see the listing</a>. The same app covers iPhone,
         iPad and Mac. Downloading is free, four services included; further slots are bought from
         inside the app.</p>
-        <p>If you were running the <a href="${TESTFLIGHT}">TestFlight</a> beta, install the App
+        <p>If you were running the <a href="${TESTFLIGHT}" target="_blank" rel="noopener">TestFlight</a> beta, install the App
         Store build: your services and keys stay put, and you stop depending on a build that
         expires.</p>`,
       },

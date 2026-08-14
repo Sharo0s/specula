@@ -22,9 +22,10 @@ export const zh = {
   'hero.proof.platforms': 'iPhone、iPad 和 Mac，全部原生。',
   'hero.cta.primary': '加入 TestFlight 测试版',
   'hero.cta.secondary': '查看集成',
-  'hero.caption': '演示模式——没有 homelab 也能体验全部界面。',
 
   // — 截图 —
+  'shot.macos.alt':
+    'macOS 上的 Specula：一侧是数据源和分组，中间是带指标的服务卡片，旁边是某个服务的详情。',
   'shot.ios.alt':
     'iPhone 上的 Specula：按分组列出的服务及各自延迟，顶部为系统状态条，Komga 标记为离线。',
   'shot.ipados.alt':
@@ -72,7 +73,6 @@ export const zh = {
   // — 隐私 —
   'privacy.body':
     '应用只与你的机器通信，不与任何其他方通信。无需注册，没有中转你地址的中间人，没有跟踪器。API 密钥保存在设备钥匙串中——不会进入备份，也不会上传 iCloud。',
-  'privacy.link': '阅读隐私政策',
 
   // — 价格 —
   'pricing.eyebrow': '价格',
@@ -160,7 +160,6 @@ export const zh = {
   'integration.setup.body':
     '用 Bonjour 扫描网络、导入现有的 services.yaml，或者直接输入地址。Specula 会自行判断类型。',
   'integration.cta': '用 {service} 试试',
-  'integration.family': '分类',
 
   // — 常见问题 —
   'faq.eyebrow': '问题',
@@ -189,7 +188,6 @@ export const zh = {
   'cta.body': '一个 TestFlight 链接，覆盖 iPhone、iPad 和 Mac。演示模式无需任何配置即可运行。',
 
   // — 页脚 —
-  'footer.source': '源代码',
   'footer.support': '支持',
   'footer.privacy': '隐私',
   'footer.changelog': '更新日志',

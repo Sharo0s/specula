@@ -22,9 +22,10 @@ export const ar = {
   'hero.proof.platforms': 'iPhone وiPad وMac — بشكل أصلي.',
   'hero.cta.primary': 'انضم إلى النسخة التجريبية على TestFlight',
   'hero.cta.secondary': 'تصفّح التكاملات',
-  'hero.caption': 'وضع العرض التجريبي — يعمل التطبيق بالكامل دون أي مختبر منزلي.',
 
   // — لقطات الشاشة —
+  'shot.macos.alt':
+    'Specula على macOS: المصادر والمجموعات على أحد الجانبين، وبطاقات الخدمات بمقاييسها في الوسط، وتفاصيل خدمة إلى جانبها.',
   'shot.ios.alt':
     'Specula على iPhone: قائمة الخدمات مرتّبة بالمجموعات مع زمن استجابة كل منها، وشريط النظام في الأعلى، وKomga مُعلَّمة كمتوقفة.',
   'shot.ipados.alt':
@@ -72,7 +73,6 @@ export const ar = {
   // — الخصوصية —
   'privacy.body':
     'يتحدث التطبيق إلى أجهزتك وحدها. لا تسجيل، ولا وسيط تمرّ عبره عناوينك، ولا أدوات تتبّع. وتبقى مفاتيح الواجهات في سلسلة مفاتيح الجهاز — لا في نسخة احتياطية ولا على iCloud.',
-  'privacy.link': 'اقرأ سياسة الخصوصية',
 
   // — السعر —
   'pricing.eyebrow': 'السعر',
@@ -160,7 +160,6 @@ export const ar = {
   'integration.setup.body':
     'افحص شبكتك عبر Bonjour، أو استورد ملف services.yaml لديك، أو اكتب العنوان. ويستنتج Specula النوع وحده.',
   'integration.cta': 'جرّبه مع {service}',
-  'integration.family': 'العائلة',
 
   // — أسئلة —
   'faq.eyebrow': 'أسئلة',
@@ -190,7 +189,6 @@ export const ar = {
     'رابط TestFlight واحد لـ iPhone وiPad وMac. ووضع العرض التجريبي يعمل دون أي إعداد.',
 
   // — التذييل —
-  'footer.source': 'الشيفرة المصدرية',
   'footer.support': 'الدعم',
   'footer.privacy': 'الخصوصية',
   'footer.changelog': 'سجل التغييرات',

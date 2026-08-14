@@ -39,7 +39,7 @@ const priceLine = t('cta.price').replace('{price}', formatPrice(PRICES.slot, lan
     IS_LIVE ? (
       /* Le badge officiel, servi tel qu'Apple le fournit. Le thème choisit la
          variante noire ou blanche — `picture` le fait sans JavaScript. */
-      <a class="store-badge" href={STORE_URL}>
+      <a class="store-badge" href={STORE_URL} target="_blank" rel="noopener">
         <picture>
           <source srcset={`/badges/white-${badge}.svg`} media="(prefers-color-scheme: dark)" />
           <img src={`/badges/black-${badge}.svg`} alt={label} height="52" />
@@ -47,7 +47,7 @@ const priceLine = t('cta.price').replace('{price}', formatPrice(PRICES.slot, lan
       </a>
     ) : (
       /* Pas de badge Apple pour une bêta : bouton maison vers TestFlight. */
-      <a class="store-btn" href={STORE_URL}>
+      <a class="store-btn" href={STORE_URL} target="_blank" rel="noopener">
         <svg class="store-glyph" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
           <path
             fill="currentColor"
