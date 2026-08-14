@@ -15,7 +15,7 @@ interface Props {
 
 const { lang, route = '', title, description, current } = Astro.props;
 const t = useTranslations(lang);
-const site = Astro.site ?? new URL('https://specula.app');
+const site = Astro.site ?? new URL('https://specula.dev');
 const url = (l: Locale) => new URL(`/${l}/${route}`, site).href;
 
 const nav = [

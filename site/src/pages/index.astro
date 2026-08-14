@@ -12,13 +12,13 @@ const target = '/en/';
   <head>
     <meta charset="utf-8" />
     <meta http-equiv="refresh" content={`0; url=${target}`} />
-    <link rel="canonical" href={new URL(target, Astro.site ?? 'https://specula.app').href} />
+    <link rel="canonical" href={new URL(target, Astro.site ?? 'https://specula.dev').href} />
     {
       LOCALES.map((l) => (
         <link
           rel="alternate"
           hreflang={BCP47[l]}
-          href={new URL(`/${l}/`, Astro.site ?? 'https://specula.app').href}
+          href={new URL(`/${l}/`, Astro.site ?? 'https://specula.dev').href}
         />
       ))
     }

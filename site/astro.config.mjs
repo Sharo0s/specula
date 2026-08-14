@@ -2,10 +2,10 @@
 import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
 
-// Le domaine n'est pas encore acheté — cette valeur alimente les URL absolues
-// du sitemap et des balises hreflang, et doit être corrigée avant la mise en
-// ligne (et dans vercel.json si l'hébergement en dépend).
-const SITE = 'https://specula.app';
+// Alimente les URL absolues du sitemap, les canoniques et les balises
+// hreflang. `.dev` est un domaine à HSTS préchargé : les navigateurs refusent
+// le HTTP en clair, l'hébergement doit donc servir en HTTPS.
+const SITE = 'https://specula.dev';
 
 export default defineConfig({
   site: SITE,

@@ -56,9 +56,6 @@ tout script.
 
 ### Avant la mise en ligne
 
-- **Le domaine n'est pas acheté.** `astro.config.mjs` porte
-  `https://specula.app` en attendant : cette valeur alimente le sitemap, les
-  URL canoniques et les `hreflang`. À corriger avant le premier déploiement.
 - **Les captures sont en français** alors que le site parle cinq langues.
   L'app étant localisée, il faut les refaire par langue (simulateur en `es`,
   `zh-Hans`, `ar`) et les ranger en `public/screenshots/<lang>/`.
