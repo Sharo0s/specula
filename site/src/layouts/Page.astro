@@ -25,7 +25,6 @@ const nav = [
   { key: 'changelog', label: t('nav.changelog'), href: `/${lang}/changelog/` },
 ];
 
-const REPO = 'https://github.com/Sharo0s/specula';
 ---
 
 <!doctype html>
@@ -89,7 +88,7 @@ const REPO = 'https://github.com/Sharo0s/specula';
               </a>
             ))
           }
-          <a href={STORE_URL} class="nav-cta">{IS_LIVE ? t('nav.cta.live') : t('nav.cta')}</a>
+          <a href={STORE_URL} class="nav-cta" target="_blank" rel="noopener">{IS_LIVE ? t('nav.cta.live') : t('nav.cta')}</a>
           <button type="button" class="theme" data-theme-toggle aria-label={t('theme.toggle')}>
             <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
               {/* lune et soleil dans le même gabarit : le CSS montre celui qui
@@ -116,7 +115,6 @@ const REPO = 'https://github.com/Sharo0s/specula';
     <footer class="wrap">
       <div class="footer-grid">
         <p class="footer-links">
-          <a href={REPO}>{t('footer.source')}</a>
           <a href={`/${lang}/support/`}>{t('footer.support')}</a>
           <a href={`/${lang}/privacy/`}>{t('footer.privacy')}</a>
           <a href={`/${lang}/changelog/`}>{t('footer.changelog')}</a>

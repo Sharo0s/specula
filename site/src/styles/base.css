@@ -118,8 +118,8 @@ code {
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.1em;
-  color: var(--muted);
-  margin: 0 0 8px;
+  color: var(--accent);
+  margin: 0 0 10px;
 }
 
 .lede { font-size: clamp(18px, 2.1vw, 21px); color: var(--muted); max-width: 54ch; }
@@ -128,13 +128,14 @@ code {
 .btn {
   display: inline-block;
   padding: 13px 22px;
+  border-radius: 12px;
   font-weight: 700;
   font-size: 15px;
   text-decoration: none;
-  border: 2px solid transparent;
+  border: 1px solid transparent;
 }
 .btn-primary { background: var(--accent); color: var(--accent-text); }
-.btn-secondary { border-color: var(--rule-strong); color: var(--text); }
+.btn-secondary { border-color: var(--shot-border); background: var(--card); color: var(--text); }
 .btn:hover { opacity: 0.85; }
 
 /* — en-tête et pied — */
@@ -155,9 +156,15 @@ code {
 footer { border-block-start: 1px solid var(--rule); padding-block: 32px 56px; color: var(--muted); font-size: 14px; }
 footer a { color: inherit; }
 
-/* — grilles — */
-.grid { display: grid; gap: 2px; background: var(--rule); border: 2px solid var(--rule-strong); }
-.grid > * { background: var(--bg); padding: 22px; }
+/* — grilles — Des cartes détachées plutôt qu'un quadrillage : c'est la
+   grammaire posée sur l'accueil, reprise ici pour toutes les pages. */
+.grid { display: grid; gap: 14px; }
+.grid > * {
+  background: var(--card);
+  border: 1px solid var(--shot-border);
+  border-radius: 16px;
+  padding: 24px;
+}
 /* Colonnes fixes plutôt qu'auto-fit : le nombre d'éléments est connu, et
    auto-fit ouvrait une troisième colonne qui laissait deux cases vides — le
    fond de la grille apparaissait alors comme un trou. */
