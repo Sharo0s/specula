@@ -173,6 +173,16 @@ struct MacSettingsPage: View {
                         .padding(.vertical, 10)
                     }
 
+                    settingsBlock("Apparence") {
+                        HStack {
+                            Text("Thème").font(.archivo(13.5, .bold))
+                            Spacer()
+                            MSeg(options: AppAppearance.segments,
+                                 selection: $store.appearance, fontSize: 10)
+                        }
+                        .padding(.vertical, 10)
+                    }
+
                     settingsBlock("Langue") {
                         // Six segments ne tiennent pas à côté du libellé dans la
                         // colonne de 420 pt : le sélecteur prend sa propre ligne.

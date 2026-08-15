@@ -245,6 +245,17 @@ struct SettingsView: View {
             .padding(.bottom, 10)
         }
 
+        // Apparence
+        section("Apparence") {
+            HStack {
+                Text("Thème")
+                    .font(.archivo(13.5, .bold))
+                Spacer()
+                MSeg(options: AppAppearance.segments, selection: $store.appearance)
+            }
+            .padding(.vertical, 10)
+        }
+
         // Langue
         section("Langue", note: "Relance l'app pour appliquer partout.") {
             // Six segments ne tiennent plus sur une ligne d'iPhone : libellé au-dessus

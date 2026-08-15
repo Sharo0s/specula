@@ -36,6 +36,10 @@ struct SpeculaApp: App {
                 .transformEnvironment(\.layoutDirection) {
                     if let direction = store.layoutDirectionOverride { $0 = direction }
                 }
+                // Posé sur la fenêtre, comme la langue : appliqué plus bas dans
+                // la hiérarchie, il laisserait les feuilles et les popovers au
+                // thème du système.
+                .preferredColorScheme(store.colorSchemeOverride)
         }
         .windowStyle(.hiddenTitleBar)
         .defaultSize(Self.defaultWindowSize)
@@ -66,6 +70,7 @@ struct SpeculaApp: App {
                 .transformEnvironment(\.layoutDirection) {
                     if let direction = store.layoutDirectionOverride { $0 = direction }
                 }
+                .preferredColorScheme(store.colorSchemeOverride)
         }
         #endif
     }

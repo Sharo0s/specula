@@ -15,7 +15,6 @@ final class MacUIState {
     /// Service sélectionné → inspecteur.
     var selection: String? = "immich"
     var paletteOpen = false
-    var forceDark = false
 }
 
 struct MacRootView: View {
@@ -47,7 +46,6 @@ struct MacRootView: View {
                 store.finishOnboarding()
             })
                 .frame(minWidth: 760, minHeight: 640)
-                .preferredColorScheme(ui.forceDark ? .dark : nil)
         }
     }
 
@@ -74,7 +72,6 @@ struct MacRootView: View {
         }
         .frame(minWidth: 1280, minHeight: 800)
         .environment(ui)
-        .preferredColorScheme(ui.forceDark ? .dark : nil)
         .background {
             // ⌘K global
             Button("") { ui.paletteOpen.toggle() }
@@ -100,6 +97,9 @@ struct MacRootView: View {
 
 struct MacToolbar: View {
     @Environment(AppStore.self) private var store
+    /// L'apparence réellement à l'écran, pour proposer l'inverse de ce que
+    /// l'utilisateur voit — et non l'inverse d'un réglage qu'il ne voit pas.
+    @Environment(\.colorScheme) private var colorScheme
     @Bindable var ui: MacUIState
 
     var body: some View {
@@ -124,15 +124,16 @@ struct MacToolbar: View {
             }
             .buttonStyle(.plain)
             Button {
-                ui.forceDark.toggle()
+                store.toggleAppearance(system: colorScheme)
             } label: {
-                Image(systemName: ui.forceDark ? "sun.max" : "moon")
+                Image(systemName: colorScheme == .dark ? "sun.max" : "moon")
                     .font(.system(size: 13, weight: .medium))
                     .frame(width: 30, height: 28)
                     .overlay(Rectangle().strokeBorder(Ink.divider, lineWidth: 1))
                     .contentShape(.rect)
             }
             .buttonStyle(.plain)
+            .help(colorScheme == .dark ? "Passer en clair" : "Passer en sombre")
             Text(Date.now, format: .dateTime.weekday(.abbreviated).day().month(.abbreviated))
                 .font(.archivo(12)).monospacedDigit()
                 .foregroundStyle(Ink.muted)

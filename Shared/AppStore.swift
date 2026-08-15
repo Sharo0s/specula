@@ -23,6 +23,20 @@ enum AppLanguage {
     }
 }
 
+/// Apparence claire ou sombre, sur le modèle de `AppLanguage`.
+///
+/// Trois états et non deux : « Système » doit rester atteignable, sinon un
+/// choix fait une fois fige l'app pour toujours, y compris quand le Mac ou
+/// l'iPhone bascule tout seul à la tombée du jour.
+enum AppAppearance {
+    @MainActor
+    static var segments: [(String, String)] {
+        [("system", String(localized: "Système")),
+         ("light", String(localized: "Clair")),
+         ("dark", String(localized: "Sombre"))]
+    }
+}
+
 // MARK: - Store central
 // Deux sources de données :
 // - `.demo` : le simulateur du prototype (random-walk, panne Komga scénarisée).
@@ -108,6 +122,34 @@ final class AppStore {
 
     var localeOverride: Locale? {
         appLanguage == "system" ? nil : Locale(identifier: appLanguage)
+    }
+
+    /// Apparence : "system", "light" ou "dark". Persistée comme la langue —
+    /// un thème choisi à la main n'a pas à être redemandé au lancement suivant.
+    var appearance: String = UserDefaults.standard.string(forKey: "appearance") ?? "system" {
+        didSet {
+            guard appearance != oldValue else { return }
+            UserDefaults.standard.set(appearance, forKey: "appearance")
+        }
+    }
+
+    /// `nil` laisse SwiftUI suivre le système. Un choix explicite s'impose dans
+    /// les deux sens — c'est là que l'ancien `forceDark` échouait : il ne
+    /// savait que forcer le sombre, si bien que sur un Mac déjà sombre le
+    /// bouton semblait mort.
+    var colorSchemeOverride: ColorScheme? {
+        switch appearance {
+        case "light": .light
+        case "dark": .dark
+        default: nil
+        }
+    }
+
+    /// Ce que voit réellement l'utilisateur, pour que le bouton de bascule
+    /// propose l'inverse de l'écran plutôt que l'inverse d'un réglage.
+    func toggleAppearance(system: ColorScheme) {
+        let effective = colorSchemeOverride ?? system
+        appearance = effective == .dark ? "light" : "dark"
     }
 
     /// L'environnement `locale` ne retourne pas la mise en page à lui seul :
