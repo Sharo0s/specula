@@ -1,5 +1,16 @@
 # Changelog
 
+## [1.3.1](https://github.com/Sharo0s/specula/compare/v1.3.0...v1.3.1) (2026-08-15)
+
+
+### Corrections
+
+* **demo:** remplace la seedbox par un VPS applicatif ([d75224a](https://github.com/Sharo0s/specula/commit/d75224a38c574559c183dd21c2cb78921bca1daa))
+* **demo:** retire quatre services du catalogue de démonstration ([aa8fb73](https://github.com/Sharo0s/specula/commit/aa8fb7344036b1ef32c5abae4cf59b358f1d0e55))
+* **ios:** retire le décompte d'intégrations invérifiable ([69d583d](https://github.com/Sharo0s/specula/commit/69d583df113f87c45d814d74e7a51e03de6ede0b))
+* **site:** rétablit l'envoi des mesures derrière le proxy PostHog ([b673e06](https://github.com/Sharo0s/specula/commit/b673e06dca589d5f03ae9dc97bc24106364c6171))
+* **theme:** rétablit la bascule clair/sombre et l'ajoute sur iOS ([f9b2bff](https://github.com/Sharo0s/specula/commit/f9b2bff9f94119ce24193248c7f2ae88e4e67c24))
+
 ## [1.3.0](https://github.com/Sharo0s/specula/compare/v1.2.0...v1.3.0) (2026-08-13)
 
 
