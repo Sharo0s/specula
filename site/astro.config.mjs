@@ -14,6 +14,12 @@ export default defineConfig({
   // n'annoncent aucune préférence. Un visiteur, lui, est envoyé vers sa langue
   // dès la racine : les `redirects` de `vercel.json` lisent son en-tête
   // `Accept-Language`, sans JavaScript ni fonction serveur.
+  //
+  // Cette redirection est recalculée à chaque requête et n'est jamais mise en
+  // cache (Vercel la sert en `max-age=0, must-revalidate`). Inutile d'essayer
+  // de lui ajouter un `Vary` par le bloc `headers` : les règles d'en-têtes ne
+  // s'appliquent pas aux réponses de redirection — la CSP elle-même en est
+  // absente.
   i18n: {
     defaultLocale: 'en',
     locales: [
