@@ -1,0 +1,33 @@
+Specula watches the services you host yourself and tells you at a glance which
+ones are running, which are struggling and which one just went down.
+
+No account, no middleman server, no telemetry: the app queries your machines
+directly on your network. Your API keys stay on your device.
+
+Every service shows its real metrics, read through its own API: Immich's photo
+count, AdGuard's blocked queries, your NAS's free space, Proxmox's containers.
+More than sixty service types are recognised automatically.
+
+iPhone, iPad and Mac, with widgets on the Home Screen and the Lock Screen, a
+Live Activity during an outage and access from the Mac menu bar.
+
+TESTING WITHOUT INSTALLING ANYTHING
+
+Demo mode, offered right in the walkthrough, fills the app with simulated data.
+You can go through everything without giving a single address.
+
+TESTING AGAINST YOUR OWN SERVICES
+
+Three ways in: scan the network, import a services.yaml from Homepage, or add
+an address by hand. The first four services are free.
+
+PURCHASES ARE FREE IN TESTFLIGHT
+
+Extra slots and the "unlimited services" option go through the sandbox: nothing
+is charged to you. Do try them, it helps.
+
+REPORTING A PROBLEM
+
+Take a screenshot, then "Send Feedback" from TestFlight, or open an issue at
+github.com/Sharo0s/specula. Name the service and its type: most mismatches come
+from an API answering differently than expected.

@@ -8,21 +8,27 @@ Un dossier par langue de fiche, nommé par le code d'App Store Connect :
 
 ```
 fr-FR/    en-US/    es-ES/    zh-Hans/    ar-SA/
-  description.txt      le corps de la fiche      4 000 caractères max
-  keywords.txt         séparés par des virgules,   100 caractères max
-  subtitle.txt         une ligne,                    30 caractères max
+  description.txt              le corps de la fiche      4 000 caractères max
+  keywords.txt                 séparés par des virgules,   100 caractères max
+  subtitle.txt                 une ligne,                    30 caractères max
+  testflight_description.txt   la fiche vue par les testeurs
   marketing_url.txt
   support_url.txt
 
-zh-Hans/name.txt       le nom de l'app,              30 caractères max
+zh-Hans/name.txt               le nom de l'app,              30 caractères max
 ```
 
 Ces fichiers ne sont pas téléversés automatiquement : ils se copient à la main
 dans App Store Connect. Le dépôt sert de source, pas de pipeline.
 
-Attention : `subtitle.txt` et `name.txt` se collent dans **Informations sur
-l'app**, pas dans la page de version. Ils se publient avec la prochaine version
-soumise, quelle que soit la plateforme.
+Trois destinations différentes, à ne pas confondre :
+
+- `description`, `keywords`, `marketing_url`, `support_url` → la page de la
+  **version**, plateforme par plateforme ;
+- `subtitle` et `name` → **Informations sur l'app**, publiés avec la prochaine
+  version soumise, quelle que soit la plateforme ;
+- `testflight_description` → **TestFlight ▸ Informations de test**, visible des
+  seuls testeurs et sans rapport avec la fiche publique.
 
 ## Le nom chinois
 
@@ -44,10 +50,21 @@ propager aux autres langues, et ne pas le retirer en croyant à une coquille.
 
 ## Ce qui n'est pas ici
 
-Le texte promotionnel et les nouveautés de version : ils changent à chaque
-livraison, et les recopier ici les ferait diverger sans qu'on s'en aperçoive.
-Les captures d'écran non plus — Apple réutilise celles de la langue principale
-pour toutes les autres.
+Le texte promotionnel, les nouveautés de version et le « à tester » de
+TestFlight : ils changent à chaque livraison, et les recopier ici les ferait
+diverger sans qu'on s'en aperçoive. Les captures d'écran non plus — Apple
+réutilise celles de la langue principale pour toutes les autres.
+
+`testflight_description.txt` fait exception parce qu'il ne bouge pas d'un build
+à l'autre : il décrit l'app, pas la livraison. Ne rien y écrire de propre à une
+version.
+
+## Apple Watch
+
+Les cibles watchOS ont été supprimées en 1.2.0. Aucun texte ne doit plus
+promettre d'app ou de complications Apple Watch — c'est précisément l'écart qui
+a fait garder la mention dans la description TestFlight jusqu'au 15 août 2026,
+longtemps après la disparition du code.
 
 ## Les prix
 
