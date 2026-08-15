@@ -3,3 +3,10 @@
 # sans cette autorisation, Astro ne peut pas construire le site.
 allowBuilds:
   esbuild: true
+
+# La même autorisation sous son ancien nom, pour pnpm 10 : c'est la version que
+# Vercel installe encore par défaut, et elle ignorerait `allowBuilds` sans rien
+# dire — esbuild resterait sans binaire et le build échouerait à l'exécution.
+# pnpm 11 accepte les deux clés sans broncher.
+onlyBuiltDependencies:
+  - esbuild
