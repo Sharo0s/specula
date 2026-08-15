@@ -2,6 +2,7 @@
 import '../styles/base.css';
 import { BCP47, LOCALES, LOCALE_NAMES, dir, useTranslations, type Locale } from '../i18n';
 import { STORE_URL, IS_LIVE } from '../data/links';
+import Analytics from '../components/Analytics.astro';
 
 interface Props {
   lang: Locale;
@@ -79,6 +80,7 @@ const nav = [
         });
       })();
     </script>
+    <Analytics />
   </head>
   <body>
     <header class="wrap">

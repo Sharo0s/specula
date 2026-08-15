@@ -3,6 +3,13 @@
   "redirects": [
     { "source": "/", "destination": "/en/", "permanent": false }
   ],
+  "rewrites": [
+    {
+      "source": "/ph/static/:path*",
+      "destination": "https://eu-assets.i.posthog.com/static/:path*"
+    },
+    { "source": "/ph/:path*", "destination": "https://eu.i.posthog.com/:path*" }
+  ],
   "headers": [
     {
       "source": "/fonts/(.*)",
@@ -19,7 +26,7 @@
         { "key": "Referrer-Policy", "value": "strict-origin-when-cross-origin" },
         {
           "key": "Content-Security-Policy",
-          "value": "default-src 'self'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; font-src 'self'; script-src 'sha256-kpYfrhPWdOYR6G6eMnKeLlD1gl+SDtm/yhaYQJxTCnw='; frame-ancestors 'none'; base-uri 'none'; form-action 'none'"
+          "value": "default-src 'self'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; font-src 'self'; script-src 'self' 'sha256-kpYfrhPWdOYR6G6eMnKeLlD1gl+SDtm/yhaYQJxTCnw='; frame-ancestors 'none'; base-uri 'none'; form-action 'none'"
         }
       ]
     }

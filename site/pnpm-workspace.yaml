@@ -2,6 +2,8 @@
 # ici. esbuild télécharge son binaire natif dans un script d'installation —
 # sans cette autorisation, Astro ne peut pas construire le site.
 allowBuilds:
+  # core-js n'installe qu'un message de remerciement : rien à exécuter.
+  core-js: false
   esbuild: true
 
 # La même autorisation sous son ancien nom, pour pnpm 10 : c'est la version que

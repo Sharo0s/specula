@@ -1,0 +1,54 @@
+---
+/**
+ * Mesure d'audience PostHog.
+ *
+ * Trois choix qui méritent d'être dits, parce qu'ils sont volontaires :
+ *
+ * 1. **Script empaqueté, pas en ligne.** Astro le sert depuis `/_astro/`, donc
+ *    `script-src 'self'` suffit. Un script en ligne aurait exigé un second
+ *    hash SHA-256 dans `vercel.json`, à recalculer à chaque retouche — le
+ *    genre d'oubli qui ne casse qu'en production.
+ * 2. **Appels par le proxy `/ph`** (voir les `rewrites` de `vercel.json`) :
+ *    même origine, donc la CSP reste en `'self'` et les bloqueurs de pub ne
+ *    coupent pas la mesure.
+ * 3. **Sans cookie** (`persistence: 'memory'`) : pas de bandeau de
+ *    consentement à afficher, et le site continue de ne rien déposer sur la
+ *    machine du lecteur. En contrepartie, un même visiteur est recompté à
+ *    chaque session — c'est le prix, il est assumé.
+ *
+ * Sans `PUBLIC_POSTHOG_KEY`, rien ne se charge : le site reste exactement ce
+ * qu'il était avant, y compris en développement.
+ */
+const enabled = Boolean(import.meta.env.PUBLIC_POSTHOG_KEY);
+---
+
+{
+  enabled && (
+    <script>
+      // La clé passe par `import.meta.env`, que Vite remplace au moment du
+      // build, et non par `define:vars` — ce dernier forcerait le script en
+      // ligne et donc un second hash à tenir à jour dans la CSP.
+      const key = import.meta.env.PUBLIC_POSTHOG_KEY;
+
+      import('posthog-js').then(({ default: posthog }) => {
+        posthog.init(key, {
+          // Le proxy de même origine, pas le domaine de PostHog.
+          api_host: `${location.origin}/ph`,
+          // Sert uniquement aux liens « voir dans PostHog » de l'interface.
+          ui_host: 'https://eu.posthog.com',
+          persistence: 'memory',
+          disable_session_recording: true,
+          disable_surveys: true,
+          capture_pageview: true,
+          // L'adresse IP sert à PostHog pour en déduire un pays, mais n'est
+          // pas attachée aux évènements — c'est ce que promet la page vie
+          // privée, autant que ce soit vrai.
+          property_denylist: ['$ip'],
+          // Le site est multilingue : sans ça, les cinq versions d'une même
+          // page se confondent dans les rapports.
+          loaded: (ph) => ph.register({ langue: document.documentElement.lang }),
+        });
+      });
+    </script>
+  )
+}

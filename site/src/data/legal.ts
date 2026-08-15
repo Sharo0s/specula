@@ -25,7 +25,7 @@ const MAIL = '<a href="mailto:specula@nysia.fr">specula@nysia.fr</a>';
 export const PRIVACY: Record<'fr' | 'en', LegalDoc> = {
   fr: {
     title: 'Politique de confidentialité',
-    updated: '2026-08-03',
+    updated: '2026-08-15',
     sections: [
       {
         h: 'En un paragraphe',
@@ -38,7 +38,9 @@ export const PRIVACY: Record<'fr' | 'en', LegalDoc> = {
         h: 'Données que nous collectons',
         html: `<p>Aucune. Nous ne recevons ni votre adresse e-mail, ni votre adresse IP, ni la
         liste de vos services, ni la moindre statistique d'usage. Il n'existe aucun serveur
-        Specula vers lequel ces informations pourraient être envoyées.</p>`,
+        Specula vers lequel ces informations pourraient être envoyées.</p>
+        <p>Cela vaut pour l'application. Le site que vous lisez, lui, mesure son audience&nbsp;:
+        la section «&nbsp;Ce site&nbsp;», plus bas, dit ce qu'il enregistre.</p>`,
       },
       {
         h: 'Données stockées sur votre appareil',
@@ -77,10 +79,23 @@ export const PRIVACY: Record<'fr' | 'en', LegalDoc> = {
         donnée les concernant.</p>`,
       },
       {
+        h: 'Ce site',
+        html: `<p>Le site specula.dev mesure son audience&nbsp;: pages consultées, langue,
+        provenance, pays, type d'appareil. Cette mesure est assurée par PostHog, hébergé dans
+        l'Union européenne, et transite par notre propre domaine plutôt que par le sien.</p>
+        <p>Elle ne dépose <strong>aucun cookie</strong> et ne conserve rien d'une visite à
+        l'autre&nbsp;: vous n'êtes pas reconnu d'une session à la suivante, et c'est pourquoi ce
+        site ne vous demande aucun consentement. Aucun enregistrement de votre navigation n'est
+        réalisé. Votre adresse IP permet d'en déduire un pays, puis n'est jointe à aucune des
+        données conservées.</p>`,
+      },
+      {
         h: 'Vos droits',
-        html: `<p>N'ayant aucune donnée vous concernant, nous n'avons rien à consulter,
-        rectifier, exporter ou supprimer à votre demande. Vos droits au titre du RGPD s'exercent
-        directement sur votre appareil, en modifiant ou en supprimant l'application.</p>`,
+        html: `<p>L'application ne détenant aucune donnée vous concernant, nous n'avons rien à
+        consulter, rectifier, exporter ou supprimer à votre demande. Vos droits au titre du RGPD
+        s'exercent directement sur votre appareil, en modifiant ou en supprimant l'application.
+        La mesure d'audience du site, elle, ne permet de rattacher aucune visite à une
+        personne.</p>`,
       },
       {
         h: 'Modifications',
@@ -91,7 +106,7 @@ export const PRIVACY: Record<'fr' | 'en', LegalDoc> = {
   },
   en: {
     title: 'Privacy policy',
-    updated: '2026-08-05',
+    updated: '2026-08-15',
     sections: [
       {
         h: 'In one paragraph',
@@ -103,7 +118,9 @@ export const PRIVACY: Record<'fr' | 'en', LegalDoc> = {
         h: 'Data we collect',
         html: `<p>None. We receive neither your email address, nor your IP address, nor the list
         of your services, nor a single usage statistic. There is no Specula server for such
-        information to be sent to.</p>`,
+        information to be sent to.</p>
+        <p>That covers the app. The website you are reading does measure its audience: the
+        &ldquo;This website&rdquo; section below says what it records.</p>`,
       },
       {
         h: 'Data stored on your device',
@@ -140,10 +157,21 @@ export const PRIVACY: Record<'fr' | 'en', LegalDoc> = {
         html: `<p>The app is not directed at children and collects no data concerning them.</p>`,
       },
       {
+        h: 'This website',
+        html: `<p>specula.dev measures its audience: pages viewed, language, referrer, country,
+        device type. This is handled by PostHog, hosted in the European Union, and routed through
+        our own domain rather than theirs.</p>
+        <p>It sets <strong>no cookie</strong> and keeps nothing between visits: you are not
+        recognised from one session to the next, which is why this site asks you for no consent.
+        Your browsing is never recorded. Your IP address is used to infer a country, then is
+        attached to none of the data kept.</p>`,
+      },
+      {
         h: 'Your rights',
-        html: `<p>Since we hold no data about you, we have nothing to disclose, correct, export
-        or delete on request. Your rights under the GDPR are exercised directly on your device,
-        by changing or deleting the app.</p>`,
+        html: `<p>Since the app holds no data about you, we have nothing to disclose, correct,
+        export or delete on request. Your rights under the GDPR are exercised directly on your
+        device, by changing or deleting the app. The website's audience measurement, for its
+        part, cannot tie any visit to a person.</p>`,
       },
       {
         h: 'Changes',
