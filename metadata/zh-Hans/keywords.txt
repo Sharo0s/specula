@@ -1,0 +1,1 @@
+selfhosted,自托管,NAS,服务器,docker,监控,uptime,群晖,proxmox,immich,homelab

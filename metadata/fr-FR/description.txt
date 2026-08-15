@@ -1,0 +1,46 @@
+Specula surveille les services que tu héberges toi-même et te dit en un regard
+lesquels tournent, lesquels rament et lequel vient de tomber.
+
+Pas de compte, pas de serveur intermédiaire, pas de télémétrie : l'app interroge
+directement tes machines sur ton réseau. Tes clés API restent sur ton appareil.
+
+UN TABLEAU DE BORD, PAS UNE LISTE DE LIENS
+
+Chaque service affiche ses vraies métriques, lues via son API : le nombre de
+photos d'Immich, les requêtes bloquées d'AdGuard, l'espace libre de ton NAS, les
+conteneurs de Proxmox, les volumes qui se remplissent. Le type de service est
+reconnu automatiquement — Immich, Nextcloud, Home Assistant, Proxmox,
+OpenMediaVault, UniFi, Portainer, Vaultwarden, Paperless et bien d'autres.
+
+DÉMARRAGE EN TROIS MINUTES
+
+Scanne ton réseau : Specula détecte tes services automatiquement. Ou importe le
+services.yaml que tu utilises déjà avec Homepage — groupes, URL et widgets sont
+repris tels quels. Sinon, ajoute une adresse à la main.
+
+LES PANNES QUI COMPTENT
+
+Un service qui ne répond plus après trois tentatives déclenche une notification.
+Le mur de statut garde trente jours d'historique et calcule la disponibilité
+réelle de chaque service. Les alertes — service hors ligne, disque plein,
+température — s'activent une par une, et un volume plein par nature s'exclut
+d'un geste.
+
+PARTOUT OÙ TU REGARDES
+
+iPhone, iPad, Mac, avec des widgets sur l'écran d'accueil et l'écran verrouillé,
+une Live Activity pendant une panne et un accès depuis la barre de menus du Mac.
+Une seule adresse par service : celle qui répond depuis ton appareil, que tu
+passes par le réseau local, un VPN, un reverse proxy ou un tunnel.
+
+ESSAYE AVANT DE CONFIGURER
+
+Un mode démo complet, avec des données simulées, te montre l'app en
+fonctionnement sans rien installer.
+
+QUATRE SERVICES OFFERTS
+
+Les quatre premiers services sont gratuits, sans compte ni durée limitée.
+Au-delà, chaque place s'achète une fois et reste acquise — 0,49 € l'unité, ou
+19,99 € pour lever la limite définitivement et soutenir le projet. Les places
+achetées te suivent d'un appareil à l'autre.

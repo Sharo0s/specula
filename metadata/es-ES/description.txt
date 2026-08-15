@@ -1,0 +1,46 @@
+Specula vigila los servicios que alojas tú mismo y te dice de un vistazo cuáles
+funcionan, cuáles van lentos y cuál acaba de caer.
+
+Sin cuenta, sin servidor intermediario, sin telemetría: la app consulta
+directamente tus máquinas en tu red. Tus claves API se quedan en tu dispositivo.
+
+UN PANEL, NO UNA LISTA DE ENLACES
+
+Cada servicio muestra sus métricas reales, leídas a través de su API: el número
+de fotos de Immich, las peticiones bloqueadas de AdGuard, el espacio libre de tu
+NAS, los contenedores de Proxmox, los volúmenes que se van llenando. El tipo de
+servicio se reconoce automáticamente — Immich, Nextcloud, Home Assistant,
+Proxmox, OpenMediaVault, UniFi, Portainer, Vaultwarden, Paperless y muchos más.
+
+EN MARCHA EN TRES MINUTOS
+
+Escanea tu red: Specula detecta tus servicios automáticamente. O importa el
+services.yaml que ya usas con Homepage — grupos, URL y widgets se recogen tal
+cual. Si lo prefieres, añade una dirección a mano.
+
+LAS CAÍDAS QUE IMPORTAN
+
+Un servicio que deja de responder tras tres intentos lanza una notificación. El
+muro de estado guarda treinta días de historial y calcula la disponibilidad real
+de cada servicio. Las alertas — servicio caído, disco lleno, temperatura — se
+activan una a una, y un volumen lleno por naturaleza se excluye con un gesto.
+
+ALLÁ DONDE MIRES
+
+iPhone, iPad, Mac, con widgets en la pantalla de inicio y en la pantalla
+bloqueada, una Live Activity durante una caída y acceso desde la barra de menús
+del Mac. Una sola dirección por servicio: la que responde desde tu dispositivo,
+ya pases por la red local, una VPN, un proxy inverso o un túnel.
+
+PRUÉBALA ANTES DE CONFIGURAR
+
+Un modo demo completo, con datos simulados, te enseña la app en funcionamiento
+sin instalar nada.
+
+CUATRO SERVICIOS DE REGALO
+
+Los cuatro primeros servicios son gratis, sin cuenta ni límite de tiempo. A
+partir de ahí, cada plaza se compra una vez y es tuya para siempre, y también
+puedes quitar el límite definitivamente de una sola vez y apoyar el proyecto.
+Consulta los precios en el App Store. Las plazas compradas te acompañan de un
+dispositivo a otro.

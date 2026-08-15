@@ -1,0 +1,45 @@
+Specula watches the services you host yourself and tells you at a glance which
+ones are running, which are struggling and which one just went down.
+
+No account, no middleman server, no telemetry: the app queries your machines
+directly on your network. Your API keys stay on your device.
+
+A DASHBOARD, NOT A LIST OF LINKS
+
+Every service shows its real metrics, read through its own API: Immich's photo
+count, AdGuard's blocked queries, your NAS's free space, Proxmox's containers,
+the volumes filling up. The service type is recognised automatically — Immich,
+Nextcloud, Home Assistant, Proxmox, OpenMediaVault, UniFi, Portainer,
+Vaultwarden, Paperless and many more.
+
+UP AND RUNNING IN THREE MINUTES
+
+Scan your network: Specula finds your services on its own. Or import the
+services.yaml you already use with Homepage — groups, URLs and widgets carry
+over as they are. Otherwise, add an address by hand.
+
+THE OUTAGES THAT MATTER
+
+A service that stops answering after three attempts triggers a notification. The
+status wall keeps thirty days of history and works out each service's real
+uptime. Alerts — service offline, disk full, temperature — are enabled one by
+one, and a volume that is meant to be full is excluded with a single gesture.
+
+WHEREVER YOU LOOK
+
+iPhone, iPad, Mac, with widgets on the Home Screen and the Lock Screen, a Live
+Activity during an outage and access from the Mac menu bar. One address per
+service: the one that answers from your device, whether you go through the local
+network, a VPN, a reverse proxy or a tunnel.
+
+TRY IT BEFORE YOU SET IT UP
+
+A complete demo mode, with simulated data, shows you the app working without
+installing anything.
+
+FOUR SERVICES ON THE HOUSE
+
+The first four services are free, with no account and no time limit. Beyond
+that, each slot is bought once and stays yours, and you can also lift the limit
+permanently in one go and support the project. See the App Store for pricing.
+Slots you buy follow you from one device to another.

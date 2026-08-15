@@ -1,0 +1,1 @@
+selfhosted,auto-hébergé,nas,serveur,docker,monitoring,uptime,synology,proxmox,immich,homelab
