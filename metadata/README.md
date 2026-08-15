@@ -10,19 +10,44 @@ Un dossier par langue de fiche, nommé par le code d'App Store Connect :
 fr-FR/    en-US/    es-ES/    zh-Hans/    ar-SA/
   description.txt      le corps de la fiche      4 000 caractères max
   keywords.txt         séparés par des virgules,   100 caractères max
+  subtitle.txt         une ligne,                    30 caractères max
   marketing_url.txt
   support_url.txt
+
+zh-Hans/name.txt       le nom de l'app,              30 caractères max
 ```
 
 Ces fichiers ne sont pas téléversés automatiquement : ils se copient à la main
 dans App Store Connect. Le dépôt sert de source, pas de pipeline.
 
+Attention : `subtitle.txt` et `name.txt` se collent dans **Informations sur
+l'app**, pas dans la page de version. Ils se publient avec la prochaine version
+soumise, quelle que soit la plateforme.
+
+## Le nom chinois
+
+Les quatre autres marchés s'appellent `Specula`. Le chinois simplifié ne le peut
+pas : au moment de créer la localisation, App Store Connect renvoie
+
+```
+STATE_ERROR.DUPLICATE_NAME.DIFFERENT_ACCOUNT
+You cannot add this localization because the app name is already being used
+by another app.
+```
+
+Un autre développeur détient `Specula` sur ce marché. Le contrôle ne se
+déclenche qu'à la **création** d'une localisation, ce qui explique que les
+versions antérieures — sans fiche chinoise — soient passées sans rien signaler.
+
+D'où `zh-Hans/name.txt`. Le nom localisé ne vaut que pour la Chine ; ne pas le
+propager aux autres langues, et ne pas le retirer en croyant à une coquille.
+
 ## Ce qui n'est pas ici
 
-Le nom, le sous-titre, le texte promotionnel et les nouveautés de version : ils
-sont courts, ils changent à chaque livraison, et les recopier ici les ferait
-diverger sans qu'on s'en aperçoive. Les captures d'écran non plus — Apple
-réutilise celles de la langue principale pour toutes les autres.
+Le texte promotionnel et les nouveautés de version : ils changent à chaque
+livraison, et les recopier ici les ferait diverger sans qu'on s'en aperçoive.
+Les captures d'écran non plus — Apple réutilise celles de la langue principale
+pour toutes les autres.
 
 ## Les prix
 
