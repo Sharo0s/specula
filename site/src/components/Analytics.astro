@@ -62,6 +62,12 @@ const enabled = Boolean(import.meta.env.PUBLIC_POSTHOG_KEY);
           session_recording: {
             maskAllInputs: true,
             maskTextSelector: '[data-private]',
+            // Le site n'appelle aucune API : les seules requêtes du navigateur
+            // sont celles de PostHog lui-même. Enregistrer leur corps
+            // reviendrait à stocker les évènements en double, pour rien. Le
+            // refus est posé ici en plus du réglage de projet, qui pourrait
+            // être rebasculé sans que ce code le sache.
+            recordBody: false,
           },
 
           cookie_expiration: 395,
