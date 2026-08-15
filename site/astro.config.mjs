@@ -9,8 +9,11 @@ const SITE = 'https://specula.dev';
 
 export default defineConfig({
   site: SITE,
-  // Les cinq langues de l'application. L'anglais mène : le trafic organique
-  // visé (r/selfhosted, Hacker News, lobste.rs) est anglophone.
+  // Les cinq langues de l'application. L'anglais reste la langue par défaut —
+  // c'est le `x-default` des hreflang, et ce que voient les robots, qui
+  // n'annoncent aucune préférence. Un visiteur, lui, est envoyé vers sa langue
+  // dès la racine : les `redirects` de `vercel.json` lisent son en-tête
+  // `Accept-Language`, sans JavaScript ni fonction serveur.
   i18n: {
     defaultLocale: 'en',
     locales: [
