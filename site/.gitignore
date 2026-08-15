@@ -3,3 +3,9 @@ dist/
 .astro/
 .vercel/
 .DS_Store
+
+# PUBLIC_POSTHOG_KEY pour les essais locaux : la vraie valeur vit dans les
+# variables d'environnement Vercel.
+.env
+.env.*
+!.env.example
