@@ -11,10 +11,11 @@
  * 2. **Appels par le proxy `/ph`** (voir les `rewrites` de `vercel.json`) :
  *    même origine, donc la CSP reste en `'self'` et les bloqueurs de pub ne
  *    coupent pas la mesure.
- * 3. **Sans cookie** (`persistence: 'memory'`) : pas de bandeau de
- *    consentement à afficher, et le site continue de ne rien déposer sur la
- *    machine du lecteur. En contrepartie, un même visiteur est recompté à
- *    chaque session — c'est le prix, il est assumé.
+ * 3. **Un cookie, aucun bandeau.** Le site s'appuie sur l'exemption CNIL de la
+ *    mesure d'audience, qui dispense de consentement à des conditions
+ *    strictes : voir le bloc de configuration plus bas, où chaque réglage
+ *    porte sa raison. Le droit d'opposition passe alors par `respect_dnt`,
+ *    faute d'un bouton.
  *
  * Sans `PUBLIC_POSTHOG_KEY`, rien ne se charge : le site reste exactement ce
  * qu'il était avant, y compris en développement.
@@ -36,18 +37,33 @@ const enabled = Boolean(import.meta.env.PUBLIC_POSTHOG_KEY);
           api_host: `${location.origin}/ph`,
           // Sert uniquement aux liens « voir dans PostHog » de l'interface.
           ui_host: 'https://eu.posthog.com',
-          persistence: 'memory',
+          // Ce qui suit n'est pas un assortiment de préférences : faute de
+          // bandeau, c'est ce qui fait tenir la mesure dans l'exemption CNIL.
+          // Retirer une de ces lignes en fait sortir le site, et rend alors
+          // le recueil du consentement obligatoire.
+
+          // Finalité bornée à l'audience : on compte des pages vues, on
+          // n'observe pas les gestes. L'autocapture remonterait chaque clic,
+          // les cartes de chaleur leurs coordonnées — le projet PostHog les
+          // active côté serveur, d'où ce refus explicite.
+          autocapture: false,
+          capture_heatmaps: false,
           disable_session_recording: true,
           disable_surveys: true,
           capture_pageview: true,
-          // Le projet PostHog active les cartes de chaleur côté serveur, ce
-          // qui ferait remonter les coordonnées de chaque clic — davantage
-          // que ce qu'annonce la page vie privée. On refuse ici.
-          capture_heatmaps: false,
-          // L'adresse IP sert à PostHog pour en déduire un pays, mais n'est
-          // pas attachée aux évènements — c'est ce que promet la page vie
-          // privée, autant que ce soit vrai.
+
+          // Treize mois, la durée maximale admise ; passé ce délai, le
+          // visiteur redevient un inconnu.
+          cookie_expiration: 395,
+          // Aucun recoupement entre sous-domaines.
+          cross_subdomain_cookie: false,
+          // L'adresse IP permet d'en déduire un pays, sans être jointe aux
+          // évènements conservés.
           property_denylist: ['$ip'],
+          // À défaut d'un bouton de refus, c'est ici que s'exerce le droit
+          // d'opposition : un navigateur réglé sur « ne pas me pister » n'est
+          // pas mesuré du tout.
+          respect_dnt: true,
           // Le site est multilingue : sans ça, les cinq versions d'une même
           // page se confondent dans les rapports.
           loaded: (ph) => ph.register({ langue: document.documentElement.lang }),

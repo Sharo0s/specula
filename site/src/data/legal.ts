@@ -83,11 +83,18 @@ export const PRIVACY: Record<'fr' | 'en', LegalDoc> = {
         html: `<p>Le site specula.dev mesure son audience&nbsp;: pages consultées, langue,
         provenance, pays, type d'appareil. Cette mesure est assurée par PostHog, hébergé dans
         l'Union européenne, et transite par notre propre domaine plutôt que par le sien.</p>
-        <p>Elle ne dépose <strong>aucun cookie</strong> et ne conserve rien d'une visite à
-        l'autre&nbsp;: vous n'êtes pas reconnu d'une session à la suivante, et c'est pourquoi ce
-        site ne vous demande aucun consentement. Aucun enregistrement de votre navigation n'est
-        réalisé. Votre adresse IP permet d'en déduire un pays, puis n'est jointe à aucune des
-        données conservées.</p>`,
+        <p>Elle dépose <strong>un cookie</strong>, dont la seule fonction est de distinguer une
+        visite d'une autre. Il expire au bout de treize mois et n'est lisible par personne
+        d'autre que ce site.</p>
+        <p>Aucun bandeau ne vous est présenté parce que cette mesure reste dans les limites que
+        la CNIL exempte de consentement&nbsp;: elle sert uniquement à compter l'audience, ne
+        vous suit pas d'un site à l'autre, n'est recoupée avec aucun autre traitement et
+        n'alimente ni publicité ni revente. Vos clics ne sont pas enregistrés, votre navigation
+        n'est jamais rejouée, et votre adresse IP permet d'en déduire un pays sans être jointe
+        aux données conservées.</p>
+        <p><strong>Pour ne pas être mesuré&nbsp;:</strong> activez l'option «&nbsp;Ne pas me
+        pister&nbsp;» (<em>Do Not Track</em>) de votre navigateur. Ce site la respecte et cesse
+        alors toute mesure vous concernant.</p>`,
       },
       {
         h: 'Vos droits',
@@ -161,10 +168,16 @@ export const PRIVACY: Record<'fr' | 'en', LegalDoc> = {
         html: `<p>specula.dev measures its audience: pages viewed, language, referrer, country,
         device type. This is handled by PostHog, hosted in the European Union, and routed through
         our own domain rather than theirs.</p>
-        <p>It sets <strong>no cookie</strong> and keeps nothing between visits: you are not
-        recognised from one session to the next, which is why this site asks you for no consent.
-        Your browsing is never recorded. Your IP address is used to infer a country, then is
-        attached to none of the data kept.</p>`,
+        <p>It sets <strong>one cookie</strong>, whose only purpose is to tell one visit from
+        another. It expires after thirteen months and is readable by no one but this site.</p>
+        <p>You are shown no banner because this measurement stays within the limits the French
+        data protection authority exempts from consent: it serves only to count audience, does
+        not follow you from site to site, is cross-referenced with no other processing, and
+        feeds neither advertising nor resale. Your clicks are not recorded, your browsing is
+        never replayed, and your IP address is used to infer a country without being attached to
+        the data kept.</p>
+        <p><strong>To opt out:</strong> turn on your browser's &ldquo;Do Not Track&rdquo;
+        setting. This site honours it and then stops measuring you altogether.</p>`,
       },
       {
         h: 'Your rights',
