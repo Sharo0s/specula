@@ -38,7 +38,9 @@ const nav = [
     <link rel="canonical" href={url(lang)} />
     {LOCALES.map((l) => <link rel="alternate" hreflang={BCP47[l]} href={url(l)} />)}
     <link rel="alternate" hreflang="x-default" href={url('en')} />
-    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="icon" href="/icon-32.png" type="image/png" sizes="32x32" />
+    <link rel="icon" href="/icon-512.png" type="image/png" sizes="512x512" />
+    <link rel="apple-touch-icon" href="/icon-180.png" />
     <link
       rel="preload"
       href="/fonts/archivo-latin.woff2"
@@ -85,7 +87,10 @@ const nav = [
   <body>
     <header class="wrap">
       <nav class="nav">
-        <a class="brand" href={`/${lang}/`}>Specula</a>
+        <a class="brand" href={`/${lang}/`}>
+          <img src="/icon-180.png" alt="" width="28" height="28" />
+          Specula
+        </a>
         <div class="nav-links">
           {
             nav.map((item) => (
