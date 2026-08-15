@@ -14,11 +14,22 @@ const t = useTranslations(lang);
  * justes quand la colonne rétrécit.
  *
  * Les captures sont celles du mode démo de la build courante, sur iPhone 17
- * Pro, iPad Pro 13" et macOS — chacune en clair et en sombre.
+ * Pro, iPad Pro 13" et macOS — dans les cinq langues du site, chacune en clair
+ * et en sombre. L'app de la capture parle donc la langue de la page.
  */
+
+const shots = `/shots/${lang}`;
 ---
 
-<div class="devices">
+<div
+  class="devices"
+  style={`--shot-mac: url('${shots}/mac-light.webp');
+          --shot-mac-dark: url('${shots}/mac-dark.webp');
+          --shot-ipad: url('${shots}/ipad-light.webp');
+          --shot-ipad-dark: url('${shots}/ipad-dark.webp');
+          --shot-iphone: url('${shots}/iphone-light.webp');
+          --shot-iphone-dark: url('${shots}/iphone-dark.webp');`}
+>
   <!-- MacBook Pro : écran encoché, posé sur sa base -->
   <div class="mac">
     <div class="mac-screen">
@@ -74,7 +85,7 @@ const t = useTranslations(lang);
   .mac-display {
     aspect-ratio: 1600 / 856;
     border-radius: 3px;
-    background: url('/shots/mac-light.webp') center / cover no-repeat;
+    background: var(--shot-mac) center / cover no-repeat;
   }
   .mac-notch {
     position: absolute;
@@ -121,7 +132,7 @@ const t = useTranslations(lang);
   .pad-screen {
     aspect-ratio: 1240 / 1653;
     border-radius: 12px;
-    background: url('/shots/ipad-light.webp') center / cover no-repeat;
+    background: var(--shot-ipad) center / cover no-repeat;
   }
 
   /* — iPhone 17 Pro, au premier plan — */
@@ -138,7 +149,7 @@ const t = useTranslations(lang);
   .phone-screen {
     aspect-ratio: 620 / 1348;
     border-radius: 18px;
-    background: url('/shots/iphone-light.webp') center / cover no-repeat;
+    background: var(--shot-iphone) center / cover no-repeat;
   }
   .island {
     position: absolute;
@@ -154,13 +165,13 @@ const t = useTranslations(lang);
   /* Les captures sombres, par les deux chemins du thème : préférence système
      (sauf choix clair explicite) et choix explicite au bouton. */
   @media (prefers-color-scheme: dark) {
-    :root:not([data-theme='light']) .mac-display { background-image: url('/shots/mac-dark.webp'); }
-    :root:not([data-theme='light']) .pad-screen { background-image: url('/shots/ipad-dark.webp'); }
-    :root:not([data-theme='light']) .phone-screen { background-image: url('/shots/iphone-dark.webp'); }
+    :root:not([data-theme='light']) .mac-display { background-image: var(--shot-mac-dark); }
+    :root:not([data-theme='light']) .pad-screen { background-image: var(--shot-ipad-dark); }
+    :root:not([data-theme='light']) .phone-screen { background-image: var(--shot-iphone-dark); }
   }
-  :root[data-theme='dark'] .mac-display { background-image: url('/shots/mac-dark.webp'); }
-  :root[data-theme='dark'] .pad-screen { background-image: url('/shots/ipad-dark.webp'); }
-  :root[data-theme='dark'] .phone-screen { background-image: url('/shots/iphone-dark.webp'); }
+  :root[data-theme='dark'] .mac-display { background-image: var(--shot-mac-dark); }
+  :root[data-theme='dark'] .pad-screen { background-image: var(--shot-ipad-dark); }
+  :root[data-theme='dark'] .phone-screen { background-image: var(--shot-iphone-dark); }
 
   /* Sous 560px, l'iPhone deviendrait illisible : on le retire et l'iPad
      reprend la place. */
