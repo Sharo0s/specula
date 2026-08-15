@@ -40,6 +40,10 @@ const enabled = Boolean(import.meta.env.PUBLIC_POSTHOG_KEY);
           disable_session_recording: true,
           disable_surveys: true,
           capture_pageview: true,
+          // Le projet PostHog active les cartes de chaleur côté serveur, ce
+          // qui ferait remonter les coordonnées de chaque clic — davantage
+          // que ce qu'annonce la page vie privée. On refuse ici.
+          capture_heatmaps: false,
           // L'adresse IP sert à PostHog pour en déduire un pays, mais n'est
           // pas attachée aux évènements — c'est ce que promet la page vie
           // privée, autant que ce soit vrai.

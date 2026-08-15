@@ -47,6 +47,26 @@ Les pages `privacy` et `support` n'existent qu'en français et en anglais
 (`src/data/legal.ts`) : les autres langues servent la version anglaise et le
 disent. Un texte juridique traduit sans relecture ne vaut pas le texte original.
 
+## Mesure d'audience
+
+PostHog, activé seulement si `PUBLIC_POSTHOG_KEY` est définie (variables
+d'environnement du projet Vercel). Sans elle, aucun script n'est injecté.
+
+Le script est **empaqueté** par Astro plutôt qu'écrit en ligne : servi depuis
+`/_astro/`, il relève de `script-src 'self'` et n'ajoute pas un second hash à
+maintenir dans la CSP.
+
+Les appels passent par un proxy de même origine déclaré dans les `rewrites` de
+`vercel.json`. **Écrire `:path(.*)` et non `:path*`** : ce dernier ne capture
+pas un chemin terminé par une barre oblique, or posthog-js appelle `/i/v0/e/`
+et `/flags/` ainsi. Le piège est vicieux — les fichiers statiques passent, donc
+tout paraît fonctionner, pendant que les mesures tombent dans un 404 de Vercel.
+
+Sans cookie, sans enregistrement de session, sans cartes de chaleur et sans
+l'adresse IP dans les évènements&nbsp;: aucune bannière de consentement n'est
+due. Les cartes de chaleur sont refusées côté client parce que le projet
+PostHog les active côté serveur.
+
 ## Déploiement
 
 Hébergement prévu : Vercel, avec **Root Directory = `site`** dans les réglages
