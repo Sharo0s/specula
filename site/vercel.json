@@ -26,7 +26,7 @@
         { "key": "Referrer-Policy", "value": "strict-origin-when-cross-origin" },
         {
           "key": "Content-Security-Policy",
-          "value": "default-src 'self'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; font-src 'self'; script-src 'self' 'sha256-kpYfrhPWdOYR6G6eMnKeLlD1gl+SDtm/yhaYQJxTCnw='; frame-ancestors 'none'; base-uri 'none'; form-action 'none'"
+          "value": "default-src 'self'; img-src 'self' data: blob:; style-src 'self' 'unsafe-inline'; font-src 'self'; script-src 'self' 'sha256-kpYfrhPWdOYR6G6eMnKeLlD1gl+SDtm/yhaYQJxTCnw='; worker-src 'self' blob:; frame-ancestors 'none'; base-uri 'none'; form-action 'none'"
         }
       ]
     }

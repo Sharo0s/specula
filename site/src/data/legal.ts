@@ -80,21 +80,29 @@ export const PRIVACY: Record<'fr' | 'en', LegalDoc> = {
       },
       {
         h: 'Ce site',
-        html: `<p>Le site specula.dev mesure son audience&nbsp;: pages consultées, langue,
-        provenance, pays, type d'appareil. Cette mesure est assurée par PostHog, hébergé dans
-        l'Union européenne, et transite par notre propre domaine plutôt que par le sien.</p>
-        <p>Elle dépose <strong>un cookie</strong>, dont la seule fonction est de distinguer une
-        visite d'une autre. Il expire au bout de treize mois et n'est lisible par personne
-        d'autre que ce site.</p>
-        <p>Aucun bandeau ne vous est présenté parce que cette mesure reste dans les limites que
-        la CNIL exempte de consentement&nbsp;: elle sert uniquement à compter l'audience, ne
-        vous suit pas d'un site à l'autre, n'est recoupée avec aucun autre traitement et
-        n'alimente ni publicité ni revente. Vos clics ne sont pas enregistrés, votre navigation
-        n'est jamais rejouée, et votre adresse IP permet d'en déduire un pays sans être jointe
-        aux données conservées.</p>
+        html: `<p>Ce qui suit vaut pour le site specula.dev, et pour lui seul&nbsp;: rien de
+        cette section ne concerne l'application, qui reste sans télémétrie d'aucune sorte.</p>
+        <p>Le site mesure sa fréquentation avec PostHog, hébergé dans l'Union européenne, dont
+        les appels transitent par notre propre domaine plutôt que par le sien. Sont
+        enregistrés&nbsp;:</p>
+        <ul>
+          <li>les pages ouvertes et quittées, la langue de lecture, la page d'où vous
+          venez&nbsp;;</li>
+          <li>votre navigateur, votre système, votre type d'appareil, la taille de votre écran
+          et le pays déduit de votre adresse IP&nbsp;;</li>
+          <li><strong>vos clics</strong>, ainsi que leur position dans la page&nbsp;;</li>
+          <li><strong>un rejeu de votre navigation</strong>&nbsp;: le contenu affiché et vos
+          déplacements dans la page peuvent être reconstitués et visionnés&nbsp;;</li>
+          <li>les erreurs techniques rencontrées et les temps de chargement.</li>
+        </ul>
+        <p>Un <strong>cookie</strong> permet de vous reconnaître d'une visite à l'autre. Il
+        expire au bout de treize mois. Votre adresse IP sert à déduire un pays mais n'est jointe
+        à aucune donnée conservée. Ces informations ne sont ni revendues, ni utilisées à des
+        fins publicitaires, ni recoupées avec un autre traitement.</p>
         <p><strong>Pour ne pas être mesuré&nbsp;:</strong> activez l'option «&nbsp;Ne pas me
         pister&nbsp;» (<em>Do Not Track</em>) de votre navigateur. Ce site la respecte et cesse
-        alors toute mesure vous concernant.</p>`,
+        alors toute mesure vous concernant. Un bloqueur de contenu ou le mode privé de votre
+        navigateur produisent le même effet.</p>`,
       },
       {
         h: 'Vos droits',
@@ -165,19 +173,27 @@ export const PRIVACY: Record<'fr' | 'en', LegalDoc> = {
       },
       {
         h: 'This website',
-        html: `<p>specula.dev measures its audience: pages viewed, language, referrer, country,
-        device type. This is handled by PostHog, hosted in the European Union, and routed through
-        our own domain rather than theirs.</p>
-        <p>It sets <strong>one cookie</strong>, whose only purpose is to tell one visit from
-        another. It expires after thirteen months and is readable by no one but this site.</p>
-        <p>You are shown no banner because this measurement stays within the limits the French
-        data protection authority exempts from consent: it serves only to count audience, does
-        not follow you from site to site, is cross-referenced with no other processing, and
-        feeds neither advertising nor resale. Your clicks are not recorded, your browsing is
-        never replayed, and your IP address is used to infer a country without being attached to
-        the data kept.</p>
+        html: `<p>What follows concerns the specula.dev website, and it alone: none of this
+        section applies to the app, which remains free of telemetry of any kind.</p>
+        <p>The website measures its traffic using PostHog, hosted in the European Union, whose
+        calls are routed through our own domain rather than theirs. The following is
+        recorded:</p>
+        <ul>
+          <li>the pages you open and leave, your reading language, the page you came from;</li>
+          <li>your browser, operating system, device type, screen size, and the country inferred
+          from your IP address;</li>
+          <li><strong>your clicks</strong>, along with their position on the page;</li>
+          <li><strong>a replay of your browsing</strong>: the content displayed and your
+          movements within the page can be reconstructed and watched;</li>
+          <li>technical errors encountered and page loading times.</li>
+        </ul>
+        <p>A <strong>cookie</strong> makes it possible to recognise you from one visit to the
+        next. It expires after thirteen months. Your IP address is used to infer a country but
+        is attached to none of the data kept. This information is neither sold, nor used for
+        advertising, nor cross-referenced with any other processing.</p>
         <p><strong>To opt out:</strong> turn on your browser's &ldquo;Do Not Track&rdquo;
-        setting. This site honours it and then stops measuring you altogether.</p>`,
+        setting. This site honours it and then stops measuring you altogether. A content blocker
+        or your browser's private mode has the same effect.</p>`,
       },
       {
         h: 'Your rights',

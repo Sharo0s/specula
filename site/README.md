@@ -62,16 +62,18 @@ pas un chemin terminé par une barre oblique, or posthog-js appelle `/i/v0/e/`
 et `/flags/` ainsi. Le piège est vicieux — les fichiers statiques passent, donc
 tout paraît fonctionner, pendant que les mesures tombent dans un 404 de Vercel.
 
-Le site pose **un cookie sans afficher de bandeau**, en s'appuyant sur
-l'exemption CNIL de la mesure d'audience. Cette exemption est conditionnelle :
-finalité bornée à l'audience, pas de suivi inter-sites, pas de recoupement,
-adresse IP hors des évènements, cookie de treize mois au plus. Les réglages qui
-la portent sont commentés un à un dans `Analytics.astro` — **en retirer un fait
-sortir le site de l'exemption et rend le consentement obligatoire.**
+Tous les capteurs sont ouverts — clics, cartes de chaleur, enregistrement des
+sessions, erreurs, performances — et **aucun bandeau de consentement n'est
+affiché**. C'est un choix assumé de l'éditeur, pas un oubli.
 
-Notamment : `autocapture` et les cartes de chaleur sont refusés côté client
-parce que le projet PostHog les active côté serveur, et `respect_dnt` tient
-lieu de droit d'opposition à défaut d'un bouton.
+À noter, puisque la question se reposera : à ce niveau de collecte, le site
+sort de l'exemption CNIL réservée à la simple mesure d'audience, et le
+consentement préalable devient légalement exigible en France. `respect_dnt`
+reste donc le seul refus qu'un visiteur puisse exprimer.
+
+Y revenir tient en quatre lignes de `Analytics.astro` : `autocapture: false`,
+`capture_heatmaps: false`, `disable_session_recording: true`,
+`disable_surveys: true`.
 
 ## Déploiement
 

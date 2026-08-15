@@ -11,11 +11,16 @@
  * 2. **Appels par le proxy `/ph`** (voir les `rewrites` de `vercel.json`) :
  *    même origine, donc la CSP reste en `'self'` et les bloqueurs de pub ne
  *    coupent pas la mesure.
- * 3. **Un cookie, aucun bandeau.** Le site s'appuie sur l'exemption CNIL de la
- *    mesure d'audience, qui dispense de consentement à des conditions
- *    strictes : voir le bloc de configuration plus bas, où chaque réglage
- *    porte sa raison. Le droit d'opposition passe alors par `respect_dnt`,
- *    faute d'un bouton.
+ * 3. **Tous les capteurs, aucun bandeau.** Choix explicite de Sylvain, le
+ *    15 août 2026. À ce niveau de collecte — clics, cartes de chaleur,
+ *    enregistrement des sessions — le site sort de l'exemption CNIL de la
+ *    mesure d'audience, et le consentement préalable devient légalement
+ *    exigible en France. Il n'est pas recueilli. Le seul refus possible reste
+ *    `respect_dnt`, gardé pour cette raison.
+ *
+ *    Y revenir tient en quatre lignes : `autocapture: false`,
+ *    `capture_heatmaps: false`, `disable_session_recording: true`,
+ *    `disable_surveys: true`.
  *
  * Sans `PUBLIC_POSTHOG_KEY`, rien ne se charge : le site reste exactement ce
  * qu'il était avant, y compris en développement.
@@ -37,32 +42,35 @@ const enabled = Boolean(import.meta.env.PUBLIC_POSTHOG_KEY);
           api_host: `${location.origin}/ph`,
           // Sert uniquement aux liens « voir dans PostHog » de l'interface.
           ui_host: 'https://eu.posthog.com',
-          // Ce qui suit n'est pas un assortiment de préférences : faute de
-          // bandeau, c'est ce qui fait tenir la mesure dans l'exemption CNIL.
-          // Retirer une de ces lignes en fait sortir le site, et rend alors
-          // le recueil du consentement obligatoire.
-
-          // Finalité bornée à l'audience : on compte des pages vues, on
-          // n'observe pas les gestes. L'autocapture remonterait chaque clic,
-          // les cartes de chaleur leurs coordonnées — le projet PostHog les
-          // active côté serveur, d'où ce refus explicite.
-          autocapture: false,
-          capture_heatmaps: false,
-          disable_session_recording: true,
-          disable_surveys: true,
+          // Collecte ouverte : chaque clic (`autocapture`), les coordonnées
+          // de ces clics (`capture_heatmaps`), le rejeu de la navigation
+          // (`session_recording`), les clics morts, les erreurs JavaScript et
+          // les temps de chargement.
+          autocapture: true,
+          capture_heatmaps: true,
+          disable_session_recording: false,
+          capture_dead_clicks: true,
+          capture_exceptions: true,
+          capture_performance: true,
+          disable_surveys: false,
           capture_pageview: true,
 
-          // Treize mois, la durée maximale admise ; passé ce délai, le
-          // visiteur redevient un inconnu.
+          // L'enregistrement de session rejoue le contenu des pages. Le site
+          // n'a ni formulaire ni zone de saisie, mais le masquage reste armé :
+          // le jour où il en gagne un, la saisie ne partira pas chez PostHog
+          // sans qu'on l'ait décidé.
+          session_recording: {
+            maskAllInputs: true,
+            maskTextSelector: '[data-private]',
+          },
+
           cookie_expiration: 395,
-          // Aucun recoupement entre sous-domaines.
           cross_subdomain_cookie: false,
-          // L'adresse IP permet d'en déduire un pays, sans être jointe aux
-          // évènements conservés.
+          // L'adresse IP sert déjà à déduire le pays côté serveur : la joindre
+          // en clair aux évènements n'apporterait aucune analyse de plus.
           property_denylist: ['$ip'],
-          // À défaut d'un bouton de refus, c'est ici que s'exerce le droit
-          // d'opposition : un navigateur réglé sur « ne pas me pister » n'est
-          // pas mesuré du tout.
+          // Aucun bandeau n'étant affiché, c'est le seul refus qu'un visiteur
+          // puisse exprimer. À garder.
           respect_dnt: true,
           // Le site est multilingue : sans ça, les cinq versions d'une même
           // page se confondent dans les rapports.
