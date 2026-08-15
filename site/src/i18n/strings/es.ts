@@ -1,6 +1,5 @@
 export const es = {
   // — meta —
-  'site.tagline': 'El panel nativo de tu homelab',
   'site.description':
     'Panel nativo para tus servicios autoalojados, en iPhone, iPad y Mac. Lee sus métricas reales, detecta las caídas y alimenta los widgets. Sin cuenta, sin servidor, sin telemetría.',
 

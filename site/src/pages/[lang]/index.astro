@@ -40,7 +40,9 @@ const faq = [
 const accent = t('hero.title.accent');
 const [before, after] = t('hero.title').split(accent);
 
-const title = `Specula — ${t('site.tagline')}`;
+// L'onglet reprend le titre affiché en haut de la page plutôt qu'une accroche
+// séparée : deux formules pour une même page divergeaient sans qu'on le voie.
+const title = `Specula — ${t('hero.title')}`;
 ---
 
 <Page {lang} route="" {title} description={t('site.description')}>

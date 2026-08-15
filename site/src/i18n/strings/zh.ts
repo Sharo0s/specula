@@ -1,6 +1,5 @@
 export const zh = {
   // — 元信息 —
-  'site.tagline': '你的 homelab 原生仪表板',
   'site.description':
     '为自托管服务打造的原生仪表板，支持 iPhone、iPad 和 Mac。读取真实指标、发现故障、驱动小组件。无账号、无服务器、无遥测。',
 

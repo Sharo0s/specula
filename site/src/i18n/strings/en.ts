@@ -1,6 +1,5 @@
 export const en = {
   // — meta —
-  'site.tagline': 'The native dashboard for your homelab',
   'site.description':
     'A native dashboard for your self-hosted services on iPhone, iPad and Mac. It reads their real metrics, catches outages and drives the widgets. No account, no server, no telemetry.',
 

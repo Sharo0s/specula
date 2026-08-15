@@ -1,6 +1,5 @@
 export const fr = {
   // — méta —
-  'site.tagline': 'Le tableau de bord natif de ton homelab',
   'site.description':
     'Tableau de bord natif pour tes services auto-hébergés, sur iPhone, iPad et Mac. Il lit leurs vraies métriques, repère les pannes et alimente les widgets. Sans compte, sans serveur, sans télémétrie.',
 
