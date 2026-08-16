@@ -1,6 +1,7 @@
 /**
- * Les deux pages que l'App Store exige, reprises mot pour mot des pages
- * publiées dans `docs/`. Elles n'existent qu'en français et en anglais : un
+ * Les deux pages que l'App Store exige. Ce fichier en est la source de vérité
+ * depuis la suppression des pages statiques de `docs/`, dont il reprenait le
+ * texte mot pour mot. Elles n'existent qu'en français et en anglais : un
  * texte juridique traduit sans relecture vaut moins que le même texte dans une
  * langue que le lecteur peut vérifier. Les autres langues du site servent la
  * version anglaise, en le disant.

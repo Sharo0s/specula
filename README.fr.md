@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="docs/icon.png" width="110" alt="Icône de Specula">
+  <img src=".github/icon.png" width="110" alt="Icône de Specula">
 </p>
 
 <h1 align="center">Specula</h1>
@@ -35,9 +35,10 @@ prise en charge.
 
 ## ✨ Fonctionnalités
 
-- **Plus de soixante intégrations** — Jellyfin, \*arr, AdGuard, Proxmox, Immich,
-  Nextcloud, Home Assistant, UniFi, Portainer, Vaultwarden, Paperless et d'autres,
-  reconnues automatiquement et lues via leur propre API.
+- **Intégrations** — Jellyfin, \*arr, AdGuard, Proxmox, Immich, Nextcloud,
+  Home Assistant, UniFi, Portainer, Vaultwarden, Paperless et d'autres, reconnues
+  automatiquement et lues via leur propre API. Le
+  [catalogue](https://specula.dev/fr/integrations/) les liste toutes, une page chacune.
 - **Détection de panne** — trois tentatives échouées passent un service hors ligne,
   avec notification et Live Activity. Le mur de statut garde trente jours d'historique
   et calcule la disponibilité réelle.
@@ -88,6 +89,23 @@ La seconde : les logos des services viennent du CDN public
 [dashboard-icons](https://github.com/homarr-labs/dashboard-icons) via jsDelivr, qui
 voit donc quels logos sont demandés — jamais tes adresses ni tes données. Un
 interrupteur dans les réglages le coupe, l'app retombe alors sur des monogrammes.
+
+## 🌐 Site
+
+[**specula.dev**](https://specula.dev/) est la vitrine, dans les cinq langues que
+parle l'app — anglais, français, espagnol, chinois et arabe — servie selon
+l'`Accept-Language` de ton navigateur :
+
+- le [catalogue d'intégrations](https://specula.dev/fr/integrations/), une page par
+  service, qui dit ce que Specula lit de chaque API. Il est extrait des sources Swift,
+  donc le site et l'app ne peuvent pas diverger.
+- le [journal des versions](https://specula.dev/fr/changelog/), rendu depuis
+  `CHANGELOG.md`
+- les [tarifs](https://specula.dev/fr/pricing/), l'[assistance](https://specula.dev/fr/support/)
+  et la [politique de confidentialité](https://specula.dev/fr/privacy/)
+
+Ses sources vivent dans [`site/`](site/) — un build Astro déployé sur Vercel, avec son
+propre [README](site/README.md).
 
 ## ⚙️ Développement
 

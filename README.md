@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="docs/icon.png" width="110" alt="Specula icon">
+  <img src=".github/icon.png" width="110" alt="Specula icon">
 </p>
 
 <h1 align="center">Specula</h1>
@@ -34,9 +34,10 @@ Requires **iOS/iPadOS 26, macOS 26**. No earlier version is supported.
 
 ## ✨ Features
 
-- **Over sixty integrations** — Jellyfin, \*arr, AdGuard, Proxmox, Immich, Nextcloud,
+- **Integrations** — Jellyfin, \*arr, AdGuard, Proxmox, Immich, Nextcloud,
   Home Assistant, UniFi, Portainer, Vaultwarden, Paperless and more, each recognised
-  automatically and read through its own API.
+  automatically and read through its own API. The
+  [catalogue](https://specula.dev/en/integrations/) lists them all, one page each.
 - **Outage detection** — three failed attempts mark a service offline, with a
   notification and a Live Activity. The status wall keeps thirty days of history and
   computes real availability.
@@ -84,6 +85,22 @@ The second: service logos come from the public
 [dashboard-icons](https://github.com/homarr-labs/dashboard-icons) CDN through jsDelivr,
 which therefore sees which logos are requested — never your addresses or your data.
 A switch in Settings turns it off, and the app falls back to monograms.
+
+## 🌐 Website
+
+[**specula.dev**](https://specula.dev/) is the shop window, in the five languages the
+app speaks — English, French, Spanish, Chinese and Arabic — served from your browser's
+`Accept-Language`:
+
+- the [integration catalogue](https://specula.dev/en/integrations/), one page per
+  service, saying what Specula reads from each API. It is extracted from the Swift
+  sources, so the site and the app cannot drift apart.
+- the [changelog](https://specula.dev/en/changelog/), rendered from `CHANGELOG.md`
+- [pricing](https://specula.dev/en/pricing/), [support](https://specula.dev/en/support/)
+  and the [privacy policy](https://specula.dev/en/privacy/)
+
+Its sources live in [`site/`](site/) — an Astro build deployed on Vercel, with its own
+[README](site/README.md).
 
 ## ⚙️ Development
 
