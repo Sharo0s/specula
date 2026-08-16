@@ -6,8 +6,8 @@ directamente tus máquinas en tu red. Tus claves API se quedan en tu dispositivo
 
 Cada servicio muestra sus métricas reales, leídas a través de su API: el número
 de fotos de Immich, las peticiones bloqueadas de AdGuard, el espacio libre de tu
-NAS, los contenedores de Proxmox. Se reconocen automáticamente más de sesenta
-tipos de servicio.
+NAS, los contenedores de Proxmox. Los tipos de servicio se reconocen
+automáticamente.
 
 iPhone, iPad y Mac, con widgets en la pantalla de inicio y en la pantalla
 bloqueada, una Live Activity durante una caída y acceso desde la barra de menús

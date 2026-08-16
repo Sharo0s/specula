@@ -6,7 +6,7 @@ directly on your network. Your API keys stay on your device.
 
 Every service shows its real metrics, read through its own API: Immich's photo
 count, AdGuard's blocked queries, your NAS's free space, Proxmox's containers.
-More than sixty service types are recognised automatically.
+Service types are recognised automatically.
 
 iPhone, iPad and Mac, with widgets on the Home Screen and the Lock Screen, a
 Live Activity during an outage and access from the Mac menu bar.
