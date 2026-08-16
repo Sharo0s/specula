@@ -33,24 +33,6 @@ La bêta est ouverte. Un seul lien pour l'iPhone, l'iPad et le Mac.
 Nécessite **iOS/iPadOS 26, macOS 26**. Aucune version antérieure n'est
 prise en charge.
 
-## 📸 Captures
-
-<p align="center">
-  <img src="docs/screenshots/macos.png" width="880"
-       alt="Fenêtre macOS en trois colonnes : à gauche les sources et les groupes, au centre les services en cartes avec leurs métriques, à droite l'inspecteur de Jellyfin — histogramme de latence, compteurs, journal du conteneur. En haut le bandeau système ; Komga est signalé hors ligne en rouge.">
-</p>
-
-<p align="center">
-  <img src="docs/screenshots/ios.png" width="215"
-       alt="iPhone : liste des services par groupe avec la latence de chacun, bandeau système en tête, Komga marqué hors ligne.">
-  <img src="docs/screenshots/ios-detail.png" width="215"
-       alt="iPhone, fiche Jellyfin : histogramme de latence sur une minute, compteurs de films, séries et épisodes, disponibilité sur 30 jours, journal du conteneur.">
-  <img src="docs/screenshots/ipados.png" width="290"
-       alt="iPad : les dix-sept services des quatre groupes en grille, chacun avec ses métriques lues via son API.">
-</p>
-
-<p align="center"><em>Mode démo — toutes les surfaces fonctionnent sans homelab.</em></p>
-
 ## ✨ Fonctionnalités
 
 - **Plus de soixante intégrations** — Jellyfin, \*arr, AdGuard, Proxmox, Immich,
@@ -97,12 +79,12 @@ Aucun compte, aucune télémétrie, aucun serveur intermédiaire. L'app parle à
 machines et à rien d'autre, et les clés API vivent dans le trousseau — jamais dans une
 sauvegarde, jamais sur iCloud.
 
-Une seule exception, et elle est nommée : le **nombre** de places de service achetées
-est écrit dans ton stockage clé-valeur iCloud, pour qu'un changement d'appareil ne te
-les fasse pas perdre. Un entier, rien d'autre — ni tes services, ni leurs adresses, ni
-tes clés.
+Deux exceptions, et toutes deux sont nommées. Le **nombre** de places de service
+achetées est écrit dans ton stockage clé-valeur iCloud, pour qu'un changement d'appareil
+ne te les fasse pas perdre. Un entier, rien d'autre — ni tes services, ni leurs adresses,
+ni tes clés.
 
-Une exception : les logos des services viennent du CDN public
+La seconde : les logos des services viennent du CDN public
 [dashboard-icons](https://github.com/homarr-labs/dashboard-icons) via jsDelivr, qui
 voit donc quels logos sont demandés — jamais tes adresses ni tes données. Un
 interrupteur dans les réglages le coupe, l'app retombe alors sur des monogrammes.

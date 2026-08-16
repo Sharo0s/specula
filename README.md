@@ -32,24 +32,6 @@ The beta is open. One link covers iPhone, iPad and Mac.
 
 Requires **iOS/iPadOS 26, macOS 26**. No earlier version is supported.
 
-## 📸 Screenshots
-
-<p align="center">
-  <img src="docs/screenshots/macos.png" width="880"
-       alt="Specula on macOS, three columns: sources and groups on the left, service cards with their metrics in the middle, the Jellyfin inspector on the right with a latency histogram, counters and the container log. The system band sits on top; Komga is flagged offline in red.">
-</p>
-
-<p align="center">
-  <img src="docs/screenshots/ios.png" width="215"
-       alt="iPhone: services listed by group with each latency, system band on top, Komga flagged offline.">
-  <img src="docs/screenshots/ios-detail.png" width="215"
-       alt="iPhone, Jellyfin detail: one-minute latency histogram, movie, series and episode counters, 30-day availability, container log.">
-  <img src="docs/screenshots/ipados.png" width="290"
-       alt="iPad: the seventeen services of four groups in a grid, each with metrics read from its own API.">
-</p>
-
-<p align="center"><em>Demo mode — every surface works without a homelab.</em></p>
-
 ## ✨ Features
 
 - **Over sixty integrations** — Jellyfin, \*arr, AdGuard, Proxmox, Immich, Nextcloud,
@@ -94,11 +76,11 @@ at once — removing a service frees its slot for another.
 No account, no telemetry, no server in the middle. The app talks to your machines and
 nothing else, and API keys live in the Keychain — never in a backup, never on iCloud.
 
-One exception, and it is named: the **number** of service slots you bought is written
-to your iCloud key-value store, so that switching devices does not lose them. One
-integer, nothing else — not your services, not their addresses, not your keys.
+Two exceptions, and both are named. The **number** of service slots you bought is
+written to your iCloud key-value store, so that switching devices does not lose them.
+One integer, nothing else — not your services, not their addresses, not your keys.
 
-One exception: service logos come from the public
+The second: service logos come from the public
 [dashboard-icons](https://github.com/homarr-labs/dashboard-icons) CDN through jsDelivr,
 which therefore sees which logos are requested — never your addresses or your data.
 A switch in Settings turns it off, and the app falls back to monograms.
