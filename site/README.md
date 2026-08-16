@@ -82,11 +82,16 @@ du projet (le dépôt contient l'app iOS à sa racine). `vercel.json` fixe la
 redirection de `/` vers `/en/`, le cache des polices et une CSP qui interdit
 tout script.
 
-### Avant la mise en ligne
+### Images
 
-- **Les captures sont en français** alors que le site parle cinq langues.
-  L'app étant localisée, il faut les refaire par langue (simulateur en `es`,
-  `zh-Hans`, `ar`) et les ranger en `public/screenshots/<lang>/`.
+- **Les captures** vivent en `public/shots/<langue>/`, six par langue au format
+  WebP : `mac`, `ipad` et `iphone`, chacune en `-light` et en `-dark`. Elles
+  sortent du mode démo de la build courante, sur iPhone 17 Pro, iPad Pro 13" et
+  macOS, simulateur réglé sur la langue visée — l'app de la capture parle donc
+  celle de la page. Seul le contenu de l'écran est une image : `DeviceHero.astro`
+  dessine les châssis en CSS et pointe les six fichiers par des variables
+  `--shot-*`. Les refaire après un changement d'interface ou de catalogue de
+  démonstration.
 - **L'image Open Graph** (`public/og.png`) est composée à part : la source est
   `scripts/og.html`, rendue en 1200×630 par Chrome sans interface. Refaire
   l'image après un changement de discours ou de captures :
