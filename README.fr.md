@@ -19,9 +19,9 @@
 </p>
 
 <p align="center">
-  <a href="https://sharo0s.github.io/specula/accueil.html">Site</a> ·
-  <a href="https://sharo0s.github.io/specula/assistance.html">Assistance</a> ·
-  <a href="https://sharo0s.github.io/specula/confidentialite.html">Politique de confidentialité</a>
+  <a href="https://specula.dev/fr/">Site</a> ·
+  <a href="https://specula.dev/fr/support/">Assistance</a> ·
+  <a href="https://specula.dev/fr/privacy/">Politique de confidentialité</a>
 </p>
 
 ## 🛠 TestFlight
