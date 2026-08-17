@@ -210,6 +210,18 @@ enum Catalog {
         Incident(serviceID: "uptimekuma", day: 3, duration: "8 min", cause: String(localized: "Redémarrage du NAS"), minutes: 8),
     ]
 
+    /// Jours de lenteur soutenue, par service, dans le repère de `Incident.day`
+    /// (0 = J-29, 29 = aujourd'hui). En mode Homelab ces jours sont observés ;
+    /// ici ils sont posés à la main pour que le mur de démonstration montre les
+    /// trois états et pas seulement deux.
+    static let degradedDays: [String: Set<Int>] = [
+        "komga": [6, 20, 22],
+        "nextcloud": [11, 13],
+        "proxmox": [17, 18, 19],
+        "immich": [26],
+        "omv": [2, 28],
+    ]
+
     /// Type d'intégration des services du catalogue.
     static let typeByID: [String: IntegrationType] = [
         "komga": .komga, "immich": .immich,

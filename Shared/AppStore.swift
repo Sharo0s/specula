@@ -212,6 +212,8 @@ final class AppStore {
     /// Lectures en cours par service (Jellyfin), rafraîchies à chaque tick.
     var nowPlaying: [String: [LiveFetcher.NowPlayingSession]] = [:]
     private var failCounts: [String: Int] = [:]
+    /// Relevés lents consécutifs, pendant de `failCounts` pour la lenteur.
+    private var slowCounts: [String: Int] = [:]
     /// Services dont la latence a été réellement mesurée (mode live) —
     /// tant qu'ils n'y sont pas, on affiche « … », pas les valeurs d'amorçage.
     private var measured: Set<String> = []
@@ -285,6 +287,14 @@ final class AppStore {
             guard outage.end == nil else { return outage }
             var sealed = outage
             sealed.end = max(config.lastTick ?? outage.start, outage.start)
+            return sealed
+        }.filter { ($0.end ?? Date()) > cutoff }
+
+        // Même scellement pour les lenteurs, et même purge à 30 jours.
+        self.config.degradations = (config.degradations ?? []).map { deg in
+            guard deg.end == nil else { return deg }
+            var sealed = deg
+            sealed.end = max(config.lastTick ?? deg.start, deg.start)
             return sealed
         }.filter { ($0.end ?? Date()) > cutoff }
 
@@ -695,6 +705,21 @@ final class AppStore {
                 latHistory[target.id]?.append(Double(result.ms))
                 failCounts[target.id] = 0
                 measured.insert(target.id)
+                // Lenteur soutenue — même règle des trois relevés que la panne,
+                // pour la même raison : un pic isolé n'est pas un incident.
+                if result.ms >= Self.slowMs {
+                    slowCounts[target.id, default: 0] += 1
+                    if slowCounts[target.id] == 3,
+                       !(config.degradations ?? []).contains(where: {
+                           $0.serviceID == target.id && $0.end == nil }) {
+                        config.degradations = (config.degradations ?? [])
+                            + [StoredDegradation(serviceID: target.id, start: Date())]
+                        persist()
+                    }
+                } else {
+                    slowCounts[target.id] = 0
+                    closeDegradationRecord(target.id)
+                }
                 if downIDs.remove(target.id) != nil {
                     closeOutageRecord(target.id)
                     // Retour à la ligne seulement si le départ a été signalé :
@@ -713,6 +738,10 @@ final class AppStore {
             } else {
                 latHistory[target.id]?.append(0)
                 failCounts[target.id, default: 0] += 1
+                // Une panne prime sur une lenteur : le service ne répond plus,
+                // il n'est plus « lent ».
+                slowCounts[target.id] = 0
+                closeDegradationRecord(target.id)
                 // « Après 3 tentatives échouées » → HORS LIGNE
                 if failCounts[target.id] == 3 && !downIDs.contains(target.id) {
                     downIDs.insert(target.id)
@@ -968,6 +997,42 @@ final class AppStore {
 
     // MARK: - Statut 30 j
 
+    /// Seuil de lenteur, partagé par l'affichage direct (`isSlow`) et par
+    /// l'enregistrement historique — les deux doivent dire la même chose.
+    static let slowMs = 100
+
+    private func closeDegradationRecord(_ id: String) {
+        guard var degs = config.degradations,
+              let i = degs.lastIndex(where: { $0.serviceID == id && $0.end == nil }) else { return }
+        degs[i].end = Date()
+        config.degradations = degs
+        persist()
+    }
+
+    /// Jours marqués par une lenteur soutenue, dans le même repère que
+    /// `Incident.day` — 0 = J-29, 29 = aujourd'hui.
+    func degradedDays(for s: Service) -> Set<Int> {
+        if dataMode == .demo {
+            return Catalog.degradedDays[s.id] ?? []
+        }
+        var days: Set<Int> = []
+        let cal = Calendar.current
+        let today = cal.startOfDay(for: Date())
+        for deg in config.degradations ?? [] where deg.serviceID == s.id {
+            let from = cal.startOfDay(for: deg.start)
+            let to = cal.startOfDay(for: deg.end ?? Date())
+            // Une lenteur qui enjambe minuit marque les deux jours.
+            var cursor = from
+            while cursor <= to {
+                let daysAgo = cal.dateComponents([.day], from: cursor, to: today).day ?? 0
+                if daysAgo < 30 { days.insert(29 - daysAgo) }
+                guard let next = cal.date(byAdding: .day, value: 1, to: cursor) else { break }
+                cursor = next
+            }
+        }
+        return days
+    }
+
     private func closeOutageRecord(_ id: String) {
         guard var outages = config.outages,
               let i = outages.lastIndex(where: { $0.serviceID == id && $0.end == nil }) else { return }
@@ -999,16 +1064,21 @@ final class AppStore {
         }
     }
 
-    func availability(_ s: Service) -> String {
+    /// Disponibilité sur les `days` derniers jours. La fenêtre est un paramètre
+    /// parce que le mur ne montre pas toujours trente jours : afficher un
+    /// pourcentage calculé sur une période plus large que les carrés visibles
+    /// donne un chiffre que rien à l'écran ne justifie.
+    func availability(_ s: Service, days: Int = 30) -> String {
+        let first = 30 - days
         var minutes = 0.0
-        for inc in incidents(for: s) {
+        for inc in incidents(for: s) where inc.day >= first {
             minutes += inc.minutes
         }
         if isDown(s) { minutes += Double(downDurationMin) }
         guard minutes > 0 else { return "100 %" }
         // Une minute de panne sur 43 200 s'arrondit à 100,00 % : un service dont
         // la rangée porte une barre rouge ne doit jamais s'afficher sans faute.
-        let pct = min(99.99, 100 - minutes / (30 * 24 * 60) * 100)
+        let pct = min(99.99, 100 - minutes / (Double(days) * 24 * 60) * 100)
         return fr((pct * 100).rounded() / 100, 2) + " %"
     }
 

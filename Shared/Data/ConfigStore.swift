@@ -69,6 +69,16 @@ struct StoredOutage: Codable {
     var end: Date?
 }
 
+/// Période de lenteur soutenue. Même forme qu'une panne, et même règle des
+/// trois relevés : un pic isolé ne salit pas le mur, une lenteur installée s'y
+/// voit. Le service répondait — ce n'est pas une panne, d'où l'enregistrement
+/// séparé plutôt qu'un champ de plus sur `StoredOutage`.
+struct StoredDegradation: Codable {
+    var serviceID: String
+    var start: Date
+    var end: Date?
+}
+
 struct AppConfig: Codable {
     var dataMode: DataMode = .demo
     /// Services ajoutés à la main (bouton « + »).
@@ -80,6 +90,9 @@ struct AppConfig: Codable {
     var pins: [String]?
     /// Pannes observées (30 jours glissants).
     var outages: [StoredOutage]?
+    /// Lenteurs observées (30 jours glissants). Optionnel : une configuration
+    /// écrite par une version antérieure se décode sans lui.
+    var degradations: [StoredDegradation]?
     /// Historique des notifications, plus récente d'abord (borné à 60).
     var notifs: [StoredNotif]?
     /// Interrupteurs de la section Alertes.
