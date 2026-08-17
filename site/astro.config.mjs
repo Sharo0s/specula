@@ -51,6 +51,12 @@ export default defineConfig({
   // navigue d'une intégration à l'autre, une feuille mise en cache une fois
   // bat le même CSS recopié dans chaque page.
   build: { inlineStylesheets: 'auto' },
-  // Aucun JS client : le site est du HTML et du CSS.
+  // Sous la limite (4 Ko par défaut), Astro recopie les scripts dans le HTML —
+  // et la CSP à empreinte de vercel.json bloque tout inline non hashé. Limite
+  // à zéro : les scripts de la vitrine et de la pilule restent des fichiers
+  // /_astro/*.js, couverts par `script-src 'self'` quel que soit leur contenu.
+  vite: { build: { assetsInlineLimit: 0 } },
+  // Le seul JS client tient en deux petits modules (vitrine, pilule) et un
+  // script de thème inline hashé dans la CSP.
   prefetch: false,
 });
