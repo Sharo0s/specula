@@ -1,5 +1,23 @@
 # Changelog
 
+## [1.3.2](https://github.com/Sharo0s/specula/compare/v1.3.1...v1.3.2) (2026-08-17)
+
+
+### Fonctionnalités
+
+* **ios:** ajoute la page statut et la lecture en cours à la liste ([4dab0ca](https://github.com/Sharo0s/specula/commit/4dab0ca08cda07b0c7bcc83e01bbde0d85e6cb0c))
+* **status:** refond le mur de disponibilité et le partage entre plateformes ([74fc91c](https://github.com/Sharo0s/specula/commit/74fc91c7d6d2a7a286d0ae0e1cbb01b730a7f20a))
+
+
+### Corrections
+
+* **status:** abrège le mois au changement dans les repères du mur ([88444fb](https://github.com/Sharo0s/specula/commit/88444fba76d5fa8a7e334cbf137d66260da68ffb))
+
+
+### Divers
+
+* **release:** passe au build 30 et force la version 1.3.2 ([9650e71](https://github.com/Sharo0s/specula/commit/9650e7128ed24383dfad5394ee8d2fef98fa2174))
+
 ## [1.3.1](https://github.com/Sharo0s/specula/compare/v1.3.0...v1.3.1) (2026-08-15)
 
 
