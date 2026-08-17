@@ -1,0 +1,15 @@
+Página de Estado
+
+El muro de disponibilidad llega a iPhone y iPad, y se rehace en Mac: una fila
+por servicio, un cuadro por día y el detalle de cada incidencia con un toque.
+
+Tres estados en lugar de dos: en línea, lento, sin conexión. Un servicio que se
+ralentiza se detecta antes de caer.
+
+Los servicios con problemas suben al principio, cada columna lleva su fecha y
+el periodo se elige entre 7, 14 y 30 días.
+
+Reproducción en curso
+
+La lista del iPhone muestra lo que Jellyfin está reproduciendo, como ya hacían
+el Mac y el iPad.

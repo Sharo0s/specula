@@ -1,0 +1,16 @@
+Page Statut
+
+Le mur de disponibilité arrive sur iPhone et iPad, et se refait une santé sur
+Mac : une rangée par service, un carré par jour, le détail d'un incident d'un
+simple appui.
+
+Trois états au lieu de deux — en ligne, lent, hors ligne. Un service qui
+ralentit se repère avant de tomber.
+
+Les services en défaut remontent en tête, chaque colonne porte sa date, et la
+période se choisit entre 7, 14 et 30 jours.
+
+Lecture en cours
+
+La liste de l'iPhone affiche ce que Jellyfin est en train de lire, comme le
+faisaient déjà le Mac et l'iPad.

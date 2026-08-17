@@ -1,0 +1,15 @@
+Status page
+
+The availability wall comes to iPhone and iPad, and gets rebuilt on Mac: one
+row per service, one square per day, and any incident one tap away.
+
+Three states instead of two — online, slow, offline. A service that starts
+dragging shows up before it goes down.
+
+Services in trouble move to the top, every column carries its date, and the
+window can be set to 7, 14 or 30 days.
+
+Now playing
+
+The iPhone list shows what Jellyfin is playing, as the Mac and iPad already
+did.

@@ -11,6 +11,7 @@ fr-FR/    en-US/    es-ES/    zh-Hans/    ar-SA/
   description.txt              le corps de la fiche      4 000 caractères max
   keywords.txt                 séparés par des virgules,   100 caractères max
   subtitle.txt                 une ligne,                    30 caractères max
+  release_notes.txt            les nouveautés,            4 000 caractères max
   testflight_description.txt   la fiche vue par les testeurs
   marketing_url.txt
   support_url.txt
@@ -25,6 +26,8 @@ Trois destinations différentes, à ne pas confondre :
 
 - `description`, `keywords`, `marketing_url`, `support_url` → la page de la
   **version**, plateforme par plateforme ;
+- `release_notes` → « Nouveautés de cette version », sur la même page mais
+  réécrit à chaque version, là où les précédents se reconduisent tels quels ;
 - `subtitle` et `name` → **Informations sur l'app**, publiés avec la prochaine
   version soumise, quelle que soit la plateforme ;
 - `testflight_description` → **TestFlight ▸ Informations de test**, visible des
