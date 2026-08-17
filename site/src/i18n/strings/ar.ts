@@ -1,7 +1,7 @@
 export const ar = {
   // — بيانات الصفحة —
   'site.description':
-    'لوحة تحكم أصلية لخدماتك المستضافة ذاتيًا على iPhone وiPad وMac. تقرأ مقاييسها الحقيقية، وترصد الأعطال، وتغذّي الأدوات. بلا حساب، بلا خادم، بلا تتبّع.',
+    'لوحة تحكم أصلية لخدماتك المستضافة ذاتيًا على iPhone وiPad وMac. تقرأ مقاييسها، وترصد الأعطال، وتغذّي الأدوات. بلا حساب، بلا خادم، بلا تتبّع.',
 
   // — التنقّل —
   'nav.integrations': 'التكاملات',
@@ -13,10 +13,10 @@ export const ar = {
   'nav.cta.live': 'تنزيل',
 
   // — الواجهة الأولى —
-  'hero.title': 'مختبرك المنزلي في يدك',
-  'hero.title.accent': 'في يدك',
+  'hero.title': 'خدماتك تتعطّل بصمت.',
+  'hero.title.accent': 'بصمت',
   'hero.lede':
-    'نظرة واحدة عند الاستيقاظ وتعرف كل شيء: ما يعمل، وما يتباطأ، وما توقّف الليلة الماضية. على iPhone وiPad وMac.',
+    'ليس بعد الآن. يقرأ Specula مقاييس مختبرك المنزلي، ويرصد الأعطال وينبّهك — إشعار وLive Activity وودجة.',
   'hero.proof.privacy': 'بلا حساب، بلا خادم، بلا تتبّع.',
   'hero.proof.platforms': 'iPhone وiPad وMac — بشكل أصلي.',
   'hero.cta.primary': 'انضم إلى النسخة التجريبية على TestFlight',
@@ -34,7 +34,7 @@ export const ar = {
   'features.eyebrow': 'ما الذي يفعله',
   'features.title': 'الـ ping يقول «إنها تستجيب». أما Specula فيقول بماذا.',
 
-  'features.metrics.title': 'مقاييس حقيقية عبر واجهة كل خدمة',
+  'features.metrics.title': 'المقاييس عبر واجهة كل خدمة',
   'features.metrics.body':
     'يخاطب Specula كل خدمة بلغتها: ‏/control/stats مع AdGuard، وواجهة العنقود مع Proxmox، وإحصاءات وحدة التخزين نفسها. فتحصل على أرقام ذات معنى، لا على نقطة خضراء.',
 
@@ -61,7 +61,7 @@ export const ar = {
   'setup.title': 'ثلاث طرق للبدء',
   'setup.scan.title': 'فحص الشبكة',
   'setup.scan.body':
-    'ينصت Specula إلى Bonjour على شبكتك، فيعثر على ما يعلن عن نفسه ويستنتج نوع كل خدمة.',
+    'ينصت Specula إلى شبكتك المحلية ويتعرّف وحده على ما يعمل فيها.',
   'setup.yaml.title': 'استيراد ملف services.yaml',
   'setup.yaml.body':
     'صيغة gethomepage.dev كما هي: المجموعات والعناوين والأدوات. والتصدير متاح أيضًا، في الاتجاهين.',
@@ -157,7 +157,7 @@ export const ar = {
   'integration.official': 'الموقع الرسمي',
   'integration.setup': 'إضافتها تستغرق دقيقة',
   'integration.setup.body':
-    'افحص شبكتك عبر Bonjour، أو استورد ملف services.yaml لديك، أو اكتب العنوان. ويستنتج Specula النوع وحده.',
+    'افحص شبكتك عبر Bonjour، أو استورد ملف services.yaml لديك، أو اكتب العنوان. ويتعرّف Specula على النوع وحده.',
   'integration.cta': 'جرّبه مع {service}',
 
   // — أسئلة —
@@ -188,6 +188,32 @@ export const ar = {
     'رابط TestFlight واحد لـ iPhone وiPad وMac. ووضع العرض التجريبي يعمل دون أي إعداد.',
 
   // — التذييل —
+
+  // — vitrine défilante de l'accueil —
+  'journey.read': 'قراءة',
+  'journey.alert': 'تنبيه',
+  'journey.status': 'الحالة',
+  'journey.settings': 'الإعدادات',
+  'journey.adguard.reqs': '31 402 طلبًا/يوم',
+  'journey.adguard.blocked': '22 ٪ محجوبة',
+  'journey.proxmox.nodes': '3 عُقد',
+  'journey.proxmox.cpu': 'المعالج 12 ٪',
+  'journey.down.title': 'Komga لا يستجيب',
+  'journey.down.body': 'ثلاث محاولات فاشلة',
+  'journey.up.title': 'عاد Komga للعمل',
+  'journey.up.body': 'انقطاع 22 دقيقة',
+  'journey.incident.title': 'عطل — Komga',
+  'journey.incident.body': '22 دقيقة، تم التنبيه في 03:12',
+  'journey.uptime.title': 'متوسط التوافر',
+  'journey.uptime.value': '99.9 ٪',
+  'journey.pinned.title': 'مثبَّتة',
+  'journey.pinned.body': 'أربع خدمات في الودجة وشريط القوائم.',
+  'journey.theme.title': 'السمة واللغات',
+  'journey.theme.body': 'حسب النظام، فاتح أو داكن — وخمس لغات.',
+  'journey.alert.alt': 'تفاصيل عطل: Komga خارج الخدمة، زمن الاستجابة منعدم، وسجلّ الحاوية.',
+  'journey.status.alt': 'جدار التوافر: صف من ثلاثين يومًا لكل خدمة، والأعطال بالأحمر.',
+  'journey.settings.alt': 'الإعدادات: الأيقونات والمجموعات والخدمات المثبَّتة.',
+
   'footer.support': 'الدعم',
   'footer.privacy': 'الخصوصية',
   'footer.changelog': 'سجل التغييرات',

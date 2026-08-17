@@ -1,7 +1,7 @@
 export const en = {
   // — meta —
   'site.description':
-    'A native dashboard for your self-hosted services on iPhone, iPad and Mac. It reads their real metrics, catches outages and drives the widgets. No account, no server, no telemetry.',
+    'A native dashboard for your self-hosted services on iPhone, iPad and Mac. It reads their metrics, catches outages and drives the widgets. No account, no server, no telemetry.',
 
   // — navigation —
   'nav.integrations': 'Integrations',
@@ -13,10 +13,10 @@ export const en = {
   'nav.cta.live': 'Download',
 
   // — hero —
-  'hero.title': 'Your homelab in your hand',
-  'hero.title.accent': 'in your hand',
+  'hero.title': 'Your services go down in silence.',
+  'hero.title.accent': 'in silence.',
   'hero.lede':
-    'One glance in the morning and you know everything: what’s running, what’s crawling, what went down overnight. On iPhone, iPad and Mac.',
+    'Not anymore. Specula reads your homelab’s metrics, spots outages and tells you — notification, Live Activity, widget.',
   'hero.proof.privacy': 'No account, no server, no telemetry.',
   'hero.proof.platforms': 'iPhone, iPad and Mac — natively.',
   'hero.cta.primary': 'Join the TestFlight beta',
@@ -34,7 +34,7 @@ export const en = {
   'features.eyebrow': 'What it does',
   'features.title': 'A ping says “it answers”. Specula says what.',
 
-  'features.metrics.title': 'Real metrics, through each service’s own API',
+  'features.metrics.title': 'The metrics, through each service’s own API',
   'features.metrics.body':
     'Specula speaks each service’s own language: /control/stats for AdGuard, the Proxmox cluster API, the NAS’s own statistics. You get numbers that mean something, not a green dot.',
 
@@ -61,7 +61,7 @@ export const en = {
   'setup.title': 'Three ways to start',
   'setup.scan.title': 'Scan the network',
   'setup.scan.body':
-    'Specula listens for Bonjour on your network, finds what announces itself and guesses each service’s type.',
+    'Specula listens to your local network and recognizes what runs on it, on its own.',
   'setup.yaml.title': 'Import a services.yaml',
   'setup.yaml.body':
     'The gethomepage.dev format, taken as-is: groups, URLs and widgets. Export works too, both directions.',
@@ -158,7 +158,7 @@ export const en = {
   'integration.official': 'Official site',
   'integration.setup': 'Adding it takes a minute',
   'integration.setup.body':
-    'Scan your network over Bonjour, import your existing services.yaml, or type the address. Specula guesses the type on its own.',
+    'Scan your network over Bonjour, import your existing services.yaml, or type the address. Specula recognizes the type on its own.',
   'integration.cta': 'Try it with {service}',
 
   // — FAQ —
@@ -190,6 +190,32 @@ export const en = {
     'One TestFlight link for iPhone, iPad and Mac. Demo mode runs with nothing configured.',
 
   // — footer —
+
+  // — vitrine défilante de l'accueil —
+  'journey.read': 'Read',
+  'journey.alert': 'Alert',
+  'journey.status': 'Status',
+  'journey.settings': 'Settings',
+  'journey.adguard.reqs': '31,402 req/day',
+  'journey.adguard.blocked': '22% blocked',
+  'journey.proxmox.nodes': '3 nodes',
+  'journey.proxmox.cpu': 'CPU 12%',
+  'journey.down.title': 'Komga stopped responding',
+  'journey.down.body': 'three failed attempts',
+  'journey.up.title': 'Komga is back',
+  'journey.up.body': '22 min of downtime',
+  'journey.incident.title': 'Incident — Komga',
+  'journey.incident.body': '22 min, notified at 3:12 AM',
+  'journey.uptime.title': 'Average availability',
+  'journey.uptime.value': '99.9%',
+  'journey.pinned.title': 'Pinned',
+  'journey.pinned.body': 'Four services on the widget and in the menu bar.',
+  'journey.theme.title': 'Theme & languages',
+  'journey.theme.body': 'System, light or dark — and five languages.',
+  'journey.alert.alt': 'An outage in detail: Komga offline, latency flatlined, container log.',
+  'journey.status.alt': 'The availability wall: one thirty-day row per service, incidents in red.',
+  'journey.settings.alt': 'Settings: icons, groups and pinned services.',
+
   'footer.support': 'Support',
   'footer.privacy': 'Privacy',
   'footer.changelog': 'Changelog',

@@ -89,7 +89,7 @@ const nav = [
       <nav class="nav">
         <a class="brand" href={`/${lang}/`}>
           <img src="/icon-180.png" alt="" width="28" height="28" />
-          Specula
+          <span class="brand-name">Specula</span>
         </a>
         <div class="nav-links">
           {
@@ -143,6 +143,16 @@ const nav = [
       </div>
       <p class="footer-license">{t('footer.license')}</p>
     </footer>
+
+    {/* Ce script-là est un module empaqueté par Astro (servi depuis /_astro/,
+        couvert par script-src 'self') : contrairement au script inline du
+        thème, il ne demande aucune empreinte dans la CSP. */}
+    <script>
+      const header = document.querySelector('header.wrap');
+      const onScroll = () => header?.classList.toggle('pill', scrollY > 80);
+      addEventListener('scroll', onScroll, { passive: true });
+      onScroll();
+    </script>
 
     <style>
       .nav-cta { color: var(--accent); }

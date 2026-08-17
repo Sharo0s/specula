@@ -1,7 +1,7 @@
 export const zh = {
   // — 元信息 —
   'site.description':
-    '为自托管服务打造的原生仪表板，支持 iPhone、iPad 和 Mac。读取真实指标、发现故障、驱动小组件。无账号、无服务器、无遥测。',
+    '为自托管服务打造的原生仪表板，支持 iPhone、iPad 和 Mac。读取各项指标、发现故障、驱动小组件。无账号、无服务器、无遥测。',
 
   // — 导航 —
   'nav.integrations': '集成',
@@ -13,10 +13,10 @@ export const zh = {
   'nav.cta.live': '下载',
 
   // — 首屏 —
-  'hero.title': '掌中的 homelab',
-  'hero.title.accent': '掌中的',
+  'hero.title': '你的服务，悄无声息地掉线。',
+  'hero.title.accent': '悄无声息',
   'hero.lede':
-    '早上一眼就全知道：哪些在跑、哪些在卡、哪些昨夜掉线。iPhone、iPad 和 Mac 上都看得到。',
+    '现在不会了。Specula 读取 homelab 的指标，发现故障并提醒你 — 通知、实时活动、小组件。',
   'hero.proof.privacy': '无账号、无服务器、无遥测。',
   'hero.proof.platforms': 'iPhone、iPad 和 Mac，全部原生。',
   'hero.cta.primary': '加入 TestFlight 测试版',
@@ -34,7 +34,7 @@ export const zh = {
   'features.eyebrow': '它能做什么',
   'features.title': 'Ping 只说「有响应」，Specula 告诉你响应了什么。',
 
-  'features.metrics.title': '通过每个服务自己的 API 读取真实指标',
+  'features.metrics.title': '通过每个服务自己的 API 读取指标',
   'features.metrics.body':
     'Specula 用每个服务自己的语言对话：AdGuard 用 /control/stats，Proxmox 用集群 API，NAS 用它自己的统计接口。你看到的是有意义的数字，而不是一个绿点。',
 
@@ -61,7 +61,7 @@ export const zh = {
   'setup.title': '三种上手方式',
   'setup.scan.title': '扫描网络',
   'setup.scan.body':
-    'Specula 监听网络中的 Bonjour 广播，找到主动通告自己的服务并推断其类型。',
+    'Specula 监听本地网络，自动识别网络中运行的服务。',
   'setup.yaml.title': '导入 services.yaml',
   'setup.yaml.body':
     '直接沿用 gethomepage.dev 的格式：分组、地址和小组件原样导入。导出同样支持，双向可用。',
@@ -157,7 +157,7 @@ export const zh = {
   'integration.official': '官方网站',
   'integration.setup': '添加只需一分钟',
   'integration.setup.body':
-    '用 Bonjour 扫描网络、导入现有的 services.yaml，或者直接输入地址。Specula 会自行判断类型。',
+    '用 Bonjour 扫描网络、导入现有的 services.yaml，或者直接输入地址。Specula 会自行识别类型。',
   'integration.cta': '用 {service} 试试',
 
   // — 常见问题 —
@@ -187,6 +187,32 @@ export const zh = {
   'cta.body': '一个 TestFlight 链接，覆盖 iPhone、iPad 和 Mac。演示模式无需任何配置即可运行。',
 
   // — 页脚 —
+
+  // — vitrine défilante de l'accueil —
+  'journey.read': '读取',
+  'journey.alert': '提醒',
+  'journey.status': '状态',
+  'journey.settings': '设置',
+  'journey.adguard.reqs': '每日 31 402 次请求',
+  'journey.adguard.blocked': '22% 已拦截',
+  'journey.proxmox.nodes': '3 个节点',
+  'journey.proxmox.cpu': 'CPU 12%',
+  'journey.down.title': 'Komga 没有响应',
+  'journey.down.body': '三次尝试失败',
+  'journey.up.title': 'Komga 已恢复',
+  'journey.up.body': '中断 22 分钟',
+  'journey.incident.title': '故障 — Komga',
+  'journey.incident.body': '22 分钟，已于 03:12 通知',
+  'journey.uptime.title': '平均可用性',
+  'journey.uptime.value': '99.9%',
+  'journey.pinned.title': '置顶',
+  'journey.pinned.body': '四个服务显示在小组件和菜单栏中。',
+  'journey.theme.title': '主题与语言',
+  'journey.theme.body': '跟随系统、浅色或深色 — 还有五种语言。',
+  'journey.alert.alt': '故障详情：Komga 离线，延迟曲线归零，容器日志。',
+  'journey.status.alt': '可用性墙：每个服务一行三十天，故障标红。',
+  'journey.settings.alt': '设置：图标、分组与置顶服务。',
+
   'footer.support': '支持',
   'footer.privacy': '隐私',
   'footer.changelog': '更新日志',

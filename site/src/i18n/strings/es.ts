@@ -1,7 +1,7 @@
 export const es = {
   // — meta —
   'site.description':
-    'Panel nativo para tus servicios autoalojados, en iPhone, iPad y Mac. Lee sus métricas reales, detecta las caídas y alimenta los widgets. Sin cuenta, sin servidor, sin telemetría.',
+    'Panel nativo para tus servicios autoalojados, en iPhone, iPad y Mac. Lee sus métricas, detecta las caídas y alimenta los widgets. Sin cuenta, sin servidor, sin telemetría.',
 
   // — navegación —
   'nav.integrations': 'Integraciones',
@@ -13,10 +13,10 @@ export const es = {
   'nav.cta.live': 'Descargar',
 
   // — portada —
-  'hero.title': 'Tu homelab en la mano',
-  'hero.title.accent': 'en la mano',
+  'hero.title': 'Tus servicios caen en silencio.',
+  'hero.title.accent': 'en silencio.',
   'hero.lede':
-    'Un vistazo al despertar y lo sabes todo: qué funciona, qué va lento y qué se cayó esta noche. En iPhone, iPad y Mac.',
+    'Ya no. Specula lee las métricas de tu homelab, detecta las caídas y te avisa — notificación, Live Activity, widget.',
   'hero.proof.privacy': 'Sin cuenta, sin servidor, sin telemetría.',
   'hero.proof.platforms': 'iPhone, iPad y Mac, en nativo.',
   'hero.cta.primary': 'Unirse a la beta de TestFlight',
@@ -34,7 +34,7 @@ export const es = {
   'features.eyebrow': 'Qué hace',
   'features.title': 'Un ping dice «responde». Specula dice qué.',
 
-  'features.metrics.title': 'Métricas reales, por la API de cada servicio',
+  'features.metrics.title': 'Las métricas, por la API de cada servicio',
   'features.metrics.body':
     'Specula habla el idioma de cada servicio: /control/stats para AdGuard, la API de clúster de Proxmox, las estadísticas del NAS. Ves cifras que significan algo, no un punto verde.',
 
@@ -61,7 +61,7 @@ export const es = {
   'setup.title': 'Tres maneras de empezar',
   'setup.scan.title': 'Escanear la red',
   'setup.scan.body':
-    'Specula escucha el Bonjour de tu red, encuentra lo que se anuncia y adivina el tipo de cada servicio.',
+    'Specula escucha tu red local y reconoce por sí solo lo que corre en ella.',
   'setup.yaml.title': 'Importar un services.yaml',
   'setup.yaml.body':
     'El formato de gethomepage.dev, tal cual: grupos, direcciones y widgets. La exportación también existe, en ambos sentidos.',
@@ -158,7 +158,7 @@ export const es = {
   'integration.official': 'Sitio oficial',
   'integration.setup': 'Añadirlo lleva un minuto',
   'integration.setup.body':
-    'Escanea tu red por Bonjour, importa tu services.yaml o escribe la dirección. Specula adivina el tipo por su cuenta.',
+    'Escanea tu red por Bonjour, importa tu services.yaml o escribe la dirección. Specula reconoce el tipo por su cuenta.',
   'integration.cta': 'Probarlo con {service}',
 
   // — preguntas —
@@ -190,6 +190,32 @@ export const es = {
     'Un solo enlace de TestFlight para iPhone, iPad y Mac. El modo demo arranca sin configurar nada.',
 
   // — pie —
+
+  // — vitrine défilante de l'accueil —
+  'journey.read': 'Leer',
+  'journey.alert': 'Alertar',
+  'journey.status': 'Estado',
+  'journey.settings': 'Ajustes',
+  'journey.adguard.reqs': '31 402 pet./día',
+  'journey.adguard.blocked': '22 % bloqueadas',
+  'journey.proxmox.nodes': '3 nodos',
+  'journey.proxmox.cpu': 'CPU 12 %',
+  'journey.down.title': 'Komga no responde',
+  'journey.down.body': 'tres intentos fallidos',
+  'journey.up.title': 'Komga ha vuelto',
+  'journey.up.body': '22 min de interrupción',
+  'journey.incident.title': 'Incidente — Komga',
+  'journey.incident.body': '22 min, notificado a las 3:12',
+  'journey.uptime.title': 'Disponibilidad media',
+  'journey.uptime.value': '99,9 %',
+  'journey.pinned.title': 'Fijados',
+  'journey.pinned.body': 'Cuatro servicios en el widget y la barra de menús.',
+  'journey.theme.title': 'Tema e idiomas',
+  'journey.theme.body': 'Sistema, claro u oscuro — y cinco idiomas.',
+  'journey.alert.alt': 'El detalle de una caída: Komga fuera de línea, latencia plana, registro del contenedor.',
+  'journey.status.alt': 'El muro de disponibilidad: una fila de treinta días por servicio, incidentes en rojo.',
+  'journey.settings.alt': 'Los ajustes: iconos, grupos y servicios fijados.',
+
   'footer.support': 'Soporte',
   'footer.privacy': 'Privacidad',
   'footer.changelog': 'Novedades',

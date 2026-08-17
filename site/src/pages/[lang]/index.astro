@@ -2,7 +2,7 @@
 import Page from '../../layouts/Page.astro';
 import { LOCALES, useTranslations, type Locale } from '../../i18n';
 import StoreButton from '../../components/StoreButton.astro';
-import DeviceHero from '../../components/DeviceHero.astro';
+import Showcase from '../../components/Showcase.astro';
 import { metricLabel } from '../../i18n/metrics';
 import { IS_LIVE } from '../../data/links';
 
@@ -48,30 +48,21 @@ const title = `Specula — ${t('hero.title')}`;
 <Page {lang} route="" {title} description={t('site.description')}>
   <section class="hero-band">
     <div class="wrap hero">
-      <div class="hero-text">
-        <h1>
-          {after === undefined ? t('hero.title') : (
-            <>
-              {before}
-              <em>{accent}</em>
-              {after}
-            </>
-          )}
-        </h1>
-        <p class="lede">{t('hero.lede')}</p>
-        <StoreButton
-          {lang}
-          secondary={{ href: `/${lang}/integrations/`, label: t('hero.cta.secondary') }}
-        />
-        <p class="proof">
-          <span>{t('hero.proof.privacy')}</span>
-          <span>{t('hero.proof.platforms')}</span>
-        </p>
-      </div>
-
-      <DeviceHero {lang} />
+      <h1>
+        {after === undefined ? t('hero.title') : (
+          <>
+            {before}
+            <em>{accent}</em>
+            {after}
+          </>
+        )}
+      </h1>
+      <p class="lede">{t('hero.lede')}</p>
+      <StoreButton {lang} />
     </div>
   </section>
+
+  <Showcase {lang} />
 
   <section class="wrap section" id="features">
     <p class="eyebrow">{t('features.eyebrow')}</p>
@@ -178,38 +169,19 @@ const title = `Specula — ${t('hero.title')}`;
 </Page>
 
 <style>
-  /* — hero en deux colonnes : le discours, puis les appareils — */
-  /* `clip` et non `hidden` : les appareils débordent vers le bord de la
-     fenêtre sans jamais créer de défilement horizontal. */
+  /* — hero centré : le discours seul, la vitrine défilante prend la suite — */
   .hero-band { background: var(--hero-wash); overflow-x: clip; }
   .hero {
-    display: grid;
-    grid-template-columns: 0.87fr 1.13fr;
-    gap: clamp(26px, 3.4vw, 52px);
-    align-items: center;
-    padding-block: clamp(44px, 6vw, 76px) clamp(36px, 5vw, 64px);
-  }
-  /* Un cran sous l'échelle globale : la colonne est plus étroite depuis que
-     les appareils ont pris de la place, et le titre doit tenir en deux lignes. */
-  .hero h1 { font-size: clamp(36px, 5vw, 60px); }
-  .hero h1 em { font-style: normal; color: var(--accent); }
-  .hero .lede { margin-block-start: 20px; }
-
-  .proof {
     display: flex;
-    flex-wrap: wrap;
-    gap: 6px 26px;
-    margin-block-start: 26px;
-    color: var(--muted);
-    font-size: 14px;
-    max-width: none;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding-block: clamp(56px, 8vw, 96px) clamp(16px, 2.4vw, 32px);
   }
-  .proof span { display: inline-flex; align-items: center; gap: 8px; }
-  .proof span::before { content: ''; width: 6px; height: 6px; background: var(--accent); flex: none; }
-
-  @media (max-width: 860px) {
-    .hero { grid-template-columns: 1fr; }
-    }
+  .hero h1 { max-width: 15ch; }
+  .hero h1 em { font-style: normal; color: var(--accent); }
+  .hero .lede { margin-block-start: 20px; margin-inline: auto; }
+  .hero .lede + :global(*) { margin-block-start: 28px; }
 
   /* — blocs de fonctionnalités : des cartes qui respirent, chacune finissant
        sur une petite démonstration plutôt que sur du vide — */

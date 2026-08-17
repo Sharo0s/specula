@@ -248,7 +248,7 @@ export const SUPPORT: Record<'fr' | 'en', LegalDoc> = {
         Réglages&nbsp;:</p>
         <ul>
           <li><strong>Scanner le réseau</strong> — Specula cherche les services visibles autour
-          de vous et devine leur type.</li>
+          de vous et reconnaît leur type.</li>
           <li><strong>Importer un <code>services.yaml</code></strong> — le format de
           gethomepage. Groupes, adresses et widgets sont repris tels quels.</li>
           <li><strong>Ajouter à la main</strong> — une adresse, un nom.</li>
@@ -338,7 +338,7 @@ export const SUPPORT: Record<'fr' | 'en', LegalDoc> = {
         html: `<p>Three ways, offered on first launch and available any time in Settings:</p>
         <ul>
           <li><strong>Scan the network</strong> — Specula looks for services advertised around
-          you and guesses their type.</li>
+          you and recognizes their type.</li>
           <li><strong>Import a <code>services.yaml</code></strong> — the gethomepage format.
           Groups, addresses and widgets come over as they are.</li>
           <li><strong>Add one by hand</strong> — an address and a name.</li>

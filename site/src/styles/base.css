@@ -139,17 +139,42 @@ code {
 .btn:hover { opacity: 0.85; }
 
 /* — en-tête et pied — */
+/* L'en-tête colle en haut : barre pleine largeur au repos, pilule flottante
+   dès qu'on défile (la classe .pill vient d'un petit script du layout). */
+header.wrap { position: sticky; top: 0; z-index: 60; }
 .nav {
   display: flex;
   align-items: center;
   gap: 22px;
   padding-block: 18px;
+  border: 1px solid transparent;
   border-block-end: 2px solid var(--rule-strong);
   flex-wrap: wrap;
+  transition: max-width 0.35s ease, padding 0.35s ease, background 0.35s ease,
+    border-color 0.35s ease, border-radius 0.35s ease, box-shadow 0.35s ease;
+}
+header.pill { padding-block-start: 14px; }
+header.pill .nav {
+  max-width: 720px;
+  margin-inline: auto;
+  padding: 6px 10px;
+  padding-inline-start: 14px;
+  background: color-mix(in srgb, var(--bg) 76%, transparent);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--rule);
+  border-radius: 999px;
+  box-shadow: var(--shadow);
 }
 .brand { display: flex; align-items: center; gap: 9px; text-decoration: none; color: var(--text); font-weight: 800; letter-spacing: -0.02em; }
 /* L'icône de l'app elle-même, plutôt qu'un carré redessiné en CSS qui dérivait. */
 .brand img { width: 28px; height: 28px; border-radius: 6px; flex: none; }
+/* Le nom se replie quand la barre devient pilule : l'icône suffit. */
+.brand-name { display: inline-block; max-width: 90px; overflow: hidden; transition: max-width 0.3s ease, opacity 0.3s ease; }
+header.pill .brand-name { max-width: 0; opacity: 0; }
+@media (prefers-reduced-motion: reduce) {
+  .nav, .brand-name { transition: none; }
+}
 .nav-links { display: flex; gap: 18px; margin-inline-start: auto; flex-wrap: wrap; }
 .nav-links a { color: var(--text); text-decoration: none; font-size: 15px; font-weight: 600; }
 .nav-links a:hover, .nav-links a[aria-current] { color: var(--accent); }

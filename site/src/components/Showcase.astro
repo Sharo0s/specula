@@ -1,0 +1,285 @@
+---
+import { existsSync } from 'node:fs';
+import { resolve } from 'node:path';
+import { useTranslations, type Locale } from '../i18n';
+
+interface Props {
+  lang: Locale;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+
+/**
+ * La vitrine défilante : un iPhone épinglé au centre de l'écran pendant que le
+ * défilement traverse quatre écrans de la démo — lire, alerter, statut,
+ * réglages. Le dock sous le téléphone suit l'état courant et sait y mener.
+ *
+ * Les captures viennent du mode démo, par langue quand elles existent ; le
+ * français sert de repli tant qu'une langue n'a pas les siennes.
+ */
+const STATES = ['read', 'alert', 'status', 'settings'] as const;
+const shotsLang = existsSync(resolve(process.cwd(), 'public/shots', lang, 'demo-read-light.png'))
+  ? lang
+  : 'fr';
+const shot = (state: string, theme: string) => `/shots/${shotsLang}/demo-${state}-${theme}.png`;
+
+const alts: Record<(typeof STATES)[number], string> = {
+  read: t('shot.ios.alt'),
+  alert: t('journey.alert.alt'),
+  status: t('journey.status.alt'),
+  settings: t('journey.settings.alt'),
+};
+
+const dockLabels: Record<(typeof STATES)[number], string> = {
+  read: t('journey.read'),
+  alert: t('journey.alert'),
+  status: t('journey.status'),
+  settings: t('journey.settings'),
+};
+---
+
+<div
+  class="journey"
+  id="apercu"
+  data-state="read"
+  style={STATES.map(
+    (s) => `--shot-${s}: url('${shot(s, 'light')}'); --shot-${s}-dark: url('${shot(s, 'dark')}');`
+  ).join(' ')}
+>
+  <div class="journey-sticky">
+    <div class="showcase">
+      <div class="float-card fc-start fc-state st-read">
+        <p class="fc-label">AdGuard Home</p>
+        <div class="fc-chips"><span>{t('journey.adguard.reqs')}</span><span>{t('journey.adguard.blocked')}</span></div>
+      </div>
+      <div class="float-card fc-end fc-state st-read">
+        <p class="fc-label">Proxmox VE</p>
+        <div class="fc-chips"><span>{t('journey.proxmox.nodes')}</span><span>{t('journey.proxmox.cpu')}</span></div>
+      </div>
+      <div class="float-card fc-start fc-state st-alert">
+        <p class="fc-label ok">{t('journey.up.title')}</p>
+        <p class="fc-body">{t('journey.up.body')}</p>
+      </div>
+      <div class="float-card fc-end fc-state st-alert">
+        <p class="fc-label ko">{t('journey.down.title')}</p>
+        <p class="fc-body">{t('journey.down.body')}</p>
+      </div>
+      <div class="float-card fc-start fc-state st-status">
+        <p class="fc-label">{t('journey.uptime.title')}</p>
+        <p class="fc-value">{t('journey.uptime.value')}</p>
+      </div>
+      <div class="float-card fc-end fc-state st-status">
+        <p class="fc-label ko">{t('journey.incident.title')}</p>
+        <p class="fc-body">{t('journey.incident.body')}</p>
+      </div>
+      <div class="float-card fc-start fc-state st-settings">
+        <p class="fc-label">{t('journey.pinned.title')}</p>
+        <p class="fc-body">{t('journey.pinned.body')}</p>
+      </div>
+      <div class="float-card fc-end fc-state st-settings">
+        <p class="fc-label">{t('journey.theme.title')}</p>
+        <p class="fc-body">{t('journey.theme.body')}</p>
+      </div>
+
+      <div class="phone">
+        {STATES.map((s) => (
+          <div class:list={['shot', `shot-${s}`]} role="img" aria-label={alts[s]} />
+        ))}
+        <span class="island" aria-hidden="true"></span>
+      </div>
+    </div>
+
+    <nav class="dock" aria-label={t('journey.status')}>
+      {STATES.map((s, i) => (
+        <a class:list={['dock-item', { 'is-active': i === 0 }]} data-spy={s} href="#apercu">
+          {dockLabels[s]}
+        </a>
+      ))}
+    </nav>
+  </div>
+</div>
+
+<script>
+  // La vitrine : le défilement traverse les quatre états, le dock suit et
+  // pilote. Sans JavaScript, le premier écran reste affiché — la page se lit.
+  const journey = document.getElementById('apercu');
+  if (journey) {
+    const STATES = ['read', 'alert', 'status', 'settings'];
+    const dockItems = Array.from(journey.querySelectorAll<HTMLAnchorElement>('.dock-item'));
+
+    const setState = (s: string) => {
+      journey.dataset.state = s;
+      dockItems.forEach((i) => i.classList.toggle('is-active', i.dataset.spy === s));
+    };
+
+    const onScroll = () => {
+      const rect = journey.getBoundingClientRect();
+      const total = journey.offsetHeight - innerHeight;
+      const progress = Math.min(0.999, Math.max(0, -rect.top / total));
+      setState(STATES[Math.floor(progress * STATES.length)]);
+    };
+
+    dockItems.forEach((item) => {
+      item.addEventListener('click', (e) => {
+        e.preventDefault();
+        const idx = STATES.indexOf(item.dataset.spy ?? '');
+        const top = journey.getBoundingClientRect().top + scrollY;
+        const total = journey.offsetHeight - innerHeight;
+        scrollTo({ top: top + (total * (idx + 0.5)) / STATES.length, behavior: 'smooth' });
+      });
+    });
+
+    addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+  }
+</script>
+
+<style>
+  .journey {
+    height: 440vh;
+    margin-block-start: min(0px, calc((820px - 100vh) / 2));
+  }
+  .journey-sticky {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+  .showcase {
+    position: relative;
+    width: min(960px, 92vw);
+    display: flex;
+    justify-content: center;
+  }
+
+  /* — l'iPhone, châssis dessiné comme dans DeviceHero — */
+  .phone {
+    position: relative;
+    z-index: 2;
+    width: min(300px, 78vw);
+    background: #0b0b0c;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    border-radius: 26px;
+    padding: 5px;
+    filter: drop-shadow(var(--shadow));
+  }
+  .island {
+    position: absolute;
+    inset-block-start: 10px;
+    inset-inline-start: 50%;
+    transform: translateX(-50%);
+    width: 32%;
+    height: 8px;
+    background: #0b0b0c;
+    border-radius: 999px;
+  }
+  .shot {
+    aspect-ratio: 620 / 1348;
+    border-radius: 21px;
+    background: var(--shot-read) center / cover no-repeat;
+  }
+  .shot + .shot {
+    position: absolute;
+    inset: 5px;
+    aspect-ratio: auto;
+    opacity: 0;
+    transition: opacity 0.45s ease;
+  }
+  .shot-alert { background-image: var(--shot-alert); }
+  .shot-status { background-image: var(--shot-status); }
+  .shot-settings { background-image: var(--shot-settings); }
+  .journey[data-state='alert'] .shot-alert,
+  .journey[data-state='status'] .shot-status,
+  .journey[data-state='settings'] .shot-settings { opacity: 1; }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme='light']) .shot { background-image: var(--shot-read-dark); }
+    :root:not([data-theme='light']) .shot-alert { background-image: var(--shot-alert-dark); }
+    :root:not([data-theme='light']) .shot-status { background-image: var(--shot-status-dark); }
+    :root:not([data-theme='light']) .shot-settings { background-image: var(--shot-settings-dark); }
+  }
+  :root[data-theme='dark'] .shot { background-image: var(--shot-read-dark); }
+  :root[data-theme='dark'] .shot-alert { background-image: var(--shot-alert-dark); }
+  :root[data-theme='dark'] .shot-status { background-image: var(--shot-status-dark); }
+  :root[data-theme='dark'] .shot-settings { background-image: var(--shot-settings-dark); }
+
+  /* — cartes flottantes : une de chaque côté, propres à chaque état — */
+  .float-card {
+    position: absolute;
+    background: var(--card);
+    border: 1px solid var(--shot-border);
+    border-radius: 14px;
+    padding: 14px 16px;
+    width: 240px;
+    box-shadow: var(--shadow);
+    opacity: 0;
+    transform: translateY(12px);
+    transition: opacity 0.4s ease, transform 0.4s ease;
+    pointer-events: none;
+  }
+  .journey[data-state='read'] .st-read,
+  .journey[data-state='alert'] .st-alert,
+  .journey[data-state='status'] .st-status,
+  .journey[data-state='settings'] .st-settings { opacity: 1; transform: none; }
+
+  .fc-end { top: 12%; inset-inline-end: max(8px, 8%); z-index: 3; }
+  .fc-start { top: 58%; inset-inline-start: max(8px, 8%); z-index: 3; }
+
+  .fc-label { margin: 0; font-weight: 700; font-size: 14px; }
+  .fc-label.ko { color: var(--accent); }
+  .fc-label.ok { color: var(--ok); }
+  .fc-body { margin: 4px 0 0; font-size: 13.5px; color: var(--muted); }
+  .fc-value { margin: 4px 0 0; font-size: 24px; font-weight: 800; letter-spacing: -0.02em; color: var(--ok); }
+  .fc-chips { display: flex; flex-wrap: wrap; gap: 6px; margin-block-start: 8px; }
+  .fc-chips span {
+    font-family: var(--mono);
+    font-size: 11.5px;
+    padding: 3px 9px;
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--ok) 14%, transparent);
+    color: var(--ok);
+  }
+
+  /* — le dock, à distance fixe sous le téléphone — */
+  .dock {
+    position: relative;
+    z-index: 3;
+    margin-block-start: 24px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    padding: 5px;
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--card) 78%, transparent);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid var(--rule);
+    box-shadow: var(--shadow);
+  }
+  .dock-item {
+    padding: 9px 16px;
+    border-radius: 999px;
+    font-size: 13.5px;
+    font-weight: 650;
+    color: var(--muted);
+    text-decoration: none;
+    white-space: nowrap;
+    transition: color 0.15s ease, background 0.15s ease;
+  }
+  .dock-item:hover { color: var(--text); }
+  .dock-item.is-active { background: var(--accent); color: var(--accent-text); }
+
+  @media (max-width: 880px) {
+    .fc-end { inset-inline-end: 0; }
+    .fc-start { inset-inline-start: 0; }
+    .float-card { width: 200px; padding: 11px 13px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .shot + .shot, .float-card, .dock-item { transition: none; }
+  }
+</style>

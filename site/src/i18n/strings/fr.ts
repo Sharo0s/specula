@@ -1,7 +1,7 @@
 export const fr = {
   // — méta —
   'site.description':
-    'Tableau de bord natif pour tes services auto-hébergés, sur iPhone, iPad et Mac. Il lit leurs vraies métriques, repère les pannes et alimente les widgets. Sans compte, sans serveur, sans télémétrie.',
+    'Tableau de bord natif pour tes services auto-hébergés, sur iPhone, iPad et Mac. Il lit leurs métriques, repère les pannes et alimente les widgets. Sans compte, sans serveur, sans télémétrie.',
 
   // — navigation —
   'nav.integrations': 'Intégrations',
@@ -13,10 +13,10 @@ export const fr = {
   'nav.cta.live': 'Télécharger',
 
   // — hero —
-  'hero.title': 'Ton homelab dans ta main',
-  'hero.title.accent': 'dans ta main',
+  'hero.title': 'Tes services tombent en silence.',
+  'hero.title.accent': 'en silence.',
   'hero.lede':
-    'Un coup d’œil au réveil et tu sais tout : ce qui tourne, ce qui rame, ce qui est tombé cette nuit. Sur iPhone, iPad et Mac.',
+    'Plus maintenant. Specula lit les métriques de ton homelab, repère les pannes et te prévient — notification, Live Activity, widget.',
   'hero.proof.privacy': 'Aucun compte, aucun serveur, aucune télémétrie.',
   'hero.proof.platforms': 'iPhone, iPad et Mac — en natif.',
   'hero.cta.primary': 'Rejoindre la bêta TestFlight',
@@ -34,7 +34,7 @@ export const fr = {
   'features.eyebrow': 'Ce que ça fait',
   'features.title': 'Un ping dit « ça répond ». Specula dit quoi.',
 
-  'features.metrics.title': 'Les vraies métriques, via l’API de chaque service',
+  'features.metrics.title': 'Les métriques, via l’API de chaque service',
   'features.metrics.body':
     'Specula parle à chaque service dans sa propre langue : /control/stats pour AdGuard, l’API cluster de Proxmox, les statistiques du NAS. Tu vois des chiffres qui veulent dire quelque chose, pas une pastille verte.',
 
@@ -61,7 +61,7 @@ export const fr = {
   'setup.title': 'Trois façons de commencer',
   'setup.scan.title': 'Scanner le réseau',
   'setup.scan.body':
-    'Specula écoute le Bonjour de ton réseau, trouve ce qui s’annonce et devine le type de chaque service.',
+    'Specula écoute ton réseau local et reconnaît tout seul ce qui y tourne.',
   'setup.yaml.title': 'Importer un services.yaml',
   'setup.yaml.body':
     'Le format de gethomepage.dev, repris tel quel : groupes, URL et widgets. L’export existe aussi, dans les deux sens.',
@@ -158,7 +158,7 @@ export const fr = {
   'integration.official': 'Site officiel',
   'integration.setup': 'L’ajouter prend une minute',
   'integration.setup.body':
-    'Scanne ton réseau en Bonjour, importe ton services.yaml existant, ou saisis l’adresse. Specula devine le type tout seul.',
+    'Scanne ton réseau en Bonjour, importe ton services.yaml existant, ou saisis l’adresse. Specula reconnaît le service tout seul.',
   'integration.cta': 'Essayer avec {service}',
 
   // — FAQ —
@@ -190,6 +190,32 @@ export const fr = {
     'Un seul lien TestFlight pour l’iPhone, l’iPad et le Mac. Le mode démo se lance sans rien configurer.',
 
   // — pied de page —
+
+  // — vitrine défilante de l'accueil —
+  'journey.read': 'Lire',
+  'journey.alert': 'Alerter',
+  'journey.status': 'Statut',
+  'journey.settings': 'Réglages',
+  'journey.adguard.reqs': '31 402 req/j',
+  'journey.adguard.blocked': '22 % bloquées',
+  'journey.proxmox.nodes': '3 nœuds',
+  'journey.proxmox.cpu': 'CPU 12 %',
+  'journey.down.title': 'Komga ne répond plus',
+  'journey.down.body': 'trois tentatives échouées',
+  'journey.up.title': 'Komga est de retour',
+  'journey.up.body': '22 min d’interruption',
+  'journey.incident.title': 'Incident — Komga',
+  'journey.incident.body': '22 min, notifié à 03 h 12',
+  'journey.uptime.title': 'Disponibilité moyenne',
+  'journey.uptime.value': '99,9 %',
+  'journey.pinned.title': 'Épinglés',
+  'journey.pinned.body': 'Quatre services dans le widget et la barre des menus.',
+  'journey.theme.title': 'Thème et langues',
+  'journey.theme.body': 'Système, clair ou sombre — et cinq langues.',
+  'journey.alert.alt': 'Le détail d’une panne : Komga hors ligne, latence à plat, journal du conteneur.',
+  'journey.status.alt': 'Le mur de disponibilité : une rangée de trente jours par service, les incidents en rouge.',
+  'journey.settings.alt': 'Les réglages : pictogrammes, groupes et services épinglés.',
+
   'footer.support': 'Assistance',
   'footer.privacy': 'Confidentialité',
   'footer.changelog': 'Journal des versions',
