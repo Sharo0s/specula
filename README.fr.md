@@ -94,18 +94,7 @@ interrupteur dans les réglages le coupe, l'app retombe alors sur des monogramme
 
 [**specula.dev**](https://specula.dev/) est la vitrine, dans les cinq langues que
 parle l'app — anglais, français, espagnol, chinois et arabe — servie selon
-l'`Accept-Language` de ton navigateur :
-
-- le [catalogue d'intégrations](https://specula.dev/fr/integrations/), une page par
-  service, qui dit ce que Specula lit de chaque API. Il est extrait des sources Swift,
-  donc le site et l'app ne peuvent pas diverger.
-- le [journal des versions](https://specula.dev/fr/changelog/), rendu depuis
-  `CHANGELOG.md`
-- les [tarifs](https://specula.dev/fr/pricing/), l'[assistance](https://specula.dev/fr/support/)
-  et la [politique de confidentialité](https://specula.dev/fr/privacy/)
-
-Ses sources vivent dans [`site/`](site/) — un build Astro déployé sur Vercel, avec son
-propre [README](site/README.md).
+l'`Accept-Language` de ton navigateur.
 
 ## ⚙️ Développement
 

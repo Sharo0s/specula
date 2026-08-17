@@ -90,17 +90,7 @@ A switch in Settings turns it off, and the app falls back to monograms.
 
 [**specula.dev**](https://specula.dev/) is the shop window, in the five languages the
 app speaks — English, French, Spanish, Chinese and Arabic — served from your browser's
-`Accept-Language`:
-
-- the [integration catalogue](https://specula.dev/en/integrations/), one page per
-  service, saying what Specula reads from each API. It is extracted from the Swift
-  sources, so the site and the app cannot drift apart.
-- the [changelog](https://specula.dev/en/changelog/), rendered from `CHANGELOG.md`
-- [pricing](https://specula.dev/en/pricing/), [support](https://specula.dev/en/support/)
-  and the [privacy policy](https://specula.dev/en/privacy/)
-
-Its sources live in [`site/`](site/) — an Astro build deployed on Vercel, with its own
-[README](site/README.md).
+`Accept-Language`.
 
 ## ⚙️ Development
 
