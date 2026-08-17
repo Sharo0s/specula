@@ -11,6 +11,8 @@ struct IPadRootView: View {
     @State private var group: Int?
     /// Feuille des réglages (seul accès à la config sur iPad).
     @State private var showSettings = false
+    /// Feuille du mur de disponibilité — l'iPad n'a pas de pile de navigation.
+    @State private var showStatus = false
     /// Service dont le détail est ouvert en feuille (tap simple sur une carte).
     @State private var detail: Service?
     /// SettingsView attend un chemin de navigation ; en feuille il reste local.
@@ -35,6 +37,14 @@ struct IPadRootView: View {
                 .environment(store)
                 .presentationSizing(.page)
         }
+        .sheet(isPresented: $showStatus) {
+            // Même raison que les réglages : le mur des trente jours a besoin de
+            // la largeur de la page, pas des ~540 pt de la feuille par défaut.
+            StatusView()
+                .environment(store)
+                .presentationSizing(.page)
+                .background(Ink.bg)
+        }
     }
 
     // MARK: Header
@@ -57,6 +67,18 @@ struct IPadRootView: View {
             Text(String(localized: "\(store.onlineCount) en ligne · CPU \(store.cpuText) · \(Date.now.formatted(.dateTime.hour().minute()))"))
                 .font(.archivo(11)).monospacedDigit()
                 .foregroundStyle(Ink.muted)
+            Button {
+                showStatus = true
+            } label: {
+                Image(systemName: "square.grid.3x3")
+                    .font(.system(size: 14, weight: .medium))
+                    .frame(width: 32, height: 30)
+                    .overlay(Rectangle().strokeBorder(Ink.divider, lineWidth: 1))
+                    .contentShape(.rect)
+            }
+            .buttonStyle(.plain)
+            .foregroundStyle(Ink.text)
+            .accessibilityLabel("Statut")
             Button {
                 showSettings = true
             } label: {

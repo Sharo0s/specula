@@ -6,6 +6,7 @@ enum IOSRoute: Hashable {
     case notifs
     case add
     case settings
+    case status
 }
 
 struct IOSRootView: View {
@@ -40,6 +41,7 @@ struct IOSRootView: View {
                                 case .notifs: NotificationsView()
                                 case .add: AddServiceView()
                                 case .settings: SettingsView(path: $path)
+                                case .status: StatusView()
                                 }
                             }
                             .navigationBarHidden(true)

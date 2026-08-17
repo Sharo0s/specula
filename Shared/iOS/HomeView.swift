@@ -59,10 +59,16 @@ struct HomeView: View {
     // MARK: Header
 
     private var header: some View {
-        HStack(spacing: 10) {
+        // Espacement et boutons resserrés : à quatre boutons, l'en-tête tient
+        // tout juste sur un iPhone étroit. Le titre est tenu sur une ligne — il
+        // vaut mieux le tronquer, cas qui ne se produit qu'avec plusieurs
+        // pastilles à la fois, que le voir se couper en deux.
+        HStack(spacing: 8) {
             BrandSquare()
             Text("Specula")
                 .font(.archivo(20, .heavy))
+                .lineLimit(1)
+                .fixedSize(horizontal: false, vertical: true)
             if store.dataMode == .demo {
                 Text("DÉMO")
                     .font(.archivo(9, .heavy))
@@ -120,6 +126,10 @@ struct HomeView: View {
                     }
                 } action: { path.append(.notifs) }
                 iconButton {
+                    Image(systemName: "square.grid.3x3")
+                        .font(.system(size: 15, weight: .medium))
+                } action: { path.append(.status) }
+                iconButton {
                     Image(systemName: "slider.horizontal.3")
                         .font(.system(size: 15, weight: .medium))
                 } action: { path.append(.settings) }
@@ -136,7 +146,7 @@ struct HomeView: View {
     private func iconButton(@ViewBuilder _ label: () -> some View, action: @escaping () -> Void) -> some View {
         Button(action: action) {
             label()
-                .frame(width: 38, height: 38)
+                .frame(width: 34, height: 34)
                 .overlay(Rectangle().strokeBorder(Ink.divider, lineWidth: 1))
                 .contentShape(.rect)
         }
@@ -230,24 +240,36 @@ struct ServiceRow: View {
     let service: Service
 
     var body: some View {
-        HStack(spacing: 12) {
-            ServiceTile(service: service, size: 38, down: store.isDown(service))
-            VStack(alignment: .leading, spacing: 1) {
-                Text(service.name)
-                    .font(.archivo(14.5, .heavy))
-                    .foregroundStyle(store.isDown(service) ? Ink.accentText : Ink.text)
-                Text(LocalizedStringKey(service.desc))
-                    .font(.archivo(11))
+        VStack(alignment: .leading, spacing: 8) {
+            HStack(spacing: 12) {
+                ServiceTile(service: service, size: 38, down: store.isDown(service))
+                VStack(alignment: .leading, spacing: 1) {
+                    Text(service.name)
+                        .font(.archivo(14.5, .heavy))
+                        .foregroundStyle(store.isDown(service) ? Ink.accentText : Ink.text)
+                    Text(LocalizedStringKey(service.desc))
+                        .font(.archivo(11))
+                        .foregroundStyle(Ink.muted)
+                        .lineLimit(2)
+                        .fixedSize(horizontal: false, vertical: true)
+                }
+                Spacer()
+                LatencyTag(text: store.pingText(service), down: store.isDown(service),
+                           slow: store.isSlow(service))
+                Image(systemName: "chevron.forward")
+                    .font(.system(size: 11, weight: .semibold))
                     .foregroundStyle(Ink.muted)
-                    .lineLimit(2)
-                    .fixedSize(horizontal: false, vertical: true)
             }
-            Spacer()
-            LatencyTag(text: store.pingText(service), down: store.isDown(service),
-                       slow: store.isSlow(service))
-            Image(systemName: "chevron.forward")
-                .font(.system(size: 11, weight: .semibold))
-                .foregroundStyle(Ink.muted)
+            // Lecture en cours (Jellyfin), alignée sous le texte. Sans le bouton
+            // pause : la rangée porte déjà le tap de navigation et le double-tap
+            // d'ouverture web, qu'un bouton imbriqué intercepterait. La pause
+            // reste sur la fiche du service, où rien ne la concurrence.
+            if let sessions = store.nowPlaying[service.id], !sessions.isEmpty {
+                ForEach(Array(sessions.prefix(2)), id: \.self) { session in
+                    NowPlayingRow(session: session)
+                        .padding(.leading, 50)
+                }
+            }
         }
         .padding(.horizontal, 18)
         .padding(.vertical, 9)
