@@ -169,13 +169,14 @@ struct AvailabilityWall: View {
                     block(s, day: day, incs: incs, degs: degs)
                 }
             }
+            let labels = dayLabels
             HStack(spacing: 3) {
                 ForEach(Array(shown), id: \.self) { day in
-                    // `fixedSize` laisse le nombre déborder de sa colonne : à
+                    // `fixedSize` laisse le repère déborder de sa colonne : à
                     // trente jours une colonne fait 10 pt, et sans lui tous les
-                    // repères se réduisent à « … ». Un jour sur cinq seulement
-                    // étant écrit, le débordement ne chevauche rien.
-                    Text(labelled(day) ? shortDay(day) : " ")
+                    // repères se réduisent à « … ». Le débordement ne chevauche
+                    // rien tant que les colonnes écrites restent espacées.
+                    Text(labels[day] ?? " ")
                         .font(.archivo(8.5)).monospacedDigit()
                         .foregroundStyle(day == Self.history - 1 ? Ink.text : Ink.muted)
                         .fixedSize()
@@ -238,10 +239,28 @@ struct AvailabilityWall: View {
         return day == Self.history - 1 || (Self.history - 1 - day) % 5 == 0
     }
 
-    private func shortDay(_ day: Int) -> String {
-        let date = Calendar.current.date(byAdding: .day,
-                                         value: -(Self.history - 1 - day), to: Date()) ?? Date()
-        return date.formatted(.dateTime.day())
+    private func dateFor(_ day: Int) -> Date {
+        Calendar.current.date(byAdding: .day,
+                              value: -(Self.history - 1 - day), to: Date()) ?? Date()
+    }
+
+    /// Le quantième suffit d'ordinaire, mais au changement de mois la suite
+    /// « 28, 2 » se lit comme un retour en arrière. Le mois est donc abrégé sur
+    /// la première colonne écrite et à chaque bascule — nulle part ailleurs, où
+    /// il n'apprendrait rien.
+    private var dayLabels: [Int: String] {
+        let cal = Calendar.current
+        var out: [Int: String] = [:]
+        var lastMonth: Int?
+        for day in shown where labelled(day) {
+            let date = dateFor(day)
+            let month = cal.component(.month, from: date)
+            out[day] = month == lastMonth
+                ? date.formatted(.dateTime.day())
+                : date.formatted(.dateTime.day().month(.abbreviated))
+            lastMonth = month
+        }
+        return out
     }
 
     private func dayCaption(_ day: Int, state st: DayState) -> String {
