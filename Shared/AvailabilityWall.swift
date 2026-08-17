@@ -12,7 +12,18 @@ import SwiftUI
 enum WallPeriod: Int, CaseIterable, Identifiable {
     case week = 7, fortnight = 14, month = 30
     var id: Int { rawValue }
-    var label: String { "\(rawValue) j" }
+    /// Trois clés littérales plutôt qu'une interpolée. « j » abrège « jours »
+    /// et doit se traduire, mais `String(localized: "\(rawValue) j")` ne le
+    /// permet pas : l'extracteur écrit `%@ j` dans le catalogue là où
+    /// l'exécution cherche `%lld j`. Les deux ne se rencontrent jamais, et le
+    /// libellé retombe silencieusement sur le français.
+    var label: String {
+        switch self {
+        case .week: String(localized: "7 j")
+        case .fortnight: String(localized: "14 j")
+        case .month: String(localized: "30 j")
+        }
+    }
 }
 
 enum DayState {
