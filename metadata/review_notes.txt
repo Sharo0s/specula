@@ -1,0 +1,9 @@
+Specula monitors self-hosted services on a private network, so no server is
+reachable from your side. This is expected.
+
+The app opens on a complete demo mode on first launch — no account, no address,
+no setup. Every surface works there: the service list, the detail views with
+live metrics, the Status page (availability wall), widgets and notifications.
+
+In-app purchases unlock extra service slots. The first four services are free.
+The paywall is reachable from Settings, or by adding a fifth service.

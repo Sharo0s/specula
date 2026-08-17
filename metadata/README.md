@@ -17,6 +17,8 @@ fr-FR/    en-US/    es-ES/    zh-Hans/    ar-SA/
   support_url.txt
 
 zh-Hans/name.txt               le nom de l'app,              30 caractères max
+review_notes.txt               les notes au vérificateur, hors arborescence de
+                               langue : le champ est unique et se lit en anglais
 ```
 
 Ces fichiers ne sont pas téléversés automatiquement : ils se copient à la main
@@ -31,7 +33,20 @@ Trois destinations différentes, à ne pas confondre :
 - `subtitle` et `name` → **Informations sur l'app**, publiés avec la prochaine
   version soumise, quelle que soit la plateforme ;
 - `testflight_description` → **TestFlight ▸ Informations de test**, visible des
-  seuls testeurs et sans rapport avec la fiche publique.
+  seuls testeurs et sans rapport avec la fiche publique ;
+- `review_notes` → **Informations pour la vérification ▸ Notes**, lu par le seul
+  vérificateur d'Apple et jamais publié.
+
+## Les notes au vérificateur
+
+Elles ne sont pas facultatives ici. Specula interroge des services d'un réseau
+privé : le vérificateur n'en a aucun, et voit donc une app dont rien ne répond.
+Sans explication, la conclusion est la guideline 2.1 — « nous n'avons pas pu
+évaluer l'app ».
+
+Le mode démo est ce qui rend l'app évaluable, et les notes servent à le dire :
+qu'il s'ouvre au premier lancement, qu'il ne demande ni compte ni adresse, et
+que toutes les surfaces y fonctionnent, achats intégrés compris.
 
 ## Le nom chinois
 
