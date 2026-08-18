@@ -20,3 +20,6 @@ build/
 
 # Signature locale (Team ID, préfixe d'identifiants) — voir Signing.xcconfig
 Signing.local.xcconfig
+
+# Supports marketing locaux, hors dépôt
+marketing/
