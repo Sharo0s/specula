@@ -15,10 +15,10 @@ export const en = {
   'nav.menu': 'Menu',
 
   // — hero —
-  'hero.title': 'Your services go down in silence.',
-  'hero.title.accent': 'in silence.',
+  'hero.title': 'Your homelab, without the worry.',
+  'hero.title.accent': 'without the worry.',
   'hero.lede':
-    'Not anymore. Specula reads your homelab’s metrics, spots outages and tells you — notification, Live Activity, widget.',
+    'Specula sees everything: live metrics, every service watched, instant alerts.',
   'hero.cta.primary': 'Join the TestFlight beta',
 
   // — captures d'écran —

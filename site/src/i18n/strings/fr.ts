@@ -15,10 +15,10 @@ export const fr = {
   'nav.menu': 'Menu',
 
   // — hero —
-  'hero.title': 'Tes services tombent en silence.',
-  'hero.title.accent': 'en silence.',
+  'hero.title': 'Ton homelab, sans l’inquiétude.',
+  'hero.title.accent': 'sans l’inquiétude.',
   'hero.lede':
-    'Plus maintenant. Specula lit les métriques de ton homelab, repère les pannes et te prévient — notification, Live Activity, widget.',
+    'Specula voit tout : métriques en direct, services surveillés un à un, alerte immédiate.',
   'hero.cta.primary': 'Rejoindre la bêta TestFlight',
 
   // — captures d'écran —

@@ -15,10 +15,10 @@ export const es = {
   'nav.menu': 'Menú',
 
   // — portada —
-  'hero.title': 'Tus servicios caen en silencio.',
-  'hero.title.accent': 'en silencio.',
+  'hero.title': 'Tu homelab, sin preocupaciones.',
+  'hero.title.accent': 'sin preocupaciones.',
   'hero.lede':
-    'Ya no. Specula lee las métricas de tu homelab, detecta las caídas y te avisa — notificación, Live Activity, widget.',
+    'Specula lo ve todo: métricas en directo, cada servicio vigilado, alerta inmediata.',
   'hero.cta.primary': 'Unirse a la beta de TestFlight',
 
   // — capturas —

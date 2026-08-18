@@ -15,10 +15,10 @@ export const zh = {
   'nav.menu': '菜单',
 
   // — 首屏 —
-  'hero.title': '你的服务，悄无声息地掉线。',
-  'hero.title.accent': '悄无声息',
+  'hero.title': '你的 homelab，从此无忧。',
+  'hero.title.accent': '从此无忧',
   'hero.lede':
-    '现在不会了。Specula 读取 homelab 的指标，发现故障并提醒你 — 通知、实时活动、小组件。',
+    'Specula 尽收眼底：实时指标、逐一守护每个服务、即时告警。',
   'hero.cta.primary': '加入 TestFlight 测试版',
 
   // — 截图 —
