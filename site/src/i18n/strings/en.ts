@@ -77,7 +77,7 @@ export const en = {
   'how.read.demo': 'Live reading',
   'how.jellyfin.movies': '412 movies',
   'how.jellyfin.shows': '87 shows',
-  'how.alert.title': 'Misses no outage',
+  'how.alert.title': 'Never misses an outage',
   'how.alert.b1': 'Three failures, and the service goes offline — immediate notification',
   'how.alert.b2': 'A Live Activity follows the outage until recovery',
   'how.alert.b3': 'The status wall keeps thirty days and computes real uptime',
@@ -112,7 +112,7 @@ export const en = {
 
   // — integrations —
   'integrations.eyebrow': 'Integrations',
-  'integrations.title': 'The services Specula recognises',
+  'integrations.title': 'The services Specula recognizes',
   'integrations.lede':
     'Every integration is hand-written against the service’s own API. Here is what Specula reads from each one — and what it doesn’t.',
   'integrations.metrics.title': 'What Specula reads',
@@ -192,7 +192,7 @@ export const en = {
   'faq.homepage.q': 'I already run Homepage. Do I start over?',
   'faq.homepage.a':
     'No: import your services.yaml in the gethomepage.dev format — groups, addresses and widgets carry over as-is. Only keys stored as {{HOMEPAGE_VAR_…}} variables need typing once: they live in Homepage’s .env, which Specula has no access to.',
-  'faq.generic.q': 'My service isn’t among the 65 integrations?',
+  'faq.generic.q': 'My service isn’t among the {count} integrations?',
   'faq.generic.a':
     'Any address that answers is tracked as generic — availability, latency, thirty days of history. And integrations keep landing: ask for yours on GitHub, the service’s name and a link to its API docs are enough.',
   'faq.more': 'Another question?',

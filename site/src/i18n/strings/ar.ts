@@ -11,7 +11,7 @@ export const ar = {
   'nav.privacy': 'الخصوصية',
   'nav.changelog': 'سجل التغييرات',
   'theme.toggle': 'تغيير المظهر',
-  'nav.cta': 'انضم إلى النسخة التجريبية',
+  'nav.cta': 'انضم إلى التجربة',
   'nav.menu': 'القائمة',
 
   // — الواجهة الأولى —
@@ -181,7 +181,7 @@ export const ar = {
 
   // — أسئلة —
   'faq.eyebrow': 'أسئلة شائعة',
-  'faq.title': 'أسئلة شائعة',
+  'faq.title': 'الأسئلة المتكررة',
   'faq.vpn.q': 'مختبري لا يُتاح إلا عبر VPN. هل يعمل؟',
   'faq.vpn.a':
     'نعم. عنوان واحد لكل خدمة: ما يجعل المختبر متاحًا من الخارج — شبكة خاصة افتراضية أو وكيل عكسي أو نفق — مكانه تحت التطبيق لا داخله. إن وصل جهازك إلى الخدمة، وصل Specula أيضًا.',
@@ -191,7 +191,7 @@ export const ar = {
   'faq.homepage.q': 'أستخدم Homepage بالفعل. هل أبدأ من جديد؟',
   'faq.homepage.a':
     'لا: استورد ملف services.yaml بصيغة gethomepage.dev — المجموعات والعناوين والأدوات تُنقل كما هي. وحدها المفاتيح المخزّنة في متغيرات {{HOMEPAGE_VAR_…}} تُكتب مرة واحدة: فهي في ملف ‎.env الخاص بـ Homepage، ولا سبيل لـ Specula إليه.',
-  'faq.generic.q': 'خدمتي ليست ضمن التكاملات الـ 65؟',
+  'faq.generic.q': 'خدمتي ليست ضمن التكاملات الـ {count}؟',
   'faq.generic.a':
     'كل عنوان يستجيب تتم متابعته بوصفه عامًا — توافر وزمن استجابة وثلاثون يومًا من السجل. والتكاملات تتوالى: اطلب خدمتك على GitHub، يكفي اسم الخدمة ورابط لوثائق واجهتها.',
   'faq.more': 'سؤال آخر؟',
@@ -213,10 +213,10 @@ export const ar = {
   'journey.alert': 'تنبيه',
   'journey.status': 'الحالة',
   'journey.settings': 'الإعدادات',
-  'journey.adguard.reqs': '31 402 طلبًا/يوم',
-  'journey.adguard.blocked': '22 ٪ محجوبة',
+  'journey.adguard.reqs': '31,402 طلبًا/يوم',
+  'journey.adguard.blocked': '22٪ محجوبة',
   'journey.proxmox.nodes': '3 عُقد',
-  'journey.proxmox.cpu': 'المعالج 12 ٪',
+  'journey.proxmox.cpu': 'المعالج 12٪',
   'journey.down.title': 'Komga لا يستجيب',
   'journey.down.body': 'ثلاث محاولات فاشلة.',
   'journey.down.time': '03:12',
@@ -227,7 +227,7 @@ export const ar = {
   'journey.incident.date': '12 أغسطس · 22 دقيقة',
   'journey.incident.body': 'اتصال مرفوض، تم التنبيه في 03:12.',
   'journey.uptime.title': 'متوسط التوافر',
-  'journey.uptime.value': '99.9 ٪',
+  'journey.uptime.value': '99.9٪',
   'journey.uptime.body': 'ثلاثون يومًا من السجل، تُحسب من ثلاث قراءات لكل خدمة.',
   'journey.pinned.title': 'مثبَّتة',
   'journey.pinned.body': 'أربع خدمات معروضة في الودجة وشريط قوائم الـ Mac.',

@@ -37,7 +37,8 @@ const faq = [
   { q: t('faq.vpn.q'), a: t('faq.vpn.a') },
   { q: t('faq.egress.q'), a: t('faq.egress.a') },
   { q: t('faq.homepage.q'), a: t('faq.homepage.a') },
-  { q: t('faq.generic.q'), a: t('faq.generic.a') },
+  // le nombre d'intégrations vient du catalogue, comme dans le marquee
+  { q: t('faq.generic.q').replace('{count}', String(TOTAL)), a: t('faq.generic.a') },
 ];
 
 // Les lignes du scan : protocole Bonjour, adresse, service reconnu. Les noms

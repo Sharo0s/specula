@@ -26,7 +26,7 @@ export const es = {
     'Specula en iPhone: la lista de servicios por grupo con la latencia de cada uno, la banda de sistema arriba y Komga marcado fuera de línea.',
 
   // — marquesina de integraciones —
-  'marquee.label': 'Reconocidos automáticamente — leídos por su propia API',
+  'marquee.label': 'Reconocidos automáticamente — leídos a través de su propia API',
   'marquee.more': '+ {count} más',
   'marquee.browse': 'Ver las {count} integraciones',
 
@@ -37,7 +37,7 @@ export const es = {
   'watch.p1':
     'La mayoría de los paneles muestran enlaces. Bonitos cuando todo va bien, mudos cuando algo se rompe — y acaba siendo un usuario quien te avisa de que Jellyfin se ha caído.',
   'watch.p2':
-    'Specula lee las métricas de cada servicio por su propia API. Tres lecturas fallidas, y el servicio pasa a fuera de línea: notificación, Live Activity, y el muro de estado guarda el registro.',
+    'Specula lee las métricas de cada servicio a través de su propia API. Tres lecturas fallidas, y el servicio pasa a fuera de línea: notificación, Live Activity, y el muro de estado guarda el registro.',
   'stat.fail.b': '3',
   'stat.fail.text': 'intentos fallidos y el servicio se declara caído — ni uno más',
   'stat.history.b': '30 d',
@@ -108,7 +108,7 @@ export const es = {
   'pricing.quota.title': 'Qué cuenta la cuota',
   'pricing.quota.body':
     'Solo cuántos servicios vigilas a la vez. Borrar un servicio libera su plaza para otro. Existe aparte un desbloqueo ilimitado, para quien quiera apoyar el proyecto.',
-  'pricing.note': 'Precio de Francia. La App Store muestra el tuyo, en tu moneda.',
+  'pricing.note': 'Precio de Francia. El App Store muestra el tuyo, en tu moneda.',
 
   // — integraciones —
   'integrations.eyebrow': 'Integraciones',
@@ -118,7 +118,7 @@ export const es = {
   'integrations.metrics.title': 'Qué lee Specula',
   'integrations.metrics.none':
     'Sin métricas: Specula sigue su disponibilidad y su latencia, nada más.',
-  'integrations.endpoints.title': 'Endpoints de la API que llama',
+  'integrations.endpoints.title': 'Endpoints de la API consultados',
   'integrations.key.chip': 'clave API',
   'integrations.key.title': 'Credencial necesaria',
   'integrations.key.none': 'Ninguna: basta con una dirección.',
@@ -150,13 +150,13 @@ export const es = {
     'Una plaza es un servicio vigilado. Empiezas con cuatro. A partir de ahí, cada plaza es una compra única a precio unitario fijo: comprar dos ahora y tres más tarde cuesta exactamente lo mismo que comprar cinco de golpe.',
   'pricing.restore.title': 'Cambiar de dispositivo',
   'pricing.restore.body':
-    'El número de plazas que tienes se guarda en tu almacén clave-valor de iCloud, así que un iPhone o un Mac nuevo las recupera. Las compras también se pueden restaurar desde la App Store cuando quieras.',
+    'El número de plazas que tienes se guarda en tu almacén clave-valor de iCloud, así que un iPhone o un Mac nuevo las recupera. Las compras también se pueden restaurar desde el App Store cuando quieras.',
   'pricing.unlimited.title': 'Desbloqueo ilimitado',
   'pricing.unlimited.body':
     'Una compra única aparte que quita del todo el contador de plazas. Existe para homelabs grandes, y para quien simplemente quiera apoyar el proyecto.',
   'pricing.refund.title': 'Reembolsos',
   'pricing.refund.body':
-    'Las compras pasan por la App Store, así que los reembolsos los gestiona Apple según sus condiciones. Specula nunca ve tus datos de pago.',
+    'Las compras pasan por el App Store, así que los reembolsos los gestiona Apple según sus condiciones. Specula nunca ve tus datos de pago.',
 
   // — familias de servicios —
   'family.media': 'Multimedia',
@@ -170,7 +170,7 @@ export const es = {
   // — página de una integración —
   'integration.heading': '{service} en tu iPhone, iPad y Mac',
   'integration.lede':
-    'Specula lee {service} por su propia API y muestra {metrics}, en la pantalla de inicio, en un widget y en la barra de menús del Mac. Sin cuenta, sin agente que instalar, sin intermediarios.',
+    'Specula lee {service} a través de su propia API y muestra {metrics}, en la pantalla de inicio, en un widget y en la barra de menús del Mac. Sin cuenta, sin agente que instalar, sin intermediarios.',
   'integration.lede.plain':
     'Specula vigila {service}: si responde, a qué velocidad y treinta días de historial de disponibilidad, en tu iPhone, iPad y Mac. Sin cuenta, sin agente que instalar, sin intermediarios.',
   'integration.back': 'Todas las integraciones',
@@ -192,14 +192,14 @@ export const es = {
   'faq.homepage.q': 'Ya uso Homepage. ¿Empiezo de cero?',
   'faq.homepage.a':
     'No: importa tu services.yaml en formato gethomepage.dev —grupos, direcciones y widgets se recuperan tal cual—. Solo las claves en variables {{HOMEPAGE_VAR_…}} hay que escribirlas una vez: viven en el .env de Homepage, al que Specula no tiene acceso.',
-  'faq.generic.q': '¿Mi servicio no está entre las 65 integraciones?',
+  'faq.generic.q': '¿Mi servicio no está entre las {count} integraciones?',
   'faq.generic.a':
     'Cualquier dirección que responda se sigue como genérica: disponibilidad, latencia y treinta días de historial. Y siguen llegando integraciones: pide la tuya en GitHub, bastan el nombre del servicio y un enlace a la documentación de su API.',
   'faq.more': '¿Otra pregunta?',
   'faq.more.link': 'El soporte responde',
 
   // — cierre —
-  'cta.store': 'Descargar en la App Store',
+  'cta.store': 'Descargar en el App Store',
   'cta.eyebrow': 'Specula, «atalaya» en latín',
   'cta.title.live': '¿Listo para montar guardia?',
   'cta.title.accent': 'montar guardia?',

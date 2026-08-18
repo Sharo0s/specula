@@ -192,7 +192,7 @@ export const fr = {
   'faq.homepage.q': 'J’utilise déjà Homepage, je recommence tout ?',
   'faq.homepage.a':
     'Non : importe ton services.yaml au format gethomepage.dev — groupes, adresses et widgets sont repris tels quels. Seules les clés en variables {{HOMEPAGE_VAR_…}} restent à saisir une fois : elles vivent dans le .env de Homepage, auquel Specula n’a pas accès.',
-  'faq.generic.q': 'Mon service n’est pas dans les 65 intégrations ?',
+  'faq.generic.q': 'Mon service n’est pas dans les {count} intégrations ?',
   'faq.generic.a':
     'Toute adresse qui répond est suivie en générique — disponibilité, latence, trente jours d’historique. Et les intégrations s’ajoutent : demande la tienne sur GitHub, le nom du service et un lien vers la doc de son API suffisent.',
   'faq.more': 'Une autre question ?',

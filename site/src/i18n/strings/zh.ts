@@ -26,7 +26,7 @@ export const zh = {
     'iPhone 上的 Specula：按分组列出的服务及各自延迟，顶部为系统状态条，Komga 标记为离线。',
 
   // — 集成跑马灯 —
-  'marquee.label': '自动识别 — 通过各自的 API 读取',
+  'marquee.label': '自动识别——通过各自的 API 读取',
   'marquee.more': '还有 {count} 个',
   'marquee.browse': '浏览全部 {count} 个集成',
 
@@ -180,7 +180,7 @@ export const zh = {
   'integration.cta': '用 {service} 试试',
 
   // — 常见问题 —
-  'faq.eyebrow': '常见问题',
+  'faq.eyebrow': 'FAQ',
   'faq.title': '常见问题',
   'faq.vpn.q': '我的 homelab 只能通过 VPN 访问，能用吗？',
   'faq.vpn.a':
@@ -191,7 +191,7 @@ export const zh = {
   'faq.homepage.q': '我已经在用 Homepage，要从头再来吗？',
   'faq.homepage.a':
     '不用：按 gethomepage.dev 格式导入你的 services.yaml——分组、地址和小组件原样保留。只有存放在 {{HOMEPAGE_VAR_…}} 变量里的密钥需要输入一次：它们在 Homepage 的 .env 里，Specula 无法访问。',
-  'faq.generic.q': '我的服务不在这 65 个集成里？',
+  'faq.generic.q': '我的服务不在这 {count} 个集成里？',
   'faq.generic.a':
     '任何能响应的地址都会作为通用服务被跟踪——可用性、延迟和三十天历史。集成也在持续增加：到 GitHub 提出需求，只需服务名称和它的 API 文档链接。',
   'faq.more': '还有其他问题？',
@@ -212,7 +212,7 @@ export const zh = {
   'journey.alert': '提醒',
   'journey.status': '状态',
   'journey.settings': '设置',
-  'journey.adguard.reqs': '每日 31 402 次请求',
+  'journey.adguard.reqs': '每日 31,402 次请求',
   'journey.adguard.blocked': '22% 已拦截',
   'journey.proxmox.nodes': '3 个节点',
   'journey.proxmox.cpu': 'CPU 12%',
@@ -231,7 +231,7 @@ export const zh = {
   'journey.pinned.title': '置顶',
   'journey.pinned.body': '四个服务显示在小组件和 Mac 菜单栏中。',
   'journey.theme.title': '主题与语言',
-  'journey.theme.body': '跟随系统、浅色或深色 — 还有五种语言，包括阿拉伯语和中文。',
+  'journey.theme.body': '跟随系统、浅色或深色——还有五种语言，包括阿拉伯语和中文。',
   'journey.alert.alt': '故障详情：Komga 离线，延迟曲线归零，容器日志。',
   'journey.status.alt': '可用性墙：每个服务一行三十天，故障标红。',
   'journey.settings.alt': '设置：图标、分组与置顶服务。',

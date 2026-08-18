@@ -257,6 +257,14 @@ header.pill .brand-name { max-width: 0; opacity: 0; }
      Gaps resserrés et retour à la ligne interdit. */
   .nav { flex-wrap: nowrap; gap: 14px; }
   .nav-links { gap: 14px; flex-wrap: nowrap; }
+  /* Ce calcul valait pour « Rejoindre la bêta ». D'une langue à l'autre le
+     libellé double de largeur — l'arabe faisait déborder la barre de 34 px et
+     mettait toute la page en défilement horizontal. La pilule suit donc la
+     largeur de l'écran au lieu d'une taille fixe pensée pour le français. */
+  .btn-beta {
+    font-size: clamp(12.5px, 3.4vw, 14.5px);
+    padding-inline: clamp(12px, 3.6vw, 18px);
+  }
 }
 @media (max-width: 359px) {
   /* sous 360 px, même resserrée la ligne ne tient plus : l'icône suffit,
@@ -298,6 +306,9 @@ img { max-width: 100%; height: auto; display: block; }
 
 /* — l'arabe : le sens de lecture s'inverse, les glyphes latins restent LTR — */
 [dir='rtl'] .btn, [dir='rtl'] .nav-links { direction: rtl; }
+/* L'arabe est cursif : l'interlettrage des sur-titres, pensé pour des
+   capitales latines, y disloque le tracé des mots. */
+[dir='rtl'] .eyebrow { letter-spacing: 0; }
 [dir='rtl'] code, [dir='rtl'] .ltr { direction: ltr; unicode-bidi: embed; display: inline-block; }
 
 .visually-hidden {
