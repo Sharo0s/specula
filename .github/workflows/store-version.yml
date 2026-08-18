@@ -1,10 +1,12 @@
-name: Version App Store
+name: Suivi App Store
 
-# Le journal du site s'arrête à la version réellement installable, lue au
-# build. Une version validée par Apple entre deux pushes resterait donc
-# invisible jusqu'au déploiement suivant : ce workflow compare une fois par
-# jour ce qu'Apple sert et ce que le site a construit, et ne déclenche un
-# rebuild que s'ils divergent.
+# Deux surveillances quotidiennes de la fiche App Store :
+#
+# 1. la version servie par Apple face à celle que le site a construite — le
+#    journal s'arrête à la version réellement installable, et une validation
+#    entre deux pushes resterait invisible jusqu'au déploiement suivant ;
+# 2. le retour de l'app dans les boutiques de l'UE, d'où elle est absente tant
+#    que le statut de trader DSA n'est pas vérifié par Apple.
 on:
   schedule:
     # 06:17 UTC — décalé de l'heure pile, où les runners planifiés s'entassent
@@ -53,3 +55,47 @@ jobs:
           fi
           curl -fsS --retry 3 -X POST "$HOOK" > /dev/null
           echo "Rebuild demandé."
+
+  disponibilite:
+    name: Signale le retour de l'app dans l'UE
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      issues: write
+    steps:
+      - name: Interroge la boutique française
+        id: fr
+        run: |
+          set -euo pipefail
+          # Un pays de l'UE suffit : le blocage DSA vaut pour les 27 d'un bloc.
+          n=$(curl -fsS --retry 3 'https://itunes.apple.com/lookup?id=6793012573&country=fr' | jq -r '.resultCount') || n=''
+          echo "resultCount pour la France : ${n:-réponse illisible}"
+          if [ "${n:-0}" -gt 0 ] 2>/dev/null; then
+            echo 'dispo=true' >> "$GITHUB_OUTPUT"
+          else
+            echo 'dispo=false' >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Ouvre une issue la première fois
+        if: steps.fr.outputs.dispo == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TITRE: Specula est de retour dans les boutiques de l'UE
+        run: |
+          set -euo pipefail
+          # La recherche porte sur les issues ouvertes comme fermées : une fois
+          # l'annonce faite, elle ne se répète pas tous les matins.
+          if gh issue list --repo "$GITHUB_REPOSITORY" --state all --search "\"$TITRE\" in:title" --json title --jq '.[].title' | grep -qxF "$TITRE"; then
+            echo "Annonce déjà faite — rien à signaler."
+            exit 0
+          fi
+          gh issue create --repo "$GITHUB_REPOSITORY" --title "$TITRE" --body \
+            "L'API de recherche d'Apple répond de nouveau pour la boutique française : le statut de trader DSA est vérifié, l'app est distribuée dans les 27 pays de l'UE.
+
+          À vérifier dans la foulée :
+
+          - **Apps → Specula → Prix et disponibilité** : les 27 pays sont bien cochés.
+          - **Le bouton du site** : \`APP_STORE\` dans \`site/src/data/links.ts\` pointe vers la fiche App Store, qui ne renvoie plus de 404 en Europe.
+          - **La fiche produit** : les coordonnées de trader s'affichent désormais publiquement sur les boutiques de l'UE.
+
+          Cette issue est ouverte une seule fois, par le workflow \`Suivi App Store\`."
