@@ -1,0 +1,55 @@
+name: Version App Store
+
+# Le journal du site s'arrête à la version réellement installable, lue au
+# build. Une version validée par Apple entre deux pushes resterait donc
+# invisible jusqu'au déploiement suivant : ce workflow compare une fois par
+# jour ce qu'Apple sert et ce que le site a construit, et ne déclenche un
+# rebuild que s'ils divergent.
+on:
+  schedule:
+    # 06:17 UTC — décalé de l'heure pile, où les runners planifiés s'entassent
+    - cron: '17 6 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  rafraichir:
+    name: Reconstruit le site si Apple a validé une version
+    runs-on: ubuntu-latest
+    steps:
+      - name: Compare la version en ligne et celle du site
+        id: versions
+        run: |
+          set -euo pipefail
+          # Le storefront américain est le seul à répondre pour cet identifiant.
+          # Une API muette ou un 404 laisse la variable vide plutôt que de
+          # planter l'étape : un incident chez Apple ne doit pas se traduire
+          # par un mail d'échec tous les matins.
+          live=$(curl -fsS --retry 3 'https://itunes.apple.com/lookup?id=6793012573' | jq -r '.results[0].version // empty') || live=''
+          site=$(curl -fsS --retry 3 'https://specula.dev/store-version.json' | jq -r '.version // empty') || site=''
+          if [ -z "$live" ] || [ -z "$site" ]; then
+            echo "Réponse incomplète (App Store : « $live », site : « $site ») — on ne touche à rien."
+            echo 'diverge=false' >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          echo "App Store : $live — site : $site"
+          if [ "$live" != "$site" ]; then
+            echo 'diverge=true' >> "$GITHUB_OUTPUT"
+          else
+            echo 'diverge=false' >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Déclenche le Deploy Hook
+        if: steps.versions.outputs.diverge == 'true'
+        env:
+          HOOK: ${{ secrets.VERCEL_DEPLOY_HOOK }}
+        run: |
+          set -euo pipefail
+          if [ -z "${HOOK:-}" ]; then
+            echo "::error::Secret VERCEL_DEPLOY_HOOK absent — Deploy Hook à créer dans Vercel (Settings → Git)."
+            exit 1
+          fi
+          curl -fsS --retry 3 -X POST "$HOOK" > /dev/null
+          echo "Rebuild demandé."

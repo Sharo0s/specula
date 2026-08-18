@@ -41,7 +41,19 @@ export function compareVersions(a: string, b: string): number {
   return 0;
 }
 
-export async function storeVersion(): Promise<string> {
+/**
+ * Une seule interrogation par build : la page est rendue cinq fois (une par
+ * langue) et l'endpoint /store-version.json une sixième, mais tous partagent
+ * la même promesse.
+ */
+let enCours: Promise<string> | null = null;
+
+export function storeVersion(): Promise<string> {
+  enCours ??= interroge();
+  return enCours;
+}
+
+async function interroge(): Promise<string> {
   try {
     const response = await fetch(LOOKUP, { signal: AbortSignal.timeout(5000) });
     if (!response.ok) throw new Error(`HTTP ${response.status}`);
