@@ -12,21 +12,24 @@ interface Props {
   description: string;
   /** Section de navigation à marquer comme courante. */
   current?: string;
+  /** Retire la page de l'index : pour celles dont le contenu ne suit pas la
+   *  langue de l'URL — le journal, écrit en français dans les cinq langues. */
+  noindex?: boolean;
 }
 
-const { lang, route = '', title, description, current } = Astro.props;
+const { lang, route = '', title, description, current, noindex = false } = Astro.props;
 const t = useTranslations(lang);
 const site = Astro.site ?? new URL('https://specula.dev');
 const url = (l: Locale) => new URL(`/${l}/${route}`, site).href;
 
 // La navigation du mockup : Fonctionnement et FAQ mènent aux ancres de
-// l'accueil, la vie privée reste au pied de page.
+// l'accueil, la vie privée et le journal restent au pied de page — quatre
+// entrées qui mènent à l'achat plutôt que cinq dont une qui raconte le passé.
 const nav = [
   { key: 'integrations', label: t('nav.integrations'), href: `/${lang}/integrations/` },
   { key: 'how', label: t('nav.how'), href: `/${lang}/#fonctionnement` },
   { key: 'pricing', label: t('nav.pricing'), href: `/${lang}/pricing/` },
   { key: 'faq', label: t('nav.faq'), href: `/${lang}/#faq` },
-  { key: 'changelog', label: t('nav.changelog'), href: `/${lang}/changelog/` },
 ];
 
 ---
@@ -38,6 +41,7 @@ const nav = [
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{title}</title>
     <meta name="description" content={description} />
+    {noindex && <meta name="robots" content="noindex, follow" />}
     <link rel="canonical" href={url(lang)} />
     {LOCALES.map((l) => <link rel="alternate" hreflang={BCP47[l]} href={url(l)} />)}
     <link rel="alternate" hreflang="x-default" href={url('en')} />

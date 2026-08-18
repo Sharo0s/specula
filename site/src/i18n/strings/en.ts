@@ -141,6 +141,8 @@ export const en = {
     'The log is generated from the commits — each release tells exactly what it brings.',
   'changelog.language':
     'The notes are written in French: they come from the commit messages, and translating a copy would let it drift at the next release.',
+  'changelog.store':
+    'Only versions already approved by Apple and installable from the App Store show up here.',
 
   // — page prix —
   'pricing.price.slot': 'per slot, one-time',

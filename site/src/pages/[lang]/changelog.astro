@@ -2,6 +2,7 @@
 import { readFileSync } from 'node:fs';
 import Page from '../../layouts/Page.astro';
 import { LOCALES, useTranslations, type Locale } from '../../i18n';
+import { compareVersions, storeVersion } from '../../data/store';
 
 export function getStaticPaths() {
   return LOCALES.map((lang) => ({ params: { lang } }));
@@ -13,7 +14,8 @@ const t = useTranslations(lang);
 /**
  * Le CHANGELOG est écrit par release-please à partir des messages de commit,
  * qui sont en français : on le rend tel quel plutôt que d'en traduire une
- * copie qui divergerait à la première release.
+ * copie qui divergerait à la première release. Les autres langues portent donc
+ * un noindex (voir la prop `noindex` plus bas) et restent hors du sitemap.
  */
 const raw = readFileSync(new URL('../../../../CHANGELOG.md', import.meta.url), 'utf8');
 
@@ -21,11 +23,57 @@ type Item = { scope: string | null; text: string };
 type Section = { title: string; kind: string; items: Item[] };
 type Release = { version: string; date: string; url?: string; sections: Section[] };
 
-// La couleur d'une rubrique suit son type : vert pour ce qui arrive, rouge
-// pour ce qui est corrigé, neutre pour le reste. Les titres viennent de
-// release-please, en français.
-const kindOf = (title: string) =>
-  title === 'Fonctionnalités' ? 'k-feat' : title === 'Corrections' ? 'k-fix' : 'k-other';
+/**
+ * Les rubriques de release-please, et leur couleur : vert pour ce qui arrive,
+ * rouge pour ce qui est corrigé. Tout le reste — « Divers », c'est-à-dire les
+ * bumps de build, la CI, les dépendances — ne dit rien à personne d'autre
+ * qu'au dépôt et ne sort pas d'ici.
+ */
+const KINDS: Record<string, string> = {
+  Fonctionnalités: 'k-feat',
+  Corrections: 'k-fix',
+  Performances: 'k-other',
+};
+
+/**
+ * Les scopes de commit sont des étiquettes de dépôt. Ceux qui désignent une
+ * partie visible de l'app deviennent une pastille lisible ; un scope inconnu
+ * laisse simplement la ligne sans pastille.
+ */
+const SCOPES: Record<string, string> = {
+  ios: 'iPhone & iPad',
+  onboarding: 'Premiers pas',
+  widgets: 'Widgets',
+  macos: 'Mac',
+  watch: 'Apple Watch',
+  status: 'Statut',
+  live: 'Suivi',
+  billing: 'Achats',
+  integrations: 'Intégrations',
+  notifs: 'Notifications',
+  keychain: 'Trousseau',
+  http: 'Réseau',
+  i18n: 'Langues',
+  yaml: 'Export',
+  theme: 'Apparence',
+};
+
+/** Chantiers internes : la vitrine, le catalogue de démo, la mécanique de
+ *  release. Rien de tout ça ne change l'app entre les mains de quelqu'un. */
+const SCOPES_INTERNES = new Set(['site', 'demo', 'release', 'ci', 'deps', 'test', 'docs']);
+
+/**
+ * Commits masqués, par SHA court. Ils décrivent le colmatage d'un trou de
+ * sécurité et se lisent, hors contexte, comme un aveu — « avant, les clés
+ * traînaient en clair ». Le dépôt les garde, publics et datés ; c'est la
+ * vitrine qui n'en fait pas sa première page. Pour en masquer un autre :
+ * ajouter ici les sept premiers caractères de son SHA.
+ */
+const MASQUES = new Set([
+  'e90b23e', // keychain: sort les clés API du fichier de configuration
+  'f050a2e', // http: limite l'acceptation des certificats auto-signés
+  '998d6a8', // demo: retire les hôtes personnels du catalogue
+]);
 
 const releases: Release[] = [];
 for (const line of raw.split('\n')) {
@@ -37,22 +85,46 @@ for (const line of raw.split('\n')) {
   const section = line.match(/^### (.+)$/);
   if (section && releases.length) {
     const title = section[1].trim();
-    releases.at(-1)!.sections.push({ title, kind: kindOf(title), items: [] });
+    if (!(title in KINDS)) continue;
+    releases.at(-1)!.sections.push({ title, kind: KINDS[title], items: [] });
     continue;
   }
   const item = line.match(/^\* (.+)$/);
   if (item && releases.at(-1)?.sections.length) {
+    // le SHA vit dans l'URL du commit, avant qu'on jette le lien
+    const shas = [...item[1].matchAll(/\/commit\/([0-9a-f]{7})/g)].map((match) => match[1]);
+    if (shas.some((sha) => MASQUES.has(sha))) continue;
+
     // on garde le texte, on jette les liens de commit et de ticket ; le scope
-    // en gras (« **demo:** … ») devient une pastille
+    // en gras (« **status:** … ») devient une pastille
     const cleaned = item[1].replace(/\s*\(\[[^\]]+\]\([^)]+\)\)/g, '').trim();
     const scoped = cleaned.match(/^\*\*(.+?):\*\*\s*(.+)$/);
+    const scope = scoped ? scoped[1].toLowerCase() : null;
+    if (scope && SCOPES_INTERNES.has(scope)) continue;
+
     releases.at(-1)!.sections.at(-1)!.items.push(
       scoped
-        ? { scope: scoped[1], text: scoped[2] }
+        ? { scope: scope ? (SCOPES[scope] ?? null) : null, text: scoped[2] }
         : { scope: null, text: cleaned.replace(/\*\*(.+?)\*\*/g, '$1') },
     );
   }
 }
+
+// Le filtrage vide des rubriques, et parfois des versions entières : une
+// release qui n'a rien apporté de visible n'a pas de ligne à montrer.
+for (const release of releases) {
+  release.sections = release.sections.filter((section) => section.items.length > 0);
+}
+
+/**
+ * Enfin, on s'arrête à ce qu'Apple sert vraiment : le dépôt est en avance sur
+ * l'App Store le temps de la validation, et annoncer une version que personne
+ * ne peut installer transforme le journal en promesse.
+ */
+const live = await storeVersion();
+const publiees = releases.filter(
+  (release) => release.sections.length > 0 && compareVersions(release.version, live) <= 0,
+);
 
 const dateFormat = new Intl.DateTimeFormat(lang === 'zh' ? 'zh-Hans' : lang, {
   year: 'numeric',
@@ -68,19 +140,20 @@ const title = `${t('nav.changelog')} — Specula`;
   route="changelog/"
   {title}
   description={t('changelog.description')}
-  current="changelog"
+  noindex={lang !== 'fr'}
 >
   <section class="wrap section">
     <p class="eyebrow">{t('nav.changelog')}</p>
     <h1>{t('changelog.title')}</h1>
     <p class="lede">{t('changelog.description')}</p>
+    <p class="note">{t('changelog.store')}</p>
     {lang !== 'fr' && <p class="note">{t('changelog.language')}</p>}
   </section>
 
   <section class="wrap log-wrap">
     <div class="log">
       {
-        releases.map((release) => (
+        publiees.map((release) => (
           <article class="log-entry">
             <header class="log-head">
               <span class="log-version">{release.version}</span>
@@ -92,7 +165,7 @@ const title = `${t('nav.changelog')} — Specula`;
                 <ul>
                   {section.items.map((item) => (
                     <li>
-                      {item.scope && <code class="ltr">{item.scope}</code>}
+                      {item.scope && <span class="log-tag ltr">{item.scope}</span>}
                       {item.text}
                     </li>
                   ))}
@@ -132,14 +205,14 @@ const title = `${t('nav.changelog')} — Specula`;
   .log-kind.k-other { color: var(--muted); }
   .log-entry ul { margin: 10px 0 0; padding: 0; list-style: none; display: grid; gap: 8px; }
   .log-entry li { display: flex; gap: 10px; align-items: baseline; font-size: 15px; color: var(--muted); }
-  .log-entry li code {
-    font-family: var(--mono);
-    font-size: 11.5px;
+  .log-entry li .log-tag {
+    font-size: 12px;
+    font-weight: 600;
     color: var(--text);
     background: var(--bg-raised);
     border: 1px solid var(--rule);
     border-radius: 6px;
-    padding: 2px 7px;
+    padding: 2px 8px;
     white-space: nowrap;
   }
   .note { color: var(--muted); font-size: 14px; }

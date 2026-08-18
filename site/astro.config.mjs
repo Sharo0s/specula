@@ -39,8 +39,11 @@ export default defineConfig({
   integrations: [
     sitemap({
       // la racine n'est qu'une redirection en noindex : elle n'a rien à faire
-      // dans le sitemap, où elle ferait doublon avec /en/
-      filter: (page) => page !== `${SITE}/`,
+      // dans le sitemap, où elle ferait doublon avec /en/. Le journal, lui,
+      // n'existe qu'en français : ses quatre autres URL servent le même texte
+      // français, elles sont en noindex et n'ont rien à indexer non plus.
+      filter: (page) =>
+        page !== `${SITE}/` && !/\/(en|es|zh|ar)\/changelog\/$/.test(page),
       i18n: {
         defaultLocale: 'en',
         locales: { en: 'en', fr: 'fr', es: 'es', zh: 'zh-Hans', ar: 'ar' },

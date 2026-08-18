@@ -140,6 +140,8 @@ export const zh = {
     '日志由提交记录生成——每个版本都如实讲述它带来了什么。',
   'changelog.language':
     '说明为法文：它们来自提交信息，翻译副本会在下一个版本就与原文脱节。',
+  'changelog.store':
+    '此处仅显示已通过 Apple 审核、可从 App Store 安装的版本。',
 
   // — 价格页 —
   'pricing.price.slot': '每个服务位，一次性购买',
