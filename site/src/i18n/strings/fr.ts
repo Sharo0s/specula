@@ -12,6 +12,7 @@ export const fr = {
   'nav.changelog': 'Journal',
   'theme.toggle': 'Changer de thème',
   'nav.cta': 'Rejoindre la bêta',
+  'nav.menu': 'Menu',
 
   // — hero —
   'hero.title': 'Tes services tombent en silence.',

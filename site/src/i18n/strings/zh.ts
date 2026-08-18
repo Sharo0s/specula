@@ -12,6 +12,7 @@ export const zh = {
   'nav.changelog': '更新日志',
   'theme.toggle': '切换主题',
   'nav.cta': '加入测试版',
+  'nav.menu': '菜单',
 
   // — 首屏 —
   'hero.title': '你的服务，悄无声息地掉线。',

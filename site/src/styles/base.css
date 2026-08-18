@@ -252,6 +252,16 @@ header.pill .brand-name { max-width: 0; opacity: 0; }
    replier la pilule : la marque, la bêta et le thème suffisent. */
 @media (max-width: 860px) {
   .nav-links .nav-item { display: none; }
+  /* marque + bêta + thème font 336 px avec les gaps de bureau : un pixel de
+     trop sur un iPhone (335 disponibles) et la barre cassait en deux lignes.
+     Gaps resserrés et retour à la ligne interdit. */
+  .nav { flex-wrap: nowrap; gap: 14px; }
+  .nav-links { gap: 14px; flex-wrap: nowrap; }
+}
+@media (max-width: 359px) {
+  /* sous 360 px, même resserrée la ligne ne tient plus : l'icône suffit,
+     comme dans la pilule. */
+  .brand-name { display: none; }
 }
 
 footer { border-block-start: 1px solid var(--rule); padding-block: 32px 56px; color: var(--muted); font-size: 14px; }
