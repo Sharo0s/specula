@@ -18,12 +18,12 @@ export const fr = {
   'hero.title': 'Ton homelab, sans l’inquiétude.',
   'hero.title.accent': 'sans l’inquiétude.',
   'hero.lede':
-    'Specula voit tout : métriques en direct, services surveillés un à un, alerte immédiate.',
+    'Specula voit tout : métriques en direct, services surveillés un à un, alerte immédiate.',
   'hero.cta.primary': 'Rejoindre la bêta TestFlight',
 
   // — captures d'écran —
   'shot.ios.alt':
-    'Specula sur iPhone : la liste des services par groupe avec la latence de chacun, le bandeau système en tête, Komga marqué hors ligne.',
+    'Specula sur iPhone : la liste des services par groupe avec la latence de chacun, le bandeau système en tête, Komga marqué hors ligne.',
 
   // — marquee d'intégrations —
   'marquee.label': 'Reconnus automatiquement — lus via leur propre API',
@@ -96,7 +96,7 @@ export const fr = {
   'pricing.eyebrow': 'Prix',
   'pricing.title': 'Quatre services gratuits, puis une place à la fois',
   'pricing.body':
-    'Les quatre premiers services sont gratuits, sans limite de durée et sans compte. Au-delà, chaque place supplémentaire s’achète une fois. Le prix est strictement linéaire : pas de pack, pas de palier, pas d’abonnement. Tu choisis combien de places et tu paies en une transaction.',
+    'Les quatre premiers services sont gratuits, sans limite de durée et sans compte. Au-delà, chaque place supplémentaire s’achète une fois. Le prix est strictement linéaire : pas de pack, pas de palier, pas d’abonnement. Tu choisis combien de places et tu paies en une transaction.',
   'pricing.free.title': 'Gratuit quoi qu’il arrive',
   'pricing.free.items': [
     'Le mode démo entier',
@@ -117,7 +117,7 @@ export const fr = {
     'Chaque intégration est écrite à la main contre l’API du service. Voici ce que Specula lit de chacun — et ce qu’il ne lit pas.',
   'integrations.metrics.title': 'Ce que Specula lit',
   'integrations.metrics.none':
-    'Aucune métrique : Specula suit sa disponibilité et sa latence, rien de plus.',
+    'Aucune métrique : Specula suit sa disponibilité et sa latence, rien de plus.',
   'integrations.endpoints.title': 'Les points d’API appelés',
   'integrations.key.chip': 'clé API',
   'integrations.key.title': 'Identifiant demandé',
@@ -125,13 +125,13 @@ export const fr = {
   'integrations.key.userPassword': 'Utilisateur et mot de passe',
   'integrations.key.password': 'Mot de passe',
   'integrations.key.token': 'Jeton unique',
-  'integrations.missing': 'Ton service n’est pas là ?',
+  'integrations.missing': 'Ton service n’est pas là ?',
   'integrations.missing.body':
-    'Toute adresse qui répond est suivie en générique — disponibilité, latence, historique. Et les intégrations s’ajoutent : demande la tienne sur GitHub.',
+    'Toute adresse qui répond est suivie en générique — disponibilité, latence, historique. Et les intégrations s’ajoutent : demande la tienne sur GitHub.',
   'integrations.missing.cta': 'Proposer une intégration',
 
   // — pages légales —
-  'legal.updated': 'Dernière mise à jour :',
+  'legal.updated': 'Dernière mise à jour :',
   'legal.notice':
     'Cette page n’existe qu’en français et en anglais. Un texte juridique traduit sans relecture vaut moins que le même texte dans une langue que vous pouvez vérifier.',
 
@@ -139,7 +139,7 @@ export const fr = {
   'changelog.title': 'Ce qui change',
   'changelog.description': 'Ce qui a changé dans Specula à chaque mise à jour.',
   'changelog.language':
-    'Les notes sont en français : elles viennent des messages de commit, et en traduire une copie la ferait diverger dès la prochaine version.',
+    'Les notes sont en français : elles viennent des messages de commit, et en traduire une copie la ferait diverger dès la prochaine version.',
 
   // — page prix —
   'pricing.price.slot': 'la place, achat unique',
@@ -150,13 +150,13 @@ export const fr = {
     'Une place, c’est un service surveillé. Tu commences avec quatre. Au-delà, chaque place s’achète une fois, à prix unitaire fixe — en prendre deux maintenant et trois plus tard coûte exactement le même prix qu’en prendre cinq d’un coup.',
   'pricing.restore.title': 'Changer d’appareil',
   'pricing.restore.body':
-    'Le nombre de places possédées est écrit dans ton stockage clé-valeur iCloud : un nouvel iPhone ou un nouveau Mac les retrouve. Les achats se restaurent aussi depuis l’App Store à tout moment.',
+    'Le nombre de places possédées est écrit dans ton stockage clé-valeur iCloud : un nouvel iPhone ou un nouveau Mac les retrouve. Les achats se restaurent aussi depuis l’App Store à tout moment.',
   'pricing.unlimited.title': 'Déverrouillage illimité',
   'pricing.unlimited.body':
     'Un achat unique, séparé, qui lève complètement le compteur de places. Il existe pour les gros homelabs — et pour ceux qui veulent simplement soutenir le projet.',
   'pricing.refund.title': 'Remboursements',
   'pricing.refund.body':
-    'Les achats passent par l’App Store : les remboursements sont donc traités par Apple, selon ses conditions. Specula ne voit jamais tes informations de paiement.',
+    'Les achats passent par l’App Store : les remboursements sont donc traités par Apple, selon ses conditions. Specula ne voit jamais tes informations de paiement.',
 
   // — familles de services —
   'family.media': 'Médias',
@@ -172,7 +172,7 @@ export const fr = {
   'integration.lede':
     'Specula lit {service} via sa propre API et affiche {metrics} — sur l’écran d’accueil, dans un widget et dans la barre des menus du Mac. Sans compte, sans agent à installer, sans intermédiaire.',
   'integration.lede.plain':
-    'Specula suit {service} : s’il répond, à quelle vitesse, et trente jours d’historique de disponibilité — sur ton iPhone, ton iPad et ton Mac. Sans compte, sans agent à installer, sans intermédiaire.',
+    'Specula suit {service} : s’il répond, à quelle vitesse, et trente jours d’historique de disponibilité — sur ton iPhone, ton iPad et ton Mac. Sans compte, sans agent à installer, sans intermédiaire.',
   'integration.back': 'Toutes les intégrations',
   'integration.official': 'Site officiel',
   'integration.setup': 'L’ajouter prend une minute',
@@ -185,17 +185,17 @@ export const fr = {
   'faq.title': 'Questions fréquentes',
   'faq.vpn.q': 'Mon homelab n’est joignable qu’en VPN. Ça marche ?',
   'faq.vpn.a':
-    'Oui. Une seule URL par service : ce qui rend un homelab joignable de l’extérieur — VPN, reverse proxy, tunnel — se règle sous l’app, pas dedans. Si ton appareil atteint le service, Specula aussi.',
+    'Oui. Une seule URL par service : ce qui rend un homelab joignable de l’extérieur — VPN, reverse proxy, tunnel — se règle sous l’app, pas dedans. Si ton appareil atteint le service, Specula aussi.',
   'faq.egress.q': 'Qu’est-ce qui sort de mon réseau, exactement ?',
   'faq.egress.a':
-    'Presque rien, et tout est nommé. Le nombre de places achetées est écrit dans ton stockage clé-valeur iCloud — un entier, ni tes services, ni leurs adresses, ni tes clés. Et les logos viennent du CDN public dashboard-icons ; un interrupteur le coupe, l’app retombe sur des monogrammes.',
+    'Presque rien, et tout est nommé. Le nombre de places achetées est écrit dans ton stockage clé-valeur iCloud — un entier, ni tes services, ni leurs adresses, ni tes clés. Et les logos viennent du CDN public dashboard-icons ; un interrupteur le coupe, l’app retombe sur des monogrammes.',
   'faq.homepage.q': 'J’utilise déjà Homepage, je recommence tout ?',
   'faq.homepage.a':
-    'Non : importe ton services.yaml au format gethomepage.dev — groupes, adresses et widgets sont repris tels quels. Seules les clés en variables {{HOMEPAGE_VAR_…}} restent à saisir une fois : elles vivent dans le .env de Homepage, auquel Specula n’a pas accès.',
+    'Non : importe ton services.yaml au format gethomepage.dev — groupes, adresses et widgets sont repris tels quels. Seules les clés en variables {{HOMEPAGE_VAR_…}} restent à saisir une fois : elles vivent dans le .env de Homepage, auquel Specula n’a pas accès.',
   'faq.generic.q': 'Mon service n’est pas dans les {count} intégrations ?',
   'faq.generic.a':
-    'Toute adresse qui répond est suivie en générique — disponibilité, latence, trente jours d’historique. Et les intégrations s’ajoutent : demande la tienne sur GitHub, le nom du service et un lien vers la doc de son API suffisent.',
-  'faq.more': 'Une autre question ?',
+    'Toute adresse qui répond est suivie en générique — disponibilité, latence, trente jours d’historique. Et les intégrations s’ajoutent : demande la tienne sur GitHub, le nom du service et un lien vers la doc de son API suffisent.',
+  'faq.more': 'Une autre question ?',
   'faq.more.link': 'L’assistance répond',
 
   // — fermeture —
@@ -216,9 +216,9 @@ export const fr = {
   'journey.status': 'Statut',
   'journey.settings': 'Réglages',
   'journey.adguard.reqs': '31 402 req/j',
-  'journey.adguard.blocked': '22 % bloquées',
+  'journey.adguard.blocked': '22 % bloquées',
   'journey.proxmox.nodes': '3 nœuds',
-  'journey.proxmox.cpu': 'CPU 12 %',
+  'journey.proxmox.cpu': 'CPU 12 %',
   'journey.down.title': 'Komga ne répond plus',
   'journey.down.body': 'trois tentatives échouées.',
   'journey.down.time': '03 h 12',
@@ -229,15 +229,15 @@ export const fr = {
   'journey.incident.date': '12 août · 22 min',
   'journey.incident.body': 'connexion refusée, notifiée à 03 h 12.',
   'journey.uptime.title': 'Disponibilité moyenne',
-  'journey.uptime.value': '99,9 %',
+  'journey.uptime.value': '99,9 %',
   'journey.uptime.body': 'Trente jours d’historique, calculés sur trois lectures par service.',
   'journey.pinned.title': 'Épinglés',
   'journey.pinned.body': 'Quatre services affichés dans le widget et la barre de menus du Mac.',
   'journey.theme.title': 'Thème & langues',
   'journey.theme.body': 'Système, clair ou sombre — et cinq langues, dont l’arabe et le chinois.',
-  'journey.alert.alt': 'Le détail d’une panne : Komga hors ligne, latence à plat, journal du conteneur.',
-  'journey.status.alt': 'Le mur de disponibilité : une rangée de trente jours par service, les incidents en rouge.',
-  'journey.settings.alt': 'Les réglages : pictogrammes, groupes et services épinglés.',
+  'journey.alert.alt': 'Le détail d’une panne : Komga hors ligne, latence à plat, journal du conteneur.',
+  'journey.status.alt': 'Le mur de disponibilité : une rangée de trente jours par service, les incidents en rouge.',
+  'journey.settings.alt': 'Les réglages : pictogrammes, groupes et services épinglés.',
 
   // — pied de page —
   'support.title': 'On répond.',

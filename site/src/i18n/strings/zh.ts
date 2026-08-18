@@ -142,7 +142,7 @@ export const zh = {
 
   // — 价格页 —
   'pricing.price.slot': '每个服务位，一次性购买',
-  'pricing.price.unlimited': '无限解锁',
+  'pricing.price.unlimited': '无限解锁，一次买断',
   'pricing.page.title': '价格',
   'pricing.how.title': '一个服务位是怎么回事',
   'pricing.how.body':
