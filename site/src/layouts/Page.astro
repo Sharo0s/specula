@@ -254,12 +254,16 @@ const nav = [
            sous la barre. Invisible au-delà de 860 px, où les liens vivent
            dans la barre. — */
       .burger { position: relative; display: none; }
+      /* 44 px de côté : la cible tactile minimale des Human Interface
+         Guidelines. Le cercle est le seul bouton de la barre en mobile, et il
+         reste 56 px de marge dans la barre arabe à 320 px — le plus serré des
+         cinq. */
       .burger summary {
         display: flex;
         align-items: center;
         justify-content: center;
-        width: 34px;
-        height: 34px;
+        width: 44px;
+        height: 44px;
         border: 1px solid var(--rule);
         border-radius: 999px;
         color: var(--text);
@@ -268,7 +272,7 @@ const nav = [
       }
       .burger summary::-webkit-details-marker { display: none; }
       .burger summary:hover { border-color: var(--accent); color: var(--accent); }
-      .burger summary svg { width: 17px; height: 17px; }
+      .burger summary svg { width: 19px; height: 19px; }
       .ic-close { display: none; }
       .burger[open] .ic-burger { display: none; }
       .burger[open] .ic-close { display: block; }
