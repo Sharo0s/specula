@@ -6,68 +6,86 @@ export const fr = {
   // — navigation —
   'nav.integrations': 'Intégrations',
   'nav.pricing': 'Prix',
+  'nav.how': 'Fonctionnement',
+  'nav.faq': 'FAQ',
   'nav.privacy': 'Vie privée',
   'nav.changelog': 'Journal',
   'theme.toggle': 'Changer de thème',
   'nav.cta': 'Rejoindre la bêta',
-  'nav.cta.live': 'Télécharger',
 
   // — hero —
   'hero.title': 'Tes services tombent en silence.',
   'hero.title.accent': 'en silence.',
   'hero.lede':
     'Plus maintenant. Specula lit les métriques de ton homelab, repère les pannes et te prévient — notification, Live Activity, widget.',
-  'hero.proof.privacy': 'Aucun compte, aucun serveur, aucune télémétrie.',
-  'hero.proof.platforms': 'iPhone, iPad et Mac — en natif.',
   'hero.cta.primary': 'Rejoindre la bêta TestFlight',
-  'hero.cta.secondary': 'Voir les intégrations',
 
   // — captures d'écran —
-  'shot.macos.alt':
-    'Specula sur macOS : les sources et les groupes sur un côté, les services en cartes avec leurs métriques au centre, et le détail d’un service à côté.',
   'shot.ios.alt':
     'Specula sur iPhone : la liste des services par groupe avec la latence de chacun, le bandeau système en tête, Komga marqué hors ligne.',
-  'shot.ipados.alt':
-    'Specula sur iPad : les services, groupe par groupe, en grille, chacun avec les métriques lues via son API.',
+
+  // — marquee d'intégrations —
+  'marquee.label': 'Reconnus automatiquement — lus via leur propre API',
+  'marquee.more': '+ {count} autres',
+  'marquee.browse': 'Parcourir les {count} intégrations',
+
+  // — le constat —
+  'watch.eyebrow': 'Le constat',
+  'watch.title': 'Ton homelab tourne. Qui le regarde ?',
+  'watch.title.accent': 'Qui le regarde ?',
+  'watch.p1':
+    'La plupart des tableaux de bord affichent des liens. Jolis quand tout va bien, muets quand ça casse — et c’est un utilisateur qui te préviendra que Jellyfin est tombé.',
+  'watch.p2':
+    'Specula lit les métriques de chaque service, via sa propre API. Trois lectures échouées, et le service passe hors ligne : notification, Live Activity, et le mur de statut garde la trace.',
+  'stat.fail.b': '3',
+  'stat.fail.text': 'tentatives échouées, et le service est déclaré hors ligne — pas une de plus',
+  'stat.history.b': '30 j',
+  'stat.history.text': 'd’historique de statut, avec la disponibilité réelle calculée',
+  'stat.zero.b': '0',
+  'stat.zero.text': 'compte, serveur intermédiaire ou télémétrie — l’app parle à tes machines, à rien d’autre',
 
   // — fonctionnalités —
-  'features.eyebrow': 'Ce que ça fait',
-  'features.title': 'Un ping dit « ça répond ». Specula dit quoi.',
+  'features.eyebrow': 'Fonctionnalités',
+  'features.title': 'Tout pour monter la garde.',
+  'features.sub': 'Pas un mur de liens : un tableau de bord qui lit, vérifie et alerte.',
+  'features.detect.title': 'Détection de panne',
+  'features.detect.body':
+    'Trois tentatives échouées passent un service hors ligne, avec notification et Live Activity. Le retour en ligne est notifié aussi.',
+  'features.screens.title': 'Sur tous tes écrans',
+  'features.screens.body':
+    'Widgets sur l’écran d’accueil, accès depuis la barre de menus du Mac. L’état réel, sans ouvrir l’app.',
+  'features.private.title': 'Rien ne sort de chez toi',
+  'features.private.body':
+    'Aucun compte, aucune télémétrie. Les clés API vivent dans le trousseau — jamais dans une sauvegarde, jamais sur iCloud.',
 
-  'features.metrics.title': 'Les métriques, via l’API de chaque service',
-  'features.metrics.body':
-    'Specula parle à chaque service dans sa propre langue : /control/stats pour AdGuard, l’API cluster de Proxmox, les statistiques du NAS. Tu vois des chiffres qui veulent dire quelque chose, pas une pastille verte.',
-
-  'features.outage.title': 'Détection de panne, pas d’alerte au moindre hoquet',
-  'features.outage.body':
-    'Il faut trois tentatives échouées pour qu’un service passe hors ligne — le Wi-Fi qui tousse ne réveille personne. Ensuite : notification, Live Activity, et un mur de statut qui garde trente jours et calcule la disponibilité réelle.',
-
-  'features.surfaces.title': 'Sur tous tes écrans',
-  'features.surfaces.body':
-    'Widgets d’écran d’accueil et d’écran verrouillé alimentés par l’état réel, accès depuis la barre des menus du Mac, Live Activity pendant une panne. Une app native, pas une page web dans une coque.',
-
-  'features.demo.title': 'Un mode démo qui n’attend rien de toi',
-  'features.demo.body':
-    'L’app s’ouvre en mode démo au premier lancement : un homelab complet, des métriques crédibles et une panne scénarisée. Tu juges l’app avant de lui donner la moindre adresse.',
-
-  // — prise en main —
-  'surface.home': 'Écran d’accueil',
-  'surface.lock': 'Écran verrouillé',
-  'surface.menubar': 'Barre des menus',
-  'feature.uptime': 'Disponibilité sur trente jours',
-  'feature.demo.chip': 'Mode démo',
-
-  'setup.eyebrow': 'Prise en main',
-  'setup.title': 'Trois façons de commencer',
-  'setup.scan.title': 'Scanner le réseau',
-  'setup.scan.body':
-    'Specula écoute ton réseau local et reconnaît tout seul ce qui y tourne.',
-  'setup.yaml.title': 'Importer un services.yaml',
-  'setup.yaml.body':
-    'Le format de gethomepage.dev, repris tel quel : groupes, URL et widgets. L’export existe aussi, dans les deux sens.',
-  'setup.manual.title': 'Saisir une adresse',
-  'setup.manual.body':
-    'Une URL, éventuellement une clé API. Ce qui rend ton homelab joignable de l’extérieur — VPN, reverse proxy, tunnel — se règle sous l’app, pas dedans.',
+  // — comment ça marche —
+  'how.eyebrow': 'Comment ça marche',
+  'how.title': 'De zéro à surveillé en trois gestes.',
+  'how.step': 'Étape',
+  'how.scan.title': 'Scanne ton réseau',
+  'how.scan.b1': 'Specula écoute ton réseau local et reconnaît tout seul ce qui y tourne',
+  'how.scan.b2': 'Un services.yaml au format gethomepage.dev s’importe tel quel',
+  'how.scan.b3': 'Et une adresse se saisit toujours à la main',
+  'how.scan.demo': 'Scan en cours',
+  'how.recognized': 'reconnu',
+  'how.scan.found': '12 services trouvés',
+  'how.read.title': 'Lit les vraies métriques',
+  'how.read.b1': 'Chaque intégration parle l’API native du service',
+  'how.read.b2': 'Les clés API entrent dans le trousseau, pas dans un fichier',
+  'how.read.b3': 'Les widgets affichent ces chiffres-là, pas un cache',
+  'how.read.demo': 'Lecture en direct',
+  'how.jellyfin.movies': '412 films',
+  'how.jellyfin.shows': '87 séries',
+  'how.alert.title': 'Ne rate aucune panne',
+  'how.alert.b1': 'Trois échecs, et le service passe hors ligne — notification immédiate',
+  'how.alert.b2': 'Une Live Activity suit la panne jusqu’au retour',
+  'how.alert.b3': 'Le mur de statut garde trente jours et calcule la disponibilité réelle',
+  'how.alert.demo': 'Panne détectée',
+  'how.alert.notif': 'Home Assistant est hors ligne',
+  'how.alert.notifBody': 'trois tentatives échouées sur 192.168.1.56.',
+  'how.tl.down': 'hors ligne · 03 h 12',
+  'how.tl.up': 'en ligne · 03 h 34',
+  'how.tl.note': '22 min d’interruption, historisées',
 
   // — vie privée —
   'privacy.body':
@@ -100,6 +118,7 @@ export const fr = {
   'integrations.metrics.none':
     'Aucune métrique : Specula suit sa disponibilité et sa latence, rien de plus.',
   'integrations.endpoints.title': 'Les points d’API appelés',
+  'integrations.key.chip': 'clé API',
   'integrations.key.title': 'Identifiant demandé',
   'integrations.key.none': 'Aucun — une URL suffit.',
   'integrations.key.userPassword': 'Utilisateur et mot de passe',
@@ -116,9 +135,9 @@ export const fr = {
     'Cette page n’existe qu’en français et en anglais. Un texte juridique traduit sans relecture vaut moins que le même texte dans une langue que vous pouvez vérifier.',
 
   // — journal —
-  'changelog.title': 'Ce qui est sorti, version par version',
+  'changelog.title': 'Ce qui change',
   'changelog.description':
-    'Toutes les versions de Specula, telles que le dépôt les publie. Les numéros et les notes sont générés à partir des commits eux-mêmes.',
+    'Le journal est généré depuis les commits — chaque version raconte exactement ce qu’elle apporte.',
   'changelog.language':
     'Les notes sont en français : elles viennent des messages de commit, et en traduire une copie la ferait diverger dès la prochaine version.',
 
@@ -162,34 +181,34 @@ export const fr = {
   'integration.cta': 'Essayer avec {service}',
 
   // — FAQ —
-  'faq.eyebrow': 'Questions',
-  'faq.title': 'Ce qu’on demande le plus souvent',
-  'faq.remote.q': 'Et si mon homelab n’est pas exposé sur Internet ?',
-  'faq.remote.a':
-    'Specula demande une seule URL par service et n’essaie pas de percer ton réseau. Ce qui rend ton homelab joignable de l’extérieur — VPN, reverse proxy, tunnel — se règle sous l’app. Depuis ton réseau local, rien à faire.',
-  'faq.away.q': 'Comment le consulter en déplacement ?',
-  'faq.away.a':
-    'Une seule adresse par service : celle qui fonctionne des deux côtés. Avec un réseau maillé comme Tailscale, saisis le nom MagicDNS — jellyfin.ton-tailnet.ts.net — il résout chez toi comme dehors, et le trafic passe en direct par ton réseau local quand tu y es. Un reverse proxy ou un tunnel font le même travail. Specula ne fabrique aucune route : elle suit la tienne, et continue d’accepter le certificat auto-signé de ton service sur la plage d’adresses du tailnet.',
-  'faq.selfhost.q': 'Faut-il héberger quelque chose ?',
-  'faq.selfhost.a':
-    'Non. Pas d’agent à installer, pas de conteneur à lancer, pas de compte à créer. L’app interroge directement les API que tes services exposent déjà.',
-  'faq.versions.q': 'Pourquoi iOS 26 et macOS 26 seulement ?',
-  'faq.versions.a':
-    'L’app est écrite pour les API de cette génération. Aucune version antérieure n’est prise en charge.',
-  'faq.homepage.q': 'J’utilise déjà gethomepage. Faut-il tout ressaisir ?',
+  'faq.eyebrow': 'FAQ',
+  'faq.title': 'Questions fréquentes',
+  'faq.vpn.q': 'Mon homelab n’est joignable qu’en VPN. Ça marche ?',
+  'faq.vpn.a':
+    'Oui. Une seule URL par service : ce qui rend un homelab joignable de l’extérieur — VPN, reverse proxy, tunnel — se règle sous l’app, pas dedans. Si ton appareil atteint le service, Specula aussi.',
+  'faq.egress.q': 'Qu’est-ce qui sort de mon réseau, exactement ?',
+  'faq.egress.a':
+    'Presque rien, et tout est nommé. Le nombre de places achetées est écrit dans ton stockage clé-valeur iCloud — un entier, ni tes services, ni leurs adresses, ni tes clés. Et les logos viennent du CDN public dashboard-icons ; un interrupteur le coupe, l’app retombe sur des monogrammes.',
+  'faq.homepage.q': 'J’utilise déjà Homepage, je recommence tout ?',
   'faq.homepage.a':
-    'Non. Specula importe ton services.yaml tel quel — groupes, URL et widgets — et sait le réexporter.',
+    'Non : importe ton services.yaml au format gethomepage.dev — groupes, adresses et widgets sont repris tels quels. Seules les clés en variables {{HOMEPAGE_VAR_…}} restent à saisir une fois : elles vivent dans le .env de Homepage, auquel Specula n’a pas accès.',
+  'faq.generic.q': 'Mon service n’est pas dans les 65 intégrations ?',
+  'faq.generic.a':
+    'Toute adresse qui répond est suivie en générique — disponibilité, latence, trente jours d’historique. Et les intégrations s’ajoutent : demande la tienne sur GitHub, le nom du service et un lien vers la doc de son API suffisent.',
+  'faq.more': 'Une autre question ?',
+  'faq.more.link': 'L’assistance répond',
 
   // — fermeture —
-    'cta.store': 'Télécharger dans l’App Store',
-  'cta.title.live': 'Specula est sur l’App Store',
-  'cta.body.live': 'Une seule app pour l’iPhone, l’iPad et le Mac. Le mode démo se lance sans rien configurer.',
+  'cta.store': 'Télécharger dans l’App Store',
+  'cta.eyebrow': 'Specula, du latin « tour de guet »',
+  'cta.title.live': 'Prêt à monter la garde ?',
+  'cta.title.accent': 'la garde ?',
+  'cta.body.live':
+    'Gratuit, sans compte, quatre services compris. La même app sur l’iPhone, l’iPad et le Mac.',
   'cta.price': 'Gratuit jusqu’à quatre services, puis {price} la place',
-'cta.title': 'La bêta est ouverte',
+  'cta.title': 'La bêta est ouverte',
   'cta.body':
     'Un seul lien TestFlight pour l’iPhone, l’iPad et le Mac. Le mode démo se lance sans rien configurer.',
-
-  // — pied de page —
 
   // — vitrine défilante de l'accueil —
   'journey.read': 'Lire',
@@ -201,24 +220,31 @@ export const fr = {
   'journey.proxmox.nodes': '3 nœuds',
   'journey.proxmox.cpu': 'CPU 12 %',
   'journey.down.title': 'Komga ne répond plus',
-  'journey.down.body': 'trois tentatives échouées',
+  'journey.down.body': 'trois tentatives échouées.',
+  'journey.down.time': '03 h 12',
   'journey.up.title': 'Komga est de retour',
-  'journey.up.body': '22 min d’interruption',
+  'journey.up.body': '22 min d’interruption.',
+  'journey.up.time': '03 h 34',
   'journey.incident.title': 'Incident — Komga',
-  'journey.incident.body': '22 min, notifié à 03 h 12',
+  'journey.incident.date': '12 août · 22 min',
+  'journey.incident.body': 'connexion refusée, notifiée à 03 h 12.',
   'journey.uptime.title': 'Disponibilité moyenne',
   'journey.uptime.value': '99,9 %',
+  'journey.uptime.body': 'Trente jours d’historique, calculés sur trois lectures par service.',
   'journey.pinned.title': 'Épinglés',
-  'journey.pinned.body': 'Quatre services dans le widget et la barre des menus.',
-  'journey.theme.title': 'Thème et langues',
-  'journey.theme.body': 'Système, clair ou sombre — et cinq langues.',
+  'journey.pinned.body': 'Quatre services affichés dans le widget et la barre de menus du Mac.',
+  'journey.theme.title': 'Thème & langues',
+  'journey.theme.body': 'Système, clair ou sombre — et cinq langues, dont l’arabe et le chinois.',
   'journey.alert.alt': 'Le détail d’une panne : Komga hors ligne, latence à plat, journal du conteneur.',
   'journey.status.alt': 'Le mur de disponibilité : une rangée de trente jours par service, les incidents en rouge.',
   'journey.settings.alt': 'Les réglages : pictogrammes, groupes et services épinglés.',
 
+  // — pied de page —
+  'support.title': 'On répond.',
+  'support.lede': 'Un mail, un dépôt public, et les réponses aux questions qui reviennent.',
   'footer.support': 'Assistance',
   'footer.privacy': 'Confidentialité',
   'footer.changelog': 'Journal des versions',
-  'footer.license': 'GPL-3.0 © nysia. Police Archivo sous SIL Open Font License 1.1.',
+  'footer.license': 'Police Archivo sous SIL Open Font License 1.1.',
   'footer.language': 'Langue',
 } as const;

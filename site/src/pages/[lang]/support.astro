@@ -1,6 +1,5 @@
 ---
 import Page from '../../layouts/Page.astro';
-import LegalDocument from '../../components/LegalDocument.astro';
 import { LOCALES, useTranslations, type Locale } from '../../i18n';
 import { SUPPORT } from '../../data/legal';
 
@@ -11,6 +10,8 @@ export function getStaticPaths() {
 const lang = Astro.params.lang as Locale;
 const t = useTranslations(lang);
 
+// Le fond du document n'existe qu'en français et en anglais ; l'habillage
+// (sur-titre, titre, sous-titre) suit la langue de la page.
 const docLang = lang === 'fr' ? 'fr' : 'en';
 const doc = SUPPORT[docLang];
 ---
@@ -19,13 +20,58 @@ const doc = SUPPORT[docLang];
   {lang}
   route="support/"
   title={`${doc.title} — Specula`}
-  description={doc.intro ?? ''}
+  description={t('support.lede')}
 >
-  <LegalDocument
-    {doc}
-    {docLang}
-    {lang}
-    notice={t('legal.notice')}
-    updatedLabel={t('legal.updated')}
-  />
+  <section class="wrap section head">
+    <p class="eyebrow">{t('footer.support')}</p>
+    <h1>{t('support.title')}</h1>
+    <p class="lede">{t('support.lede')}</p>
+    {docLang !== lang && <p class="notice">{t('legal.notice')}</p>}
+  </section>
+
+  {/* Le contenu vient du même document que la version légale : des cartes en
+      grille plutôt qu'une colonne, comme la vue assistance du mockup. */}
+  <section class="wrap assist-wrap" lang={docLang} dir="ltr">
+    <div class="assist">
+      {
+        doc.sections.map((section) => (
+          <div class="assist-card">
+            <h3>{section.h}</h3>
+            <div set:html={section.html} />
+          </div>
+        ))
+      }
+    </div>
+  </section>
 </Page>
+
+<style>
+  .head { padding-block-end: 8px; }
+  .notice {
+    border-inline-start: 2px solid var(--accent);
+    padding-inline-start: 14px;
+    color: var(--muted);
+    font-size: 15px;
+  }
+  .assist-wrap { padding-block-end: clamp(56px, 8vw, 104px); }
+  .assist {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 16px;
+  }
+  .assist-card {
+    background: var(--card);
+    border: 2px solid var(--rule);
+    border-radius: var(--radius);
+    padding: 24px;
+  }
+  .assist-card h3 { font-size: 18px; font-weight: 720; letter-spacing: -0.01em; color: var(--accent); }
+  .assist-card :global(p) { margin: 10px 0 0; font-size: 15px; color: var(--muted); max-width: none; }
+  .assist-card :global(ul) { margin: 10px 0 0; padding-inline-start: 20px; font-size: 15px; color: var(--muted); }
+  .assist-card :global(li) { margin-block-end: 6px; }
+  .assist-card :global(strong) { color: var(--text); font-weight: 640; }
+  .assist-card :global(a) { color: var(--text); font-weight: 600; }
+  .assist-card :global(a:hover) { color: var(--accent); }
+  .assist-card :global(code) { font-size: 13px; }
+  .assist-card :global(.muted) { color: var(--muted); font-size: 14px; }
+</style>

@@ -14,14 +14,23 @@
 
 :root {
   --bg: #f1f0f0;
+  --bg-raised: #fdfcfc;
   --text: #1a1a1a;
   --muted: rgba(26, 26, 26, 0.58);
+  --faint: rgba(26, 26, 26, 0.4);
   --accent: #ec3013;
+  --accent-warm: #e07000;
+  --accent-soft: rgba(236, 48, 19, 0.1);
   --accent-text: #ffffff;
   --rule: rgba(26, 26, 26, 0.15);
-  --rule-strong: #1a1a1a;
+  --rule-strong: rgba(26, 26, 26, 0.4);
   --card: #f8f4f4;
   --ok: #1f8b4c;
+  --ok-soft: rgba(31, 139, 76, 0.12);
+  --warn: #d97706;
+  /* Le dégradé du titre : rouge de la marque vers un orange chaud. */
+  --grad: linear-gradient(98deg, var(--accent) 20%, var(--accent-warm) 90%);
+  --radius: 16px;
 
   /* Archivo ne couvre ni le chinois ni l'arabe : le système prend le relais
      pour ces écritures, sans requête réseau supplémentaire. */
@@ -48,12 +57,18 @@
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme='light']) {
     --bg: #1a1a1a;
+    --bg-raised: #211e1e;
     --text: #f3f2f2;
     --muted: rgba(243, 242, 242, 0.58);
+    --faint: rgba(243, 242, 242, 0.34);
+    --accent-warm: #ff8a00;
+    --accent-soft: rgba(236, 48, 19, 0.14);
     --rule: rgba(243, 242, 242, 0.18);
-    --rule-strong: #f3f2f2;
+    --rule-strong: rgba(243, 242, 242, 0.3);
     --card: #262323;
     --ok: #4ade80;
+    --ok-soft: rgba(74, 222, 128, 0.14);
+    --warn: #fbbf24;
     --shadow: 0 26px 60px rgba(0, 0, 0, 0.55);
     --shot-border: rgba(243, 242, 242, 0.14);
     --hero-wash: linear-gradient(160deg, rgba(236, 48, 19, 0.14), transparent 60%);
@@ -62,12 +77,18 @@
 
 :root[data-theme='dark'] {
   --bg: #1a1a1a;
+  --bg-raised: #211e1e;
   --text: #f3f2f2;
   --muted: rgba(243, 242, 242, 0.58);
+  --faint: rgba(243, 242, 242, 0.34);
+  --accent-warm: #ff8a00;
+  --accent-soft: rgba(236, 48, 19, 0.14);
   --rule: rgba(243, 242, 242, 0.18);
-  --rule-strong: #f3f2f2;
+  --rule-strong: rgba(243, 242, 242, 0.3);
   --card: #262323;
   --ok: #4ade80;
+  --ok-soft: rgba(74, 222, 128, 0.14);
+  --warn: #fbbf24;
   --shadow: 0 26px 60px rgba(0, 0, 0, 0.55);
   --shot-border: rgba(243, 242, 242, 0.14);
   --hero-wash: linear-gradient(160deg, rgba(236, 48, 19, 0.14), transparent 60%);
@@ -90,9 +111,18 @@ body {
 }
 
 h1, h2, h3 { font-weight: 800; letter-spacing: -0.02em; line-height: 1.08; text-wrap: balance; margin: 0; }
-h1 { font-size: clamp(38px, 6.2vw, 66px); letter-spacing: -0.035em; }
-h2 { font-size: clamp(26px, 3.4vw, 36px); }
+/* Les titres de pages intérieures partagent l'échelle des sections : seule
+   l'accroche de l'accueil monte plus haut (règle locale du héro). */
+h1, h2 { font-size: clamp(30px, 4.6vw, 50px); line-height: 1.04; letter-spacing: -0.025em; }
 h3 { font-size: 19px; letter-spacing: -0.015em; }
+
+/* Le mot accentué d'un titre : le dégradé de la marque, posé sur le texte. */
+.grad {
+  background: var(--grad);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
 p { margin: 0 0 var(--step); max-width: var(--measure); }
 
 a { color: var(--accent); text-underline-offset: 3px; }
@@ -112,53 +142,79 @@ code {
 .rule { height: 2px; border: 0; margin: 0; background: var(--rule-strong); }
 .rule-thin { height: 1px; border: 0; margin: 0; background: var(--rule); }
 
-/* Le sur-titre de section : petites capitales, filet en dessous. */
+/* Le sur-titre de section : chasse fixe, comme les étiquettes de l'app. */
 .eyebrow {
-  font-size: 12px;
-  font-weight: 700;
+  font-family: var(--mono);
+  font-size: 12.5px;
+  font-weight: 600;
   text-transform: uppercase;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.14em;
   color: var(--accent);
-  margin: 0 0 10px;
+  margin: 0 0 14px;
 }
 
 .lede { font-size: clamp(18px, 2.1vw, 21px); color: var(--muted); max-width: 54ch; }
 
-/* — boutons — */
+/* — boutons : des pilules, comme dans le mockup — */
 .btn {
-  display: inline-block;
-  padding: 13px 22px;
-  border-radius: 12px;
-  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  padding: 13px 26px;
+  border-radius: 999px;
+  font-weight: 650;
   font-size: 15px;
   text-decoration: none;
-  border: 1px solid transparent;
+  border: 2px solid transparent;
+  white-space: nowrap;
+  transition: transform 0.15s ease, background 0.15s ease, border-color 0.15s ease;
 }
 .btn-primary { background: var(--accent); color: var(--accent-text); }
-.btn-secondary { border-color: var(--shot-border); background: var(--card); color: var(--text); }
-.btn:hover { opacity: 0.85; }
+.btn-primary:hover { background: color-mix(in srgb, var(--accent) 90%, #000); transform: translateY(-1px); }
+.btn-secondary { border-color: var(--rule-strong); background: transparent; color: var(--text); }
+.btn-secondary:hover { border-color: var(--text); }
+@media (prefers-reduced-motion: reduce) {
+  .btn { transition: none; }
+  .btn-primary:hover { transform: none; }
+}
 
 /* — en-tête et pied — */
-/* L'en-tête colle en haut : barre pleine largeur au repos, pilule flottante
-   dès qu'on défile (la classe .pill vient d'un petit script du layout). */
-header.wrap { position: sticky; top: 0; z-index: 60; }
+/* L'en-tête colle en haut, transparent et sans filet : il se pose sur le héro
+   (marge négative de sa propre hauteur), puis devient pilule flottante dès
+   qu'on défile (la classe .pill vient d'un petit script du layout). */
+header.wrap {
+  position: sticky;
+  top: 0;
+  z-index: 60;
+  margin-block-end: -64px;
+  transition: padding 0.4s cubic-bezier(0.33, 1, 0.68, 1);
+}
 .nav {
   display: flex;
   align-items: center;
   gap: 22px;
-  padding-block: 18px;
+  min-height: 64px;
+  padding-block: 8px;
   border: 1px solid transparent;
-  border-block-end: 2px solid var(--rule-strong);
   flex-wrap: wrap;
-  transition: max-width 0.35s ease, padding 0.35s ease, background 0.35s ease,
-    border-color 0.35s ease, border-radius 0.35s ease, box-shadow 0.35s ease;
-}
-header.pill { padding-block-start: 14px; }
-header.pill .nav {
-  max-width: 720px;
+  /* max-width posé dès le repos : `none` ne s'anime pas, la pilule sautait */
+  max-width: 1120px;
   margin-inline: auto;
-  padding: 6px 10px;
-  padding-inline-start: 14px;
+  transition: max-width 0.4s cubic-bezier(0.33, 1, 0.68, 1),
+    min-height 0.4s cubic-bezier(0.33, 1, 0.68, 1),
+    padding 0.4s cubic-bezier(0.33, 1, 0.68, 1),
+    background 0.4s ease, border-color 0.4s ease, border-radius 0.4s ease,
+    box-shadow 0.4s ease;
+}
+header.pill { padding-block-start: 18px; }
+header.pill .nav {
+  /* assez large pour cinq liens, le bouton et le thème sur UNE ligne — le
+     repli est interdit, sinon la pilule double de hauteur */
+  max-width: 780px;
+  min-height: 54px;
+  flex-wrap: nowrap;
+  padding: 5px 8px;
+  padding-inline-start: 16px;
   background: color-mix(in srgb, var(--bg) 76%, transparent);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
@@ -173,11 +229,30 @@ header.pill .nav {
 .brand-name { display: inline-block; max-width: 90px; overflow: hidden; transition: max-width 0.3s ease, opacity 0.3s ease; }
 header.pill .brand-name { max-width: 0; opacity: 0; }
 @media (prefers-reduced-motion: reduce) {
-  .nav, .brand-name { transition: none; }
+  header.wrap, .nav, .brand-name { transition: none; }
 }
-.nav-links { display: flex; gap: 18px; margin-inline-start: auto; flex-wrap: wrap; }
-.nav-links a { color: var(--text); text-decoration: none; font-size: 15px; font-weight: 600; }
-.nav-links a:hover, .nav-links a[aria-current] { color: var(--accent); }
+/* Liens en retrait (gris, graisse moyenne) : le bouton de bêta reste le seul
+   élément qui appelle, comme dans le mockup. */
+.nav-links { display: flex; align-items: center; gap: 26px; margin-inline-start: auto; flex-wrap: wrap; }
+.nav-links a { color: var(--muted); text-decoration: none; font-size: 15px; font-weight: 520; }
+.nav-links a:hover { color: var(--text); }
+.nav-links a[aria-current] { color: var(--accent); }
+/* Le bouton de bêta reste un bouton, même en mode App Store — c'est la seule
+   entrée TestFlight du site. */
+.btn-beta {
+  padding: 9px 18px;
+  border-radius: 999px;
+  background: var(--accent);
+  font-size: 14.5px;
+  white-space: nowrap;
+}
+.nav-links a.btn-beta { color: var(--accent-text); }
+.nav-links a.btn-beta:hover { opacity: 0.88; }
+/* Sous 860 px, la barre superposée n'a pas la place des cinq liens sans
+   replier la pilule : la marque, la bêta et le thème suffisent. */
+@media (max-width: 860px) {
+  .nav-links .nav-item { display: none; }
+}
 
 footer { border-block-start: 1px solid var(--rule); padding-block: 32px 56px; color: var(--muted); font-size: 14px; }
 footer a { color: inherit; }
@@ -187,8 +262,8 @@ footer a { color: inherit; }
 .grid { display: grid; gap: 14px; }
 .grid > * {
   background: var(--card);
-  border: 1px solid var(--shot-border);
-  border-radius: 16px;
+  border: 2px solid var(--rule);
+  border-radius: var(--radius);
   padding: 24px;
 }
 /* Colonnes fixes plutôt qu'auto-fit : le nombre d'éléments est connu, et

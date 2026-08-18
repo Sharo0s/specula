@@ -1,7 +1,7 @@
 ---
 import '../styles/base.css';
 import { BCP47, LOCALES, LOCALE_NAMES, dir, useTranslations, type Locale } from '../i18n';
-import { STORE_URL, IS_LIVE } from '../data/links';
+import { TESTFLIGHT } from '../data/links';
 import Analytics from '../components/Analytics.astro';
 
 interface Props {
@@ -19,10 +19,13 @@ const t = useTranslations(lang);
 const site = Astro.site ?? new URL('https://specula.dev');
 const url = (l: Locale) => new URL(`/${l}/${route}`, site).href;
 
+// La navigation du mockup : Fonctionnement et FAQ mènent aux ancres de
+// l'accueil, la vie privée reste au pied de page.
 const nav = [
   { key: 'integrations', label: t('nav.integrations'), href: `/${lang}/integrations/` },
+  { key: 'how', label: t('nav.how'), href: `/${lang}/#fonctionnement` },
   { key: 'pricing', label: t('nav.pricing'), href: `/${lang}/pricing/` },
-  { key: 'privacy', label: t('nav.privacy'), href: `/${lang}/privacy/` },
+  { key: 'faq', label: t('nav.faq'), href: `/${lang}/#faq` },
   { key: 'changelog', label: t('nav.changelog'), href: `/${lang}/changelog/` },
 ];
 
@@ -94,12 +97,12 @@ const nav = [
         <div class="nav-links">
           {
             nav.map((item) => (
-              <a href={item.href} aria-current={current === item.key ? 'page' : undefined}>
+              <a class="nav-item" href={item.href} aria-current={current === item.key ? 'page' : undefined}>
                 {item.label}
               </a>
             ))
           }
-          <a href={STORE_URL} class="nav-cta" target="_blank" rel="noopener">{IS_LIVE ? t('nav.cta.live') : t('nav.cta')}</a>
+          <a href={TESTFLIGHT} class="btn-beta" target="_blank" rel="noopener">{t('nav.cta')}</a>
           <button type="button" class="theme" data-theme-toggle aria-label={t('theme.toggle')}>
             <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
               {/* lune et soleil dans le même gabarit : le CSS montre celui qui
@@ -125,11 +128,23 @@ const nav = [
 
     <footer class="wrap">
       <div class="footer-grid">
+        {/* Le monogramme nysia : encre sombre sur pastille ocre en clair,
+            tracé blanc en sombre — le CSS montre celui du thème courant. */}
+        <p class="footer-brand">
+          <a href="https://nysia.fr" target="_blank" rel="noopener">
+            <img class="brand-light" src="/nysia-footer-light.png" alt="" width="26" height="26" />
+            <img class="brand-dark" src="/nysia-footer-dark.png" alt="" width="26" height="26" />
+            <span>© nysia</span>
+          </a>
+        </p>
         <p class="footer-links">
           <a href={`/${lang}/support/`}>{t('footer.support')}</a>
           <a href={`/${lang}/privacy/`}>{t('footer.privacy')}</a>
           <a href={`/${lang}/changelog/`}>{t('footer.changelog')}</a>
+          <a href="https://github.com/Sharo0s/specula" target="_blank" rel="noopener">GitHub</a>
         </p>
+      </div>
+      <div class="footer-grid footer-under">
         <p class="footer-langs">
           <span class="visually-hidden">{t('footer.language')}</span>
           {
@@ -141,7 +156,9 @@ const nav = [
           }
         </p>
       </div>
-      <p class="footer-license">{t('footer.license')}</p>
+      {/* La marque et la licence du code sont invariantes ; seule la mention
+          de la police vient des chaînes. Le © vit à côté du logo, plus haut. */}
+      <p class="footer-license">Specula — GPL-3.0. {t('footer.license')}</p>
     </footer>
 
     {/* Ce script-là est un module empaqueté par Astro (servi depuis /_astro/,
@@ -155,8 +172,6 @@ const nav = [
     </script>
 
     <style>
-      .nav-cta { color: var(--accent); }
-
       .theme {
         display: inline-flex;
         align-items: center;
@@ -189,7 +204,34 @@ const nav = [
         flex-wrap: wrap;
         gap: 12px 32px;
         justify-content: space-between;
+        align-items: center;
       }
+      .footer-brand { display: flex; align-items: center; margin: 0; }
+      .footer-brand a {
+        display: flex;
+        align-items: center;
+        gap: 9px;
+        text-decoration: none;
+        color: var(--muted);
+        font-weight: 600;
+      }
+      .footer-brand a:hover { color: var(--text); }
+      .footer-brand img { width: 26px; height: 26px; }
+      .brand-light { border-radius: 5px; }
+
+      /* Même mécanique à trois états que la lune et le soleil du bouton de
+         thème : préférence système, puis choix explicite dans les deux sens. */
+      .brand-dark { display: none; }
+      @media (prefers-color-scheme: dark) {
+        :root:not([data-theme='light']) .brand-light { display: none; }
+        :root:not([data-theme='light']) .brand-dark { display: block; }
+      }
+      :root[data-theme='dark'] .brand-light { display: none; }
+      :root[data-theme='dark'] .brand-dark { display: block; }
+      :root[data-theme='light'] .brand-light { display: block; }
+      :root[data-theme='light'] .brand-dark { display: none; }
+
+      .footer-under { margin-block-start: 14px; }
       .footer-links a, .footer-langs a { margin-inline-end: 16px; text-decoration: none; }
       .footer-links a:hover, .footer-langs a:hover { text-decoration: underline; }
       .footer-langs a[aria-current] { color: var(--accent); font-weight: 700; }

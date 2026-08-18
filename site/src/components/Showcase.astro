@@ -49,36 +49,57 @@ const dockLabels: Record<(typeof STATES)[number], string> = {
 >
   <div class="journey-sticky">
     <div class="showcase">
+      {/* Lire : deux services et leurs métriques, monogrammes colorés comme
+          dans l'app quand le logo distant est coupé. */}
       <div class="float-card fc-start fc-state st-read">
-        <p class="fc-label">AdGuard Home</p>
+        <div class="fc-head">
+          <span class="mono-badge" style="background:rgba(104,190,104,.14);color:#3d8b3d">A</span>
+          <b>AdGuard Home</b>
+        </div>
         <div class="fc-chips"><span>{t('journey.adguard.reqs')}</span><span>{t('journey.adguard.blocked')}</span></div>
       </div>
       <div class="float-card fc-end fc-state st-read">
-        <p class="fc-label">Proxmox VE</p>
+        <div class="fc-head">
+          <span class="mono-badge" style="background:rgba(230,138,60,.14);color:#c2691a">P</span>
+          <b>Proxmox VE</b>
+        </div>
         <div class="fc-chips"><span>{t('journey.proxmox.nodes')}</span><span>{t('journey.proxmox.cpu')}</span></div>
       </div>
+      {/* Alerter : les deux notifications, la panne et le retour. */}
       <div class="float-card fc-start fc-state st-alert">
-        <p class="fc-label ok">{t('journey.up.title')}</p>
-        <p class="fc-body">{t('journey.up.body')}</p>
+        <div class="fc-head">
+          <img src="/icon-180.png" alt="" width="22" height="22" />
+          <b>Specula</b>
+          <time>{t('journey.up.time')}</time>
+        </div>
+        <p class="fc-body"><span class="ok">{t('journey.up.title')}</span> — {t('journey.up.body')}</p>
       </div>
       <div class="float-card fc-end fc-state st-alert">
-        <p class="fc-label ko">{t('journey.down.title')}</p>
-        <p class="fc-body">{t('journey.down.body')}</p>
+        <div class="fc-head">
+          <img src="/icon-180.png" alt="" width="22" height="22" />
+          <b>Specula</b>
+          <time>{t('journey.down.time')}</time>
+        </div>
+        <p class="fc-body"><span class="ko">{t('journey.down.title')}</span> — {t('journey.down.body')}</p>
       </div>
+      {/* Statut : cartes repoussées aux extrêmes pour dégager le mur. */}
       <div class="float-card fc-start fc-state st-status">
-        <p class="fc-label">{t('journey.uptime.title')}</p>
-        <p class="fc-value">{t('journey.uptime.value')}</p>
+        <div class="fc-head">
+          <span class="fc-label">{t('journey.uptime.title')}</span>
+          <span class="fc-up">{t('journey.uptime.value')}</span>
+        </div>
+        <p class="fc-body">{t('journey.uptime.body')}</p>
       </div>
       <div class="float-card fc-end fc-state st-status">
-        <p class="fc-label ko">{t('journey.incident.title')}</p>
-        <p class="fc-body">{t('journey.incident.body')}</p>
+        <div class="fc-head"><span class="fc-label">{t('journey.incident.title')}</span></div>
+        <p class="fc-body"><span class="ko">{t('journey.incident.date')}</span> — {t('journey.incident.body')}</p>
       </div>
       <div class="float-card fc-start fc-state st-settings">
-        <p class="fc-label">{t('journey.pinned.title')}</p>
+        <div class="fc-head"><span class="fc-label">{t('journey.pinned.title')}</span></div>
         <p class="fc-body">{t('journey.pinned.body')}</p>
       </div>
       <div class="float-card fc-end fc-state st-settings">
-        <p class="fc-label">{t('journey.theme.title')}</p>
+        <div class="fc-head"><span class="fc-label">{t('journey.theme.title')}</span></div>
         <p class="fc-body">{t('journey.theme.body')}</p>
       </div>
 
@@ -86,7 +107,6 @@ const dockLabels: Record<(typeof STATES)[number], string> = {
         {STATES.map((s) => (
           <div class:list={['shot', `shot-${s}`]} role="img" aria-label={alts[s]} />
         ))}
-        <span class="island" aria-hidden="true"></span>
       </div>
     </div>
 
@@ -138,7 +158,11 @@ const dockLabels: Record<(typeof STATES)[number], string> = {
 <style>
   .journey {
     height: 440vh;
-    margin-block-start: min(0px, calc((820px - 100vh) / 2));
+    /* La pile téléphone + dock (~790 px) est centrée dans l'écran épinglé :
+       on replie les demi-vides du premier et du dernier écran, sinon le héro
+       et le marquee s'éloignent d'autant. */
+    margin-block-start: min(0px, calc((790px - 100vh) / 2));
+    margin-block-end: min(0px, calc((790px - 100vh) / 2));
   }
   .journey-sticky {
     position: sticky;
@@ -157,35 +181,25 @@ const dockLabels: Record<(typeof STATES)[number], string> = {
     justify-content: center;
   }
 
-  /* — l'iPhone, châssis dessiné comme dans DeviceHero — */
+  /* — l'iPhone : bordure épaisse et coins profonds, comme le vrai châssis.
+       Les captures gardent leur propre barre d'état et leur îlot. — */
   .phone {
     position: relative;
     z-index: 2;
-    width: min(300px, 78vw);
-    background: #0b0b0c;
-    border: 1px solid rgba(255, 255, 255, 0.18);
-    border-radius: 26px;
-    padding: 5px;
-    filter: drop-shadow(var(--shadow));
-  }
-  .island {
-    position: absolute;
-    inset-block-start: 10px;
-    inset-inline-start: 50%;
-    transform: translateX(-50%);
-    width: 32%;
-    height: 8px;
-    background: #0b0b0c;
-    border-radius: 999px;
+    width: min(315px, 80vw);
+    border: 11px solid #1c1917;
+    border-radius: 54px;
+    overflow: hidden;
+    background: #000;
+    box-shadow: 0 40px 90px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(243, 242, 242, 0.08);
   }
   .shot {
     aspect-ratio: 620 / 1348;
-    border-radius: 21px;
     background: var(--shot-read) center / cover no-repeat;
   }
   .shot + .shot {
     position: absolute;
-    inset: 5px;
+    inset: 0;
     aspect-ratio: auto;
     opacity: 0;
     transition: opacity 0.45s ease;
@@ -211,12 +225,12 @@ const dockLabels: Record<(typeof STATES)[number], string> = {
   /* — cartes flottantes : une de chaque côté, propres à chaque état — */
   .float-card {
     position: absolute;
-    background: var(--card);
-    border: 1px solid var(--shot-border);
-    border-radius: 14px;
+    background: var(--bg-raised);
+    border: 1px solid var(--rule);
+    border-radius: var(--radius);
     padding: 14px 16px;
-    width: 240px;
-    box-shadow: var(--shadow);
+    width: 250px;
+    box-shadow: 0 18px 50px rgba(0, 0, 0, 0.35);
     opacity: 0;
     transform: translateY(12px);
     transition: opacity 0.4s ease, transform 0.4s ease;
@@ -227,37 +241,73 @@ const dockLabels: Record<(typeof STATES)[number], string> = {
   .journey[data-state='status'] .st-status,
   .journey[data-state='settings'] .st-settings { opacity: 1; transform: none; }
 
-  .fc-end { top: 12%; inset-inline-end: max(8px, 8%); z-index: 3; }
-  .fc-start { top: 58%; inset-inline-start: max(8px, 8%); z-index: 3; }
+  .fc-end { top: 9%; inset-inline-end: max(8px, 9%); z-index: 3; }
+  .fc-start { top: 58%; inset-inline-start: max(8px, 9%); z-index: 3; }
+  /* Statut : le mur occupe tout l'écran, les cartes se rangent aux extrêmes. */
+  .st-status.fc-end { top: 4%; inset-inline-end: 0; }
+  .st-status.fc-start { top: 78%; inset-inline-start: 0; }
 
-  .fc-label { margin: 0; font-weight: 700; font-size: 14px; }
-  .fc-label.ko { color: var(--accent); }
-  .fc-label.ok { color: var(--ok); }
-  .fc-body { margin: 4px 0 0; font-size: 13.5px; color: var(--muted); }
-  .fc-value { margin: 4px 0 0; font-size: 24px; font-weight: 800; letter-spacing: -0.02em; color: var(--ok); }
-  .fc-chips { display: flex; flex-wrap: wrap; gap: 6px; margin-block-start: 8px; }
+  /* L'en-tête de carte : monogramme ou icône, nom en gras, heure à droite. */
+  .fc-head { display: flex; align-items: center; gap: 8px; font-size: 13px; }
+  .fc-head b { font-weight: 700; }
+  .fc-head img { width: 22px; height: 22px; border-radius: 6px; flex: none; }
+  .fc-head time {
+    margin-inline-start: auto;
+    color: var(--faint);
+    font-variant-numeric: tabular-nums;
+    font-size: 12px;
+  }
+  .mono-badge {
+    width: 24px;
+    height: 24px;
+    border-radius: 7px;
+    display: grid;
+    place-items: center;
+    font-family: var(--mono);
+    font-size: 12px;
+    font-weight: 700;
+    flex: none;
+  }
+  .fc-label {
+    font-family: var(--mono);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--muted);
+  }
+  .fc-up {
+    margin-inline-start: auto;
+    font-weight: 700;
+    color: var(--ok);
+    font-size: 15px;
+    font-variant-numeric: tabular-nums;
+  }
+  .fc-body { margin: 6px 0 0; font-size: 13.5px; color: var(--muted); text-wrap: pretty; }
+  .fc-body .ko { color: var(--accent); font-weight: 640; }
+  .fc-body .ok { color: var(--ok); font-weight: 640; }
+  .fc-chips { display: flex; flex-wrap: wrap; gap: 6px; margin-block-start: 10px; }
   .fc-chips span {
     font-family: var(--mono);
     font-size: 11.5px;
     padding: 3px 9px;
     border-radius: 999px;
-    background: color-mix(in srgb, var(--ok) 14%, transparent);
+    background: var(--ok-soft);
     color: var(--ok);
   }
 
-  /* — le dock, à distance fixe sous le téléphone — */
+  /* — le dock, à distance fixe sous le téléphone, même verre que la pilule — */
   .dock {
     position: relative;
     z-index: 3;
-    margin-block-start: 24px;
+    margin-block-start: 26px;
     display: flex;
     align-items: center;
     gap: 4px;
     padding: 5px;
     border-radius: 999px;
-    background: color-mix(in srgb, var(--card) 78%, transparent);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
+    background: color-mix(in srgb, var(--bg) 76%, transparent);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
     border: 1px solid var(--rule);
     box-shadow: var(--shadow);
   }
@@ -277,7 +327,10 @@ const dockLabels: Record<(typeof STATES)[number], string> = {
   @media (max-width: 880px) {
     .fc-end { inset-inline-end: 0; }
     .fc-start { inset-inline-start: 0; }
+  }
+  @media (max-width: 600px) {
     .float-card { width: 200px; padding: 11px 13px; }
+    .dock-item { padding: 8px 12px; font-size: 12.5px; }
   }
   @media (prefers-reduced-motion: reduce) {
     .shot + .shot, .float-card, .dock-item { transition: none; }

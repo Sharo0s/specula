@@ -3,8 +3,8 @@ import Page from '../../layouts/Page.astro';
 import { LOCALES, useTranslations, type Locale } from '../../i18n';
 import StoreButton from '../../components/StoreButton.astro';
 import Showcase from '../../components/Showcase.astro';
-import { metricLabel } from '../../i18n/metrics';
-import { IS_LIVE } from '../../data/links';
+import catalog from '../../data/integrations.json';
+import { PALETTE } from '../../data/palette';
 
 export function getStaticPaths() {
   return LOCALES.map((lang) => ({ params: { lang } }));
@@ -13,32 +13,59 @@ export function getStaticPaths() {
 const lang = Astro.params.lang as Locale;
 const t = useTranslations(lang);
 
-const features = [
-  { title: t('features.metrics.title'), body: t('features.metrics.body') },
-  { title: t('features.outage.title'), body: t('features.outage.body') },
-  { title: t('features.surfaces.title'), body: t('features.surfaces.body') },
-  { title: t('features.demo.title'), body: t('features.demo.body') },
+/**
+ * Le marquee : seize services connus en monogrammes colorés — le repli natif
+ * de l'app quand les logos distants sont coupés — puis le renvoi au catalogue.
+ */
+const MARQUEE = PALETTE;
+const TOTAL = catalog.length;
+const MORE = TOTAL - MARQUEE.length;
+
+const stats = [
+  { hot: true, b: t('stat.fail.b'), text: t('stat.fail.text') },
+  { hot: false, b: t('stat.history.b'), text: t('stat.history.text') },
+  { hot: false, b: t('stat.zero.b'), text: t('stat.zero.text') },
 ];
 
-const setup = [
-  { title: t('setup.scan.title'), body: t('setup.scan.body') },
-  { title: t('setup.yaml.title'), body: t('setup.yaml.body') },
-  { title: t('setup.manual.title'), body: t('setup.manual.body') },
+const features = [
+  { glyph: '▲', title: t('features.detect.title'), body: t('features.detect.body') },
+  { glyph: '❖', title: t('features.screens.title'), body: t('features.screens.body') },
+  { glyph: '◈', title: t('features.private.title'), body: t('features.private.body') },
 ];
 
 const faq = [
-  { q: t('faq.remote.q'), a: t('faq.remote.a') },
-  { q: t('faq.away.q'), a: t('faq.away.a') },
-  { q: t('faq.selfhost.q'), a: t('faq.selfhost.a') },
+  { q: t('faq.vpn.q'), a: t('faq.vpn.a') },
+  { q: t('faq.egress.q'), a: t('faq.egress.a') },
   { q: t('faq.homepage.q'), a: t('faq.homepage.a') },
-  { q: t('faq.versions.q'), a: t('faq.versions.a') },
+  { q: t('faq.generic.q'), a: t('faq.generic.a') },
+];
+
+// Les lignes du scan : protocole Bonjour, adresse, service reconnu. Les noms
+// et adresses ne se traduisent pas, seul le verdict vient des chaînes.
+const scan = [
+  ['_http._tcp', '192.168.1.24', 'OpenMediaVault'],
+  ['_http._tcp', '192.168.1.2', 'AdGuard Home'],
+  ['_https._tcp', '192.168.1.10', 'Proxmox VE'],
+  ['_http._tcp', '192.168.1.31', 'Immich'],
+  ['_smb._tcp', '192.168.1.40', 'TrueNAS'],
+];
+
+const reading = [
+  ['J', '#7b4dc9', 'rgba(146, 107, 222, 0.14)', 'Jellyfin', t('how.jellyfin.movies'), t('how.jellyfin.shows')],
+  ['A', '#3d8b3d', 'rgba(104, 190, 104, 0.14)', 'AdGuard Home', t('journey.adguard.reqs'), t('journey.adguard.blocked')],
+  ['P', '#c2691a', 'rgba(230, 138, 60, 0.14)', 'Proxmox VE', t('journey.proxmox.nodes'), t('journey.proxmox.cpu')],
 ];
 
 // Le titre se colore par morceaux : la portion accentuée est une chaîne
 // traduite, pas un découpage à l'index — chaque langue place l'accent où sa
 // grammaire le met.
-const accent = t('hero.title.accent');
-const [before, after] = t('hero.title').split(accent);
+const split = (text: string, accent: string) => {
+  const [before, after] = text.split(accent);
+  return { before, accent, after };
+};
+const hero = split(t('hero.title'), t('hero.title.accent'));
+const watch = split(t('watch.title'), t('watch.title.accent'));
+const outro = split(t('cta.title.live'), t('cta.title.accent'));
 
 // L'onglet reprend le titre affiché en haut de la page plutôt qu'une accroche
 // séparée : deux formules pour une même page divergeaient sans qu'on le voie.
@@ -49,107 +76,176 @@ const title = `Specula — ${t('hero.title')}`;
   <section class="hero-band">
     <div class="wrap hero">
       <h1>
-        {after === undefined ? t('hero.title') : (
+        {hero.after === undefined ? t('hero.title') : (
           <>
-            {before}
-            <em>{accent}</em>
-            {after}
+            {hero.before}
+            <em class="grad">{hero.accent}</em>
+            {hero.after}
           </>
         )}
       </h1>
       <p class="lede">{t('hero.lede')}</p>
-      <StoreButton {lang} />
+      <StoreButton {lang} price={false} />
     </div>
   </section>
 
   <Showcase {lang} />
 
-  <section class="wrap section" id="features">
-    <p class="eyebrow">{t('features.eyebrow')}</p>
-    <h2>{t('features.title')}</h2>
-
-    {/* Chaque bloc porte une petite démonstration, pas une icône décorative :
-        ce que l'app affiche vraiment, en HTML — donc net partout et traduit
-        avec le reste. Les valeurs sont celles du mode démo de l'app. */}
-    <div class="cards">
-      <article class="card">
-        <h3>{features[0].title}</h3>
-        <p>{features[0].body}</p>
-        <div class="demo demo-metrics">
-          <div class="svc-name"><i class="dot"></i>Immich</div>
-          <div class="svc-values">
-            {[
-              ['10 967', metricLabel('Photos', lang)],
-              ['314', metricLabel('Vidéos', lang)],
-              ['112 Go', metricLabel('Stockage', lang)],
-            ].map(([value, label]) => (
-              <div>
-                <b>{value}</b>
-                <span>{label}</span>
-              </div>
+  <section class="marquee-band" aria-label={t('nav.integrations')}>
+    <p class="marquee-label">{t('marquee.label')}</p>
+    <div class="marquee">
+      <div class="marquee-track">
+        {[0, 1].map((copy) => (
+          <>
+            {MARQUEE.map(([name, color, bg]) => (
+              <span class="chip" aria-hidden={copy === 1 ? 'true' : undefined}>
+                <span class="mono-badge" style={`color:${color};background:${bg}`}>{name.charAt(0)}</span>
+                {name}
+              </span>
             ))}
-          </div>
-        </div>
-      </article>
+            <a class="chip more" href={`/${lang}/integrations/`} aria-hidden={copy === 1 ? 'true' : undefined}>
+              {t('marquee.more').replace('{count}', String(MORE))}
+            </a>
+          </>
+        ))}
+      </div>
+    </div>
+    <p class="marquee-cta">
+      <a href={`/${lang}/integrations/`}>{t('marquee.browse').replace('{count}', String(TOTAL))} →</a>
+    </p>
+  </section>
 
-      <article class="card">
-        <h3>{features[1].title}</h3>
-        <p>{features[1].body}</p>
-        <div class="demo">
-          <div class="bars">
-            {Array.from({ length: 30 }, (_, i) => <i class={i === 21 ? 'down' : ''} />)}
-          </div>
-          <p class="demo-caption">{t('feature.uptime')}</p>
+  <section class="wrap section watch-grid">
+    <div class="watch-copy">
+      <p class="eyebrow">{t('watch.eyebrow')}</p>
+      <h2>
+        {watch.after === undefined ? t('watch.title') : (
+          <>
+            {watch.before}
+            <span class="grad">{watch.accent}</span>
+            {watch.after}
+          </>
+        )}
+      </h2>
+      <p>{t('watch.p1')}</p>
+      <p>{t('watch.p2')}</p>
+    </div>
+    <div class="stats">
+      {stats.map((s) => (
+        <div class:list={['stat', { hot: s.hot }]}>
+          <b>{s.b}</b>
+          <span>{s.text}</span>
         </div>
-      </article>
-
-      <article class="card">
-        <h3>{features[2].title}</h3>
-        <p>{features[2].body}</p>
-        <div class="demo chips">
-          <span>{t('surface.home')}</span>
-          <span>{t('surface.lock')}</span>
-          <span>{t('surface.menubar')}</span>
-          <span>Live Activity</span>
-        </div>
-      </article>
-
-      <article class="card">
-        <h3>{features[3].title}</h3>
-        <p>{features[3].body}</p>
-        <div class="demo">
-          <span class="pill">{t('feature.demo.chip')}</span>
-        </div>
-      </article>
+      ))}
     </div>
   </section>
 
-  <section class="wrap section" id="setup">
-    <p class="eyebrow">{t('setup.eyebrow')}</p>
-    <h2>{t('setup.title')}</h2>
-    <ol class="steps">
-      {
-        setup.map((s, i) => (
-          <li>
-            <span class="step-n">{i + 1}</span>
-            <h3>{s.title}</h3>
-            <p>{s.body}</p>
-          </li>
-        ))
-      }
-    </ol>
+  <section class="wrap section rule-top" id="features">
+    <p class="eyebrow">{t('features.eyebrow')}</p>
+    <h2>{t('features.title')}</h2>
+    <p class="section-sub">{t('features.sub')}</p>
+    <div class="feat-grid">
+      {features.map((f) => (
+        <article class="feat">
+          <span class="glyph" aria-hidden="true">{f.glyph}</span>
+          <h3>{f.title}</h3>
+          <p>{f.body}</p>
+        </article>
+      ))}
+    </div>
   </section>
 
-  <section class="wrap section" id="faq">
+  <section class="wrap section rule-top" id="fonctionnement">
+    <p class="eyebrow">{t('how.eyebrow')}</p>
+    <h2>{t('how.title')}</h2>
+
+    <div class="step">
+      <div class="step-copy">
+        <p class="step-num">{t('how.step')} 01</p>
+        <h3>{t('how.scan.title')}</h3>
+        <ul>
+          <li>{t('how.scan.b1')}</li>
+          <li>{t('how.scan.b2')}</li>
+          <li>{t('how.scan.b3')}</li>
+        </ul>
+      </div>
+      <div class="demo-card">
+        <p class="demo-title">{t('how.scan.demo')}</p>
+        <div class="scanlog" dir="ltr">
+          {scan.map(([proto, ip, name]) => (
+            <>
+              <span class="dim">{proto}</span>{' '}{ip} → <b>{name}</b>{' '}
+              <span class="ok">✓ {t('how.recognized')}</span>
+              <br />
+            </>
+          ))}
+          <span class="dim">{t('how.scan.found')}</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-copy">
+        <p class="step-num">{t('how.step')} 02</p>
+        <h3>{t('how.read.title')}</h3>
+        <ul>
+          <li>{t('how.read.b1')}</li>
+          <li>{t('how.read.b2')}</li>
+          <li>{t('how.read.b3')}</li>
+        </ul>
+      </div>
+      <div class="demo-card">
+        <p class="demo-title">{t('how.read.demo')}</p>
+        <div class="metrics">
+          {reading.map(([letter, color, bg, name, m1, m2]) => (
+            <div class="svc">
+              <span class="mono-badge" style={`color:${color};background:${bg}`}>{letter}</span>
+              <span class="svc-name">{name}</span>
+              <span class="svc-metrics"><span class="metric">{m1}</span><span class="metric">{m2}</span></span>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-copy">
+        <p class="step-num">{t('how.step')} 03</p>
+        <h3>{t('how.alert.title')}</h3>
+        <ul>
+          <li>{t('how.alert.b1')}</li>
+          <li>{t('how.alert.b2')}</li>
+          <li>{t('how.alert.b3')}</li>
+        </ul>
+      </div>
+      <div class="demo-card">
+        <p class="demo-title">{t('how.alert.demo')}</p>
+        <div class="notif">
+          <img src="/icon-180.png" alt="" width="34" height="34" />
+          <div class="notif-body">
+            <div class="notif-head"><b>Specula</b><time>{t('journey.down.time')}</time></div>
+            <p class="notif-text"><span class="ko">{t('how.alert.notif')}</span> — {t('how.alert.notifBody')}</p>
+          </div>
+        </div>
+        <div class="timeline">
+          <span class="state ko">{t('how.tl.down')}</span>
+          <span aria-hidden="true">→</span>
+          <span class="state ok">{t('how.tl.up')}</span>
+          <span>{t('how.tl.note')}</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="wrap section rule-top" id="faq">
     <p class="eyebrow">{t('faq.eyebrow')}</p>
     <h2>{t('faq.title')}</h2>
-    {/* `details`/`summary` : un accordéon natif, sans une ligne de JavaScript —
-        la CSP du site interdit les scripts, et le contenu replié reste dans le
-        HTML, donc indexé. La première question s'ouvre pour montrer le geste. */}
+    {/* `details`/`summary` : un accordéon natif, sans JavaScript — le contenu
+        replié reste dans le HTML, donc indexé. */}
     <div class="faq">
       {
-        faq.map((f, i) => (
-          <details class="faq-item" open={i === 0}>
+        faq.map((f) => (
+          <details class="faq-item">
             <summary>
               <h3>{f.q}</h3>
             </summary>
@@ -158,134 +254,393 @@ const title = `Specula — ${t('hero.title')}`;
         ))
       }
     </div>
+    <p class="faq-more">
+      {t('faq.more')} <a href={`/${lang}/support/`}>{t('faq.more.link')} →</a>
+    </p>
   </section>
 
-  <section class="wrap section close">
-    <hr class="rule" />
-    <h2>{IS_LIVE ? t('cta.title.live') : t('cta.title')}</h2>
-    <p class="lede">{IS_LIVE ? t('cta.body.live') : t('cta.body')}</p>
-    <StoreButton {lang} />
+  <section class="outro">
+    <div class="wrap section">
+      <p class="eyebrow">{t('cta.eyebrow')}</p>
+      <h2>
+        {outro.after === undefined ? t('cta.title.live') : (
+          <>
+            {outro.before}
+            <span class="grad">{outro.accent}</span>
+            {outro.after}
+          </>
+        )}
+      </h2>
+      <p class="lede">{t('cta.body.live')}</p>
+      <StoreButton {lang} price={false} />
+    </div>
   </section>
 </Page>
 
 <style>
-  /* — hero centré : le discours seul, la vitrine défilante prend la suite — */
+  /* — héro centré : le discours seul, la vitrine défilante prend la suite.
+       La barre de navigation se pose dessus, d'où le grand dégagement haut. — */
   .hero-band { background: var(--hero-wash); overflow-x: clip; }
   .hero {
     display: flex;
     flex-direction: column;
     align-items: center;
     text-align: center;
-    padding-block: clamp(56px, 8vw, 96px) clamp(16px, 2.4vw, 32px);
+    padding-block: clamp(120px, 15vh, 170px) clamp(20px, 3vh, 36px);
   }
-  .hero h1 { max-width: 15ch; }
-  .hero h1 em { font-style: normal; color: var(--accent); }
-  .hero .lede { margin-block-start: 20px; margin-inline: auto; }
-  .hero .lede + :global(*) { margin-block-start: 28px; }
+  .hero h1 {
+    max-width: 15ch;
+    font-size: clamp(46px, 8.6vw, 96px);
+    font-weight: 850;
+    line-height: 0.99;
+    letter-spacing: -0.035em;
+  }
+  .hero h1 em { font-style: normal; }
+  .hero .lede { margin-block-start: 26px; margin-inline: auto; }
+  .hero :global(.store) { margin-block-start: 36px; }
 
-  /* — blocs de fonctionnalités : des cartes qui respirent, chacune finissant
-       sur une petite démonstration plutôt que sur du vide — */
-  .cards {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 14px;
-    margin-block-start: 34px;
+  .rule-top { border-block-start: 1px solid var(--rule); }
+
+  /* — marquee d'intégrations : un bandeau qui défile, masqué aux bords — */
+  .marquee-band { padding-block: clamp(32px, 4.5vh, 56px) 0; }
+  .marquee-label {
+    text-align: center;
+    font-family: var(--mono);
+    font-size: 12.5px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--faint);
+    margin: 0;
+    padding-inline: var(--edge);
+    max-width: none; /* le 62ch global des <p> le collait à gauche */
   }
-  .card {
-    background: var(--card);
-    border: 1px solid var(--shot-border);
-    border-radius: 16px;
-    padding: 26px 26px 22px;
+  .marquee {
+    margin-block-start: 30px;
+    overflow: hidden;
+    -webkit-mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent);
+    mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent);
+  }
+  .marquee-track {
     display: flex;
-    flex-direction: column;
+    gap: 14px;
+    width: max-content;
+    animation: slide 46s linear infinite;
+    padding-block: 4px;
   }
-  .card h3 { margin-block-end: 10px; }
-  .card p { margin-block-end: 20px; }
-  .card .demo { margin-block-start: auto; }
-
-  /* la carte de service, telle que l'app la dessine */
-  .demo-metrics {
-    background: var(--bg);
-    border: 1px solid var(--shot-border);
-    border-radius: 12px;
-    padding: 14px 16px;
+  .marquee:hover .marquee-track { animation-play-state: paused; }
+  @keyframes slide { to { transform: translateX(-50%); } }
+  @media (prefers-reduced-motion: reduce) {
+    .marquee-track { animation: none; flex-wrap: wrap; width: auto; justify-content: center; }
+    .marquee { mask-image: none; -webkit-mask-image: none; }
   }
-  .svc-name { display: flex; align-items: center; gap: 8px; font-weight: 700; font-size: 15px; }
-  .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--ok); flex: none; }
-  .svc-values { display: flex; gap: 22px; margin-block-start: 10px; flex-wrap: wrap; }
-  .svc-values b { display: block; font-size: 19px; letter-spacing: -0.02em; }
-  .svc-values span { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.06em; }
-
-  /* le mur de statut : trente barres, une panne */
-  .bars { display: flex; gap: 3px; }
-  .bars i { flex: 1; height: 30px; border-radius: 2px; background: color-mix(in srgb, var(--ok) 34%, var(--bg)); }
-  .bars i.down { background: var(--accent); }
-  .demo-caption { color: var(--muted); font-size: 13px; margin: 10px 0 0; }
-
-  .chips { display: flex; flex-wrap: wrap; gap: 8px; }
-  .chips span, .pill {
-    border: 1px solid var(--shot-border);
+  .chip {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 9px 18px 9px 10px;
+    border: 1px solid var(--rule);
     border-radius: 999px;
-    padding: 7px 14px;
-    font-size: 13px;
-    font-weight: 600;
-    background: var(--bg);
+    background: var(--bg-raised);
+    font-size: 14.5px;
+    font-weight: 560;
+    white-space: nowrap;
+    color: var(--text);
+    text-decoration: none;
   }
-  .pill { color: var(--accent); border-color: currentColor; }
+  .chip .mono-badge {
+    width: 26px;
+    height: 26px;
+    border-radius: 7px;
+    display: grid;
+    place-items: center;
+    font-family: var(--mono);
+    font-size: 12.5px;
+    font-weight: 700;
+  }
+  .chip.more { color: var(--muted); padding-inline-start: 18px; border-style: dashed; }
+  .marquee-cta { margin: 26px 0 0; text-align: center; font-size: 14.5px; max-width: none; }
+  .marquee-cta a {
+    color: var(--muted);
+    text-decoration: none;
+    border-block-end: 1px solid var(--rule-strong);
+    padding-block-end: 2px;
+    transition: color 0.15s ease, border-color 0.15s ease;
+  }
+  .marquee-cta a:hover { color: var(--accent); border-color: var(--accent); }
 
-  /* — prise en main : trois étapes numérotées, sans grille encadrée — */
-  .steps {
-    list-style: none;
-    padding: 0;
-    margin: 34px 0 0;
+  /* — le constat : le discours à gauche, trois chiffres à droite — */
+  .watch-grid {
+    display: grid;
+    grid-template-columns: 1.25fr 1fr;
+    gap: clamp(32px, 5vw, 72px);
+    align-items: center;
+  }
+  @media (max-width: 860px) { .watch-grid { grid-template-columns: 1fr; } }
+  .watch-copy h2 { margin-block-end: 0; }
+  .watch-copy p:not(.eyebrow) { margin: 18px 0 0; color: var(--muted); max-width: 58ch; }
+
+  .stats { display: grid; gap: 0; border-block: 2px solid var(--rule); }
+  .stat {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    align-items: baseline;
+    gap: 18px;
+    padding-block: 20px;
+  }
+  .stat + .stat { border-block-start: 1px solid var(--rule); }
+  .stat b {
+    font-size: clamp(34px, 4vw, 46px);
+    font-weight: 830;
+    letter-spacing: -0.03em;
+    font-variant-numeric: tabular-nums;
+    min-width: 2.6ch;
+  }
+  .stat.hot b { color: var(--accent); }
+  .stat span { color: var(--muted); font-size: 15.5px; }
+
+  /* — fonctionnalités : trois cartes à glyphe — */
+  .section-sub {
+    margin: 16px 0 0;
+    max-width: 56ch;
+    color: var(--muted);
+    font-size: 18px;
+  }
+  .feat-grid {
+    margin-block-start: clamp(36px, 5vh, 56px);
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 32px;
+    gap: 16px;
   }
-  .steps li { border-block-start: 2px solid var(--rule-strong); padding-block-start: 16px; }
-  .step-n {
-    display: block;
-    font-size: 34px;
-    font-weight: 800;
-    letter-spacing: -0.04em;
-    line-height: 1;
+  @media (max-width: 860px) { .feat-grid { grid-template-columns: 1fr; } }
+  .feat {
+    background: var(--card);
+    border: 2px solid var(--rule);
+    border-radius: var(--radius);
+    padding: 26px 24px;
+    transition: border-color 0.2s ease, transform 0.2s ease;
+  }
+  .feat:hover { border-color: var(--rule-strong); transform: translateY(-3px); }
+  .glyph {
+    width: 40px;
+    height: 40px;
+    border-radius: 11px;
+    display: grid;
+    place-items: center;
+    background: var(--accent-soft);
     color: var(--accent);
-    margin-block-end: 10px;
+    font-size: 19px;
+    font-weight: 700;
   }
-  .steps h3 { margin-block-end: 6px; }
-  .steps p { margin-block-end: 0; }
+  .feat h3 { margin-block-start: 16px; }
+  .feat p { margin: 9px 0 0; font-size: 15px; color: var(--muted); }
 
+  /* — comment ça marche : copie et carte démo en vis-à-vis, alternées — */
+  .step {
+    display: grid;
+    grid-template-columns: 1fr 1.1fr;
+    gap: clamp(28px, 5vw, 64px);
+    align-items: center;
+    padding-block: clamp(36px, 6vh, 60px);
+  }
+  .step + .step { border-block-start: 1px solid var(--rule); }
+  .step:nth-of-type(even) .step-copy { order: 2; }
   @media (max-width: 860px) {
-    .cards, .steps { grid-template-columns: 1fr; }
+    .step { grid-template-columns: 1fr; }
+    .step:nth-of-type(even) .step-copy { order: 0; }
+  }
+  .step-num {
+    font-family: var(--mono);
+    font-size: 13px;
+    color: var(--accent);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin: 0;
+  }
+  .step h3 {
+    margin-block-start: 10px;
+    font-size: clamp(24px, 3vw, 32px);
+    font-weight: 780;
+    letter-spacing: -0.02em;
+  }
+  .step ul { margin: 16px 0 0; padding: 0; list-style: none; display: grid; gap: 10px; }
+  .step li {
+    position: relative;
+    padding-inline-start: 24px;
+    color: var(--muted);
+    font-size: 15.5px;
+  }
+  .step li::before {
+    content: '';
+    position: absolute;
+    inset-inline-start: 0;
+    top: 0.52em;
+    width: 12px;
+    height: 2px;
+    background: var(--accent);
   }
 
-  .faq-item { border-block-start: 1px solid var(--rule); }
-  .faq-item:last-of-type { border-block-end: 1px solid var(--rule); }
+  .demo-card {
+    background: var(--card);
+    border: 2px solid var(--rule);
+    border-radius: var(--radius);
+    padding: 20px;
+    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.12);
+  }
+  .demo-title {
+    font-family: var(--mono);
+    font-size: 11.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.09em;
+    color: var(--faint);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 0;
+  }
+  .demo-title::before {
+    content: '';
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--accent);
+  }
 
+  .scanlog {
+    margin-block-start: 14px;
+    font-family: var(--mono);
+    font-size: 13px;
+    line-height: 2.05;
+    color: var(--muted);
+    overflow-x: auto;
+    text-align: start;
+  }
+  .scanlog b { color: var(--text); font-weight: 600; }
+  .scanlog .ok { color: var(--ok); }
+  .scanlog .dim { color: var(--faint); }
+
+  .metrics { margin-block-start: 14px; display: grid; gap: 10px; }
+  .svc {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 14px;
+    background: var(--bg-raised);
+    border: 1px solid var(--rule);
+    border-radius: 12px;
+    flex-wrap: wrap;
+  }
+  .mono-badge {
+    width: 30px;
+    height: 30px;
+    border-radius: 8px;
+    display: grid;
+    place-items: center;
+    font-family: var(--mono);
+    font-size: 13.5px;
+    font-weight: 700;
+    flex: none;
+  }
+  .svc-name { font-weight: 640; font-size: 15px; margin-inline-end: auto; }
+  .svc-metrics { display: flex; gap: 7px; flex-wrap: wrap; }
+  .metric {
+    font-family: var(--mono);
+    font-size: 12px;
+    padding: 4px 10px;
+    border-radius: 999px;
+    background: var(--ok-soft);
+    color: var(--ok);
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+  }
+
+  .notif {
+    margin-block-start: 14px;
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+    background: var(--bg-raised);
+    border: 1px solid var(--rule);
+    border-radius: 14px;
+    padding: 14px 16px;
+  }
+  .notif img { width: 34px; height: 34px; border-radius: 8px; flex: none; }
+  .notif-body { flex: 1; min-width: 0; }
+  .notif-head { display: flex; justify-content: space-between; gap: 10px; font-size: 13px; }
+  .notif-head b { font-weight: 700; }
+  .notif-head time { color: var(--faint); font-variant-numeric: tabular-nums; }
+  .notif-text { margin: 3px 0 0; font-size: 14px; color: var(--muted); }
+  .notif-text .ko { color: var(--accent); font-weight: 640; }
+  .timeline {
+    margin-block-start: 12px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-family: var(--mono);
+    font-size: 12.5px;
+    color: var(--faint);
+    flex-wrap: wrap;
+  }
+  .state { padding: 4px 12px; border-radius: 999px; font-weight: 600; }
+  .state.ko { background: var(--accent-soft); color: var(--accent); }
+  .state.ok { background: var(--ok-soft); color: var(--ok); }
+
+  /* — FAQ — */
+  .faq { margin-block-start: clamp(28px, 4vh, 44px); max-width: 760px; }
+  .faq-item { border-block-start: 1px solid var(--rule); padding-block: 6px; }
+  .faq-item:last-of-type { border-block-end: 1px solid var(--rule); }
   .faq-item summary {
     display: flex;
-    align-items: baseline;
-    gap: 16px;
-    padding-block: 18px;
+    justify-content: space-between;
+    align-items: center;
+    gap: 18px;
+    padding-block: 16px;
     cursor: pointer;
     list-style: none; /* Firefox */
   }
   .faq-item summary::-webkit-details-marker { display: none; } /* Safari */
-  .faq-item summary h3 { flex: 1; }
-
-  /* Le marqueur : un + qui devient − une fois ouvert. `content` porte le
-     signe, pas une image — il suit donc la taille du texte. */
+  .faq-item summary h3 { flex: 1; font-size: 17.5px; font-weight: 650; letter-spacing: -0.01em; }
   .faq-item summary::after {
     content: '+';
-    font-size: 22px;
-    font-weight: 700;
+    font-size: 24px;
+    font-weight: 300;
     line-height: 1;
     color: var(--accent);
+    transition: transform 0.2s ease;
+    flex-shrink: 0;
   }
-  .faq-item[open] summary::after { content: '−'; }
-  .faq-item[open] summary h3 { color: var(--accent); }
+  .faq-item[open] summary::after { transform: rotate(45deg); }
+  .faq-item p { padding-block: 0 20px; margin: 0; color: var(--muted); max-width: 62ch; }
+  @media (prefers-reduced-motion: reduce) {
+    .faq-item summary::after { transition: none; }
+  }
+  .faq-more { margin-block-start: 28px; font-size: 15px; color: var(--muted); }
+  .faq-more a {
+    color: var(--text);
+    font-weight: 600;
+    text-decoration: none;
+    border-block-end: 1px solid var(--rule-strong);
+    padding-block-end: 2px;
+    transition: color 0.15s ease, border-color 0.15s ease;
+  }
+  .faq-more a:hover { color: var(--accent); border-color: var(--accent); }
 
-  .faq-item p { padding-block-end: 22px; margin-block-end: 0; }
-
-  .close h2 { margin-block-start: 32px; }
+  /* — CTA final, centré sur un halo bas — */
+  .outro {
+    border-block-start: 1px solid var(--rule);
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .outro::before {
+    content: '';
+    position: absolute;
+    inset: auto -20% -60%;
+    height: 120%;
+    background: radial-gradient(50% 50% at 50% 100%, var(--accent-soft), transparent 70%);
+    pointer-events: none;
+  }
+  .outro .wrap { position: relative; }
+  .outro h2 { margin-inline: auto; }
+  .outro .lede { margin: 16px auto 0; }
+  .outro :global(.store) { margin-block-start: 32px; }
 </style>

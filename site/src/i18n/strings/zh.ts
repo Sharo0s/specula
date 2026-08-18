@@ -6,68 +6,86 @@ export const zh = {
   // — 导航 —
   'nav.integrations': '集成',
   'nav.pricing': '价格',
+  'nav.how': '工作原理',
+  'nav.faq': '常见问题',
   'nav.privacy': '隐私',
   'nav.changelog': '更新日志',
   'theme.toggle': '切换主题',
   'nav.cta': '加入测试版',
-  'nav.cta.live': '下载',
 
   // — 首屏 —
   'hero.title': '你的服务，悄无声息地掉线。',
   'hero.title.accent': '悄无声息',
   'hero.lede':
     '现在不会了。Specula 读取 homelab 的指标，发现故障并提醒你 — 通知、实时活动、小组件。',
-  'hero.proof.privacy': '无账号、无服务器、无遥测。',
-  'hero.proof.platforms': 'iPhone、iPad 和 Mac，全部原生。',
   'hero.cta.primary': '加入 TestFlight 测试版',
-  'hero.cta.secondary': '查看集成',
 
   // — 截图 —
-  'shot.macos.alt':
-    'macOS 上的 Specula：一侧是数据源和分组，中间是带指标的服务卡片，旁边是某个服务的详情。',
   'shot.ios.alt':
     'iPhone 上的 Specula：按分组列出的服务及各自延迟，顶部为系统状态条，Komga 标记为离线。',
-  'shot.ipados.alt':
-    'iPad 上的 Specula：按分组排列的服务网格，每个都显示通过其 API 读取的指标。',
+
+  // — 集成跑马灯 —
+  'marquee.label': '自动识别 — 通过各自的 API 读取',
+  'marquee.more': '还有 {count} 个',
+  'marquee.browse': '浏览全部 {count} 个集成',
+
+  // — 问题所在 —
+  'watch.eyebrow': '问题所在',
+  'watch.title': '你的 homelab 在运转。谁在盯着它？',
+  'watch.title.accent': '谁在盯着它？',
+  'watch.p1':
+    '大多数仪表板只是一排链接。一切正常时很好看，出问题时却一声不吭——最后是某个用户来告诉你 Jellyfin 挂了。',
+  'watch.p2':
+    'Specula 通过每个服务自己的 API 读取指标。连续三次读取失败，服务即被判定离线：通知、实时活动，状态墙留下记录。',
+  'stat.fail.b': '3',
+  'stat.fail.text': '次尝试失败即判定服务离线——一次也不多',
+  'stat.history.b': '30 天',
+  'stat.history.text': '的状态历史，并计算真实可用率',
+  'stat.zero.b': '0',
+  'stat.zero.text': '账号、中转服务器或遥测——应用只与你的机器通信，别无其他',
 
   // — 功能 —
-  'features.eyebrow': '它能做什么',
-  'features.title': 'Ping 只说「有响应」，Specula 告诉你响应了什么。',
+  'features.eyebrow': '功能',
+  'features.title': '站岗放哨，样样俱全。',
+  'features.sub': '不是一排链接，而是会读取、会核实、会报警的仪表板。',
+  'features.detect.title': '故障检测',
+  'features.detect.body':
+    '连续三次尝试失败即判定服务离线，随之而来的是通知和实时活动。恢复上线也会通知。',
+  'features.screens.title': '出现在你的每块屏幕上',
+  'features.screens.body':
+    '主屏幕小组件，Mac 菜单栏随时可查。真实状态，无需打开应用。',
+  'features.private.title': '数据不出家门',
+  'features.private.body':
+    '无账号、无遥测。API 密钥保存在钥匙串中——不会进入备份，也不会上传 iCloud。',
 
-  'features.metrics.title': '通过每个服务自己的 API 读取指标',
-  'features.metrics.body':
-    'Specula 用每个服务自己的语言对话：AdGuard 用 /control/stats，Proxmox 用集群 API，NAS 用它自己的统计接口。你看到的是有意义的数字，而不是一个绿点。',
-
-  'features.outage.title': '识别真正的故障，而不是为每次抖动报警',
-  'features.outage.body':
-    '连续三次请求失败才会判定服务下线——Wi-Fi 抖一下不会吵醒任何人。随后是通知、实时活动，以及保留三十天并计算真实可用率的状态墙。',
-
-  'features.surfaces.title': '出现在你的每块屏幕上',
-  'features.surfaces.body':
-    '主屏幕和锁定屏幕小组件由真实状态驱动，Mac 菜单栏随时可查，故障期间还有实时活动。这是一个原生应用，不是套壳网页。',
-
-  'features.demo.title': '不向你索取任何东西的演示模式',
-  'features.demo.body':
-    '首次启动即进入演示模式：一整套 homelab、可信的指标和一场编排好的故障。你可以先评估这个应用，再交给它任何一个地址。',
-
-  // — 上手 —
-  'surface.home': '主屏幕',
-  'surface.lock': '锁定屏幕',
-  'surface.menubar': '菜单栏',
-  'feature.uptime': '三十天可用性',
-  'feature.demo.chip': '演示模式',
-
-  'setup.eyebrow': '开始使用',
-  'setup.title': '三种上手方式',
-  'setup.scan.title': '扫描网络',
-  'setup.scan.body':
-    'Specula 监听本地网络，自动识别网络中运行的服务。',
-  'setup.yaml.title': '导入 services.yaml',
-  'setup.yaml.body':
-    '直接沿用 gethomepage.dev 的格式：分组、地址和小组件原样导入。导出同样支持，双向可用。',
-  'setup.manual.title': '手动输入地址',
-  'setup.manual.body':
-    '一个 URL，必要时加一个 API 密钥。让 homelab 能从外网访问的方式——VPN、反向代理、隧道——属于应用之下的一层，而不是应用内部。',
+  // — 工作原理 —
+  'how.eyebrow': '工作原理',
+  'how.title': '三步之内，从零到全面监控。',
+  'how.step': '步骤',
+  'how.scan.title': '扫描你的网络',
+  'how.scan.b1': 'Specula 监听本地网络，自动识别网络中运行的服务',
+  'how.scan.b2': 'gethomepage.dev 格式的 services.yaml 可以原样导入',
+  'how.scan.b3': '地址也永远可以手动输入',
+  'how.scan.demo': '扫描进行中',
+  'how.recognized': '已识别',
+  'how.scan.found': '找到 12 个服务',
+  'how.read.title': '读取真实指标',
+  'how.read.b1': '每个集成都使用服务的原生 API',
+  'how.read.b2': 'API 密钥进入钥匙串，而不是某个文件',
+  'how.read.b3': '小组件显示的正是这些数字，不是缓存',
+  'how.read.demo': '实时读取',
+  'how.jellyfin.movies': '412 部电影',
+  'how.jellyfin.shows': '87 部剧集',
+  'how.alert.title': '不放过任何故障',
+  'how.alert.b1': '三次失败，服务即离线——立刻通知',
+  'how.alert.b2': '实时活动全程跟进，直到恢复',
+  'how.alert.b3': '状态墙保留三十天并计算真实可用率',
+  'how.alert.demo': '检测到故障',
+  'how.alert.notif': 'Home Assistant 已离线',
+  'how.alert.notifBody': '192.168.1.56 上三次尝试失败。',
+  'how.tl.down': '离线 · 03:12',
+  'how.tl.up': '在线 · 03:34',
+  'how.tl.note': '22 分钟的中断，已记入历史',
 
   // — 隐私 —
   'privacy.body':
@@ -99,6 +117,7 @@ export const zh = {
   'integrations.metrics.title': 'Specula 读取的内容',
   'integrations.metrics.none': '没有指标：Specula 只跟踪它的可用性和延迟。',
   'integrations.endpoints.title': '调用的 API 端点',
+  'integrations.key.chip': 'API 密钥',
   'integrations.key.title': '需要的凭据',
   'integrations.key.none': '不需要——一个地址就够了。',
   'integrations.key.userPassword': '用户名和密码',
@@ -115,9 +134,9 @@ export const zh = {
     '本页仅提供英文和法文版本。未经校对的法律译文，价值低于一份你能亲自核对的原文。',
 
   // — 更新日志 —
-  'changelog.title': '逐个版本的发布记录',
+  'changelog.title': '有什么变化',
   'changelog.description':
-    'Specula 的全部版本，直接来自代码仓库。版本号和说明均由提交记录生成。',
+    '日志由提交记录生成——每个版本都如实讲述它带来了什么。',
   'changelog.language':
     '说明为法文：它们来自提交信息，翻译副本会在下一个版本就与原文脱节。',
 
@@ -161,32 +180,32 @@ export const zh = {
   'integration.cta': '用 {service} 试试',
 
   // — 常见问题 —
-  'faq.eyebrow': '问题',
-  'faq.title': '大家问得最多的',
-  'faq.remote.q': '如果我的 homelab 没有暴露在公网上呢？',
-  'faq.remote.a':
-    'Specula 每个服务只要一个地址，也从不尝试穿透你的网络。让 homelab 能从外部访问的方式——VPN、反向代理、隧道——属于应用之下的一层。在自己的网络里，什么都不用做。',
-  'faq.away.q': '不在家时怎么查看？',
-  'faq.away.a':
-    '每个服务只填一个地址：在家和在外都能用的那个。若使用 Tailscale 这类网状网络，填 MagicDNS 名称（jellyfin.你的-tailnet.ts.net）：在家在外都能解析，而当你在同一局域网时流量仍走直连。反向代理或隧道同样可行。Specula 不会自行构建线路，它只沿用你已经搭好的那条，并且在 tailnet 地址段内依然接受服务的自签名证书。',
-  'faq.selfhost.q': '需要额外部署什么吗？',
-  'faq.selfhost.a':
-    '不需要。没有代理程序要装，没有容器要跑，也没有账号要注册。应用直接调用你的服务已经暴露的 API。',
-  'faq.versions.q': '为什么只支持 iOS 26 和 macOS 26？',
-  'faq.versions.a': '应用是针对该代系统的 API 编写的，不支持更早的版本。',
-  'faq.homepage.q': '我已经在用 gethomepage，需要全部重新录入吗？',
+  'faq.eyebrow': '常见问题',
+  'faq.title': '常见问题',
+  'faq.vpn.q': '我的 homelab 只能通过 VPN 访问，能用吗？',
+  'faq.vpn.a':
+    '能。每个服务只填一个地址：让 homelab 能从外部访问的方式——VPN、反向代理、隧道——属于应用之下的一层，而不是应用内部。只要你的设备能连上服务，Specula 就能。',
+  'faq.egress.q': '到底有什么会离开我的网络？',
+  'faq.egress.a':
+    '几乎没有，而且每一项都有名有姓。已购服务位的数量写入你的 iCloud 键值存储——只是一个整数，不含你的服务、地址或密钥。图标来自公共 CDN dashboard-icons；一个开关即可关闭，应用会退回到字母图标。',
+  'faq.homepage.q': '我已经在用 Homepage，要从头再来吗？',
   'faq.homepage.a':
-    '不需要。Specula 会原样导入你的 services.yaml——分组、地址和小组件——也可以再导出。',
+    '不用：按 gethomepage.dev 格式导入你的 services.yaml——分组、地址和小组件原样保留。只有存放在 {{HOMEPAGE_VAR_…}} 变量里的密钥需要输入一次：它们在 Homepage 的 .env 里，Specula 无法访问。',
+  'faq.generic.q': '我的服务不在这 65 个集成里？',
+  'faq.generic.a':
+    '任何能响应的地址都会作为通用服务被跟踪——可用性、延迟和三十天历史。集成也在持续增加：到 GitHub 提出需求，只需服务名称和它的 API 文档链接。',
+  'faq.more': '还有其他问题？',
+  'faq.more.link': '支持页面有答案',
 
   // — 结尾 —
-    'cta.store': '在 App Store 下载',
-  'cta.title.live': 'Specula 已上架 App Store',
-  'cta.body.live': '一个应用覆盖 iPhone、iPad 和 Mac。演示模式无需任何配置即可运行。',
+  'cta.store': '在 App Store 下载',
+  'cta.eyebrow': 'Specula，拉丁语「瞭望塔」',
+  'cta.title.live': '准备好站岗了吗？',
+  'cta.title.accent': '站岗',
+  'cta.body.live': '免费、无需账号，含四个服务。同一个应用覆盖 iPhone、iPad 和 Mac。',
   'cta.price': '四个服务以内免费，之后每个服务位 {price}',
-'cta.title': '测试版已开放',
+  'cta.title': '测试版已开放',
   'cta.body': '一个 TestFlight 链接，覆盖 iPhone、iPad 和 Mac。演示模式无需任何配置即可运行。',
-
-  // — 页脚 —
 
   // — vitrine défilante de l'accueil —
   'journey.read': '读取',
@@ -198,24 +217,31 @@ export const zh = {
   'journey.proxmox.nodes': '3 个节点',
   'journey.proxmox.cpu': 'CPU 12%',
   'journey.down.title': 'Komga 没有响应',
-  'journey.down.body': '三次尝试失败',
+  'journey.down.body': '三次尝试失败。',
+  'journey.down.time': '03:12',
   'journey.up.title': 'Komga 已恢复',
-  'journey.up.body': '中断 22 分钟',
+  'journey.up.body': '中断 22 分钟。',
+  'journey.up.time': '03:34',
   'journey.incident.title': '故障 — Komga',
-  'journey.incident.body': '22 分钟，已于 03:12 通知',
+  'journey.incident.date': '8 月 12 日 · 22 分钟',
+  'journey.incident.body': '连接被拒绝，已于 03:12 通知。',
   'journey.uptime.title': '平均可用性',
   'journey.uptime.value': '99.9%',
+  'journey.uptime.body': '三十天的历史，按每个服务三次读取计算。',
   'journey.pinned.title': '置顶',
-  'journey.pinned.body': '四个服务显示在小组件和菜单栏中。',
+  'journey.pinned.body': '四个服务显示在小组件和 Mac 菜单栏中。',
   'journey.theme.title': '主题与语言',
-  'journey.theme.body': '跟随系统、浅色或深色 — 还有五种语言。',
+  'journey.theme.body': '跟随系统、浅色或深色 — 还有五种语言，包括阿拉伯语和中文。',
   'journey.alert.alt': '故障详情：Komga 离线，延迟曲线归零，容器日志。',
   'journey.status.alt': '可用性墙：每个服务一行三十天，故障标红。',
   'journey.settings.alt': '设置：图标、分组与置顶服务。',
 
+  // — 页脚 —
+  'support.title': '有问必答。',
+  'support.lede': '一个邮箱、一个公开仓库，以及常见问题的答案。',
   'footer.support': '支持',
   'footer.privacy': '隐私',
   'footer.changelog': '更新日志',
-  'footer.license': 'GPL-3.0 © nysia。Archivo 字体采用 SIL Open Font License 1.1。',
+  'footer.license': 'Archivo 字体采用 SIL Open Font License 1.1。',
   'footer.language': '语言',
 } as const;

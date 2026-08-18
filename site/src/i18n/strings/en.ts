@@ -6,68 +6,86 @@ export const en = {
   // — navigation —
   'nav.integrations': 'Integrations',
   'nav.pricing': 'Pricing',
+  'nav.how': 'How it works',
+  'nav.faq': 'FAQ',
   'nav.privacy': 'Privacy',
   'nav.changelog': 'Changelog',
   'theme.toggle': 'Switch theme',
   'nav.cta': 'Join the beta',
-  'nav.cta.live': 'Download',
 
   // — hero —
   'hero.title': 'Your services go down in silence.',
   'hero.title.accent': 'in silence.',
   'hero.lede':
     'Not anymore. Specula reads your homelab’s metrics, spots outages and tells you — notification, Live Activity, widget.',
-  'hero.proof.privacy': 'No account, no server, no telemetry.',
-  'hero.proof.platforms': 'iPhone, iPad and Mac — natively.',
   'hero.cta.primary': 'Join the TestFlight beta',
-  'hero.cta.secondary': 'Browse the integrations',
 
   // — captures d'écran —
-  'shot.macos.alt':
-    'Specula on macOS: sources and groups down one side, service cards with their metrics in the middle, and one service’s detail alongside.',
   'shot.ios.alt':
     'Specula on iPhone: services listed by group with each one’s latency, the system band on top, Komga marked offline.',
-  'shot.ipados.alt':
-    'Specula on iPad: the services, group by group, in a grid, each with the metrics read from its own API.',
+
+  // — integrations marquee —
+  'marquee.label': 'Recognized automatically — read through their own API',
+  'marquee.more': '+ {count} more',
+  'marquee.browse': 'Browse all {count} integrations',
+
+  // — the observation —
+  'watch.eyebrow': 'The problem',
+  'watch.title': 'Your homelab runs. Who’s watching it?',
+  'watch.title.accent': 'Who’s watching it?',
+  'watch.p1':
+    'Most dashboards show links. Pretty when everything works, silent when something breaks — and it’s a user who ends up telling you Jellyfin went down.',
+  'watch.p2':
+    'Specula reads each service’s metrics through its own API. Three failed reads, and the service goes offline: a notification, a Live Activity, and the status wall keeps the record.',
+  'stat.fail.b': '3',
+  'stat.fail.text': 'failed attempts before a service is declared down — not one more',
+  'stat.history.b': '30 d',
+  'stat.history.text': 'of status history, with real uptime computed',
+  'stat.zero.b': '0',
+  'stat.zero.text': 'accounts, middleman servers or telemetry — the app talks to your machines, nothing else',
 
   // — features —
-  'features.eyebrow': 'What it does',
-  'features.title': 'A ping says “it answers”. Specula says what.',
+  'features.eyebrow': 'Features',
+  'features.title': 'Everything to stand guard.',
+  'features.sub': 'Not a wall of links: a dashboard that reads, checks and alerts.',
+  'features.detect.title': 'Outage detection',
+  'features.detect.body':
+    'Three failed attempts mark a service offline, with a notification and a Live Activity. Recovery is notified too.',
+  'features.screens.title': 'On every screen you own',
+  'features.screens.body':
+    'Widgets on the Home Screen, quick access from the Mac menu bar. Live state, without opening the app.',
+  'features.private.title': 'Nothing leaves your home',
+  'features.private.body':
+    'No account, no telemetry. API keys live in the keychain — never in a backup, never on iCloud.',
 
-  'features.metrics.title': 'The metrics, through each service’s own API',
-  'features.metrics.body':
-    'Specula speaks each service’s own language: /control/stats for AdGuard, the Proxmox cluster API, the NAS’s own statistics. You get numbers that mean something, not a green dot.',
-
-  'features.outage.title': 'Outage detection, not alerts on every hiccup',
-  'features.outage.body':
-    'It takes three failed attempts before a service is marked down — flaky Wi-Fi doesn’t wake anyone up. Then: a notification, a Live Activity, and a status wall that keeps thirty days and computes real uptime.',
-
-  'features.surfaces.title': 'On every screen you own',
-  'features.surfaces.body':
-    'Home Screen and Lock Screen widgets driven by live state, a menu bar item on the Mac, a Live Activity while a service is down. A native app, not a web page in a shell.',
-
-  'features.demo.title': 'A demo mode that asks nothing of you',
-  'features.demo.body':
-    'The app opens in demo mode on first launch: a full homelab, believable metrics and a scripted outage. You judge the app before handing it a single address.',
-
-  // — setup —
-  'surface.home': 'Home Screen',
-  'surface.lock': 'Lock Screen',
-  'surface.menubar': 'Menu bar',
-  'feature.uptime': 'Thirty days of uptime',
-  'feature.demo.chip': 'Demo mode',
-
-  'setup.eyebrow': 'Getting started',
-  'setup.title': 'Three ways to start',
-  'setup.scan.title': 'Scan the network',
-  'setup.scan.body':
-    'Specula listens to your local network and recognizes what runs on it, on its own.',
-  'setup.yaml.title': 'Import a services.yaml',
-  'setup.yaml.body':
-    'The gethomepage.dev format, taken as-is: groups, URLs and widgets. Export works too, both directions.',
-  'setup.manual.title': 'Type an address',
-  'setup.manual.body':
-    'One URL, an API key if the service needs one. Whatever makes your homelab reachable from outside — VPN, reverse proxy, tunnel — belongs under the app, not inside it.',
+  // — how it works —
+  'how.eyebrow': 'How it works',
+  'how.title': 'From zero to monitored in three moves.',
+  'how.step': 'Step',
+  'how.scan.title': 'Scan your network',
+  'how.scan.b1': 'Specula listens to your local network and recognizes what runs on it, on its own',
+  'how.scan.b2': 'A services.yaml in the gethomepage.dev format imports as-is',
+  'how.scan.b3': 'And an address can always be typed by hand',
+  'how.scan.demo': 'Scan in progress',
+  'how.recognized': 'recognized',
+  'how.scan.found': '12 services found',
+  'how.read.title': 'Reads the real metrics',
+  'how.read.b1': 'Each integration speaks the service’s native API',
+  'how.read.b2': 'API keys go into the keychain, not into a file',
+  'how.read.b3': 'The widgets show those numbers, not a cache',
+  'how.read.demo': 'Live reading',
+  'how.jellyfin.movies': '412 movies',
+  'how.jellyfin.shows': '87 shows',
+  'how.alert.title': 'Misses no outage',
+  'how.alert.b1': 'Three failures, and the service goes offline — immediate notification',
+  'how.alert.b2': 'A Live Activity follows the outage until recovery',
+  'how.alert.b3': 'The status wall keeps thirty days and computes real uptime',
+  'how.alert.demo': 'Outage detected',
+  'how.alert.notif': 'Home Assistant is offline',
+  'how.alert.notifBody': 'three failed attempts on 192.168.1.56.',
+  'how.tl.down': 'offline · 3:12 AM',
+  'how.tl.up': 'online · 3:34 AM',
+  'how.tl.note': '22 min of downtime, kept on record',
 
   // — privacy —
   'privacy.body':
@@ -100,6 +118,7 @@ export const en = {
   'integrations.metrics.none':
     'No metrics: Specula tracks its availability and latency, nothing more.',
   'integrations.endpoints.title': 'API endpoints called',
+  'integrations.key.chip': 'API key',
   'integrations.key.title': 'Credential required',
   'integrations.key.none': 'None — a URL is enough.',
   'integrations.key.userPassword': 'Username and password',
@@ -116,9 +135,9 @@ export const en = {
     'This page exists in English and French only. A legal text translated without review is worth less than the same text in a language you can check.',
 
   // — journal —
-  'changelog.title': 'What shipped, release by release',
+  'changelog.title': 'What changes',
   'changelog.description':
-    'Every Specula release, straight from the repository. Versions and notes are generated from the commits themselves.',
+    'The log is generated from the commits — each release tells exactly what it brings.',
   'changelog.language':
     'The notes are written in French: they come from the commit messages, and translating a copy would let it drift at the next release.',
 
@@ -162,34 +181,34 @@ export const en = {
   'integration.cta': 'Try it with {service}',
 
   // — FAQ —
-  'faq.eyebrow': 'Questions',
-  'faq.title': 'What people ask most',
-  'faq.remote.q': 'What if my homelab isn’t exposed to the internet?',
-  'faq.remote.a':
-    'Specula asks for one URL per service and never tries to punch through your network. Whatever makes your homelab reachable from outside — VPN, reverse proxy, tunnel — belongs under the app. On your own network, there is nothing to do.',
-  'faq.away.q': 'How do I check on it while I’m away?',
-  'faq.away.a':
-    'One address per service: the one that works from both sides. With a mesh network like Tailscale, enter the MagicDNS name — jellyfin.your-tailnet.ts.net — it resolves at home and away, and traffic still goes straight over your LAN when you are on it. A reverse proxy or a tunnel does the same job. Specula never builds a route: it follows yours, and keeps accepting your service’s self-signed certificate on the tailnet address range.',
-  'faq.selfhost.q': 'Do I have to host anything?',
-  'faq.selfhost.a':
-    'No. No agent to install, no container to run, no account to create. The app queries the APIs your services already expose.',
-  'faq.versions.q': 'Why iOS 26 and macOS 26 only?',
-  'faq.versions.a':
-    'The app is written against that generation’s APIs. No earlier version is supported.',
-  'faq.homepage.q': 'I already run gethomepage. Do I retype everything?',
+  'faq.eyebrow': 'FAQ',
+  'faq.title': 'Frequently asked questions',
+  'faq.vpn.q': 'My homelab is only reachable over VPN. Does it work?',
+  'faq.vpn.a':
+    'Yes. One URL per service: whatever makes a homelab reachable from outside — VPN, reverse proxy, tunnel — belongs under the app, not inside it. If your device can reach the service, so can Specula.',
+  'faq.egress.q': 'What leaves my network, exactly?',
+  'faq.egress.a':
+    'Almost nothing, and all of it is named. The number of purchased slots is written to your iCloud key-value store — an integer, not your services, their addresses or your keys. And logos come from the public dashboard-icons CDN; a switch turns it off, and the app falls back to monograms.',
+  'faq.homepage.q': 'I already run Homepage. Do I start over?',
   'faq.homepage.a':
-    'No. Specula imports your services.yaml as-is — groups, URLs and widgets — and can export it back.',
+    'No: import your services.yaml in the gethomepage.dev format — groups, addresses and widgets carry over as-is. Only keys stored as {{HOMEPAGE_VAR_…}} variables need typing once: they live in Homepage’s .env, which Specula has no access to.',
+  'faq.generic.q': 'My service isn’t among the 65 integrations?',
+  'faq.generic.a':
+    'Any address that answers is tracked as generic — availability, latency, thirty days of history. And integrations keep landing: ask for yours on GitHub, the service’s name and a link to its API docs are enough.',
+  'faq.more': 'Another question?',
+  'faq.more.link': 'Support has answers',
 
   // — closing —
-    'cta.store': 'Download on the App Store',
-  'cta.title.live': 'Specula is on the App Store',
-  'cta.body.live': 'One app for iPhone, iPad and Mac. Demo mode runs with nothing configured.',
+  'cta.store': 'Download on the App Store',
+  'cta.eyebrow': 'Specula, Latin for “watchtower”',
+  'cta.title.live': 'Ready to stand guard?',
+  'cta.title.accent': 'stand guard?',
+  'cta.body.live':
+    'Free, no account, four services included. The same app on iPhone, iPad and Mac.',
   'cta.price': 'Free up to four services, then {price} per slot',
-'cta.title': 'The beta is open',
+  'cta.title': 'The beta is open',
   'cta.body':
     'One TestFlight link for iPhone, iPad and Mac. Demo mode runs with nothing configured.',
-
-  // — footer —
 
   // — vitrine défilante de l'accueil —
   'journey.read': 'Read',
@@ -201,24 +220,31 @@ export const en = {
   'journey.proxmox.nodes': '3 nodes',
   'journey.proxmox.cpu': 'CPU 12%',
   'journey.down.title': 'Komga stopped responding',
-  'journey.down.body': 'three failed attempts',
+  'journey.down.body': 'three failed attempts.',
+  'journey.down.time': '3:12 AM',
   'journey.up.title': 'Komga is back',
-  'journey.up.body': '22 min of downtime',
+  'journey.up.body': '22 min of downtime.',
+  'journey.up.time': '3:34 AM',
   'journey.incident.title': 'Incident — Komga',
-  'journey.incident.body': '22 min, notified at 3:12 AM',
+  'journey.incident.date': 'Aug 12 · 22 min',
+  'journey.incident.body': 'connection refused, notified at 3:12 AM.',
   'journey.uptime.title': 'Average availability',
   'journey.uptime.value': '99.9%',
+  'journey.uptime.body': 'Thirty days of history, computed from three reads per service.',
   'journey.pinned.title': 'Pinned',
-  'journey.pinned.body': 'Four services on the widget and in the menu bar.',
+  'journey.pinned.body': 'Four services shown on the widget and in the Mac menu bar.',
   'journey.theme.title': 'Theme & languages',
-  'journey.theme.body': 'System, light or dark — and five languages.',
+  'journey.theme.body': 'System, light or dark — and five languages, Arabic and Chinese included.',
   'journey.alert.alt': 'An outage in detail: Komga offline, latency flatlined, container log.',
   'journey.status.alt': 'The availability wall: one thirty-day row per service, incidents in red.',
   'journey.settings.alt': 'Settings: icons, groups and pinned services.',
 
+  // — footer —
+  'support.title': 'We answer.',
+  'support.lede': 'One email, a public repository, and answers to the questions that keep coming back.',
   'footer.support': 'Support',
   'footer.privacy': 'Privacy',
   'footer.changelog': 'Changelog',
-  'footer.license': 'GPL-3.0 © nysia. Archivo typeface under SIL Open Font License 1.1.',
+  'footer.license': 'Archivo typeface under SIL Open Font License 1.1.',
   'footer.language': 'Language',
 } as const;

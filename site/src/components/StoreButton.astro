@@ -7,9 +7,11 @@ interface Props {
   lang: Locale;
   /** Lien secondaire discret sous la ligne de prix. */
   secondary?: { href: string; label: string };
+  /** La ligne de prix sous le badge — l'accueil s'en passe, façon mockup. */
+  price?: boolean;
 }
 
-const { lang, secondary } = Astro.props;
+const { lang, secondary, price = true } = Astro.props;
 const t = useTranslations(lang);
 
 /**
@@ -58,7 +60,7 @@ const priceLine = t('cta.price').replace('{price}', formatPrice(PRICES.slot, lan
       </a>
     )
   }
-  <p class="store-price">{priceLine}</p>
+  {price && <p class="store-price">{priceLine}</p>}
   {secondary && (
     <p class="store-secondary">
       <a href={secondary.href}>{secondary.label} →</a>

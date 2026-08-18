@@ -3,6 +3,7 @@ import Page from '../../../layouts/Page.astro';
 import { LOCALES, useTranslations, type Locale } from '../../../i18n';
 import { metricLabel } from '../../../i18n/metrics';
 import { SERVICES, FAMILY_ORDER } from '../../../data/services';
+import { badgePalette } from '../../../data/palette';
 import catalog from '../../../data/integrations.json';
 
 export function getStaticPaths() {
@@ -23,10 +24,15 @@ const groups = FAMILY_ORDER.map((family) => ({
     .map((c) => ({
       slug: c.slug,
       name: SERVICES[c.slug]!.name,
+      needsKey: c.needsKey,
       metrics: c.metrics.map((m) => metricLabel(m, lang)),
     }))
     .sort((a, b) => a.name.localeCompare(b.name)),
 }));
+
+// L'index global d'une carte décide de son monogramme : la palette du mockup
+// tourne en boucle sur tout le catalogue.
+let badgeIndex = 0;
 
 const title = `${t('integrations.title')} — Specula`;
 ---
@@ -50,22 +56,31 @@ const title = `${t('integrations.title')} — Specula`;
         <div class="family">
           <h2>{group.label}</h2>
           <ul class="list">
-            {group.rows.map((row) => (
-              <li>
-                <a href={`/${lang}/integrations/${row.slug}/`}>
-                  <span class="name">{row.name}</span>
-                  {row.metrics.length ? (
-                    <span class="metrics">
-                      {row.metrics.map((m) => (
-                        <i>{m}</i>
-                      ))}
+            {group.rows.map((row) => {
+              const [color, bg] = badgePalette(badgeIndex++);
+              return (
+                <li>
+                  <a class="cat-card" href={`/${lang}/integrations/${row.slug}/`}>
+                    <span class="cat-head">
+                      <span class="mono-badge" style={`color:${color};background:${bg}`}>
+                        {row.name.charAt(0).toUpperCase()}
+                      </span>
+                      <span class="name">{row.name}</span>
+                      {row.needsKey && <span class="cat-key">{t('integrations.key.chip')}</span>}
                     </span>
-                  ) : (
-                    <span class="metrics none">{t('integrations.metrics.none')}</span>
-                  )}
-                </a>
-              </li>
-            ))}
+                    {row.metrics.length ? (
+                      <span class="metrics">
+                        {row.metrics.map((m) => (
+                          <i>{m}</i>
+                        ))}
+                      </span>
+                    ) : (
+                      <span class="metrics none">{t('integrations.metrics.none')}</span>
+                    )}
+                  </a>
+                </li>
+              );
+            })}
           </ul>
         </div>
       ))
@@ -91,6 +106,7 @@ const title = `${t('integrations.title')} — Specula`;
      ce que la liste en deux colonnes ne montrait qu'en petit texte gris. */
   .family { margin-block-end: 40px; }
   .family h2 {
+    font-family: var(--mono);
     font-size: 13px;
     text-transform: uppercase;
     letter-spacing: 0.09em;
@@ -102,34 +118,57 @@ const title = `${t('integrations.title')} — Specula`;
     padding: 0;
     margin: 0;
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-    gap: 12px;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 14px;
   }
-  .list a {
-    display: block;
+  .cat-card {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
     height: 100%;
-    padding: 16px 18px;
+    padding: 18px;
     background: var(--card);
-    border: 1px solid var(--shot-border);
-    border-radius: 14px;
+    border: 2px solid var(--rule);
+    border-radius: var(--radius);
     text-decoration: none;
     color: var(--text);
+    transition: border-color 0.2s ease, transform 0.2s ease;
   }
-  .list a:hover { border-color: var(--accent); }
-  .name { display: block; font-weight: 700; font-size: 17px; letter-spacing: -0.015em; }
-  .metrics { display: flex; flex-wrap: wrap; gap: 6px; margin-block-start: 12px; }
+  .cat-card:hover { border-color: var(--rule-strong); transform: translateY(-2px); }
+  .cat-head { display: flex; align-items: center; gap: 10px; }
+  .mono-badge {
+    width: 30px;
+    height: 30px;
+    border-radius: 8px;
+    display: grid;
+    place-items: center;
+    font-family: var(--mono);
+    font-size: 13.5px;
+    font-weight: 700;
+    flex: none;
+  }
+  .name { font-weight: 680; font-size: 15.5px; }
+  .cat-key {
+    margin-inline-start: auto;
+    font-family: var(--mono);
+    font-size: 10.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--faint);
+    border: 1px solid var(--rule);
+    border-radius: 999px;
+    padding: 3px 9px;
+    white-space: nowrap;
+  }
+  .metrics { display: flex; flex-wrap: wrap; gap: 6px; }
   .metrics i {
     font-style: normal;
-    font-size: 12px;
-    font-weight: 600;
-    /* Le rouge de marque est assombri de 12% pour ce seul usage : sur du texte
-       de 12px, #ec3013 plein ne donne que 4,2:1 contre le blanc, sous le seuil
-       AA de 4,5:1. Le mélange monte à ~5:1 sans changer la couleur perçue. */
-    background: color-mix(in srgb, var(--accent) 88%, #000);
-    color: #fff;
-    border: 1px solid transparent;
+    font-family: var(--mono);
+    font-size: 11.5px;
+    padding: 3px 9px;
     border-radius: 999px;
-    padding: 3px 10px;
+    background: var(--ok-soft);
+    color: var(--ok);
   }
   .metrics.none { color: var(--muted); font-size: 13px; display: block; }
   .missing { margin-block-start: 24px; }
