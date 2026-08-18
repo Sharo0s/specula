@@ -137,12 +137,9 @@ export const fr = {
 
   // — journal —
   'changelog.title': 'Ce qui change',
-  'changelog.description':
-    'Le journal est généré depuis les commits — chaque version raconte exactement ce qu’elle apporte.',
+  'changelog.description': 'Ce qui a changé dans Specula à chaque mise à jour.',
   'changelog.language':
     'Les notes sont en français : elles viennent des messages de commit, et en traduire une copie la ferait diverger dès la prochaine version.',
-  'changelog.store':
-    'Seules les versions déjà validées par Apple et installables depuis l’App Store apparaissent ici.',
 
   // — page prix —
   'pricing.price.slot': 'la place, achat unique',

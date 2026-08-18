@@ -137,12 +137,9 @@ export const es = {
 
   // — novedades —
   'changelog.title': 'Lo que cambia',
-  'changelog.description':
-    'El registro se genera desde los commits: cada versión cuenta exactamente lo que aporta.',
+  'changelog.description': 'Lo que ha cambiado en Specula en cada actualización.',
   'changelog.language':
     'Las notas están en francés: proceden de los mensajes de commit, y traducir una copia la desincronizaría en la siguiente versión.',
-  'changelog.store':
-    'Aquí solo aparecen las versiones ya aprobadas por Apple e instalables desde la App Store.',
 
   // — página de precio —
   'pricing.price.slot': 'por plaza, pago único',
