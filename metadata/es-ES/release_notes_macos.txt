@@ -1,0 +1,12 @@
+Página de Estado
+
+El muro de disponibilidad se rehace: una fila por servicio, un cuadro por día
+y el detalle de cada incidencia con un clic.
+
+Tres estados en lugar de dos: en línea, lento, sin conexión. Un servicio que se
+ralentiza se detecta antes de caer.
+
+Los servicios con problemas suben al principio, cada columna lleva su fecha y
+el periodo se elige entre 7, 14 y 30 días.
+
+Compartir un estado funciona igual en Mac, iPhone y iPad.

@@ -12,6 +12,8 @@ fr-FR/    en-US/    es-ES/    zh-Hans/    ar-SA/
   keywords.txt                 séparés par des virgules,   100 caractères max
   subtitle.txt                 une ligne,                    30 caractères max
   release_notes.txt            les nouveautés,            4 000 caractères max
+  release_notes_macos.txt      les mêmes, réécrites pour le Mac (clic plutôt
+                               qu'appui, pas de « arrive sur iPhone »)
   testflight_description.txt   la fiche vue par les testeurs
   marketing_url.txt
   support_url.txt
@@ -29,7 +31,9 @@ Trois destinations différentes, à ne pas confondre :
 - `description`, `keywords`, `marketing_url`, `support_url` → la page de la
   **version**, plateforme par plateforme ;
 - `release_notes` → « Nouveautés de cette version », sur la même page mais
-  réécrit à chaque version, là où les précédents se reconduisent tels quels ;
+  réécrit à chaque version, là où les précédents se reconduisent tels quels.
+  Le champ est propre à la plateforme : `release_notes_macos` sert la fiche
+  Mac, l'autre la fiche iOS ;
 - `subtitle` et `name` → **Informations sur l'app**, publiés avec la prochaine
   version soumise, quelle que soit la plateforme ;
 - `testflight_description` → **TestFlight ▸ Informations de test**, visible des
@@ -68,10 +72,15 @@ propager aux autres langues, et ne pas le retirer en croyant à une coquille.
 
 ## Ce qui n'est pas ici
 
-Le texte promotionnel, les nouveautés de version et le « à tester » de
-TestFlight : ils changent à chaque livraison, et les recopier ici les ferait
-diverger sans qu'on s'en aperçoive. Les captures d'écran non plus — Apple
-réutilise celles de la langue principale pour toutes les autres.
+Le texte promotionnel et le « à tester » de TestFlight : ils changent à chaque
+livraison, et les recopier ici les ferait diverger sans qu'on s'en aperçoive.
+Les captures d'écran non plus — Apple réutilise celles de la langue principale
+pour toutes les autres.
+
+Les nouveautés de version, elles, ont fini par atterrir ici : cinq langues à
+écrire d'un coup se relisent mieux côte à côte que dans cinq onglets d'App
+Store Connect. Elles se réécrivent à chaque version — un texte qui parle encore
+de la précédente est pire que pas de texte.
 
 `testflight_description.txt` fait exception parce qu'il ne bouge pas d'un build
 à l'autre : il décrit l'app, pas la livraison. Ne rien y écrire de propre à une

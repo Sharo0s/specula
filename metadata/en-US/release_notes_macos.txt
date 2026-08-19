@@ -1,0 +1,12 @@
+Status page
+
+The availability wall gets rebuilt: one row per service, one square per day,
+and any incident one click away.
+
+Three states instead of two — online, slow, offline. A service that starts
+dragging shows up before it goes down.
+
+Services in trouble move to the top, every column carries its date, and the
+window can be set to 7, 14 or 30 days.
+
+Sharing a status now works the same on Mac, iPhone and iPad.

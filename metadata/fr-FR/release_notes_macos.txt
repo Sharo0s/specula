@@ -1,0 +1,12 @@
+Page Statut
+
+Le mur de disponibilité se refait une santé : une rangée par service, un carré
+par jour, le détail d'un incident d'un simple clic.
+
+Trois états au lieu de deux — en ligne, lent, hors ligne. Un service qui
+ralentit se repère avant de tomber.
+
+Les services en défaut remontent en tête, chaque colonne porte sa date, et la
+période se choisit entre 7, 14 et 30 jours.
+
+Le partage d'un statut est aligné entre le Mac, l'iPhone et l'iPad.
