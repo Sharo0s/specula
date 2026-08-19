@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.3.3](https://github.com/Sharo0s/specula/compare/v1.3.2...v1.3.3) (2026-08-19)
+
+
+### Corrections
+
+* **i18n:** traduit les chaînes restées en français dans les quatre langues ([39b8779](https://github.com/Sharo0s/specula/commit/39b8779ec67b41c827d2a43af8d914b9e2f7e819))
+* **site:** lit la version des deux plateformes, pas d'une seule ([bc0fb94](https://github.com/Sharo0s/specula/commit/bc0fb94c271d12511e17554c80d71c1d0d69ccc7))
+* **site:** porte le bouton du menu mobile à 44 px ([5d33b73](https://github.com/Sharo0s/specula/commit/5d33b73d0be6afe1570d18440b80e3622ee66549))
+* **site:** pose la typographie française et aligne le reste des langues ([20216e6](https://github.com/Sharo0s/specula/commit/20216e60d3bbe7d0df41fdbedfd53afab0f775ab))
+* **site:** répare la barre arabe et relit les cinq langues ([3d264a7](https://github.com/Sharo0s/specula/commit/3d264a76b35cd8c25140e20d9f4d13a6276672ff))
+* **site:** resserre le blanc sous l'en-tête du journal ([8791773](https://github.com/Sharo0s/specula/commit/879177353f23481a21a3be9382b7c8fdc4131b62))
+
 ## [1.3.2](https://github.com/Sharo0s/specula/compare/v1.3.1...v1.3.2) (2026-08-17)
 
 
