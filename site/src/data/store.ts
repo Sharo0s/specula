@@ -24,11 +24,18 @@ const APP_ID = '6793012573';
 const LAST_KNOWN = '1.3.1';
 
 /**
+ * Deux fiches derrière un seul identifiant : l'app iOS et l'app macOS avancent
+ * chacune à son rythme, et Apple peut valider l'une sans l'autre. On interroge
+ * donc les deux entités et on retient la version la plus haute — le journal
+ * annonce ce qui est installable quelque part, pas le plus petit dénominateur.
+ *
  * Le storefront américain est le seul à répondre pour cet identifiant : les
  * autres pays renvoient `resultCount: 0` tant que l'app n'y est pas
  * distribuée. Sans paramètre `country`, l'API interroge les États-Unis.
  */
-const LOOKUP = `https://itunes.apple.com/lookup?id=${APP_ID}`;
+const ENTITES = ['software', 'macSoftware'] as const;
+const lookup = (entite: string) =>
+  `https://itunes.apple.com/lookup?id=${APP_ID}&entity=${entite}`;
 
 /** Compare deux versions numériques (« 1.3.10 » > « 1.3.9 »). */
 export function compareVersions(a: string, b: string): number {
@@ -54,8 +61,20 @@ export function storeVersion(): Promise<string> {
 }
 
 async function interroge(): Promise<string> {
+  const versions = (await Promise.all(ENTITES.map(lit))).filter(
+    (v): v is string => v !== null,
+  );
+  if (versions.length === 0) {
+    console.warn(`[changelog] version App Store indisponible, repli sur ${LAST_KNOWN}`);
+    return LAST_KNOWN;
+  }
+  return versions.sort(compareVersions).at(-1)!;
+}
+
+/** Une plateforme muette n'en condamne pas une autre : elle rend `null`. */
+async function lit(entite: string): Promise<string | null> {
   try {
-    const response = await fetch(LOOKUP, { signal: AbortSignal.timeout(5000) });
+    const response = await fetch(lookup(entite), { signal: AbortSignal.timeout(5000) });
     if (!response.ok) throw new Error(`HTTP ${response.status}`);
     const version = (await response.json())?.results?.[0]?.version;
     if (typeof version !== 'string' || !/^\d+(\.\d+)*$/.test(version)) {
@@ -64,8 +83,8 @@ async function interroge(): Promise<string> {
     return version;
   } catch (error) {
     console.warn(
-      `[changelog] version App Store indisponible (${error instanceof Error ? error.message : error}), repli sur ${LAST_KNOWN}`,
+      `[changelog] ${entite} : ${error instanceof Error ? error.message : error}`,
     );
-    return LAST_KNOWN;
+    return null;
   }
 }

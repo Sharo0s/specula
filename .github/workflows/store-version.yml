@@ -26,10 +26,17 @@ jobs:
         run: |
           set -euo pipefail
           # Le storefront américain est le seul à répondre pour cet identifiant.
-          # Une API muette ou un 404 laisse la variable vide plutôt que de
-          # planter l'étape : un incident chez Apple ne doit pas se traduire
+          # Deux fiches derrière un identifiant : iOS et macOS peuvent être
+          # validées séparément. On retient la plus haute des deux, comme le
+          # site. Une API muette ou un 404 laisse la variable vide plutôt que
+          # de planter l'étape : un incident chez Apple ne doit pas se traduire
           # par un mail d'échec tous les matins.
-          live=$(curl -fsS --retry 3 'https://itunes.apple.com/lookup?id=6793012573' | jq -r '.results[0].version // empty') || live=''
+          lit() {
+            curl -fsS --retry 3 "https://itunes.apple.com/lookup?id=6793012573&entity=$1" \
+              | jq -r '.results[0].version // empty' || true
+          }
+          live=$(printf '%s\n%s\n' "$(lit software)" "$(lit macSoftware)" \
+            | grep -E '^[0-9]+(\.[0-9]+)*$' | sort -V | tail -1) || live=''
           site=$(curl -fsS --retry 3 'https://specula.dev/store-version.json' | jq -r '.version // empty') || site=''
           if [ -z "$live" ] || [ -z "$site" ]; then
             echo "Réponse incomplète (App Store : « $live », site : « $site ») — on ne touche à rien."
