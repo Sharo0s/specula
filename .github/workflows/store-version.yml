@@ -106,3 +106,32 @@ jobs:
           - **La fiche produit** : les coordonnées de trader s'affichent désormais publiquement sur les boutiques de l'UE.
 
           Cette issue est ouverte une seule fois, par le workflow \`Suivi App Store\`."
+
+  garder-actif:
+    name: Empêche GitHub de désactiver le cron
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Pousse un commit vide si le dépôt dort depuis 55 jours
+        run: |
+          set -euo pipefail
+          # GitHub désactive les workflows planifiés d'un dépôt public après
+          # 60 jours sans commit. Le cron passant tous les jours, un seuil à
+          # 55 laisse cinq tentatives avant la coupure.
+          jours=$(( ( $(date +%s) - $(git log -1 --format=%ct) ) / 86400 ))
+          echo "dernier commit il y a $jours jour(s)"
+          if [ "$jours" -lt 55 ]; then
+            echo "Le dépôt vit — rien à pousser."
+            exit 0
+          fi
+          # Un commit vide : pas de fichier parasite, juste une entrée dans
+          # l'historique. Poussé avec GITHUB_TOKEN, il ne déclenche ni la CI ni
+          # release-please, qui ignore de toute façon les `chore`.
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git commit --allow-empty -m 'chore(ci): garde le cron de suivi App Store actif'
+          git push
+          echo "Commit vide poussé, compteur d'inactivité remis à zéro."
